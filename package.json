@@ -1,0 +1,25 @@
+{
+  "name": "website-builder",
+  "version": "1.0.0",
+  "description": "Website and landing page builder",
+  "main": "app.js",
+  "scripts": {
+    "start": "node start app.js",
+    "server": "nodemon start app.js"
+  },
+  "keywords": [
+    "mern",
+    "react"
+  ],
+  "author": "Tagir Faskhutdinov <tagirdjan@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "nodemon": "^2.0.7"
+  }
+}

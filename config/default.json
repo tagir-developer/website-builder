@@ -1,0 +1,4 @@
+{
+	"port": 5000,
+	"db-url": "mongodb+srv://Tagir3991:CiLen47z%23L82zHs@main-claster.kdeku.mongodb.net/app?retryWrites=true&w=majority"
+}
