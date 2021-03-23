@@ -1,0 +1,95 @@
+// Fonts
+
+@mixin display-big-text {
+	font-size: 64px;
+	line-height: 1.8;
+  }
+  @mixin display-small-text {
+	font-size: 48px;
+	line-height: 2.4;
+  }
+  @mixin h1-pc {
+	font-size: 34px;
+	font-weight: bold;
+  }
+  @mixin h2-pc {
+	font-size: 30px;
+	font-weight: bold;
+  }
+  @mixin h3-pc {
+	font-size: 28px;
+	font-weight: bold;
+  }
+  @mixin h1-mobile {
+	font-size: 26px;
+	font-weight: bold;
+  }
+  @mixin h4-pc {
+	font-size: 25px;
+	font-weight: bold;
+  }
+  @mixin h2-mobile {
+	font-size: 24px;
+	font-weight: bold;
+  }
+  @mixin big-button-text {
+	font-size: 24px;
+	font-weight: bold;
+  }
+  @mixin h5-pc {
+	font-size: 23px;
+	font-weight: bold;
+  }
+  @mixin h6-pc {
+	font-size: 21px;
+	font-weight: bold;
+  }
+  @mixin h3-mobile {
+	font-size: 21px;
+	font-weight: bold;
+  }
+  @mixin footer-headings-text {
+	font-size: 20px;
+	font-weight: bold;
+  }
+  @mixin form-input-text {
+	font-size: 20px;
+  }
+  @mixin main-button-text {
+	font-size: 18px;
+	font-weight: bold;
+  }
+  @mixin h4-mobile {
+	font-size: 18px;
+	font-weight: bold;
+  }
+  @mixin top-menu-text {
+	font-size: 18px;
+  }
+  @mixin body-big-text {
+	font-size: 18px;
+	line-height: 1.33;
+  }
+  @mixin body-middle-text {
+	font-size: 16px;
+	line-height: 1.5;
+  }
+  @mixin footer-button-text {
+	font-size: 14px;
+	font-weight: bold;
+  }
+  @mixin mini-text {
+	font-size: 14px;
+  }
+  @mixin body-small-text {
+	font-size: 14px;
+	line-height: 1.71;
+  }
+  @mixin forms-content-text {
+	font-size: 12px;
+	line-height: 1.67;
+  }
+  @mixin body-very-small-text {
+	font-size: 12px;
+	line-height: 2;
+  }

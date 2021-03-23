@@ -4,13 +4,12 @@ import './styles.scss'
 
 const Footer: React.FC = () => {
 	return (
-		<div className="container">
-			{/* container внутри блока или снаружи? Пока не разобрался */}
-			<div className="footer">
+		<div className="footer">
+			<div className="container">
 				<div className="footer__row">
 					<div className="footer__support">
 						<span className="footer__title">Поддержка</span>
-						<button className="footer__button">Задать вопрос</button>
+						<button className="footer__footer-button footer-button">Задать вопрос</button>
 						<button className="footer__footer-button footer-button">Отправить жалобу</button>
 					</div>
 					<div className="footer__learning">
