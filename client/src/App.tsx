@@ -1,6 +1,6 @@
 import React from 'react'
-import Content from './components/Content/Content'
-import Footer from './components/Footer/Footer'
+import Content from './components/UI/Content/Content'
+import Footer from './components/UI/Footer/Footer'
 
 const App: React.FC = () => {
   return (

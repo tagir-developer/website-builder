@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles.scss'
+import './Footer.scss'
 
 
 const Footer: React.FC = () => {
@@ -24,8 +24,8 @@ const Footer: React.FC = () => {
 						</ul>
 					</div>
 					<div className="footer__copyright">
-						<span className="footer__website">© site-generator.com</span>
-						<span className="footer__cppyright-info">Все права защищены.</span>
+						<p className="footer__cppyright-info">Все права защищены.</p>
+						<p className="footer__website">© site-generator.com</p>
 					</div>
 				</div>
 			</div>
