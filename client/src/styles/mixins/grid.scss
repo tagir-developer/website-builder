@@ -1,0 +1,47 @@
+// Ссылка на источник: https://github.com/twbs/bootstrap/blob/main/scss/mixins/_grid.scss
+
+@import "../../styles/variables.scss";
+
+/// Grid system (Система сеток)
+
+// Создание контейнера
+
+@mixin make-container($c-width: $container-max-width) {
+	max-width: $c-width;
+	margin: 0 auto;
+	padding: 0 10px;
+}
+
+// Создание строки
+
+@mixin make-row($gutter: $grid-gutter-width) {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	box-sizing: border-box;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: -($gutter / 2);
+	margin-right: -($gutter / 2);
+}
+
+// Создание столбца
+
+// box-sizing: border-box;
+// width: calc(100% / 12 * 3 - 20px);
+// margin: 0 10px;
+
+@mixin make-col($numb-cols, $columns: $grid-columns, $gutter: $grid-gutter-width) {
+	box-sizing: border-box;
+	width: calc(100% / #{$columns} * #{$numb-cols} - #{$gutter});
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: $gutter / 2;
+	margin-right: $gutter / 2;
+}
+
+// Установка только ширины колонки
+
+@mixin col-width($numb-cols, $columns: $grid-columns, $gutter: $grid-gutter-width) {
+	width: calc(100% / #{$columns} * #{$numb-cols} - #{$gutter});
+}

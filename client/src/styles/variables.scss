@@ -8,9 +8,22 @@ $warning: #ceae04;
 $text-middle: #7888a3;
 $text-secondary: #656565;
 $bg-icons: #c4c4c4;
+$bg-dark: #303438;
 $footer-heading: #84888c;
 $footer-main-text: #ffffff;
 $hoovered-text: #fd6907;
 
-// Fonts
+// Grid
+
+$container-max-width: 1200px;
+$grid-columns: 12 !default;
+$grid-gutter-width: 20px !default;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
 

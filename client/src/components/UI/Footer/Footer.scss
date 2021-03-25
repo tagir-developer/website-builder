@@ -1,31 +1,40 @@
 @import "../../../styles/variables.scss";
-@import "../../../styles/mixins.scss";
+@import "../../../styles/mixins/mixins.scss";
+@import "../../../styles/mixins/breakpoints.scss";
+@import "../../../styles/mixins/grid.scss";
 
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 10px;
-}
 .footer {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	height: 300px;
+	height: auto;
 	box-shadow: inset 4px 4px 29px 0 #6b7279, inset -12px -12px 29px 0 #272727;
-	background: #303438;
+	background: $bg-dark;
+
+		&__container {
+			@include make-container();
+		}
 
 		&__row {
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
-			box-sizing: border-box;
-			margin: 0 -10px;
-			padding-top: 40px;	
+			@include make-row();
+			padding-top: 40px;
+			@include media-breakpoint-up(lg) {
+				padding-bottom: 70px;
+			}	
 		}
 
 		&__support {
-			width: calc(100% / 12 * 3 - 20px);
-			margin: 0 10px;
+			@include make-col(3);
+			@include media-breakpoint-down(xl) {
+				padding-left: 10px;
+			}
+			@include media-breakpoint-down(lg) {
+				@include col-width(6);
+			}
+			@include media-breakpoint-down(sm) {
+				@include col-width(12);
+			}
+
 		}
 
 		&__title {
@@ -42,8 +51,16 @@
 		}
 
 		&__learning {
-			width: calc(100% / 12 * 3 - 20px);
-			margin: 0 10px;
+			@include make-col(3);
+			@include media-breakpoint-down(lg) {
+				@include col-width(6);
+				padding-left: 10px;
+
+			}
+			@include media-breakpoint-down(sm) {
+				@include col-width(12);
+				padding-top: 20px;
+			}
 		}
 
 		&__list-unstyled {
@@ -51,25 +68,32 @@
 		}
 
 		&__copyright {
-			width: calc(100% / 12 * 3 - 20px);
-			margin: 100px 10px 0px 10px;
+			@include make-col(6);
+			padding-top: 100px;
+			padding-right: 10px;
+			text-align: right;
+			@include media-breakpoint-down(lg) {
+				@include col-width(12);
+				text-align: center;
+				padding-right: 0px;
+				padding-top: 80px;
+				padding-bottom: 30px;
+			}
 		}
 
 		&__website {
 			font-size: 18px;
 			font-weight: bold;
 			color: $footer-heading;
-			text-align: right;
 		}
 
 		&__cppyright-info {
 			font-size: 16px;
 			color: $footer-heading;
-			text-align: right;
 		}
 }
 .footer-button {
-	display: inline-block;
+	display: block;
 	@include footer-button-text;
 	color: $bg-icons;
     text-align: center;
@@ -83,14 +107,14 @@
 	box-shadow: 3px 3px 24px 0 rgba(0, 0, 0, 0.9), -3px -3px 24px 0 rgba(255, 255, 255, 0.2);
 	background-color: transparent;
 	background: 
-		linear-gradient(161deg, #2D3237 6.15%, #1D1F23 80.89%) padding-box, // linear-gradient(122deg,
-		linear-gradient(154deg, #1f2125 8.51%, #2f343a 89.82%) border-box; // linear-gradient(143deg,
+		linear-gradient(170deg, #2D3237 6.15%, #1D1F23 80.89%) padding-box, // linear-gradient(122deg,
+		linear-gradient(160deg, #1f2125 8.51%, #2f343a 89.82%) border-box; // linear-gradient(143deg,
 	&:hover {
 		color: $hoovered-text;
 		text-shadow: 0px 0px 14px rgba(253, 105, 7, 0.85);
 		background: 
-		linear-gradient(345deg, #2D3237 6.15%, #1D1F23 80.89%) padding-box,
-		linear-gradient(154deg, #1f2125 8.51%, #2f343a 89.82%) border-box;
+		linear-gradient(350deg, #2D3237 6.15%, #1D1F23 80.89%) padding-box,
+		linear-gradient(160deg, #1f2125 8.51%, #2f343a 89.82%) border-box;
 		transition: all ease-in 100ms;
 	}
 }
@@ -99,7 +123,7 @@
 	margin: 0;
 
 		&__item {
-			margin-bottom: 20px;
+			margin-bottom: 15px;
 		}
 
 		&__link {
