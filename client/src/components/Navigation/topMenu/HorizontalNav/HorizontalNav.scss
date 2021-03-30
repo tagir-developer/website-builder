@@ -1,0 +1,38 @@
+@import "/src/styles/variables.scss";
+@import "/src/styles/mixins/mixins.scss";
+@import "/src/styles/mixins/breakpoints.scss";
+@import "/src/styles/mixins/grid.scss";
+
+.horizontal-nav {
+	// margin-left: auto;
+
+	&__list {
+		margin: 0;
+		list-style: none;
+	}
+
+	&__item {
+		display: inline-block;
+		line-height: 60px;
+		padding-left: 20px;
+		padding-right: 20px;
+		color: $text-primary;
+		cursor: pointer;
+		&:hover {
+			background: linear-gradient(to top, #f0f4f8, #e1eaf1);
+			// color: $success;
+			// text-shadow: 0px 0px 12px $success 0.7;
+			// transition: ease-in 100ms;
+		}
+	}
+
+	&__link {
+		text-decoration: none;
+		color: inherit;
+  		@include body-middle-text;
+
+		&_bold {
+			font-weight: bold;
+		}
+	}
+}

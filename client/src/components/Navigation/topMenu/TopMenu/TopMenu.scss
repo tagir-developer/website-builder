@@ -4,6 +4,8 @@
 @import "/src/styles/mixins/grid.scss";
 
 .top-menu {
+	position: fixed;
+	top: 0;
 	width: 100%;
 	height: 60px;
 	background: linear-gradient(to bottom, #f0f4f8, #e0ebf3);
@@ -28,7 +30,8 @@
 	}
 
 	&__horizontal-nav {
-		padding-left: 200px;
+		// padding-left: 200px;
+		margin-left: auto;
 	}
 }
 .logo {
@@ -37,47 +40,6 @@
 	width: 70px;
 	height: 30px;
 }
-.bread-crumbs {
 
-	&__list {
-		margin: 0;
-		list-style: none;
-	}
 
-	&__item {
-		display: inline-block;
-		width: 150px;
-		line-height: 60px;
-		padding-left: 30px;
-	}
-
-	&__link {
-		text-decoration: none;
-		color: $text-primary;
-  		@include body-middle-text;
-		  &:before {
-			  content: '';
-			  position: absolute;
-			  width: 22px;
-			  height: 60px;
-			  background-image: url('./img/i-back-dark-mini.svg');
-			  background-position: center;
-			  background-repeat: no-repeat;
-		  }
-	}
-}
-.horizontal-nav {
-
-	&__list {
-	}
-
-	&__item {
-	}
-
-	&__link {
-
-		&_bold {
-		}
-	}
-}
 
