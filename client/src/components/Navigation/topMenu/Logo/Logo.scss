@@ -1,0 +1,11 @@
+@import "/src/styles/variables.scss";
+@import "/src/styles/mixins/mixins.scss";
+@import "/src/styles/mixins/breakpoints.scss";
+@import "/src/styles/mixins/grid.scss";
+
+.logo {
+	display: block;
+	background-image: url("./img/logo.svg");
+	width: 70px;
+	height: 30px;
+}
