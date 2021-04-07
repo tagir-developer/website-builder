@@ -4,6 +4,8 @@
 @import "/src/styles/mixins/grid.scss";
 
 .bread-crumbs {
+	// color: $text-primary;
+	// color: inherit;
 
 	&__list {
 		margin: 0;
@@ -15,13 +17,18 @@
 		line-height: 60px;
 		padding-left: 40px;
 		padding-right: 20px;
-		color: $text-primary;
+		// color: inherit;
 		cursor: pointer;
 		&:hover {
 			background: linear-gradient(to top, #f0f4f8, #e1eaf1);
 			// color: $success;
 			// text-shadow: 0px 0px 12px $success 0.7;
 			// transition: ease-in 100ms;
+		}
+		&_dark-theme {
+			&:hover {
+				background: linear-gradient(to top, #3e3e3e, #000000);
+			}
 		}
 	}
 
@@ -39,5 +46,18 @@
 			  background-position: center;
 			  background-repeat: no-repeat;
 		  }
+		
+		  &_dark-theme {
+			&:before {
+				content: '';
+				position: absolute;
+				width: 22px;
+				height: 60px;
+				margin-left: -30px;
+				background-image: url('./img/i-back-light-mini.svg');
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+		}
 	}
 }

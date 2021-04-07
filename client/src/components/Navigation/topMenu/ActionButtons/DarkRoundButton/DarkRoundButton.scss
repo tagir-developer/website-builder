@@ -1,0 +1,52 @@
+@import "../../../../../styles/mixins/mixins.scss";
+
+// .action-buttons {
+
+// 	&__dark-round-button {
+// 	}
+// }
+
+.dark-round-button {
+	@include centering;
+	width: 42px;
+	height: 42px;
+	box-sizing: border-box;
+	padding: 2px;
+	border-radius: 50%;
+	cursor: pointer;
+	background: 	
+		linear-gradient(146.14deg, #101010 0%, #101010 100%) content-box,
+		linear-gradient(146.14deg, #151516 0%, #45484A 100%) border-box;
+	&:hover {
+		background: 	
+		linear-gradient(146.14deg, #fd6601 0%, #fd6601 100%) content-box,
+		linear-gradient(146.14deg, #a34709 0%, #a15d05 100%) border-box;
+		box-shadow: 0px 0px 14px rgba(253, 105, 7, 0.85);
+	}
+
+	&__button {
+		@include centering;
+		width: 33px;
+		height: 33px;
+		box-sizing: border-box;
+		padding: 1px;
+		background: 	
+			linear-gradient(154.72deg, #373737 0%, #252525 100%) content-box,
+			linear-gradient(146.14deg, #45484A 0%, #151516 100%) border-box;
+		border-radius: 50%;
+	}
+
+	&__icon {
+		width: 25px;
+		height: 25px;
+		&_icon-undo {
+			background: url("../img/undo.svg") center no-repeat;
+		}
+		&_icon-save {
+			background: url("../img/save.svg") center no-repeat;
+		}		
+		&_icon-show {
+			background: url("../img/show.svg") center no-repeat;
+		}
+	}
+}

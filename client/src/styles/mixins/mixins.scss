@@ -93,3 +93,18 @@
 	font-size: 12px;
 	line-height: 2;
   }
+
+  // Helpfull mixins
+
+@mixin centering {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Style reset mixins
+
+@mixin reset-link {
+  text-decoration: none;
+  color: inherit;
+}

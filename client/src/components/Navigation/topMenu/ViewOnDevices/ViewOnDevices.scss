@@ -1,0 +1,29 @@
+@import "../../../../styles/mixins/mixins.scss";
+@import "../../../../styles/variables.scss";
+
+.view-on-devices {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 440px;
+	color: inherit;
+	font-size: 16px;
+
+	&__button {
+		@include centering;
+		width: 140px;
+		height: 50px;
+		border-radius: 10px;
+		cursor: pointer;
+		&:hover {
+			background: linear-gradient(126.36deg, #2F2F2F 21.21%, #121212 76.96%);
+			box-shadow: inset -3px -3px 10px #434343, inset 3px 3px 10px #000000;
+		}
+		&_active {
+			background: linear-gradient(126.36deg, #2F2F2F 21.21%, #121212 76.96%);
+			box-shadow: inset -3px -3px 10px #434343, inset 3px 3px 10px #000000;
+			color: $success;
+			text-shadow: 3px 3px 13px $success;
+		}
+	}
+}

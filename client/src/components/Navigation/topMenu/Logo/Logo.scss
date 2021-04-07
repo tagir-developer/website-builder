@@ -8,4 +8,8 @@
 	background-image: url("./img/logo.svg");
 	width: 70px;
 	height: 30px;
+
+	&_dark-theme {
+		background-image: url("./img/logo-dark-theme.svg");
+	}
 }

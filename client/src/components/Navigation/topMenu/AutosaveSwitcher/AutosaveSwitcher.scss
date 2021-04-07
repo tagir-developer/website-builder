@@ -1,0 +1,15 @@
+.autosave-switcher {
+	display: flex;
+	align-items: center;
+
+	&__title {
+		width: 106px;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	&__toggle {
+		width: 84px;
+		padding-left: 10px;
+	}
+}

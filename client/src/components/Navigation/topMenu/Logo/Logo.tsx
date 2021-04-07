@@ -1,24 +1,18 @@
 import React from 'react'
 import './Logo.scss'
+import {useCreateClassName} from '../../../../hooks/createClassName.hook'
 
 interface ILogo {
 	parentClass?: string
+	modClass?: string[]
 }
 
-const Logo: React.FC<ILogo> = ({ parentClass }) => {
+const Logo: React.FC<ILogo> = ({ parentClass, modClass}) => {
 
-	// ? Можно ли реализовать логику генерирования динамических классов в хуках?
-
-	const classes: string[] = [
-		"logo"
-	]
-
-	if (parentClass) {
-		classes.push(parentClass + "__logo")
-	}
+	const classes = useCreateClassName('logo', parentClass, modClass)
 
 	return (
-		<div className={classes.join(' ')}>
+		<div className={classes}>
 		</div>
 	)
 }
