@@ -8,7 +8,11 @@ import AutosaveSwitcher from '../AutosaveSwitcher/AutosaveSwitcher'
 import ActionButtons from '../ActionButtons/ActionButtons'
 import ViewOnDevices from '../ViewOnDevices/ViewOnDevices'
 
-const TopMenu: React.FC = () => {
+interface ITopMenu {
+	menuType?: string
+}
+
+const TopMenu: React.FC<ITopMenu> = ({ menuType }) => {
 
 
 	const topMenuClasses = useCreateClassName('top-menu', null, ['dark-theme'])

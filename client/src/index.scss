@@ -21,6 +21,10 @@ h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
 
 // Basic Tag styles
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'Montserrat', 'Helvetica Neue', sans-serif, 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans';
@@ -28,6 +32,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: $main;
   color: $text-primary;
+  height: 100%;
 }
 
 code {
@@ -35,8 +40,24 @@ code {
     monospace;
 }
 
-button { // ! Возможно сброс стилей для кнопки нужно добавиь в общий Reset
+button {
   font: inherit;
   color: inherit;
   background-color: transparent;
 } 
+
+#root {
+  display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
+.content-area {
+  width: 100%;
+	margin-top: 60px;
+	padding: 40px 20px;
+	box-sizing: border-box;
+  flex: 1 0 auto;
+}
+
+

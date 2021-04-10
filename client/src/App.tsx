@@ -1,15 +1,16 @@
 import React from 'react'
+import {BrowserRouter as Router} from 'react-router-dom'
 import TopMenu from './components/Navigation/topMenu/TopMenu/TopMenu'
-import Content from './components/UI/Content/Content'
-import Footer from './components/UI/Footer/Footer'
+import { useRoutes } from './routes'
 
 const App: React.FC = () => {
+
+  const routes = useRoutes(false)
+  
   return (
-  <React.Fragment>
-    <TopMenu />
-    <Content />
-    <Footer />
-  </React.Fragment>
+    <Router>
+      {routes}
+    </Router>
   )
 }
 
