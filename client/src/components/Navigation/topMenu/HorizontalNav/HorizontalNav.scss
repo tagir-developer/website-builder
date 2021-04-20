@@ -7,6 +7,9 @@
 	&__list {
 		margin: 0;
 		list-style: none;
+		@include media-breakpoint-down(lg) {
+			display: none;
+		}
 	}
 
 	&__item {
