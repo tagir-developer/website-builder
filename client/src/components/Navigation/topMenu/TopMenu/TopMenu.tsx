@@ -6,6 +6,7 @@ import Logo from '../Logo/Logo'
 import AutosaveSwitcher from '../AutosaveSwitcher/AutosaveSwitcher'
 import ActionButtons from '../ActionButtons/ActionButtons'
 import ViewOnDevices from '../ViewOnDevices/ViewOnDevices'
+import MobileMenu from '../MobileMenu/MobileMenu'
 
 interface ITopMenu {
 	menuType?: string
@@ -23,6 +24,11 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 		return 'top-menu'
 	}
 
+	const topMenuContainerClasses = (typeMenu: string): string => {
+		if (typeMenu === 'edit') return 'top-menu__container top-menu__container_dark-theme'
+		return 'top-menu__container'
+	}
+
 	const setMenuChildren = (typeMenu: string): JSX.Element => {
 
 		if (typeMenu === 'main') {
@@ -36,6 +42,13 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 						{ title: 'Регистрация', link: '/', bold: false },
 						{ title: 'Войти', link: '/', bold: false },
 					]}
+				/>
+				<MobileMenu 
+					items={[
+						{ title: 'Регистрация', link: '/', bold: false },
+						{ title: 'Войти', link: '/', bold: false },
+					]} 
+					parentClass="top-menu"
 				/>
 				</>
 			)
@@ -69,6 +82,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 						{ title: 'Выход', link: '/', bold: true },
 					]}
 				/>
+				<MobileMenu 
+					items={[
+						{ title: 'Справочная информация', link: '/', bold: false },
+						{ title: 'Настройки аккаунта', link: '/', bold: false },
+						{ title: 'Выход', link: '/', bold: false },
+					]} 
+					parentClass="top-menu"
+				/>
 				</>
 			)
 		}
@@ -92,6 +113,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 						{ title: 'Выход', link: '/', bold: true },
 					]}
 				/>
+				<MobileMenu 
+					items={[
+						{ title: 'Справочная информация', link: '/', bold: false },
+						{ title: 'Настройки аккаунта', link: '/', bold: false },
+						{ title: 'Выход', link: '/', bold: false },
+					]} 
+					parentClass="top-menu"
+				/>
 				</>
 			)
 		}
@@ -108,6 +137,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 						{ title: 'Список страниц', link: '/' },
 					]}
 				/>
+				<div className="top-menu__devider"></div>
 				<AutosaveSwitcher parentClass="top-menu" />
 				<ActionButtons parentClass="top-menu" />
 				<HorizontalNav 
@@ -116,6 +146,16 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					items={[
 						{ title: 'Опубликовать', link: '/', bold: true },
 					]}
+				/>
+				<MobileMenu 
+					items={[
+						{ title: 'Сохранить', link: '/', bold: false },
+						{ title: 'Отменить действие', link: '/', bold: false },
+						{ title: 'Предпросмотр', link: '/', bold: false },
+						{ title: 'Опубликовать', link: '/', bold: false },
+					]} 
+					parentClass="top-menu"
+					modClass={['dark-theme']}
 				/>
 				</>
 			)
@@ -144,7 +184,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 
 	return (
 		<div className={topMenuClasses(menuType)}>
-			<div className="top-menu__container">
+			<div className={topMenuContainerClasses(menuType)}>
 				<div className="top-menu__row">
 					{setMenuChildren(menuType)}
 				</div>

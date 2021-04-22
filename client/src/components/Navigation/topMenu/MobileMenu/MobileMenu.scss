@@ -4,7 +4,7 @@
 .mobile-nav {
 	display: none;
 	position: relative;
-	@include media-breakpoint-down(lg) {
+	@include media-breakpoint-down(xl) {
 		display: block;
 	}
 
@@ -38,14 +38,15 @@
 		right: 0;
 		margin-top: 60px;
 		z-index: -1;
-		height: 200px;
-		// background: $main;
-		background: rgb(255, 253, 253);
+		height: auto;
+		background: $main;
 		box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.2);
+		transform: translateY(-100%);
+		transition: transform 100ms ease-in;
 	}
 
 	&__bar.mobile-nav__bar_open {
-		display: block;
+		transform: translateY(0px);
 	}
 
 	&__item {
@@ -54,12 +55,20 @@
 		height: 65px;
 		line-height: 65px;
 		text-align: center;
-		border-bottom: 1px solid grey;
+		&:nth-last-child(n+2):after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 5px;
+			background: #DBE6EF;
+			box-shadow: inset 0px -1px 3px rgba(255, 255, 255, 0.65), inset 0px 1px 3px #A4B9C9;
+			border-radius: 5px;
+		}
 	}
 
 	&__link {
 		text-decoration: none;
-		color: $text-primary;
+		color: $text-secondary;
 		font-size: 16px;
 	}
 }

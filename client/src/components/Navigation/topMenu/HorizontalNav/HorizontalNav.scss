@@ -7,7 +7,7 @@
 	&__list {
 		margin: 0;
 		list-style: none;
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(xl) {
 			display: none;
 		}
 	}

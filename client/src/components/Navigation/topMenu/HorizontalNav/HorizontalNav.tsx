@@ -2,7 +2,6 @@ import React from 'react'
 import './HorizontalNav.scss'
 import {useCreateClassName} from '../../../../hooks/createClassName.hook'
 import { NavLink } from 'react-router-dom'
-import MobileMenu from '../MobileMenu/MobileMenu'
 
 interface IItems {
 	title: string
@@ -23,9 +22,6 @@ const HorizontalNav: React.FC<IHorizontalNav> = ({ parentClass, modClass, items 
 
 	return (
 		<div className={classes}>
-
-		<MobileMenu items={items} parentClass="horizontal-nav" />
-		{/* <MobileMenu items={items} parentClass="horizontal-nav" modClass={['dark-theme']} /> */}
 
 			<ul className="horizontal-nav__list">
 			{items.map((item, i) => {

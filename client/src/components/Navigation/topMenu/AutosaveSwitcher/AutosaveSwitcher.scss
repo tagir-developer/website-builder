@@ -1,6 +1,12 @@
+@import "/src/styles/variables.scss";
+@import "/src/styles/mixins/breakpoints.scss";
+
 .autosave-switcher {
 	display: flex;
 	align-items: center;
+	@include media-breakpoint-down(xl) {
+		display: none;
+	}
 
 	&__title {
 		width: 106px;
