@@ -1,0 +1,30 @@
+@import "../../../../styles/mixins/mixins.scss";
+@import "../../../../styles/mixins/breakpoints.scss";
+@import "../../../../styles/variables.scss";
+
+.view-on-devices-mobile {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 140px;
+	@include media-breakpoint-up(md) {
+		display: none;
+	}
+
+	&__button-container {
+		@include centering;
+		width: 45px;
+		height: 60px;
+		&_active {
+			background: linear-gradient(126.36deg, #2F2F2F 21.21%, #121212 76.96%);
+			box-shadow: inset -3px -3px 10px #434343, inset 3px 3px 10px #000000;
+			color: $success;
+			text-shadow: 3px 3px 13px $success;
+		}
+	}
+
+	&__dark-round-button-active {
+
+	}
+
+}

@@ -17,9 +17,12 @@ interface IBreadCrumbsProps {
 
 const BreadCrumbs: React.FC<IBreadCrumbsProps> = ({ parentClass, modClass, items}) => {
 
-	const classes = useCreateClassName('bread-crumbs', parentClass)
-	const linkClasses = useCreateClassName('bread-crumbs__link', null, modClass)
-	const itemClasses = useCreateClassName('bread-crumbs__item', null, modClass)
+	const themeModClass = modClass && modClass.includes('dark-theme') ? ['dark-theme'] : undefined
+	const deviceModClass = modClass && modClass.includes('mobile-version') ? ['mobile-version'] : undefined
+
+	const classes = useCreateClassName('bread-crumbs', parentClass, deviceModClass)
+	const linkClasses = useCreateClassName('bread-crumbs__link', null, themeModClass)
+	const itemClasses = useCreateClassName('bread-crumbs__item', null, themeModClass)
 
 	return (
 		<div className={classes}>

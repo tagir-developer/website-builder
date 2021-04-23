@@ -1,6 +1,5 @@
 import React from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
-import TopMenu from './components/Navigation/topMenu/TopMenu/TopMenu'
 import { useRoutes } from './routes'
 
 const App: React.FC = () => {

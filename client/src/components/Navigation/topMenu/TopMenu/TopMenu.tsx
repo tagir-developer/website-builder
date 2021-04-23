@@ -6,6 +6,7 @@ import Logo from '../Logo/Logo'
 import AutosaveSwitcher from '../AutosaveSwitcher/AutosaveSwitcher'
 import ActionButtons from '../ActionButtons/ActionButtons'
 import ViewOnDevices from '../ViewOnDevices/ViewOnDevices'
+import ViewOnDevicesMobile from '../ViewOnDevicesMobile/ViewOnDevicesMobile'
 import MobileMenu from '../MobileMenu/MobileMenu'
 
 interface ITopMenu {
@@ -26,6 +27,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 
 	const topMenuContainerClasses = (typeMenu: string): string => {
 		if (typeMenu === 'edit') return 'top-menu__container top-menu__container_dark-theme'
+		if (typeMenu === 'preview') return 'top-menu__container top-menu__container_dark-theme'
 		return 'top-menu__container'
 	}
 
@@ -63,6 +65,13 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					parentClass="top-menu" 
 					items={[
 						{ title: 'Вернуться на главную', link: '/' },
+					]}
+				/>
+				<BreadCrumbs 
+					parentClass="top-menu"
+					modClass={['mobile-version']}
+					items={[
+						{ title: 'На главную', link: '/' },
 					]}
 				/>
 				</>
@@ -104,6 +113,13 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 						{ title: 'Мои сайты', link: '/' },
 					]}
 				/>
+				<BreadCrumbs 
+					parentClass="top-menu"
+					modClass={['mobile-version']}
+					items={[
+						{ title: 'Мои сайты', link: '/' },
+					]}
+				/>
 				<div className="top-menu__devider"></div>
 				<HorizontalNav 
 					parentClass="top-menu"
@@ -135,6 +151,13 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					items={[
 						{ title: 'Мои сайты', link: '/' },
 						{ title: 'Список страниц', link: '/' },
+					]}
+				/>
+				<BreadCrumbs 
+					parentClass="top-menu"
+					modClass={['dark-theme', 'mobile-version']}
+					items={[
+						{ title: 'Сайт', link: '/' },
 					]}
 				/>
 				<div className="top-menu__devider"></div>
@@ -172,7 +195,15 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 						{ title: 'Вернуться к редактированию', link: '/' },
 					]}
 				/>
+				<BreadCrumbs 
+					parentClass="top-menu"
+					modClass={['dark-theme', 'mobile-version']}
+					items={[
+						{ title: 'Назад', link: '/' },
+					]}
+				/>
 				<ViewOnDevices parentClass="top-menu" />
+				<ViewOnDevicesMobile parentClass="top-menu" />
 				</>
 			)
 		}

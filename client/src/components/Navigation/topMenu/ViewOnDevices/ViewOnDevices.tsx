@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import './ViewOnDevices.scss'
 import {useCreateClassName} from '../../../../hooks/createClassName.hook'
-import classNames from 'classnames'
 
 interface IViewOnDevices {
 	parentClass?: string
