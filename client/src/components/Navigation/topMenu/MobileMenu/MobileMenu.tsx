@@ -3,6 +3,7 @@ import './MobileMenu.scss'
 import {useCreateClassName} from '../../../../hooks/createClassName.hook'
 import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
+import Toggle from '../../../UI/Toggle/Toggle'
 
 interface IItems {
 	title: string
@@ -14,9 +15,10 @@ interface IMobileMenu {
 	parentClass?: string
 	modClass?: string[]
 	items: Array<IItems>
+	autosaveCheker?: boolean
 }
 
-const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items }) => {
+const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items, autosaveCheker=false }) => {
 
 	const [isOpen, isOpenHandler] = useState<boolean>(false)
 
@@ -33,12 +35,23 @@ const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items }) => 
 		'mobile-nav__bar_open': isOpen
 	})
 
+	const autosaveElement = (
+		<div className="mobile-nav__autosave-switcher-panel autosave-switcher-panel">
+			<Toggle name="mob-menu-toggle" parentClass="autosave-switcher-panel" />
+			<div className="autosave-switcher-panel__name">Включить автосохранение</div>
+		</div>
+	)
+
 	return (
 		<div className={navClasses}>
 
 			<div onClick={() => isOpenHandler(prev => !prev)} className={toggleClasses}></div>
 
-			<ul className={barClasses}>
+			<div className={barClasses}>
+
+			{autosaveCheker ? autosaveElement : null}
+			
+			<ul className="mobile-nav__list">
 			{items.map((item, i) => {
 					return (
 						<li key={i} className="mobile-nav__item">
@@ -52,6 +65,7 @@ const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items }) => 
 					)
 				})}
 			</ul>
+			</div>
 		</div>
 	)
 }

@@ -11,61 +11,69 @@ const ViewOnDevicesMobile: React.FC<IViewOnDevicesMobile> = ({ parentClass }) =>
 
 	const classes = useCreateClassName('view-on-devices-mobile', parentClass)
 
-	// const [mobileClasses, setMobileClasses] = useState('view-on-devices-mobile__button-container')
-	// const [tabletClasses, setTabletClasses] = useState('view-on-devices-mobile__button-container')
-	// const [desktopClasses, setDesktopClasses] = useState('view-on-devices-mobile__button-container')
+	const [mobileActive, setMobileActive] = useState(true)
+	const [tabletActive, setTabletActive] = useState(false)
+	const [desktopActive, setDesktopActive] = useState(false)
 
-	// const changeDeviceHandler = (device: string): void => {
-	// 	if (device === 'mobile') {
-	// 		setMobileClasses('view-on-devices-mobile__button-container view-on-devices-mobile__button-container_active')
-	// 		setTabletClasses('view-on-devices-mobile__button-container')
-	// 		setDesktopClasses('view-on-devices-mobile__button-container')
-	// 		return
-	// 	}
-	// 	if (device === 'tablet') {
-	// 		setTabletClasses('view-on-devices-mobile__button-container view-on-devices-mobile__button_active')
-	// 		setMobileClasses('view-on-devices-mobile__button-container')
-	// 		setDesktopClasses('view-on-devices-mobile__button-container')
-	// 		return
-	// 	}
-	// 	if (device === 'desktop') {
-	// 		setDesktopClasses('view-on-devices-mobile__button-container view-on-devices-mobile__button-container_active')
-	// 		setMobileClasses('view-on-devices-mobile__button-container')
-	// 		setTabletClasses('view-on-devices-mobile__button-container')
-	// 		return
-	// 	}
-	// }
+	const [devType, setDevType] = useState('Смартфон')
+
+	const changeDeviceHandler = (device: string): void => {
+		if (device === 'mobile') {
+			setMobileActive(true)
+			setTabletActive(false)
+			setDesktopActive(false)
+			setDevType('Смартфон')
+			return
+		}
+		if (device === 'tablet') {
+			setMobileActive(false)
+			setTabletActive(true)
+			setDesktopActive(false)
+			setDevType('Планшет')
+			return
+		}
+		if (device === 'desktop') {
+			setMobileActive(false)
+			setTabletActive(false)
+			setDesktopActive(true)
+			setDevType('Компьютер')
+			return
+		}
+	}
 
 	return (
 		<div className={classes}>
 			<div 
 				onClick={() => changeDeviceHandler('mobile')} 
-				className={mobileClasses}
+				className='view-on-devices-mobile__button-container'
 			>
 				<DarkRoundButtonActive 
 					parentClass="view-on-devices-mobile" 
-					modClass={['icon-undo']} 
-					activeClass={['icon-undo-green']}
+					iconClass="icon-mobile"
+					isActive={mobileActive}
 				/>
 			</div>
 			<div 
 				onClick={() => changeDeviceHandler('tablet')} 
-				className={tabletClasses}
+				className='view-on-devices-mobile__button-container'
 			>
 				<DarkRoundButtonActive 
 					parentClass="view-on-devices-mobile" 
-					modClass={['icon-save']} 
+					iconClass="icon-tablet"
+					isActive={tabletActive}
 				/>
 			</div>
 			<div 
 				onClick={() => changeDeviceHandler('desktop')} 
-				className={desktopClasses}
+				className='view-on-devices-mobile__button-container'
 			>
 				<DarkRoundButtonActive 
 					parentClass="view-on-devices-mobile" 
-					modClass={['icon-show']} 
+					iconClass="icon-pc"
+					isActive={desktopActive}
 				/>
 			</div>
+			<div className="view-on-devices-mobile__show-device-type">{devType}</div>
 		</div>
 	)
 }

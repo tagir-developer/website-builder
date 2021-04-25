@@ -10,7 +10,7 @@ import ViewOnDevicesMobile from '../ViewOnDevicesMobile/ViewOnDevicesMobile'
 import MobileMenu from '../MobileMenu/MobileMenu'
 
 interface ITopMenu {
-	menuType?: string
+	menuType?: 'main' | 'back-to-main' | 'auth' | 'auth-project' | 'select-template' | 'edit' | 'preview'
 }
 
 const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
@@ -20,6 +20,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 		if (typeMenu === 'back-to-main') return 'top-menu'
 		if (typeMenu === 'auth') return 'top-menu'
 		if (typeMenu === 'auth-project') return 'top-menu'
+		if (typeMenu === 'select-template') return 'top-menu'
 		if (typeMenu === 'edit') return 'top-menu top-menu_dark-theme'
 		if (typeMenu === 'preview') return 'top-menu top-menu_dark-theme'
 		return 'top-menu'
@@ -141,6 +142,46 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 			)
 		}
 
+		if (typeMenu === 'select-template') {
+			return (
+				<>
+				<Logo parentClass="top-menu" />
+				<BreadCrumbs 
+					parentClass="top-menu" 
+					modClass={['dark-theme']}
+					items={[
+						{ title: 'Мои сайты', link: '/' },
+						{ title: 'Список страниц', link: '/' },
+					]}
+				/>
+				<BreadCrumbs 
+					parentClass="top-menu"
+					modClass={['dark-theme', 'mobile-version']}
+					items={[
+						{ title: 'Сайт', link: '/' },
+					]}
+				/>
+				<div className="top-menu__devider"></div>
+				<HorizontalNav 
+					parentClass="top-menu"
+					items={[
+						{ title: 'Справка', link: '/', bold: false },
+						{ title: 'Аккаунт', link: '/', bold: false },
+						{ title: 'Выход', link: '/', bold: true },
+					]}
+				/>
+				<MobileMenu 
+					items={[
+						{ title: 'Справочная информация', link: '/', bold: false },
+						{ title: 'Настройки аккаунта', link: '/', bold: false },
+						{ title: 'Выход', link: '/', bold: false },
+					]} 
+					parentClass="top-menu"
+				/>
+				</>
+			)
+		}
+
 		if (typeMenu === 'edit') {
 			return (
 				<>
@@ -179,6 +220,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					]} 
 					parentClass="top-menu"
 					modClass={['dark-theme']}
+					autosaveCheker={true}
 				/>
 				</>
 			)
