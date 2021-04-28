@@ -5,16 +5,31 @@ import Footer from '../../components/UI/Footer/Footer'
 
 const ProjectsPage: React.FC = () => {
 
-	const name = 'apple'
+	const array = [
+		{name: 'apple'},
+		{name: 'orange'},
+		{name: 'banana'},
+	]
 
 	return (
 		<>
 			<TopMenu menuType="auth" />
 			<div className="content-area">
 				<h1>Страница со списком сайтов пользователя</h1>
-				<NavLink to={"/" + name}>Ссылка на проект Апельсин</NavLink>
-				<div></div>
-				<NavLink to="/apple">Ссылка на проект Яблоко</NavLink>
+				{/* {array.map((i) => {
+					return (
+						<>
+						<NavLink to={"/pr/" + i.name}>{i.name}</NavLink>
+						<div></div>
+						</>
+					)
+				})} */}
+
+			<NavLink to={"/pr/" + 'apple'}>APPLE</NavLink>
+			<div></div>
+			<NavLink to={"/pr/" + 'orange'}>ORANGE</NavLink>
+				
+				
 				
 			</div>
 			<Footer />
