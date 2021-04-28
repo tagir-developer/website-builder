@@ -1,21 +1,22 @@
 import React from 'react'
 import './BreadCrumbs.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
-import { NavLink } from 'react-router-dom'
+import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom'
 
 interface IItems {
 	title: string
 	link: string
+	goBack?: boolean
 }
 
-interface IBreadCrumbsProps {
+interface IBreadCrumbsProps extends RouteComponentProps<any> {
 	parentClass?: string
 	modClass?: string[]
 	items: Array<IItems>
 }
 
 
-const BreadCrumbs: React.FC<IBreadCrumbsProps> = ({ parentClass, modClass, items}) => {
+const BreadCrumbs: React.FC<IBreadCrumbsProps> = ({ parentClass, modClass, items, history}) => {
 
 	const themeModClass = modClass && modClass.includes('dark-theme') ? ['dark-theme'] : undefined
 	const deviceModClass = modClass && modClass.includes('mobile-version') ? ['mobile-version'] : undefined
@@ -30,7 +31,11 @@ const BreadCrumbs: React.FC<IBreadCrumbsProps> = ({ parentClass, modClass, items
 				{items.map((item, i) => {
 					return (
 						<li key={i} className={itemClasses}>
-							<NavLink to={item.link} className={linkClasses}>{item.title}</NavLink>
+							{item.hasOwnProperty('goBack') && item.goBack
+								? <div onClick={() => history.goBack()} className={linkClasses}>{item.title}</div> 
+								: <NavLink to={item.link} className={linkClasses}>{item.title}</NavLink>
+							}
+							
 						</li>
 					)
 				})}
@@ -39,4 +44,4 @@ const BreadCrumbs: React.FC<IBreadCrumbsProps> = ({ parentClass, modClass, items
 	)
 }
 
-export default BreadCrumbs
+export default withRouter(BreadCrumbs)

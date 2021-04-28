@@ -5,9 +5,9 @@ import Footer from '../../components/UI/Footer/Footer'
 const AuthPage: React.FC = () => {
 	return (
 		<>
-			<TopMenu />
+			<TopMenu menuType="back-to-main" />
 			<div className="content-area">
-				<h1>Auth page</h1>
+				<h1>Авторизация</h1>
 			</div>
 			<Footer />
 		</>

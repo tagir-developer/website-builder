@@ -10,7 +10,7 @@ import ViewOnDevicesMobile from '../ViewOnDevicesMobile/ViewOnDevicesMobile'
 import MobileMenu from '../MobileMenu/MobileMenu'
 
 interface ITopMenu {
-	menuType?: 'main' | 'back-to-main' | 'auth' | 'auth-project' | 'select-template' | 'edit' | 'preview'
+	menuType?: 'main' | 'back-to-main' | 'go-back' | 'auth' | 'auth-project' | 'select-template' | 'edit' | 'preview'
 }
 
 const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
@@ -42,14 +42,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 				<HorizontalNav 
 					parentClass="top-menu"
 					items={[
-						{ title: 'Регистрация', link: '/', bold: false },
-						{ title: 'Войти', link: '/', bold: false },
+						{ title: 'Регистрация', link: '/registration', bold: false },
+						{ title: 'Войти', link: '/login', bold: false },
 					]}
 				/>
 				<MobileMenu 
 					items={[
-						{ title: 'Регистрация', link: '/', bold: false },
-						{ title: 'Войти', link: '/', bold: false },
+						{ title: 'Регистрация', link: '/registration', bold: false },
+						{ title: 'Войти', link: '/login', bold: false },
 					]} 
 					parentClass="top-menu"
 				/>
@@ -79,6 +79,28 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 			)
 		}
 
+		if (typeMenu === 'go-back') {
+			return (
+				<>
+				<Logo parentClass="top-menu" />
+				<div className="top-menu__devider"></div>
+				<BreadCrumbs 
+					parentClass="top-menu" 
+					items={[
+						{ title: 'Назад', link: '/', goBack: true },
+					]}
+				/>
+				<BreadCrumbs 
+					parentClass="top-menu"
+					modClass={['mobile-version']}
+					items={[
+						{ title: 'Назад', link: '/', goBack: true },
+					]}
+				/>
+				</>
+			)
+		}
+
 		if (typeMenu === 'auth') {
 			return (
 				<>
@@ -87,15 +109,15 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 				<HorizontalNav 
 					parentClass="top-menu"
 					items={[
-						{ title: 'Справка', link: '/', bold: false },
-						{ title: 'Аккаунт', link: '/', bold: false },
+						{ title: 'Справка', link: '/help', bold: false },
+						{ title: 'Аккаунт', link: '/user-profile', bold: false },
 						{ title: 'Выход', link: '/', bold: true },
 					]}
 				/>
 				<MobileMenu 
 					items={[
-						{ title: 'Справочная информация', link: '/', bold: false },
-						{ title: 'Настройки аккаунта', link: '/', bold: false },
+						{ title: 'Справочная информация', link: '/help', bold: false },
+						{ title: 'Настройки аккаунта', link: '/user-profile', bold: false },
 						{ title: 'Выход', link: '/', bold: false },
 					]} 
 					parentClass="top-menu"
@@ -125,15 +147,15 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 				<HorizontalNav 
 					parentClass="top-menu"
 					items={[
-						{ title: 'Справка', link: '/', bold: false },
-						{ title: 'Аккаунт', link: '/', bold: false },
+						{ title: 'Справка', link: '/help', bold: false },
+						{ title: 'Аккаунт', link: '/user-profile', bold: false },
 						{ title: 'Выход', link: '/', bold: true },
 					]}
 				/>
 				<MobileMenu 
 					items={[
-						{ title: 'Справочная информация', link: '/', bold: false },
-						{ title: 'Настройки аккаунта', link: '/', bold: false },
+						{ title: 'Справочная информация', link: '/help', bold: false },
+						{ title: 'Настройки аккаунта', link: '/user-profile', bold: false },
 						{ title: 'Выход', link: '/', bold: false },
 					]} 
 					parentClass="top-menu"
@@ -165,15 +187,15 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 				<HorizontalNav 
 					parentClass="top-menu"
 					items={[
-						{ title: 'Справка', link: '/', bold: false },
-						{ title: 'Аккаунт', link: '/', bold: false },
+						{ title: 'Справка', link: '/help', bold: false },
+						{ title: 'Аккаунт', link: '/user-profile', bold: false },
 						{ title: 'Выход', link: '/', bold: true },
 					]}
 				/>
 				<MobileMenu 
 					items={[
-						{ title: 'Справочная информация', link: '/', bold: false },
-						{ title: 'Настройки аккаунта', link: '/', bold: false },
+						{ title: 'Справочная информация', link: '/help', bold: false },
+						{ title: 'Настройки аккаунта', link: '/user-profile', bold: false },
 						{ title: 'Выход', link: '/', bold: false },
 					]} 
 					parentClass="top-menu"

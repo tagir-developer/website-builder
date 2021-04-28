@@ -4,7 +4,7 @@ import { useRoutes } from './routes'
 
 const App: React.FC = () => {
 
-  const routes = useRoutes(false)
+  const routes = useRoutes(true)
   
   return (
     <Router>

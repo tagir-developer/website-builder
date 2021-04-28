@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import './Footer.scss'
 
 const Footer: React.FC = () => {
@@ -15,10 +16,10 @@ const Footer: React.FC = () => {
 						<span className="footer__title">Обучение</span>
 						<ul className="footer__list-unstyled list-unstyled">
 							<li className="list-unstyled__item">
-								<a href="#" className="list-unstyled__link">Справочный центр</a>
+								<NavLink to="/help" className="list-unstyled__link">Справочный центр</NavLink>
 							</li>
 							<li className="list-unstyled__item">
-								<a href="#" className="list-unstyled__link">Обучающие видеоуроки</a>
+								<NavLink to="/learning" className="list-unstyled__link">Обучающие видеоуроки</NavLink>
 							</li>
 						</ul>
 					</div>

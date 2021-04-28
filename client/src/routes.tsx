@@ -2,35 +2,46 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import AuthPage from './pages/AuthPage/AuthPage'
 import EditPage from './pages/EditPage/EditPage'
+import HelpPage from './pages/HelpPage/HelpPage'
 import LandingPage from './pages/LandingPage/LandingPage'
+import LearningPage from './pages/LearningPage/LearningPage'
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage'
 import PreviewPage from './pages/PreviewPage/PreviewPage'
 import ProjectsPage from './pages/ProjectsPage/ProjectsPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 import SelectTemplatePage from './pages/SelectTemplatePage/SelectTemplatePage'
+import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
 import WebsitePage from './pages/WebsitePage/WebsitePage'
 
-export const useRoutes = (isAuthenticated: boolean) => {
-	if (!isAuthenticated) {
+export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
+	if (isAuthenticated) {
 		return (
 			<Switch>
-				<Route path="/" component={LandingPage} exact />
-				<Route path="/login" component={AuthPage} exact />
-				<Route path="/registration" component={RegisterPage} exact />
-				<Route path="/recovery" component={PasswordRecoveryPage} exact />
-				<Redirect to="/" />
+				<Route path="/pr" component={ProjectsPage} exact />
+				
+				<Route path="/pr/:name" component={WebsitePage} exact />
+				{/* <Route path="/:name/template" component={SelectTemplatePage} exact />
+				<Route path="/:name/:page-id" component={EditPage} exact />
+				<Route path="/:name/:page-id/preview" component={PreviewPage} exact /> */}
+
+				<Route path="/user-profile" component={UserProfilePage} exact />
+				<Route path="/learning" component={LearningPage} exact />
+				<Route path="/help" component={HelpPage} exact />
+				<Redirect to="/pr" />
 			</Switch>
 		)
 	}
 
+
 	return (
 		<Switch>
-			<Route path="/" component={ProjectsPage} exact />
-			<Route path="/:name" component={WebsitePage} />
-			<Route path="/:name/template" component={SelectTemplatePage} />
-			<Route path="/:name/:page-id" component={EditPage} />
-			<Route path="/:name/:page-id/preview" component={PreviewPage} />
-			<Redirect to="/" />
+			<Route path="/project" component={LandingPage} exact />
+			<Route path="/login" component={AuthPage} exact />
+			<Route path="/registration" component={RegisterPage} exact />
+			<Route path="/recovery" component={PasswordRecoveryPage} exact />
+			<Route path="/learning" component={LearningPage} exact />
+			<Route path="/help" component={HelpPage} exact />
+			<Redirect to="/project" />
 		</Switch>
 	)
 }

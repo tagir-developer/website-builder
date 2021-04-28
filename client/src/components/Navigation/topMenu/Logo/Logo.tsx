@@ -1,19 +1,21 @@
 import React from 'react'
 import './Logo.scss'
-import {useCreateClassName} from '../../../../hooks/createClassName.hook'
+import { useCreateClassName } from '../../../../hooks/createClassName.hook'
+import { NavLink } from 'react-router-dom'
 
 interface ILogo {
 	parentClass?: string
 	modClass?: string[]
 }
 
-const Logo: React.FC<ILogo> = ({ parentClass, modClass}) => {
+const Logo: React.FC<ILogo> = ({ parentClass, modClass }) => {
 
 	const classes = useCreateClassName('logo', parentClass, modClass)
 
 	return (
-		<div className={classes}>
-		</div>
+		<NavLink to="/">
+			<div className={classes}></div>
+		</NavLink>
 	)
 }
 
