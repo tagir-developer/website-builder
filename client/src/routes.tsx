@@ -17,17 +17,15 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 	if (isAuthenticated) {
 		return (
 			<Switch>
-				<Route path="/pr" component={ProjectsPage} exact />
-				
-				<Route path="/pr/:name" component={WebsitePage} exact />
-				{/* <Route path="/:name/template" component={SelectTemplatePage} exact />
-				<Route path="/:name/:page-id" component={EditPage} exact />
-				<Route path="/:name/:page-id/preview" component={PreviewPage} exact /> */}
-
+				<Route path="/" component={ProjectsPage} exact />
 				<Route path="/user-profile" component={UserProfilePage} exact />
 				<Route path="/learning" component={LearningPage} exact />
-				<Route path="/help" component={HelpPage} exact />
-				<Redirect to="/pr" />
+				<Route path="/help" component={HelpPage} exact />			
+				<Route path="/:name" component={WebsitePage} exact />
+				<Route path="/:name/template" component={SelectTemplatePage} exact />
+				<Route path="/:name/:pageId" component={EditPage} exact />
+				<Route path="/:name/:pageId/preview" component={PreviewPage} exact />
+				<Redirect to="/" />
 			</Switch>
 		)
 	}

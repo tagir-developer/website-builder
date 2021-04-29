@@ -16,10 +16,10 @@ const Footer: React.FC = () => {
 						<span className="footer__title">Обучение</span>
 						<ul className="footer__list-unstyled list-unstyled">
 							<li className="list-unstyled__item">
-								<NavLink to="/help" className="list-unstyled__link">Справочный центр</NavLink>
+								<NavLink to="/help" className="list-unstyled__link" exact >Справочный центр</NavLink>
 							</li>
 							<li className="list-unstyled__item">
-								<NavLink to="/learning" className="list-unstyled__link">Обучающие видеоуроки</NavLink>
+								<NavLink to="/learning" className="list-unstyled__link" exact >Обучающие видеоуроки</NavLink>
 							</li>
 						</ul>
 					</div>

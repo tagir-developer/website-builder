@@ -169,18 +169,16 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 				<>
 				<Logo parentClass="top-menu" />
 				<BreadCrumbs 
-					parentClass="top-menu" 
-					modClass={['dark-theme']}
+					parentClass="top-menu"
 					items={[
-						{ title: 'Мои сайты', link: '/' },
-						{ title: 'Список страниц', link: '/' },
+						{ title: 'Сайт', link: '/', goBack: true },
 					]}
 				/>
 				<BreadCrumbs 
 					parentClass="top-menu"
-					modClass={['dark-theme', 'mobile-version']}
+					modClass={['mobile-version']}
 					items={[
-						{ title: 'Сайт', link: '/' },
+						{ title: 'Сайт', link: '/', goBack: true },
 					]}
 				/>
 				<div className="top-menu__devider"></div>
@@ -213,14 +211,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					modClass={['dark-theme']}
 					items={[
 						{ title: 'Мои сайты', link: '/' },
-						{ title: 'Список страниц', link: '/' },
+						{ title: 'Список страниц', link: '/', goBack: true },
 					]}
 				/>
 				<BreadCrumbs 
 					parentClass="top-menu"
 					modClass={['dark-theme', 'mobile-version']}
 					items={[
-						{ title: 'Сайт', link: '/' },
+						{ title: 'Сайт', link: '/', goBack: true },
 					]}
 				/>
 				<div className="top-menu__devider"></div>
@@ -256,14 +254,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					parentClass="top-menu" 
 					modClass={['dark-theme']}
 					items={[
-						{ title: 'Вернуться к редактированию', link: '/' },
+						{ title: 'Вернуться к редактированию', link: '/', goBack: true },
 					]}
 				/>
 				<BreadCrumbs 
 					parentClass="top-menu"
 					modClass={['dark-theme', 'mobile-version']}
 					items={[
-						{ title: 'Назад', link: '/' },
+						{ title: 'Назад', link: '/', goBack: true },
 					]}
 				/>
 				<ViewOnDevices parentClass="top-menu" />

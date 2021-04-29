@@ -4,12 +4,17 @@
 @import "/src/styles/mixins/grid.scss";
 
 .bread-crumbs {
+	display: flex;
+	align-items: center;
+	height: 60px;
 	@include media-breakpoint-down(lg) {
 		display: none;
 	}
 
 	&_mobile-version {
-		display: block;
+		// display: block;
+		display: flex;
+		align-items: center;
 		@include media-breakpoint-up(lg) {
 			display: none;
 		}
@@ -22,16 +27,22 @@
 
 	&__item {
 		display: inline-block;
-		line-height: 60px;
+		height: 50px;
+		border-radius: 10px;
+		line-height: 50px;
 		padding-left: 40px;
 		padding-right: 20px;
 		cursor: pointer;
 		&:hover {
-			background: linear-gradient(to top, #f0f4f8, #e1eaf1);
+			// background: linear-gradient(to top, #f0f4f8, #e1eaf1);
+			background: linear-gradient(180deg, #E0EBF3 0%, #F0F4F8 100%);
+			box-shadow: inset -2px -2px 11px rgba(255, 255, 255, 0.25), inset 2px 2px 11px #C6D2DC;
 		}
 		&_dark-theme {
 			&:hover {
-				background: linear-gradient(to top, #3e3e3e, #000000);
+				// background: linear-gradient(to top, #3e3e3e, #000000);
+				background: linear-gradient(0deg, #2F2F2F 21.21%, #121212 76.96%);
+				box-shadow: inset -3px -3px 10px #434343, inset 3px 3px 10px #000000;
 			}
 		}
 	}
@@ -45,7 +56,7 @@
 			  content: '';
 			  position: absolute;
 			  width: 22px;
-			  height: 60px;
+			  height: 50px;
 			  margin-left: -30px;
 			  background-image: url('./img/i-back-dark-mini.svg');
 			  background-position: center;
@@ -57,7 +68,7 @@
 				content: '';
 				position: absolute;
 				width: 22px;
-				height: 60px;
+				height: 50px;
 				margin-left: -30px;
 				background-image: url('./img/i-back-light-mini.svg');
 				background-position: center;

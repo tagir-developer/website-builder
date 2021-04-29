@@ -25,9 +25,9 @@ const ProjectsPage: React.FC = () => {
 					)
 				})} */}
 
-			<NavLink to={"/pr/" + 'apple'}>APPLE</NavLink>
+			<NavLink to={"/" + 'apple'}>APPLE</NavLink>
 			<div></div>
-			<NavLink to={"/pr/" + 'orange'}>ORANGE</NavLink>
+			<NavLink to={"/" + 'orange'}>ORANGE</NavLink>
 				
 				
 				
