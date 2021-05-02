@@ -33,13 +33,13 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 
 	return (
 		<Switch>
-			<Route path="/project" component={LandingPage} exact />
+			<Route path="/" component={LandingPage} exact />
 			<Route path="/login" component={AuthPage} exact />
 			<Route path="/registration" component={RegisterPage} exact />
 			<Route path="/recovery" component={PasswordRecoveryPage} exact />
 			<Route path="/learning" component={LearningPage} exact />
 			<Route path="/help" component={HelpPage} exact />
-			<Redirect to="/project" />
+			<Redirect to="/" />
 		</Switch>
 	)
 }

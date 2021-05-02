@@ -1,0 +1,49 @@
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+
+.login {
+	width: 100%;
+
+	&__container {
+		@include make-container();
+	}
+
+	&__row {
+		@include make-row();
+		justify-content: center;
+		align-items: center;
+		// @include media-breakpoint-up(lg) {
+		// 	padding-bottom: 70px;
+		// }	
+	}
+
+	&__form-container {
+		@include make-col(5);
+		background: $main;
+		box-shadow: -20px -20px 54px rgba(255, 255, 255, 0.5), 20px 20px 56px rgba(169, 190, 210, 0.4);
+		border-radius: 50px;
+	}
+
+	&__form {
+		padding: 50px;
+		padding-bottom: 40px;
+	}
+
+	&__input {
+		margin-bottom: 40px;
+	}
+
+	&__button {
+
+	}
+
+	&__small-icon-button {
+		
+	}
+
+	&__recovery-link {
+
+	}
+}

@@ -10,10 +10,6 @@ export const useCreateClassName = (mainClass: string, parentClass?: parentType, 
 		classes.push(parentClass + "__" + mainClass)
 	}
 
-	// if (modClass) {
-	// 	classes.push(mainClass + "_" + modClass)
-	// }
-
 	if (modClass) {
 		modClass.forEach(mod => {
 			classes.push(mainClass + "_" + mod)
