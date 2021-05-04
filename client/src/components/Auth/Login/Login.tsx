@@ -40,13 +40,16 @@ const Login: React.FC<ILogin> = ({ parentClass }) => {
 								Войти
 							</Button>
 
+							<div className="login__bottom-container">
 							<SmallIconButton 
-								img="success.svg" 
 								parentClass="login"
+								modClass={["register-icon"]}
+								handler={() => console.log('Small-icon-btn click')}
 							>
 								Регистрация
 							</SmallIconButton>
 							<Link to="recovery" className="login__recovery-link" >Забыли пароль?</Link>
+							</div>				
 						</div>			
 					</div>
 				</div>

@@ -1,3 +1,29 @@
+@import "../../styles/variables.scss";
+
+
+// Helpfull mixins
+
+@mixin centering {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin hovered-link($blur: 20px, $text-color: $success) {
+      color: $text-color;
+			text-shadow: 0px 0px $blur $text-color;
+}
+  
+// Style reset mixins
+  
+@mixin reset-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+
+
 // Fonts
 
 @mixin display-big-text {
@@ -94,17 +120,4 @@
 	line-height: 2;
   }
 
-  // Helpfull mixins
 
-@mixin centering {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-// Style reset mixins
-
-@mixin reset-link {
-  text-decoration: none;
-  color: inherit;
-}

@@ -1,3 +1,33 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/mixins.scss";
+
 .small-icon-button {
-	
+	display: inline-block;
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	padding-right: 30px;
+	padding-left: 60px;
+	font-size: 18px;
+	color: $text-secondary;
+	background: $main;
+	box-shadow: -6px -6px 19px rgba(255, 255, 255, 0.8), 6px 6px 20px rgba(169, 190, 210, 0.8);
+	border-radius: 50px;
+	cursor: pointer;
+	&:hover {
+		@include hovered-link()
+	}
+	&:before {
+		content: '';
+		position: absolute;
+		margin-left: -40px;
+		width: 25px;
+		height: 40px;
+		background: rgb(97, 97, 97);
+	}
+	&_register-icon {
+		&:before {
+			background: no-repeat center url('./img/register.svg');
+		}
+	}
 }
