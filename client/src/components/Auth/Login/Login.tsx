@@ -1,21 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../../UI/Button/Button'
 import SmallIconButton from '../../UI/SmallIconButton/SmallIconButton'
 import './Login.scss'
 
-interface ILogin {
+interface ILogin extends RouteComponentProps {
 	parentClass: string
 }
 
-const Login: React.FC<ILogin> = ({ parentClass }) => {
+const Login: React.FC<ILogin> = ({ parentClass, history }) => {
+
+	const loginClasses = useCreateClassName('login', parentClass)
 
 	const emailInput = useInput('')
 	const passwordInput = useInput('')
 
 	return (
-		<div className="login">
+		<div className={loginClasses}>
 			<div className="login__container">
 				<div className="login__row">
 					<div className="login__form-container">
@@ -44,11 +47,11 @@ const Login: React.FC<ILogin> = ({ parentClass }) => {
 							<SmallIconButton 
 								parentClass="login"
 								modClass={["register-icon"]}
-								handler={() => console.log('Small-icon-btn click')}
+								handler={() => history.push('./registration')}
 							>
 								Регистрация
 							</SmallIconButton>
-							<Link to="recovery" className="login__recovery-link" >Забыли пароль?</Link>
+							<Link to="/recovery" className="login__recovery-link" >Забыли пароль?</Link>
 							</div>				
 						</div>			
 					</div>
@@ -58,4 +61,4 @@ const Login: React.FC<ILogin> = ({ parentClass }) => {
 	)
 }
 
-export default Login
+export default withRouter(Login)

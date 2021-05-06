@@ -10,7 +10,7 @@
 		linear-gradient(94.15deg, #C2D3DF 16.59%, #DCE3EB 88.24%) border-box;
 	background-size: 200%;
 	box-shadow: -14px -14px 27px rgba(255, 255, 255, 0.9), 14px 14px 27px rgba(159, 181, 208, 0.7);
-	font-size: 24px;
+	font-size: 18px;
 	font-weight: bold;
 	color: white;
 	cursor: pointer;
@@ -21,5 +21,6 @@
 
 	&_big {
 		height: 70px;
+		font-size: 24px;
 	}
 }

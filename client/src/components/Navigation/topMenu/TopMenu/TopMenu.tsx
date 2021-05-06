@@ -277,7 +277,8 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 
 	return (
 		<div className={topMenuClasses(menuType)}>
-			<div className={topMenuContainerClasses(menuType)}>
+			<div className="top-menu__shadow"></div>
+			<div className={topMenuContainerClasses(menuType)}>		
 				<div className="top-menu__row">
 					{setMenuChildren(menuType)}
 				</div>

@@ -30,4 +30,9 @@
 			background: no-repeat center url('./img/register.svg');
 		}
 	}
+	&_enter-icon {
+		&:before {
+			background: no-repeat center url('./img/enter.svg');
+		}
+	}
 }
