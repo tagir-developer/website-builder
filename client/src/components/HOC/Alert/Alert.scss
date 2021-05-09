@@ -1,0 +1,62 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+@import '../../../styles/mixins/grid.scss';
+
+.alert-popup {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 300;
+	overflow-y: auto;
+	overflow-x: hidden;
+	animation: show-alert-content 3s ease-out; //Время анимации должно быть равно таймауту алерта
+	@include media-breakpoint-down(sm) {
+		box-sizing: border-box;
+		padding: 0px 15px;
+	}
+	
+	&_basic {
+		color: $text-primary;
+	}
+	&_success {
+		@include success-text();
+	}
+	&_warning {
+		@include warning-text();
+	}
+	&_danger {
+		@include danger-text();
+	}
+
+	&__content {
+		box-sizing: border-box;
+		max-width: 480px;
+		font-size: 18px;
+		text-align: center;
+		background: $main;
+		box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.4);
+		border-radius: 50px;
+		padding: 40px 50px;
+		margin: 130px auto;
+		@include media-breakpoint-down(sm) {
+			max-width: 345px;
+			padding: 20px 30px;
+		}
+	}
+
+}
+
+@keyframes show-alert-content {
+	from {
+		transform: translateY(-100%);
+	} 10% {
+		transform: translateY(0);
+	} 90% {
+		transform: translateY(0);
+	} to {
+		transform: translateY(-100%);
+	}
+}

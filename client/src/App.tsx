@@ -1,15 +1,18 @@
 import React from 'react'
-import {BrowserRouter as Router} from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
+import Layout from './components/HOC/Layout/Layout'
 import { useRoutes } from './routes'
 
 const App: React.FC = () => {
 
   const routes = useRoutes(false)
-  
+
   return (
-    <Router>
-      {routes}
-    </Router>
+    <Layout>
+      <Router>
+        {routes}
+      </Router>
+    </Layout>
   )
 }
 

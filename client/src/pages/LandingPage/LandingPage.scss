@@ -9,7 +9,6 @@
 	flex-direction: column;
 }
 
-
 .landing-header {
 	width: 100%;
 	padding: 50px 0px;
@@ -47,16 +46,19 @@
 		margin-top: 90px;
 		margin-bottom: 60px;
 		text-align: center;
+		animation: slide-title-from-left 0.7s ease-out;
 		@include media-breakpoint-down(md) {
 			margin-top: 20px;
 			margin-bottom: 30px;
 		}
+		
 	}
 
 	&__button {
 		width: 286px;
 		font-size: 18px;
 		margin-bottom: 70px;
+		animation: slide-button-from-left 1s ease-out;
 		@include media-breakpoint-down(md) {
 			margin-bottom: 0px;
 		}
@@ -71,7 +73,7 @@
 		@include media-breakpoint-down(md) {
 			// display: none;
 			width: 100%;
-		}	
+		}
 	}
 
 	&__image {
@@ -79,10 +81,12 @@
 		height: 270px;
 		background: center no-repeat url('./img/pc-and-phone.svg');
 		background-size: 100%;
+		animation: picture-scale 0.7s ease-out;
 		@include media-breakpoint-down(md) {
 			width: 250px;
 			height: 210px;
 		}
+
 	}
 }
 .landing-blocks {
@@ -128,5 +132,36 @@
 		width: 286px;
 		font-size: 18px;
 		margin-bottom: 100px;
+	}
+}
+
+
+@keyframes picture-scale {
+	from {
+		transform: scale(0.4, 0.4);
+	} 70% {
+		transform: scale(1.1, 1.1);
+	} to {
+		transform: scale(1, 1);
+	}
+}
+
+@keyframes slide-title-from-left {
+	from {
+		transform: translateX(-300%);
+	} 60% {
+		transform: translateX(10%);
+	} to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-button-from-left {
+	from {
+		transform: translateX(-300%);
+	} 80% {
+		transform: translateX(20%);
+	} to {
+		transform: translateX(0);
 	}
 }

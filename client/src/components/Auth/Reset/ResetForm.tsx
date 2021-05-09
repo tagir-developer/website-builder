@@ -6,9 +6,10 @@ import './ResetForm.scss'
 
 interface IResetForm {
 	parentClass: string
+	alertHandler: (param: any) => any
 }
 
-const ResetForm: React.FC<IResetForm> = ({ parentClass }) => {
+const ResetForm: React.FC<IResetForm> = ({ parentClass, alertHandler }) => {
 
 	const resetFormClasses = useCreateClassName('reset-form', parentClass)
 
@@ -35,7 +36,7 @@ const ResetForm: React.FC<IResetForm> = ({ parentClass }) => {
 
 							<Button 
 								parentClass="reset-form" 
-								handler={() => console.log('Btn click')}
+								handler={alertHandler}
 							>
 								Изменить пароль
 							</Button>				
