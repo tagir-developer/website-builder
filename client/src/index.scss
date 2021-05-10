@@ -4,8 +4,12 @@
 @import "./styles/mixins/breakpoints.scss";
 @import "./styles/mixins/grid.scss";
 
+// Fonts
+
 // Font Montserrat
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+// Open sans
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
 
 // Default styles reset
 * {
@@ -78,7 +82,7 @@ button {
     border-radius: 50px;
 }
 
-// .input:focus::-webkit-input-placeholder { color:transparent; }
-// .input:focus:-moz-placeholder { color:transparent; } 
-// .input:focus::-moz-placeholder { color:transparent; } 
-// .input:focus:-ms-input-placeholder { color:transparent; }
+.input:focus::-webkit-input-placeholder { color: #c3ccdd; }
+.input:focus:-moz-placeholder { color: #c3ccdd; } 
+.input:focus::-moz-placeholder { color: #c3ccdd; } 
+.input:focus:-ms-input-placeholder { color: #c3ccdd; }

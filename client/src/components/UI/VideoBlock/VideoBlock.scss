@@ -1,0 +1,110 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/mixins.scss';
+
+.video-block {
+	width: 100%;
+
+	&__container {
+		@include make-container();
+	}
+
+	&__row {
+		@include make-row();
+		justify-content: center;
+		padding: 0 15px;
+	}
+
+	&__title {
+		width: 980px;
+		display: flex;
+		align-items: center;
+		margin-bottom: 30px;
+	}
+
+	&__number {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background: linear-gradient(142.82deg, #DCE4ED 14.68%, #EBF3F9 87.43%);
+		box-shadow: -10px -10px 30px rgba(255, 255, 255, 0.4), 10px 10px 30px #D0DAE3;
+		text-align: center;
+		line-height: 80px;
+		color: $text-primary;
+		font-family: 'Open Sans', sans-serif;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 48px;
+		@include media-breakpoint-down(sm) {
+			width: 50px;
+			height: 50px;
+			font-size: 24px;
+			line-height: 50px;
+		}
+	}
+
+	&__text {
+		max-width: 780px;
+		font-size: 23px;
+		font-weight: bold;
+		margin-left: 20px;
+		@include media-breakpoint-down(sm) {
+			font-size: 18px;
+			margin-left: 10px;
+		}
+	}
+
+	&__body {
+		width: 780px;
+		box-sizing: border-box;
+		@include card-styles;
+		padding: 35px 47px;
+		@include media-breakpoint-down(sm) {
+			padding: 15px 20px;
+			border-radius: 20px;
+			box-shadow: -4.42308px -4.42308px 13.2692px rgba(255, 255, 255, 0.9), 4.42308px 4.42308px 13.2692px #B3BFC9;
+		}	
+	}
+
+	&__border {
+		background: linear-gradient(160deg, #A8B7CA 2.72%, #fcfdff 95.48%);
+		padding: 3px;
+	}
+
+	&__screen {
+		position: relative;
+		padding-bottom: 56.25%; /* задаёт высоту контейнера для 16:9 (если 4:3 — поставьте 75%) */
+		height: 0;
+		overflow: hidden;
+	}
+
+	&__iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-width: 0;
+		outline-width: 0;
+	}
+}
+
+// Адаптивные стили для видео
+
+// .test-video {
+// 	position: relative;
+//   	padding-bottom: 56.25%; /* задаёт высоту контейнера для 16:9 (если 4:3 — поставьте 75%) */
+//   	height: 0;
+//   	overflow: hidden;
+// }
+
+// .test-video-iframe {
+// 	position: absolute;
+// 	top: 0;
+// 	left: 0;
+// 	width: 100%;
+// 	height: 100%;
+// 	border-width: 0;
+// 	outline-width: 0;
+// }
