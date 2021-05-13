@@ -26,7 +26,7 @@ const LearningPage: React.FC = () => {
 						<VideoBlock
 							parentClass="learning-content"
 							numb={2}
-							title="Как создать свой первый сайт и страницу"
+							title="Как создать свой первый сайт и страницу."
 							link={"https://www.youtube.com/embed/W62lE_nzwzU"}
 						/>
 					</div>

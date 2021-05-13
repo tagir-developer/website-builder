@@ -1,0 +1,137 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins/mixins.scss';
+@import '../../styles/mixins/breakpoints.scss';
+@import '../../styles/mixins/grid.scss';
+
+.help-page {
+	width: 100%;
+
+		&_left-menu {
+		}
+
+		&__container {
+			@include make-container(100%);
+		}
+
+		&__row {
+			@include make-row();
+		}
+
+		&__col-menu {
+			@include make-col(3);
+			background: rgb(255, 136, 0);
+		}
+
+		&__col-content {
+			@include make-col(9);
+			box-sizing: border-box;
+			padding: 70px 0;
+			padding-left: 5%;
+			padding-right: 5%;
+		}
+
+		&__table-of-contents {
+			font-weight: 500;
+			margin-bottom: 50px;
+		}
+
+		&__contents-heading {
+			@include h5-pc;
+		}
+
+		&__contents-list {
+			color: $text-secondary;
+			padding-left: 30px;
+		}
+
+		&__contents-list-item {
+			padding-left: 5px;
+			margin-bottom: 15px;
+		}
+
+		&__contents-nested-list {
+			list-style-type: disc;
+			font-size: 14px;
+			padding-left: 20px;
+		}
+
+		&__contents-nested-list-item {
+			padding-left: 5px;
+			margin-bottom: 5px;
+		}
+
+		&__h1 {
+			@include h1-pc;
+		}
+
+		&__h2 {
+			@include h2-pc;
+		}
+
+		&__p {
+			font-size: 16px;
+			line-height: 24px;
+			margin: 25px 0;
+		}
+
+		&__bold {
+			font-weight: bold;
+		}
+
+		&__image-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding-top: 20px;
+			padding-bottom: 50px;
+		}
+
+		&__image {
+			width: 580px;
+			height: 340px;
+			background: url('./img/react.jpg');
+			background-size: contain;
+		}
+
+		&__list {
+			list-style-type: none; 
+			counter-reset: num;
+			margin: 20px 0;
+			margin-left: 40px;
+		}
+
+		&__list-item {
+			position: relative;
+			line-height: 24px;
+			margin-bottom: 30px;
+			padding-left: 10px;
+			&:before {
+					content: counter(num); 
+					counter-increment: num;
+					display: inline-block;
+					position: absolute;
+					top: 0;
+					left: -38px;
+					width: 28px;
+					height: 28px;
+					background: $text-primary;
+					color: rgb(255, 255, 255);
+					text-align: center;
+					line-height: 28px;
+					font-size: 18px;
+					font-weight: 500;
+					border-radius: 50%;
+			}
+		}
+
+		&__quote {
+			background: linear-gradient(to bottom, #DDE8F2 10.42%, #EBF1F8 91.75%);
+			box-shadow: -5px -5px 20px rgba(255, 255, 255, 0.7), 5px 5px 20px rgba(179, 191, 201, 0.7);
+			border-radius: 13px;
+			font-size: 17px;
+			font-style: italic;
+			font-weight: 500;
+			line-height: 30px;
+			padding: 25px 20px;
+		}
+}
