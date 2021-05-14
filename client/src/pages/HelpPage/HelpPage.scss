@@ -19,6 +19,7 @@
 
 		&__col-menu {
 			@include make-col(3);
+			margin: 0px;
 		}
 
 		&__col-content {
