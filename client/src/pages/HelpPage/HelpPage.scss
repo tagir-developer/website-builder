@@ -20,6 +20,18 @@
 		&__col-menu {
 			@include make-col(3);
 			margin: 0px;
+			@include media-breakpoint-down(lg) {
+				@include make-col(4);
+			}
+			@include media-breakpoint-down(md) {
+				display: none;
+			}
+		}
+
+		&__menu-toggle {
+			@include media-breakpoint-up(md) {
+				display: none;
+			}
 		}
 
 		&__col-content {
@@ -28,6 +40,13 @@
 			padding: 70px 0;
 			padding-left: 5%;
 			padding-right: 5%;
+			@include media-breakpoint-down(lg) {
+				@include make-col(8);
+			}
+			@include media-breakpoint-down(md) {
+				@include make-col(12);
+				padding: 90px 15px 50px 15px;
+			}
 		}
 
 		&__table-of-contents {

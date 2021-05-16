@@ -1,14 +1,18 @@
 import React from 'react'
 import '../HelpPage.scss'
 
-const PageStart: React.FC = () => {
+interface IPageStart {
+	title: string
+}
+
+const PageStart: React.FC<IPageStart> = ({ title }) => {
 	return (
 		<>
 			<div className="help-page__table-of-contents">
 				<span className="help-page__contents-heading">Содержание</span>
 				<ol className="help-page__contents-list">
 					<li className="help-page__contents-list-item">Раздел 1
-											<ul className="help-page__contents-nested-list">
+						<ul className="help-page__contents-nested-list">
 							<li className="help-page__contents-nested-list-item">Подраздел 1</li>
 							<li className="help-page__contents-nested-list-item">Подраздел 2</li>
 						</ul>
@@ -17,7 +21,7 @@ const PageStart: React.FC = () => {
 					<li className="help-page__contents-list-item">Раздел 3</li>
 				</ol>
 			</div>
-			<h1 className="help-page__h1">Начало работы</h1>
+			<h1 className="help-page__h1">{ title }</h1>
 			<p className="help-page__p">Какой-то текст, описывающий работу с сайтом. Инструкция по работе с сайтом и другая полезная информация. Как настроить сервис. Инструкция по работе с сайтом и другая полезная информация. Как настроить сервис.</p>
 			<p className="help-page__p">Какой-то текст, описывающий работу с сайтом. <span className="help-page__bold">Инструкция по работе с сайтом и другая полезная информация. Как настроить сервис.</span></p>
 			<p className="help-page__p">Какой-то текст, описывающий работу с сайтом. Инструкция по работе с сайтом и другая полезная информация. Как настроить сервис. Инструкция по работе с сайтом и другая полезная информация. Как настроить сервис. Инструкция по работе с сайтом и другая полезная информация. Как настроить сервис.</p>

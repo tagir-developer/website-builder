@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 @mixin create-blur($blur-radius: 4px, $old-browser-value: 4) {
 	filter: url(./img/blur.svg#blur);
 	-webkit-filter: blur($blur-radius);
@@ -13,7 +15,17 @@
 	overflow-y: hidden;
 	z-index: 200;
 	// margin-right: 15px;
-	animation: anim-popup-blur 3s ease-out; //Время анимации должно быть равно таймауту алерта
+	&_alert {
+		animation: anim-alert-blur 3s ease-out; //Время анимации должно быть равно таймауту алерта
+	}
+	&_popup-blur {
+		animation: anim-popup-blur 1s ease-out; 
+		animation-fill-mode: forwards;
+	}
+	&_popup-solid {
+		
+	}
+	
 
 	&__darkening {
 		width: 100%;
@@ -25,13 +37,22 @@
 		left: 0;
 		background: rgba(27, 52, 81, 0.3);
 		z-index: 200;
-		animation: anim-popup-darkening 3s ease-out; //Время анимации должно быть равно таймауту алерта
+		&_alert {
+			animation: anim-alert-darkening 3s ease-out; //Время анимации должно быть равно таймауту алерта
+		}
+		&_popup-blur {
+			animation: anim-popup-darkening 1s ease-out; //Время анимации должно быть равно таймауту алерта
+		}
+		&_popup-solid {
+			background: $main;
+		}
+		
 	}
 
 }
 
 
-@keyframes anim-popup-blur {
+@keyframes anim-alert-blur {
 	from {
 		@include create-blur(0px, 0)
 	} 10% {
@@ -40,17 +61,33 @@
 		@include create-blur(4px, 4)
 	} to {
 		@include create-blur(0px, 0)
+	}
+}
+
+@keyframes anim-alert-darkening {
+	from {
+		opacity: 0;
+	} 10% {
+		opacity: 1;
+	} 90% {
+		opacity: 1;
+	} to {
+		opacity: 0;
+	}
+}
+
+@keyframes anim-popup-blur {
+	from {
+		@include create-blur(0px, 0)
+	} to {
+		@include create-blur(4px, 4)
 	}
 }
 
 @keyframes anim-popup-darkening {
 	from {
 		opacity: 0;
-	} 10% {
-		opacity: 1;
-	} 90% {
-		opacity: 1;
 	} to {
-		opacity: 0;
+		opacity: 1;
 	}
 }

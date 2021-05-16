@@ -1,6 +1,5 @@
 import React from 'react'
 import './VideoBlock.scss'
-import { NavLink } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 
 interface IVideoBlock {
