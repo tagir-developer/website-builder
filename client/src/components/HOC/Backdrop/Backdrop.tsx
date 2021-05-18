@@ -1,24 +1,44 @@
-import React from 'react'
-import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import classNames from 'classnames'
+import React, { useRef } from 'react'
 import './Backdrop.scss'
 
 interface IBackdrop {
-	// modClass?: string[]
-	modClass: ['popup-blur'] | ['alert'] | ['popup-solid']
+	isOpen?: boolean
+	type:  'blur' | 'solid'
 }
 
-const Backdrop: React.FC<IBackdrop> = ({ children, modClass }) => {
+const Backdrop: React.FC<IBackdrop> = ({ children, isOpen, type }) => {
 
-	const backdropClasses = useCreateClassName('popup-backdrop', null, modClass)
-	const darkeningClasses = useCreateClassName('popup-backdrop__darkening', null, modClass)
+	let backdropClasses = 'popup-backdrop_simple'
+	let darkeningClasses = 'popup-backdrop__darkening'
+	
+	if (type === 'blur') {
+		darkeningClasses = classNames({
+			'popup-backdrop__darkening': true,
+			'popup-backdrop__darkening_blur popup-backdrop__darkening_show': isOpen
+		})
+		backdropClasses = classNames({
+			'popup-backdrop': true,
+			'popup-backdrop_show': isOpen
+		})
+	}
+	
+	if (type === 'solid') {
+		darkeningClasses = classNames({
+			'popup-backdrop__darkening': true,
+			'popup-backdrop__darkening_solid popup-backdrop__darkening_show': isOpen
+		})
+		backdropClasses = classNames({
+			'popup-backdrop_solid': true,
+			'popup-backdrop_solid popup-backdrop_show': isOpen
+		})
+	}
 
 	return (
-		<>
-			<div className={backdropClasses}>
-				<div className={darkeningClasses}></div>
-				{children}
-			</div>
-		</>
+		<div className={backdropClasses}>
+			<div className={darkeningClasses}></div>
+			{children}
+		</div>
 	)
 }
 

@@ -17,7 +17,6 @@ const MenuToggle: React.FC<IMenuToggle> = ({parentClass, modClass, handler}) => 
 
 	const toggleClasses = classNames({
 		'menu-toggle__icon': true,
-		'menu-toggle__icon_open': isOpen,
 	})
 
 	const toggleHandler = () => {

@@ -27,7 +27,7 @@ const Alert: React.FC<IAlert> = ({ parentClass, modClass, type, isOpen, message,
 						{message}
 					</div>
 				</div>
-				<Backdrop modClass={['alert']}>
+				<Backdrop type="blur">
 					{children}
 				</Backdrop>
 			</>

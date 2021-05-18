@@ -1,5 +1,7 @@
 @import '../../../styles/variables.scss';
 
+$delay: 500ms; // Задержка анимации
+
 @mixin create-blur($blur-radius: 4px, $old-browser-value: 4) {
 	filter: url(./img/blur.svg#blur);
 	-webkit-filter: blur($blur-radius);
@@ -7,25 +9,27 @@
 	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='#{$old-browser-value}');
 }
 
-
 .popup-backdrop {
 	display: flex;
 	flex-direction: column;
 	min-height: 100%;
-	overflow-y: hidden;
 	z-index: 200;
-	// margin-right: 15px;
-	&_alert {
-		animation: anim-alert-blur 3s ease-out; //Время анимации должно быть равно таймауту алерта
+	transition: all $delay;
+
+	&_simple {
+		overflow-y: hidden;
 	}
-	&_popup-blur {
-		animation: anim-popup-blur 1s ease-out; 
-		animation-fill-mode: forwards;
+
+	&_show {
+		@include create-blur(4px, 4);
+		overflow-y: hidden;
+		transition: all $delay;
 	}
-	&_popup-solid {
-		
+
+	&_solid.popup-backdrop_show {
+		overflow-y: hidden;
+		transition: all $delay;
 	}
-	
 
 	&__darkening {
 		width: 100%;
@@ -35,59 +39,23 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
-		background: rgba(27, 52, 81, 0.3);
+		visibility: hidden;
+		opacity: 0;
+		transition: all $delay;
 		z-index: 200;
-		&_alert {
-			animation: anim-alert-darkening 3s ease-out; //Время анимации должно быть равно таймауту алерта
+
+		&_blur {
+			background: rgba(27, 52, 81, 0.3);
 		}
-		&_popup-blur {
-			animation: anim-popup-darkening 1s ease-out; //Время анимации должно быть равно таймауту алерта
-		}
-		&_popup-solid {
+
+		&_solid {
 			background: $main;
 		}
-		
-	}
 
-}
+		&_show {
+			opacity: 1;
+			visibility: visible;
+		}
 
-
-@keyframes anim-alert-blur {
-	from {
-		@include create-blur(0px, 0)
-	} 10% {
-		@include create-blur(4px, 4)
-	} 90% {
-		@include create-blur(4px, 4)
-	} to {
-		@include create-blur(0px, 0)
-	}
-}
-
-@keyframes anim-alert-darkening {
-	from {
-		opacity: 0;
-	} 10% {
-		opacity: 1;
-	} 90% {
-		opacity: 1;
-	} to {
-		opacity: 0;
-	}
-}
-
-@keyframes anim-popup-blur {
-	from {
-		@include create-blur(0px, 0)
-	} to {
-		@include create-blur(4px, 4)
-	}
-}
-
-@keyframes anim-popup-darkening {
-	from {
-		opacity: 0;
-	} to {
-		opacity: 1;
 	}
 }
