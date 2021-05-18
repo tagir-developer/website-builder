@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { useRef } from 'react'
+import React from 'react'
 import './Backdrop.scss'
 
 interface IBackdrop {

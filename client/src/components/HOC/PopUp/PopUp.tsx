@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './PopUp.scss'
@@ -9,16 +9,32 @@ interface IPopUp {
 	modClass?: string[]
 	isOpen: boolean
 	handler: () => void
+	transparent?: boolean
 }
 
-const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children, handler }) => {
+const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children, handler, transparent }) => {
 
 	const modClasses: string[] = modClass ? modClass.concat([type]) : [type]
 
-	const popupClasses = useCreateClassName('popup', parentClass)
+	const popupClasses = useCreateClassName('popup', parentClass, modClasses)
 	const popupContentClasses = useCreateClassName('popup__content', null, modClasses)
 
-	return (
+	if (transparent) {
+		return (
+			<CSSTransition
+				in={isOpen}
+				timeout={400}
+				classNames="popup_show"
+				mountOnEnter
+				unmountOnExit
+			>
+				<div className={popupClasses}>
+					{children}
+				</div>
+			</CSSTransition>
+		)
+	} else {
+		return (
 			<CSSTransition
 				in={isOpen}
 				timeout={400}
@@ -34,7 +50,8 @@ const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children
 					</div>
 				</div>
 			</CSSTransition>
-	)
+		)
+	}
 
 }
 

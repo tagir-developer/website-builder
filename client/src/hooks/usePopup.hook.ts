@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from "react"
 
 interface IUsePopup {
@@ -15,9 +14,8 @@ interface IUsePopup {
 	handler: () => void
 	closePopup: () => void
 	openPopup: () => void
+	showHide: (param: number) => void
 }
-
-// type typeInit = 'blur' | 'solid'
 
 export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUsePopup => {
 
@@ -28,6 +26,10 @@ export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUs
 	const handler = (): void => setIsOpen(prev => !prev)
 	const openPopup = (): void => setIsOpen(true)
 	const closePopup = (): void => setIsOpen(false)
+	const showHide = (delay: number): void => {
+		openPopup()
+		setTimeout(() => closePopup(), delay)
+	}
 
 	return {
 		popupProps: {type, isOpen, handler},
@@ -35,7 +37,8 @@ export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUs
 		isOpen,
 		handler,
 		openPopup,
-		closePopup
+		closePopup,
+		showHide
 	}
 
 }

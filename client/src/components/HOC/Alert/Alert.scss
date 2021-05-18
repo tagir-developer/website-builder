@@ -4,20 +4,7 @@
 @import '../../../styles/mixins/grid.scss';
 
 .alert-popup {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 300;
-	overflow-y: auto;
-	overflow-x: hidden;
-	animation: show-alert-content 3s ease-out; //Время анимации должно быть равно таймауту алерта
-	@include media-breakpoint-down(sm) {
-		box-sizing: border-box;
-		padding: 0px 15px;
-	}
-	
+
 	&_basic {
 		color: $text-primary;
 	}
@@ -47,16 +34,4 @@
 		}
 	}
 
-}
-
-@keyframes show-alert-content {
-	from {
-		transform: translateY(-100%);
-	} 10% {
-		transform: translateY(0);
-	} 90% {
-		transform: translateY(0);
-	} to {
-		transform: translateY(-100%);
-	}
 }

@@ -18,6 +18,9 @@
 		color: $text-middle;
 		margin-top: 20px;
 		margin-bottom: 25px;
+		@include media-breakpoint-down(sm) {
+			width: 75%;
+		}
 	}
 
 	&__devider {

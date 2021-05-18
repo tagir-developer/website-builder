@@ -12,10 +12,12 @@
 	z-index: 300;
 	overflow-y: auto;
 	overflow-x: hidden;
+	padding: 0 15px;
+	box-sizing: border-box;
 
 	&__content {
 		position: relative;
-		width: 480px;
+		max-width: 480px;
 		margin: 130px auto;
 		box-sizing: border-box;
 		@include card-styles();
@@ -25,6 +27,9 @@
 		}
 		&_solid {
 			box-shadow: -20px -20px 54px rgba(255, 255, 255, 0.5), 20px 20px 56px rgba(169, 190, 210, 0.4);
+		}
+		@include media-breakpoint-down(sm) {
+			border-radius: 20px;
 		}
 	}
 
