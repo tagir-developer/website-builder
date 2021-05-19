@@ -1,6 +1,6 @@
 import React from 'react'
 import ResetForm from '../../components/Auth/Reset/ResetForm'
-import Alert from '../../components/HOC/Alert/Alert'
+import Alert from '../../components/UI/Alert/Alert'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import './Footer.scss'
 
 const Footer: React.FC = () => {
@@ -9,7 +9,9 @@ const Footer: React.FC = () => {
 				<div className="footer__row">
 					<div className="footer__support">
 						<span className="footer__title">Поддержка</span>
-						<button className="footer__footer-button footer-button">Задать вопрос</button>
+						<Link to="/question" className="footer__button-link">
+							<button className="footer__footer-button footer-button">Задать вопрос</button>
+						</Link>
 						<button className="footer__footer-button footer-button">Написать жалобу</button>
 					</div>
 					<div className="footer__learning">

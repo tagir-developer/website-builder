@@ -9,6 +9,7 @@ import LearningPage from './pages/LearningPage/LearningPage'
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage'
 import PreviewPage from './pages/PreviewPage/PreviewPage'
 import ProjectsPage from './pages/ProjectsPage/ProjectsPage'
+import QuestionPage from './pages/QuestionPage/QuestionPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 import SelectTemplatePage from './pages/SelectTemplatePage/SelectTemplatePage'
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
@@ -49,6 +50,7 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 				<Route path="/" component={ProjectsPage} exact />
 				<Route path="/user-profile" component={UserProfilePage} exact />
 				<Route path="/learning" component={LearningPage} exact />
+				<Route path="/question" component={QuestionPage} exact />
 				{helpPageRoutes()}
 				{/* <Route path="/help" component={HelpPage} exact />			 */}
 				<Route path="/:name" component={WebsitePage} exact />
@@ -68,6 +70,7 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 			<Route path="/registration" component={RegisterPage} exact />
 			<Route path="/recovery" component={PasswordRecoveryPage} exact />
 			<Route path="/learning" component={LearningPage} exact />
+			<Route path="/question" component={QuestionPage} exact />
 			{helpPageRoutes()}
 			{/* <Route path="/help" component={HelpPage} exact /> */}
 			<Redirect to="/" />
