@@ -10,9 +10,10 @@ interface IPopUp {
 	isOpen: boolean
 	handler: () => void
 	transparent?: boolean
+	withTitle?: string
 }
 
-const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children, handler, transparent }) => {
+const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children, handler, transparent, withTitle }) => {
 
 	const modClasses: string[] = modClass ? modClass.concat([type]) : [type]
 
@@ -30,6 +31,25 @@ const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children
 			>
 				<div className={popupClasses}>
 					{children}
+				</div>
+			</CSSTransition>
+		)
+	} else if (withTitle) {
+		return (
+			<CSSTransition
+				in={isOpen}
+				timeout={400}
+				classNames="popup_show"
+				mountOnEnter
+				unmountOnExit
+			>
+				<div className={popupClasses}>
+					<div className="popup__close-wrapper" onClick={handler}></div>
+					<div className={popupContentClasses}>
+						<div onClick={handler} className="popup__close-button"></div>
+						<div className="popup__title">{withTitle}</div>
+						{children}
+					</div>
 				</div>
 			</CSSTransition>
 		)

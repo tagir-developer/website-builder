@@ -2,6 +2,7 @@ import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../Button/Button'
+import SmallButton from '../SmallButton/SmallButton'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import './SendQuestion.scss'
 
@@ -22,36 +23,50 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 				<div className="send-question__row">
 					<div className="send-question__form-container">
 						<div className="send-question__form">
-							<input 
-								type="text" 
-								className="send-question__input input" 
-								placeholder="" 
-								{...emailInput.bind} 
+							<label 
+								htmlFor="answer-mail" 
+								className="send-question__input-label input-label"
+							>Укажите email, на который мы вышлем ответ:
+							</label>
+							<input
+								id="answer-mail"
+								type="text"
+								className="send-question__input input"
+								placeholder=""
+								{...emailInput.bind}
 							/>
-							<input 
-								type="password" 
-								className="send-question__input input" 
-								placeholder="" 
-								{...passwordInput.bind} />
+							<label 
+								htmlFor="question-textarea"
+								className="send-question__input-label input-label"
+							>
+								Наберите сообщение:
+							</label>
+							<textarea
+								id="question-textarea"
+								className="send-question__textarea textarea"
+								placeholder=""
+								/>
 
-							<Button 
-								parentClass="send-question" 
+							<div className="send-question__download-file">
+								<div className="send-question__show-downloaded-files">File name.jpg File name.jpg File name.jpg File name.jpg File name.jpg</div>
+							<SmallButton
+								parentClass="send-question"
+								handler={() => console.log('Прикрепить файл нажата')}
+							>
+								Прикрепить файл
+							</SmallButton>
+							</div>
+
+							<Button
+								parentClass="send-question"
 								handler={() => console.log('Btn click')}
 								modClass={['big']}
 							>
 								Отправить
 							</Button>
 
-							<div className="send-question__bottom-container">
-							<SmallIconButton 
-								parentClass="send-question"
-								modClass={["register-icon"]}
-								handler={() => console.log('Прикрепить файл нажата')}
-							>
-								Прикрепить файл
-							</SmallIconButton>
-							</div>				
-						</div>			
+
+						</div>
 					</div>
 				</div>
 			</div>

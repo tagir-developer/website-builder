@@ -15,6 +15,7 @@ interface IUsePopup {
 	closePopup: () => void
 	openPopup: () => void
 	showHide: (param: number) => void
+	closeAndGoBack: (param: any) => void
 }
 
 export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUsePopup => {
@@ -30,6 +31,10 @@ export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUs
 		openPopup()
 		setTimeout(() => closePopup(), delay)
 	}
+	const closeAndGoBack = (history: any): void => {
+		closePopup()
+		setTimeout(() => history.goBack(), 400)
+	}
 
 	return {
 		popupProps: {type, isOpen, handler},
@@ -38,7 +43,8 @@ export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUs
 		handler,
 		openPopup,
 		closePopup,
-		showHide
+		showHide,
+		closeAndGoBack
 	}
 
 }
