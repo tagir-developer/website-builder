@@ -6,7 +6,7 @@ import ScrollToTop from './utils/ScrollToTop/ScrollToTop'
 
 const App: React.FC = () => {
 
-  const routes = useRoutes(false)
+  const routes = useRoutes(true)
 
   // ! Если в глобальном стейте открыт попап или алерт, то не рендерить компонент <ScrollToTop />, чтобы не сбивать скролл
 

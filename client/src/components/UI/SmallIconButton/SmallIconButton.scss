@@ -35,4 +35,14 @@
 			background: no-repeat center url('./img/enter.svg');
 		}
 	}
+	&_add-icon {
+		&:before {
+			background: no-repeat center url('./img/add-plus.svg');
+		}
+	}
+	&_delete-icon {
+		&:before {
+			background: no-repeat center url('./img/delete.svg');
+		}
+	}
 }

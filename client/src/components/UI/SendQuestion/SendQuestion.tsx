@@ -3,7 +3,6 @@ import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../Button/Button'
 import SmallButton from '../SmallButton/SmallButton'
-import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import './SendQuestion.scss'
 
 interface ISendQuestion {
@@ -15,7 +14,6 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 	const sendQuestionClasses = useCreateClassName('send-question', parentClass)
 
 	const emailInput = useInput('')
-	const passwordInput = useInput('')
 
 	return (
 		<div className={sendQuestionClasses}>

@@ -11,7 +11,7 @@ interface IMenuToggle {
 
 const MenuToggle: React.FC<IMenuToggle> = ({parentClass, modClass, handler}) => {
 
-	const [isOpen, isOpenHandler] = useState<boolean>(false)
+	// const [isOpen, isOpenHandler] = useState<boolean>(false)
 
 	const menuToggleClasses = useCreateClassName('menu-toggle', parentClass, modClass)
 
@@ -20,7 +20,7 @@ const MenuToggle: React.FC<IMenuToggle> = ({parentClass, modClass, handler}) => 
 	})
 
 	const toggleHandler = () => {
-		isOpenHandler(prev => !prev)
+		// isOpenHandler(prev => !prev)
 		if (handler) handler()
 	}
 

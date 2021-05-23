@@ -1,12 +1,12 @@
 import React from 'react'
-import './QuestionPage.scss'
-import SendQuestion from '../../components/UI/SendQuestion/SendQuestion'
+import './ComplaintPage.scss'
 import { usePopup } from '../../hooks/usePopup.hook'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import { RouteComponentProps, withRouter } from 'react-router'
+import SendComplaint from '../../components/UI/SendComplaint/SendComplaint'
 
 
-const QuestionPage: React.FC<RouteComponentProps> = ({ history }) => {
+const ComplaintPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	const popup = usePopup(false, 'solid')
 
@@ -17,10 +17,10 @@ const QuestionPage: React.FC<RouteComponentProps> = ({ history }) => {
 			<PopUp
 				{...popup.popupProps}
 				handler={() => popup.closeAndGoBack(history)}
-				withTitle="Задать вопрос"
+				withTitle="Отправить жалобу"
 			>
-				<div className="question-page">
-					<SendQuestion parentClass="question-page" />
+				<div className="complaint-page">
+					<SendComplaint parentClass="complaint-page" />
 				</div>
 			</PopUp>
 			<div className="content-area">
@@ -29,4 +29,4 @@ const QuestionPage: React.FC<RouteComponentProps> = ({ history }) => {
 	)
 }
 
-export default withRouter(QuestionPage)
+export default withRouter(ComplaintPage)

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import AuthPage from './pages/AuthPage/AuthPage'
+import ComplaintPage from './pages/ComplaintPage/ComplaintPage'
 import EditPage from './pages/EditPage/EditPage'
 import HelpPage from './pages/HelpPage/HelpPage'
 import PageStart from './pages/HelpPage/pages/PageStart'
@@ -51,8 +52,8 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 				<Route path="/user-profile" component={UserProfilePage} exact />
 				<Route path="/learning" component={LearningPage} exact />
 				<Route path="/question" component={QuestionPage} exact />
+				<Route path="/complaint" component={ComplaintPage} exact />
 				{helpPageRoutes()}
-				{/* <Route path="/help" component={HelpPage} exact />			 */}
 				<Route path="/:name" component={WebsitePage} exact />
 				<Route path="/:name/template" component={SelectTemplatePage} exact />
 				<Route path="/:name/:pageId" component={EditPage} exact />
@@ -71,8 +72,8 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 			<Route path="/recovery" component={PasswordRecoveryPage} exact />
 			<Route path="/learning" component={LearningPage} exact />
 			<Route path="/question" component={QuestionPage} exact />
+			<Route path="/complaint" component={ComplaintPage} exact />
 			{helpPageRoutes()}
-			{/* <Route path="/help" component={HelpPage} exact /> */}
 			<Redirect to="/" />
 		</Switch>
 	)

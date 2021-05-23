@@ -68,6 +68,11 @@
 			transform: rotate(0deg);
 			transition: transform 200ms ease-in-out;
 		}
+
+		@include media-breakpoint-down(sm) {
+			top: 15px;
+			right: 15px;
+		}
 	}
 
 	&__title {		
@@ -79,7 +84,7 @@
 		color: $text-middle;
 		@include media-breakpoint-down(sm) {
 			width: 75%;
-			padding: 40px 0px 40px 30px;
+			padding: 40px 0px 40px 15px;
 		}
 	}
 
