@@ -21,19 +21,19 @@ const UserProfilePage: React.FC = () => {
 							<div className="user-profile__photo-and-name">
 								<div className="user-profile__profile-photo-container">
 
-								<div className="user-profile__avatar-container">
-									<div className="user-profile__avatar"></div>
-								</div>
-									
-								<div className="user-profile__download-and-delete">
-										<SmallIconButton 
+									<div className="user-profile__avatar-container">
+										<div className="user-profile__avatar"></div>
+									</div>
+
+									<div className="user-profile__download-and-delete">
+										<SmallIconButton
 											parentClass="user-profile"
 											modClass={["add-icon"]}
 											handler={() => { }}
 										>
 											Загрузить фото
 										</SmallIconButton>
-										<SmallIconButton 
+										<SmallIconButton
 											parentClass="user-profile"
 											modClass={["delete-icon"]}
 											handler={() => { }}
@@ -43,13 +43,28 @@ const UserProfilePage: React.FC = () => {
 									</div>
 								</div>
 
-								<ChangeConfigInput />
+								<div className="user-profile__change-name-wrapper">
+								<ChangeConfigInput
+									parentClass="user-profile"
+									title="Изменить имя"
+									value="Владислав Иванов"
+								/>
+								</div>
 
 							</div>
 
 							<div className="user-profile__email-and-password">
-								{/* <ChangeConfigInput/> */}
-								{/* <ChangeConfigInput/> */}
+								<ChangeConfigInput
+									parentClass="user-profile"
+									title="Изменить логин (email)"
+									value="vladislav@mail.ru"
+								/>
+								<ChangeConfigInput
+									parentClass="user-profile"
+									title="Изменить пароль"
+									value="Password123"
+									inputType="password"
+								/>
 							</div>
 
 						</div>

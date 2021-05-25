@@ -8,6 +8,7 @@ interface IUseInputResult {
 	}
 	value: string
 	clear: () => void
+	setNewValue: (param: string) => void
 }
 
 export const useInput = (initialValue: string): IUseInputResult => {
@@ -16,13 +17,14 @@ export const useInput = (initialValue: string): IUseInputResult => {
 	const onChange = (event: React.FormEvent & { target: HTMLInputElement }): void => {
 		setValue(event.target.value)
 	}
-
 	const clear = (): void => setValue('')
+	const setNewValue = (param: string): void => setValue(param)
 
 	return {
 		bind: {value, onChange},
 		value,
-		clear
+		clear,
+		setNewValue
 	}
 
 }
