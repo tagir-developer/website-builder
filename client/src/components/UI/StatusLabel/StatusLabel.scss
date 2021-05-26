@@ -1,0 +1,28 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/mixins.scss";
+
+.status-label {
+	display: inline-block;
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 30px;
+	font-size: 18px;
+	color: $text-secondary;
+	background: $main;
+	box-shadow: -6px -6px 19px rgba(255, 255, 255, 0.8), 6px 6px 20px rgba(169, 190, 210, 0.8);
+	border-radius: 50px;
+
+	&_success {
+		@include success-text;
+	}
+
+	&_warning {
+		@include warning-text;
+	}
+
+	&_danger {
+		@include danger-text;
+	}
+
+}
