@@ -1,5 +1,7 @@
 @import "../../../styles/variables.scss";
 @import "../../../styles/mixins/mixins.scss";
+@import "../../../styles/mixins/breakpoints.scss";
+@import "../../../styles/mixins/grid.scss";
 
 .add-new-button {
 	max-width: 300px;
@@ -31,6 +33,16 @@
 				background-size: 60%;
 			}
 		}
+		@include media-breakpoint-down(sm) {
+			width: 80px;
+			height: 80px;
+			margin-bottom: 20px;
+			&:hover {
+				&:after {
+					background-size: 48%;
+				}
+			}
+		}
 	}
 
 	&__text {
@@ -38,5 +50,8 @@
 		text-align: center;
 		color: $text-primary;
 		cursor: pointer;
+		@include media-breakpoint-down(sm) {
+			font-size: 18px;
+		}
 	}
 }

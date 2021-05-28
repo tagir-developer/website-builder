@@ -38,9 +38,10 @@ const ProjectsPage: React.FC = () => {
 					<AddNewButton parentClass="projects-page" handler={() => { }} />
 
 					{
-						projects.map((i) => {
+						projects.map((i, index) => {
 							return (
 								<ProjectCard
+									key={'project-card' + index}
 									parentClass="projects-page"
 									title={i.name}
 									published={i.pusblished}

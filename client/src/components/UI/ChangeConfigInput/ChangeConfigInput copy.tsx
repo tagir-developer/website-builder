@@ -2,7 +2,7 @@ import React, { MutableRefObject, useCallback, useEffect, useRef, useState } fro
 import './ChangeConfigInput.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useInput } from '../../../hooks/useInput.hook'
-import { v4 as uuid } from 'uuid'
+import {v4 as uuid} from 'uuid'
 
 interface IChangeConfigInput {
 	parentClass?: string
@@ -10,69 +10,44 @@ interface IChangeConfigInput {
 	title?: string
 	value: string
 	inputType?: string
-	// handler: (param?: any) => void
-	confirm: {
-		setPopup: (param: boolean) => void
-		confirmFunc: (param: boolean) => void
-		isConfirm: boolean
-	}
 }
 
-const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType, confirm }) => {
+const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType }) => {
 
 	const inputClasses = useCreateClassName('change-config-input', parentClass, modClass)
 
 	const inputId: string = uuid();
 
-	const [configValue, setConfigValue] = useState<string>(value) // ! Это значение будем добывать из базы и передавать в пропсах из родителя
+	const [userName, setUserName] = useState<string>(value) // ! Это значение будем добывать из базы и передавать в пропсах из родителя
 
 	const [isEdit, setIsEdit] = useState<boolean>(false)
 
-	const input = useInput(configValue)
+	const input = useInput(userName)
 
 	const inputRef = useRef() as MutableRefObject<HTMLInputElement>
 	const btnRef = useRef() as MutableRefObject<HTMLDivElement>
 
-	const startChangeInput = async () => {
+	const openHandler = async () => {
 		await setIsEdit(true)
 		inputRef.current.focus()
 	}
 
-	const openConfirmPopup = () => {
-		console.log('Запуск функции saveHandler открывающей попап')
-		confirm.setPopup(true)
+	const saveHandler = async () => {
+		// ? Здесь нужно запросить подтверждение в попапке (компонент Confirm)
+		await setUserName(input.value)
+		setIsEdit(false)
 	}
 
 	const editCanceled = useCallback((event: MouseEvent): void => {
 		if (event.target !== inputRef.current && event.target !== btnRef.current) {
-			input.setNewValue(configValue)
+			input.setNewValue(userName)
 			setIsEdit(false)
 		}
-	}, [input, configValue])
-
-
-	useEffect(() => {
-
-		const saveNewValue = async () => {
-			await setConfigValue(input.value)
-			setIsEdit(false)
-		}
-
-		if (confirm.isConfirm) {
-			console.log('Запуск функции saver изменяющей значение в базе данных')
-			saveNewValue()
-			confirm.confirmFunc(false)
-			confirm.setPopup(false)
-		}
-
-	}, [confirm, input.value])
-
+	}, [input, userName])
 
 	useEffect(() => {
 		isEdit ? document.addEventListener('click', editCanceled) : document.removeEventListener('click', editCanceled)
 	}, [isEdit, editCanceled])
-
-	console.log('Новый рендер')
 
 	return (
 		<div className={inputClasses}>
@@ -80,14 +55,14 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 				? (
 					<div
 						className={"change-config-input__button change-config-input__button_save-changes"}
-						onClick={openConfirmPopup}
+						onClick={saveHandler}
 						ref={btnRef}
 					></div>
 				)
 				: (
 					<div
 						className={"change-config-input__button change-config-input__button_change-input"}
-						onClick={startChangeInput}
+						onClick={openHandler}
 						ref={btnRef}
 					></div>
 				)

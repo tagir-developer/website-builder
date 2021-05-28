@@ -23,31 +23,33 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 	return (
 		<div className={projectCardClasses}>
 			<div className="project-card__card-container">
-				<div className="project-card__title">{ title }</div>
-				{ published 
-					? <StatusLabel parentClass="project-card" modClass={["success"]}>Опубликован</StatusLabel>
-					: <StatusLabel parentClass="project-card" modClass={["danger"]}>Не опубликован</StatusLabel>
-				}
-				
+				<div className="project-card__title">{title}</div>
+				<div className="project-card__label-container">
+					{published
+						? <StatusLabel parentClass="project-card" modClass={["success"]}>Опубликован</StatusLabel>
+						: <StatusLabel parentClass="project-card" modClass={["danger"]}>Не опубликован</StatusLabel>
+					}
+				</div>
+
 				<div className="project-card__buttons-container">
 					<Button parentClass="project-card" handler={() => { history.push(link) }} >
 						Редактировать сайт
 					</Button>
-					{ !hasPages 
-							? <SecondaryButton parentClass="project-card" handler={() => { }} >
-									Создайте первую страницу
+					{!hasPages
+						? <SecondaryButton parentClass="project-card" handler={() => { }} >
+							Создать страницу
 								</SecondaryButton>
-							: null
+						: null
 					}
-					{ hasPages && published
-							? <CopyLink parentClass="project-card" value="http://insta-site.com/sveta" />
-							: null
+					{hasPages && published
+						? <CopyLink parentClass="project-card" value="http://insta-site.com/sveta" />
+						: null
 					}
-					{ hasPages && !published
-							? <SecondaryButton parentClass="project-card" handler={() => { }} >
-								Опубликовать сайт
+					{hasPages && !published
+						? <SecondaryButton parentClass="project-card" handler={() => { }} >
+							Опубликовать сайт
 							</SecondaryButton>
-							: null
+						: null
 					}
 					{/* <CopyLink parentClass="project-card" value="http://insta-site.com/sveta" /> */}
 					{/* <SecondaryButton parentClass="project-card" handler={() => { }} >

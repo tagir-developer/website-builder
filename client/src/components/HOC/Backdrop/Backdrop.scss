@@ -14,7 +14,7 @@ $delay: 500ms; // Задержка анимации
 	flex-direction: column;
 	min-height: 100%;
 	z-index: 200;
-	transition: all $delay;
+	transition: filter $delay;
 
 	&_simple {
 		overflow-y: hidden;
@@ -23,7 +23,8 @@ $delay: 500ms; // Задержка анимации
 	&_show {
 		@include create-blur(4px, 4);
 		overflow-y: hidden;
-		transition: all $delay;
+		transition: filter $delay;
+		padding-right: 15px;
 	}
 
 	&_solid.popup-backdrop_show {

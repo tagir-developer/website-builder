@@ -11,12 +11,30 @@
 		padding: 40px;
 		@include card-styles;
 		margin: 0 auto;
+		@include media-breakpoint-down(sm) {
+			border-radius: 20px;
+			padding: 35px 15px;
+		}
 	}
 
 	&__title {
 		@include h1-pc;
 		color: $text-primary;
 		margin-bottom: 20px;
+		@include media-breakpoint-down(sm) {
+			@include h2-mobile;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+	}
+
+	&__label-container {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		@include media-breakpoint-down(sm) {
+			justify-content: center;
+		}
 	}
 
 	&__status-label {
@@ -27,17 +45,38 @@
 		width: 100%;
 		display: flex;
 		flex-direction: row;
+		@include media-breakpoint-down(md) {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		@include media-breakpoint-down(sm) {
+			align-items: center;
+		}
 	}
 
 	&__button {
-		max-width: 280px;
+		width: 100%;
+		@include media-breakpoint-up(sm) {
+			max-width: 280px;
+		}
 	}
 
 	&__secondary-button {
 		margin-left: 40px;
+		@include media-breakpoint-down(md) {
+			margin-left: 0px;
+			margin-top: 30px;
+		}
+		@include media-breakpoint-down(sm) {
+			width: 100%;
+		}
 	}
 
 	&__copy-link {
 		margin-left: 40px;
+		@include media-breakpoint-down(md) {
+			margin-left: 0px;
+			margin-top: 30px;
+		}
 	}
 }

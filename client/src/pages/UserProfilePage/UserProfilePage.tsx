@@ -1,15 +1,28 @@
 import React from 'react'
+import Backdrop from '../../components/HOC/Backdrop/Backdrop'
+import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import ChangeConfigInput from '../../components/UI/ChangeConfigInput/ChangeConfigInput'
+import Confirm from '../../components/UI/Confirm/Confirm'
 import Footer from '../../components/UI/Footer/Footer'
 import SmallIconButton from '../../components/UI/SmallIconButton/SmallIconButton'
+import { usePopup } from '../../hooks/usePopup.hook'
 import './UserProfilePage.scss'
 
 //! Здесь в зависимости от авторизованности выводить разный тип меню
 
 const UserProfilePage: React.FC = () => {
+
+	const popup = usePopup(false, 'blur')
+
 	return (
 		<>
+			<PopUp {...popup.popupProps} transparent={true} backdropBlocked={true}>
+				<Confirm handler={popup.confirm}>Сохранить изменения?</Confirm>
+			</PopUp>
+
+			<Backdrop {...popup.backdropProps}>
+
 			<TopMenu menuType="back-to-main" />
 			<div className="content-area">
 				<div className="user-profile">
@@ -45,9 +58,11 @@ const UserProfilePage: React.FC = () => {
 
 								<div className="user-profile__change-name-wrapper">
 								<ChangeConfigInput
+									key="1"
 									parentClass="user-profile"
 									title="Изменить имя"
 									value="Владислав Иванов"
+									confirm={popup.confirm}
 								/>
 								</div>
 
@@ -55,15 +70,19 @@ const UserProfilePage: React.FC = () => {
 
 							<div className="user-profile__email-and-password">
 								<ChangeConfigInput
+									key="2"
 									parentClass="user-profile"
 									title="Изменить логин (email)"
 									value="vladislav@mail.ru"
+									confirm={popup.confirm}
 								/>
 								<ChangeConfigInput
+									key="3"
 									parentClass="user-profile"
 									title="Изменить пароль"
 									value="Password123"
 									inputType="password"
+									confirm={popup.confirm}
 								/>
 							</div>
 
@@ -75,6 +94,8 @@ const UserProfilePage: React.FC = () => {
 				</div>
 			</div>
 			<Footer />
+
+			</Backdrop>
 		</>
 	)
 }

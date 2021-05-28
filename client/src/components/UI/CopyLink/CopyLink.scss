@@ -43,6 +43,10 @@
 		padding-left: 70px;
 		overflow: visible;
 		animation: copy-anim 800ms ease-in-out;
+		@include media-breakpoint-down(sm) {
+			animation: copy-anim-mobile 850ms ease-in-out;
+			line-height: 30px;
+		}
 	}
 
 	&__button {
@@ -79,4 +83,14 @@
 	  transform: translateY(-100%) scale(2, 2);
 	  color: transparent;
 	}
-  }
+}
+
+@keyframes copy-anim-mobile {
+	from {
+	  z-index: -1;
+	} to {
+	  z-index: 500;
+	  transform: translateY(-100%);
+	  color: transparent;
+	}
+}

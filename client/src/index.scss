@@ -11,6 +11,9 @@
 // Open sans
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
 
+// Scrollbar custom styles
+@include scrollbars(15px, #a7b3be);
+
 // Default styles reset
 * {
 	padding: 0;
@@ -106,3 +109,4 @@ button {
     box-sizing: border-box;
     padding: 20px;
 }
+
