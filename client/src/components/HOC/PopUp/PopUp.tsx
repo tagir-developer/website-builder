@@ -21,11 +21,11 @@ const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children
 	const popupClasses = useCreateClassName('popup', parentClass, modClasses)
 	const popupContentClasses = useCreateClassName('popup__content', null, modClasses)
 
-	const closePopup = (event: React.MouseEvent<HTMLDivElement>): void => {
+	const stopPropagation = (event: React.MouseEvent<HTMLDivElement>): void => {
 		event.preventDefault()
 		event.stopPropagation()
-		handler()
 	}
+
 
 	if (transparent) {
 		return (
@@ -37,6 +37,8 @@ const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children
 				unmountOnExit
 			>
 				<div className={popupClasses}>
+				<div className="popup__close-wrapper" onClick={e => stopPropagation(e)}></div>
+
 					{children}
 				</div>
 			</CSSTransition>
@@ -51,7 +53,7 @@ const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children
 				unmountOnExit
 			>
 				<div className={popupClasses}>
-					{ !backdropBlocked ? <div className="popup__close-wrapper" onClick={e => closePopup(e)}></div> : null }
+					{ !backdropBlocked ? <div className="popup__close-wrapper" onClick={handler}></div> : null }
 					<div className={popupContentClasses}>
 						<div onClick={handler} className="popup__close-button"></div>
 						<div className="popup__title">{withTitle}</div>
@@ -70,7 +72,7 @@ const PopUp: React.FC<IPopUp> = ({ parentClass, modClass, type, isOpen, children
 				unmountOnExit
 			>
 				<div className={popupClasses}>
-				{ !backdropBlocked ? <div className="popup__close-wrapper" onClick={e => closePopup(e)}></div> : null }
+					{ !backdropBlocked ? <div className="popup__close-wrapper" onClick={handler}></div> : null }
 					<div className={popupContentClasses}>
 						<div onClick={handler} className="popup__close-button"></div>
 						{children}

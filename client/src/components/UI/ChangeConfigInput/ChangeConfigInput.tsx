@@ -10,7 +10,6 @@ interface IChangeConfigInput {
 	title?: string
 	value: string
 	inputType?: string
-	// handler: (param?: any) => void
 	confirm: {
 		setPopup: (param: boolean) => void
 		confirmFunc: (param: boolean) => void
@@ -39,7 +38,6 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 	}
 
 	const openConfirmPopup = () => {
-		console.log('Запуск функции saveHandler открывающей попап')
 		confirm.setPopup(true)
 	}
 
@@ -59,7 +57,6 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 		}
 
 		if (confirm.isConfirm) {
-			console.log('Запуск функции saver изменяющей значение в базе данных')
 			saveNewValue()
 			confirm.confirmFunc(false)
 			confirm.setPopup(false)
@@ -67,12 +64,9 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 
 	}, [confirm, input.value])
 
-
 	useEffect(() => {
 		isEdit ? document.addEventListener('click', editCanceled) : document.removeEventListener('click', editCanceled)
 	}, [isEdit, editCanceled])
-
-	console.log('Новый рендер')
 
 	return (
 		<div className={inputClasses}>

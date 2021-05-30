@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { useState } from 'react'
 import './Backdrop.scss'
 
 interface IBackdrop {
@@ -11,6 +11,8 @@ const Backdrop: React.FC<IBackdrop> = ({ children, isOpen, type }) => {
 
 	let backdropClasses = 'popup-backdrop_simple'
 	let darkeningClasses = 'popup-backdrop__darkening'
+
+
 	
 	if (type === 'blur') {
 		darkeningClasses = classNames({
@@ -19,7 +21,7 @@ const Backdrop: React.FC<IBackdrop> = ({ children, isOpen, type }) => {
 		})
 		backdropClasses = classNames({
 			'popup-backdrop': true,
-			'popup-backdrop_show': isOpen
+			'popup-backdrop_show': isOpen,
 		})
 	}
 	
@@ -33,6 +35,8 @@ const Backdrop: React.FC<IBackdrop> = ({ children, isOpen, type }) => {
 			'popup-backdrop_solid popup-backdrop_show': isOpen
 		})
 	}
+
+	console.log('Новый рендер')
 
 	return (
 		<div className={backdropClasses}>

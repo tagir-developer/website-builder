@@ -17,7 +17,7 @@ const UserProfilePage: React.FC = () => {
 
 	return (
 		<>
-			<PopUp {...popup.popupProps} transparent={true} backdropBlocked={true}>
+			<PopUp {...popup.popupProps} transparent={true}>
 				<Confirm handler={popup.confirm}>Сохранить изменения?</Confirm>
 			</PopUp>
 
@@ -58,7 +58,6 @@ const UserProfilePage: React.FC = () => {
 
 								<div className="user-profile__change-name-wrapper">
 								<ChangeConfigInput
-									key="1"
 									parentClass="user-profile"
 									title="Изменить имя"
 									value="Владислав Иванов"
@@ -70,14 +69,12 @@ const UserProfilePage: React.FC = () => {
 
 							<div className="user-profile__email-and-password">
 								<ChangeConfigInput
-									key="2"
 									parentClass="user-profile"
 									title="Изменить логин (email)"
 									value="vladislav@mail.ru"
 									confirm={popup.confirm}
 								/>
 								<ChangeConfigInput
-									key="3"
 									parentClass="user-profile"
 									title="Изменить пароль"
 									value="Password123"

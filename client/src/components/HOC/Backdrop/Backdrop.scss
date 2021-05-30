@@ -1,4 +1,6 @@
 @import '../../../styles/variables.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/breakpoints.scss';
 
 $delay: 500ms; // Задержка анимации
 
@@ -16,6 +18,7 @@ $delay: 500ms; // Задержка анимации
 	z-index: 200;
 	transition: filter $delay;
 
+
 	&_simple {
 		overflow-y: hidden;
 	}
@@ -25,12 +28,15 @@ $delay: 500ms; // Задержка анимации
 		overflow-y: hidden;
 		transition: filter $delay;
 		padding-right: 15px;
+		@include media-breakpoint-down(md) {
+			padding-right: 0px;
+		}
 	}
 
-	&_solid.popup-backdrop_show {
-		overflow-y: hidden;
-		transition: all $delay;
-	}
+	// &_solid.popup-backdrop_show {
+	// 	overflow-y: hidden;
+	// 	// transition: all $delay;
+	// }
 
 	&__darkening {
 		width: 100%;
@@ -44,6 +50,7 @@ $delay: 500ms; // Задержка анимации
 		opacity: 0;
 		transition: all $delay;
 		z-index: 200;
+		overflow-y: hidden;
 
 		&_blur {
 			background: rgba(27, 52, 81, 0.3);
@@ -56,6 +63,7 @@ $delay: 500ms; // Задержка анимации
 		&_show {
 			opacity: 1;
 			visibility: visible;
+			animation: test 4000ms;
 		}
 
 	}

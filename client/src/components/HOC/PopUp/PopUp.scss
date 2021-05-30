@@ -14,6 +14,7 @@
 	overflow-x: hidden;
 	padding: 0 15px;
 	box-sizing: border-box;
+	margin-right: 60px;
 
 	&__content {
 		position: relative;
@@ -104,5 +105,6 @@
 	&_show-exit-active {
 		transform: translateY(-200%);
 		transition: transform 400ms;
+		// overflow: hidden;
 	}
 }
