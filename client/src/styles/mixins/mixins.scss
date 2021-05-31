@@ -90,6 +90,7 @@
   @mixin h1-pc {
 	font-size: 34px;
 	font-weight: bold;
+  color: $text-primary;
   }
   @mixin h2-pc {
 	font-size: 30px;
@@ -102,6 +103,7 @@
   @mixin h1-mobile {
 	font-size: 26px;
 	font-weight: bold;
+  color: $text-primary;
   }
   @mixin h4-pc {
 	font-size: 25px;

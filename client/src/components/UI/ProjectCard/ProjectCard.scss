@@ -57,7 +57,8 @@
 	&__button {
 		width: 100%;
 		@include media-breakpoint-up(sm) {
-			max-width: 280px;
+			// max-width: 280px;
+			width: auto;
 		}
 	}
 

@@ -6,9 +6,11 @@ interface ICopyLink {
 	parentClass?: string
 	modClass?: string[]
 	value: string
+	useLabel?: string
+	inputDisabled?: boolean
 }
 
-const CopyLink: React.FC<ICopyLink> = ({ parentClass, modClass, value }) => {
+const CopyLink: React.FC<ICopyLink> = ({ parentClass, modClass, value, useLabel, inputDisabled }) => {
 
 	const classes = useCreateClassName('copy-link', parentClass, modClass)
 
@@ -21,17 +23,35 @@ const CopyLink: React.FC<ICopyLink> = ({ parentClass, modClass, value }) => {
 
 	return (
 		<div className={classes}>
-			<div
-				className="copy-link__button"
-				onClick={copyLinkHandler}
-			></div>
-			<input
-				type="text"
-				className="copy-link__input"
-				value={value}
-				readOnly
-			/>
-			{ copied ? <div className="copy-link__anim-text-copy">{value}</div> : null }
+			{useLabel ? <div className="copy-link__input-label">{useLabel}</div> : null}
+
+			{
+				inputDisabled
+					? <>
+						<input
+							type="text"
+							className="copy-link__input copy-link__input_disabled"
+							value={value}
+							readOnly
+							disabled
+						/>
+					</>
+					: <>
+						<div
+							className="copy-link__button"
+							onClick={copyLinkHandler}
+						></div>
+						<input
+							type="text"
+							className="copy-link__input"
+							value={value}
+							readOnly
+						/>
+					</>
+			}
+
+
+			{ copied ? <div className="copy-link__anim-text-copy">{value}</div> : null}
 		</div>
 	)
 }

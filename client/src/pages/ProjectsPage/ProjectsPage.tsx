@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
@@ -16,66 +16,53 @@ const ProjectsPage: React.FC = () => {
 	const [projects, setProjects] = useState([{
 		name: 'Опубликованный сайт',
 		pusblished: true,
-		link: '/learning',
+		link: '/project-1',
 		hasPages: true
 	},
 	{
 		name: 'Неопубликованный сайт',
 		pusblished: false,
-		link: '/learning',
+		link: '/project-1',
 		hasPages: true
 	},
 	{
 		name: 'Сайт без страниц',
 		pusblished: false,
-		link: '/learning',
+		link: '/project-1',
 		hasPages: false
 	}])
 
-
-
 	const addNewProject = () => {
-		// projects.push({
-		// 	name: 'Новый сайт',
-		// 	pusblished: false,
-		// 	link: '/learning',
-		// 	hasPages: false
-		// })
-
-
 
 		setProjects([{
 			name: 'Опубликованный сайт',
 			pusblished: true,
-			link: '/learning',
+			link: '/project-1',
 			hasPages: true
 		},
 		{
 			name: 'Неопубликованный сайт',
 			pusblished: false,
-			link: '/learning',
+			link: '/project-1',
 			hasPages: true
 		},
 		{
 			name: 'Сайт без страниц',
 			pusblished: false,
-			link: '/learning',
+			link: '/project-1',
 			hasPages: false
 		},
 		{
 			name: 'Новый сайт',
 			pusblished: false,
-			link: '/learning',
+			link: '/project-1',
 			hasPages: false
 		}
 	])
 
 		popup.handler()
 
-
 	}
-
-	console.log('New render')
 
 	return (
 		<>
@@ -106,8 +93,6 @@ const ProjectsPage: React.FC = () => {
 						}
 
 					</div>
-					{/* <NavLink to={"/" + 'apple'}>APPLE</NavLink>
-			<NavLink to={"/" + 'orange'}>ORANGE</NavLink>			 */}
 				</div>
 				<Footer />
 			</Backdrop>

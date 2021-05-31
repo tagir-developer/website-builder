@@ -22,9 +22,25 @@
 		box-sizing: border-box;
 		padding-left: 70px;
 		transition: all 200ms ease-in-out;
+
+		&_disabled {
+			font-size: 15px;
+			color: $text-middle;
+			padding-left: 0px;
+			text-align: center;
+		}
 		
 		&:disabled {
 			color: #aab9be;
+		}
+	}
+
+	&__input-label {
+		font-size: 16px;
+		color: $text-secondary;
+		margin-bottom: 20px;
+		@include media-breakpoint-down(md) {
+			text-align: center;
 		}
 	}
 

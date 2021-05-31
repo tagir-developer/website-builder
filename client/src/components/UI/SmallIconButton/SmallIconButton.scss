@@ -45,4 +45,9 @@
 			background: no-repeat center url('./img/delete.svg');
 		}
 	}
+	&_change-icon {
+		&:before {
+			background: no-repeat center url('./img/change.svg');
+		}
+	}
 }

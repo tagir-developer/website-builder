@@ -1,0 +1,90 @@
+@import "/src/styles/variables.scss";
+@import "/src/styles/mixins/mixins.scss";
+@import "/src/styles/mixins/breakpoints.scss";
+@import "/src/styles/mixins/grid.scss";
+
+.project-header {
+	width: 100%;
+
+	&__header-container {
+		position: relative;
+		max-width: 980px;
+		margin: 0px auto 80px auto;
+		box-sizing: border-box;
+		padding: 40px;
+		@include card-styles();
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	&__title {
+		@include h1-pc;
+		margin-bottom: 20px;
+		@include media-breakpoint-down(md) {
+			margin-bottom: 40px;
+		}
+	}
+
+	&__action-buttons {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		@include media-breakpoint-down(md) {
+			align-items: center;
+			margin-bottom: 20px;
+		}
+	}
+
+	&__main-btn-and-link-container {
+		display: flex;
+		align-items: flex-end;
+		@include media-breakpoint-down(md) {
+			flex-direction: column-reverse;
+			align-items: center;
+		}
+	}
+
+	&__col-1 {
+		width: 50%;
+		@include media-breakpoint-down(md) {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+	}
+
+	&__col-2 {
+		width: 50%;
+		@include media-breakpoint-down(md) {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+	}
+
+	&__small-icon-button {
+		margin-bottom: 20px;
+	}
+
+	&__button {
+		width: auto;
+		@include media-breakpoint-down(md) {
+			width: 100%;
+			max-width: 380px;
+		}
+	}
+
+	&__copy-link {
+		@include media-breakpoint-down(md) {
+			max-width: 380px;
+			margin-bottom: 40px;
+		}
+	}
+
+	&__show-menu-btn {
+		position: absolute;
+		top: 20px;
+		right: 20px
+	}
+
+}
