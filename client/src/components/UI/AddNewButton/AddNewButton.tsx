@@ -6,16 +6,17 @@ interface IAddNewButton {
 	parentClass: string
 	modClass?: string[]
 	handler: (param: any) => any
+	title?: string
 }
 
-const AddNewButton: React.FC<IAddNewButton> = ({ parentClass, modClass, handler }) => {
+const AddNewButton: React.FC<IAddNewButton> = ({ parentClass, modClass, handler, title }) => {
 
 	const addNewButtonClasses = useCreateClassName('add-new-button', parentClass, modClass)
 
 	return (
 		<div className={addNewButtonClasses} onClick={handler}>
 			<div className="add-new-button__round-shape"></div>
-			<div className="add-new-button__text" onClick={handler}>Создать новый сайт</div>
+			<div className="add-new-button__text" onClick={handler}>{title}</div>
 		</div>
 	)
 }

@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React from 'react'
 import './Backdrop.scss'
 
 interface IBackdrop {
@@ -12,8 +12,6 @@ const Backdrop: React.FC<IBackdrop> = ({ children, isOpen, type }) => {
 	let backdropClasses = 'popup-backdrop_simple'
 	let darkeningClasses = 'popup-backdrop__darkening'
 
-
-	
 	if (type === 'blur') {
 		darkeningClasses = classNames({
 			'popup-backdrop__darkening': true,

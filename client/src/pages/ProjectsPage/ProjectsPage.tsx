@@ -75,7 +75,11 @@ const ProjectsPage: React.FC = () => {
 				<div className="content-area">
 					<div className="projects-page">
 
-						<AddNewButton parentClass="projects-page" handler={popup.handler} />
+						<AddNewButton 
+							parentClass="projects-page" 
+							handler={popup.handler}
+							title="Создать новый сайт"
+						/>
 
 						{
 							projects.map((i, index) => {

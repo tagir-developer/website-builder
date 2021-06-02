@@ -21,6 +21,13 @@
 		background-position: right;
 	}
 
+	&:disabled {
+		background: linear-gradient(180deg, #E0E8F1 14.68%, #ECF6FE 87.43%);
+		color: #BFCFD7;
+		cursor: default;
+		box-shadow: none;
+	}
+
 	&_big {
 		height: 70px;
 		font-size: 24px;

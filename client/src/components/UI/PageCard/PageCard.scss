@@ -1,0 +1,106 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+@import '../../../styles/mixins/grid.scss';
+
+.page-card {
+	width: 100%;
+
+	&__card-container {
+		position: relative;
+		max-width: 980px;
+		box-sizing: border-box;
+		padding: 40px;
+		@include card-styles;
+		margin: 0 auto;
+		@include media-breakpoint-down(md) {
+			padding: 30px 15px;
+		}
+		@include media-breakpoint-down(sm) {
+			border-radius: 20px;
+		}
+	}
+
+	&__title-container {
+		display: flex;
+		@include media-breakpoint-down(sm) {
+			flex-direction: column;
+		}
+	}
+
+	&__title {
+		@include h2-pc;
+		color: $text-primary;
+		margin-bottom: 25px;
+		padding-right: 60px;
+		@include media-breakpoint-down(md) {
+			@include h3-mobile;
+		}
+	}
+
+	&__main-page-icon {
+		width: 45px;
+		height: 35px;
+		background: url('./img/main-page-icon.svg') center no-repeat;
+		@include media-breakpoint-down(sm) {
+			width: 30px;
+			height: 50px;
+		}
+	}
+
+	&__label-and-button-container {
+		display: flex;
+		// flex-wrap: wrap;
+		height: 60px;
+		@include media-breakpoint-down(md) {
+			flex-direction: column;
+			height: auto;
+		}
+	}
+
+	&__col-1 {
+		display: flex;
+		width: 50%;
+		@include media-breakpoint-down(md) {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+
+	&__col-2 {
+		display: flex;
+		width: 50%;
+		@include media-breakpoint-down(md) {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+
+	&__status-label {
+		@include media-breakpoint-down(md) {
+			margin-bottom: 30px;
+		}
+	}
+
+
+	&__button {
+		width: 100%;
+		@include media-breakpoint-up(sm) {
+			width: auto;
+		}		
+		@include media-breakpoint-down(sm) {
+			font-size: 15px;
+			padding: 5px;
+		}
+	}
+
+	&__show-menu-btn {
+		position: absolute;
+		top: 20px;
+		right: 30px;
+		@include media-breakpoint-down(md) {
+			right: 15px;
+		}
+	}
+
+}

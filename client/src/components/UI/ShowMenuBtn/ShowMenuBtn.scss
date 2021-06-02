@@ -2,9 +2,6 @@
 @import '../../../styles/mixins/mixins.scss';
 
 .show-menu-btn {
-	// display: flex;
-	// justify-content: center;
-	// align-items: center;
 	width: 50px;
 	height: 50px;
 	margin-left: 15px;
@@ -32,20 +29,23 @@
 		overflow: hidden;
 
 		&_show-enter {
-			transform: scale(0, 0) translate(-100%, -100%);
+			transform: scale(0, 0);
+			transform-origin: top right;
+
 		}
 	
 		&_show-enter-active {
-			transform: scale(1, 1) translate(0, 0);
+			transform: scale(1, 1);
 			transition: transform 400ms;
 		}
 	
 		&_show-exit {
-			transform: translateY(0);
+			transform: scale(1, 1);
+			transform-origin: top right;
 		}
 	
 		&_show-exit-active {
-			transform: translateY(-200%);
+			transform: scale(0, 0);
 			transition: transform 400ms;
 		}
 	}

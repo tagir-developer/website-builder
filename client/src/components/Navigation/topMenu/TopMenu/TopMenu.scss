@@ -57,11 +57,17 @@
 	}
 
 	&__horizontal-nav {
-		margin-left: 20px;	
+		margin-left: 20px;
+		@include media-breakpoint-down(sm) {
+			margin-left: 0px;
+		}	
 	}
 
 	&__mobile-nav {
 		margin-left: 20px;
+		@include media-breakpoint-down(sm) {
+			margin-left: 0px;
+		}	
 	}
 
 	&__view-on-devices {

@@ -1,3 +1,8 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins/mixins.scss';
+@import '../../styles/mixins/breakpoints.scss';
+@import '../../styles/mixins/grid.scss';
+
 .website-page {
 	width: 100%;
 	min-height: 100vh;
@@ -6,8 +11,26 @@
 	// align-items: center;
 	box-sizing: border-box;
 	padding: 0px 15px 40px 15px;
+	@include media-breakpoint-down(sm) {
+		padding: 0px;
+	}
+
+	&__pages-list-container {
+		padding: 0px;
+		@include media-breakpoint-down(sm) {
+			padding: 0 15px;
+		}
+	}
 
 	&__project-header {
 
+	}
+
+	&__add-new-button {
+		margin: 20px auto 90px auto;
+	}
+
+	&__page-card {
+		margin-bottom: 60px;
 	}
 }

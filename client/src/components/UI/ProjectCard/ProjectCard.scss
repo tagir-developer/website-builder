@@ -8,6 +8,7 @@
 
 	&__card-container {
 		max-width: 980px;
+		box-sizing: border-box;
 		padding: 40px;
 		@include card-styles;
 		margin: 0 auto;
