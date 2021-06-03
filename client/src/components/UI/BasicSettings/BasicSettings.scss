@@ -1,0 +1,51 @@
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+
+.basic-settings {
+	width: 100%;
+
+	&__container {
+		@include make-container();
+	}
+
+	&__row {
+		@include make-row();
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__form-container {
+		width: 480px;
+		border-radius: 50px;
+		&_own-container {
+			background: $main;
+			box-shadow: -20px -20px 54px rgba(255, 255, 255, 0.5), 20px 20px 56px rgba(169, 190, 210, 0.4);
+		}
+	}
+
+	&__form {
+		padding: 0px 50px 50px 50px;
+		@include media-breakpoint-down(sm) {
+			padding: 0px 15px 20px 15px;
+		}
+	}
+
+	&__button {
+		@include media-breakpoint-down(sm) {
+			margin-bottom: 15px;
+			font-size: 18px;
+			padding: 0 5px;
+			height: 60px;
+		}
+	}
+
+	&__textarea {
+		margin-bottom: 65px;
+		@include media-breakpoint-down(sm) {
+			margin-bottom: 30px;
+		}
+	}
+
+}

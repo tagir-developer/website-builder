@@ -9,11 +9,11 @@
 	border-radius: 50%;
 	background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
 	box-shadow: -4px -4px 19px rgba(255, 255, 255, 0.7), 4px 4px 30px #B3BFC9;
-	z-index: 50;
 	cursor: pointer;
 
 	&__menu {
 		position: relative;
+		z-index: 50;
 	}
 
 	&__menu-list {

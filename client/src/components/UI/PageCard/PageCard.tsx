@@ -2,9 +2,7 @@ import React from 'react'
 import './PageCard.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import Button from '../Button/Button'
-import SecondaryButton from '../SecondaryButton/SecondaryButton'
 import StatusLabel from '../StatusLabel/StatusLabel'
-import CopyLink from '../CopyLink/CopyLink'
 import { RouteComponentProps, withRouter } from 'react-router'
 import ShowMenuBtn from '../ShowMenuBtn/ShowMenuBtn'
 
@@ -21,19 +19,42 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 
 	const pageCardClasses = useCreateClassName('page-card', parentClass, modClass)
 
+	const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать'
+
+	const menuItems = [
+		{
+			title: needToPublish,
+			handler: () => { }
+		},
+		{
+			title: 'Изменить страницу',
+			handler: () => { }
+		},
+		{
+			title: 'Создать дубликат',
+			handler: () => { }
+		},
+		{
+			title: 'Удалить страницу',
+			handler: () => { }
+		},
+		{
+			title: 'Сделать главной',
+			handler: () => { }
+		},
+	]
+
 	return (
 		<div className={pageCardClasses}>
-			
 
 			<div className="page-card__card-container">
 
-			<ShowMenuBtn parentClass="page-card" />
+				<ShowMenuBtn parentClass="page-card" items={menuItems} />
 
 				<div className="page-card__title-container">
 					{isMainPage ? <div className="page-card__main-page-icon"></div> : null}
-				<div className="page-card__title">{title}</div>
+					<div className="page-card__title">{title}</div>
 				</div>
-				
 
 				<div className="page-card__label-and-button-container">
 					<div className="page-card__col-1">
@@ -48,30 +69,8 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 					</Button>
 					</div>
 
-
 				</div>
 
-				{/* <div className="page-card__buttons-container">
-					
-
-					{!hasPages
-						? <SecondaryButton parentClass="page-card" handler={() => { }} >
-							Создать страницу
-								</SecondaryButton>
-						: null
-					}
-					{hasPages && published
-						? <CopyLink parentClass="page-card" value="http://insta-site.com/sveta" />
-						: null
-					}
-					{hasPages && !published
-						? <SecondaryButton parentClass="page-card" handler={() => { }} >
-							Опубликовать сайт
-							</SecondaryButton>
-						: null
-					}
-
-				</div> */}
 			</div>
 		</div>
 	)

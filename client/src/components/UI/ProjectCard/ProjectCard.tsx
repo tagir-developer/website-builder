@@ -51,10 +51,6 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 							</SecondaryButton>
 						: null
 					}
-					{/* <CopyLink parentClass="project-card" value="http://insta-site.com/sveta" /> */}
-					{/* <SecondaryButton parentClass="project-card" handler={() => { }} >
-						Опубликовать сайт
-					</SecondaryButton> */}
 				</div>
 			</div>
 		</div>

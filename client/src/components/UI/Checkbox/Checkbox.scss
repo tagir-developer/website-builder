@@ -1,0 +1,58 @@
+@import '../../../styles/variables.scss';
+
+.checkbox {
+
+	&__container {
+		display: flex;
+	}
+
+	&__text {
+		width: 100%;
+		font-size: 18px;
+		color: $text-secondary;
+		margin-left: 20px;
+		padding-top: 4px;
+	}
+
+	&__dimple-container {
+		width: 30px;
+	}
+
+	&__input {
+		position: absolute; 
+		left: -9999px;
+	}
+
+	&__dimple {
+		position: relative; 
+		display: block;
+		width: 30px; 
+		height: 30px;
+		cursor: pointer;
+		border-radius: 50%;
+		background: linear-gradient(142.82deg, #E0E8F1 14.68%, #ECF6FE 87.43%);
+		box-shadow: inset -3px -3px 10px rgba(255, 255, 255, 0.84), inset 3px 3px 10px #B6C1CD;
+		overflow: hidden;
+		&:before {
+			content:'';
+			position: absolute; 
+			display: block;
+			margin: 4px;
+			width: 22px; 
+			height: 22px;
+			border-radius: 50%;
+			transition: transform 100ms ease-in-out;
+			background: linear-gradient(111.58deg, #FFB72C 17.45%, #FF7F37 98.61%);
+			transform: scale(0, 0)
+		}
+
+	}
+}
+
+input:checked + .checkbox__dimple:before {
+	background: linear-gradient(111.58deg, #FFB72C 17.45%, #FF7F37 98.61%);
+	transition: transform 100ms ease-in-out;
+	transform: scale(1, 1)
+	
+}
+

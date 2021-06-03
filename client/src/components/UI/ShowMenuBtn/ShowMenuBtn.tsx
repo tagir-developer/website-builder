@@ -3,13 +3,15 @@ import { CSSTransition } from 'react-transition-group'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './ShowMenuBtn.scss'
 
+interface IItems {
+	title: string
+	handler: (param?: any) => any
+}
+
 interface IShowMenuBtn {
 	parentClass?: string
 	modClass?: string[]
-	items: {
-		title: string
-		handler: (param?: any) => any
-	}[]
+	items: Array<IItems>
 }
 
 const ShowMenuBtn: React.FC<IShowMenuBtn> = ({ parentClass, modClass, items }) => {
@@ -19,7 +21,6 @@ const ShowMenuBtn: React.FC<IShowMenuBtn> = ({ parentClass, modClass, items }) =
 	const ShowMenuBtnClasses = useCreateClassName('show-menu-btn', parentClass, modClass)
 
 	const showMenuRef = useRef() as MutableRefObject<HTMLDivElement>
-
 
 	useEffect(() => {
 
@@ -35,23 +36,18 @@ const ShowMenuBtn: React.FC<IShowMenuBtn> = ({ parentClass, modClass, items }) =
 
 	}, [])
 
-	const toggleHandler = () => isOpenHandler(prev => !prev)
-
-	const openSetting = (e: React.MouseEvent<HTMLLIElement>, itemHandler: (param?: any) => any) => {
+	const openSettingInPopup = (e: React.MouseEvent<HTMLLIElement>, itemHandler: (param?: any) => any): void => {
 		e.preventDefault()
 		e.stopPropagation()
-		// Открываем конфигурационные настройки в новой странице или иначе
 		isOpenHandler(false)
 		itemHandler()
 	}
-
-
 
 	return (
 		<>
 			<div
 				className={ShowMenuBtnClasses}
-				onClick={toggleHandler}
+				onClick={() => isOpenHandler(prev => !prev)}
 				
 			>
 				<div className="show-menu-btn__menu">
@@ -69,7 +65,7 @@ const ShowMenuBtn: React.FC<IShowMenuBtn> = ({ parentClass, modClass, items }) =
 								<li 
 									key={'menu-list-item' + index}
 									className="show-menu-btn__menu-list-item" 
-									onClick={e => openSetting(e, i.handler)}
+									onClick={e => openSettingInPopup(e, i.handler)}
 								>
 									{i.title}
 								</li>

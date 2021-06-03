@@ -1,27 +1,25 @@
 import React from 'react'
+import './WebsitePage.scss'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import Footer from '../../components/UI/Footer/Footer'
 import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
 import ProjectHeader from '../../components/UI/ProjectHeader/ProjectHeader'
-import './WebsitePage.scss'
 import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
 import PageCard from '../../components/UI/PageCard/PageCard'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import { usePopup } from '../../hooks/usePopup.hook'
 import LeftMenu from '../../components/Navigation/leftMenu/LeftMenu'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
+import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
+import CreatePage from '../../components/UI/CreatePage/CreatePage'
+import BasicSettings from '../../components/UI/BasicSettings/BasicSettings'
+import FontConfig from '../../components/UI/FontConfig/FontConfig'
 
 interface IRouteProps {
 	name: string
 }
 
 interface IWebsitePage extends RouteComponentProps<IRouteProps> {
-
-}
-
-interface IBackdropProps {
-	type: 'blur' | 'solid'
-	isOpen: boolean
 }
 
 const WebsitePage: React.FC<IWebsitePage> = ({ match }) => {
@@ -43,11 +41,13 @@ const WebsitePage: React.FC<IWebsitePage> = ({ match }) => {
 		}
 	]
 
-	
-
 	const mainConfigPopup = usePopup(false, 'solid')
 	const formProcessingPopup = usePopup(false, 'solid')
 	const fontConfigPopup = usePopup(false, 'solid')
+
+	const createPagePopup = usePopup(false, 'solid')
+
+	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup)
 
 	const handlers = {
 		mainConfigPopup: mainConfigPopup.handler,
@@ -55,32 +55,25 @@ const WebsitePage: React.FC<IWebsitePage> = ({ match }) => {
 		fontConfigPopup: fontConfigPopup.handler,
 	}
 
-	const backdropProps = (): IBackdropProps => {
-		if (mainConfigPopup.isOpen) return mainConfigPopup.backdropProps
-		if (formProcessingPopup.isOpen) return formProcessingPopup.backdropProps
-		if (fontConfigPopup.isOpen) return fontConfigPopup.backdropProps
-		return {
-			type: 'blur',
-			isOpen: false
-		}
-	}
-
-
 	return (
 		<>
-			<PopUp {...mainConfigPopup.popupProps}>
-				<LeftMenu parentClass="popup" title="Основные настройки" />
+			<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
+				<BasicSettings parentClass="popup" handler={() => {}} />
 			</PopUp>
 
 			<PopUp {...formProcessingPopup.popupProps}>
 				<LeftMenu parentClass="popup" title="Обработка форм" />
 			</PopUp>
 
-			<PopUp {...fontConfigPopup.popupProps}>
-				<LeftMenu parentClass="popup" title="Выбрать шрифт" />
+			<PopUp {...fontConfigPopup.popupProps} withTitle="Выбрать шрифт">
+				<FontConfig parentClass="popup" handler={() => {}} />
 			</PopUp>
 
-			<Backdrop {...backdropProps()} >
+			<PopUp {...createPagePopup.popupProps} withTitle="Создание страницы" >
+				<CreatePage parentClass="popup" handler={() => {}} />
+			</PopUp>
+
+			<Backdrop {...backdropProps} >
 
 			<TopMenu menuType="auth-project" />
 			<div className="content-area">
@@ -88,8 +81,12 @@ const WebsitePage: React.FC<IWebsitePage> = ({ match }) => {
 				<div className="website-page">
 					<ProjectHeader 
 						parentClass="website-page" 
-						name="Сайт без страниц" 
-						handlers={handlers} 
+						name="Название сайта" 
+						handlers={handlers}
+						type='published-updated'
+						// published={true}
+						// hasPages={true}
+						// updated={true}
 					/>
 
 					<div className="website-page__pages-list-container">
@@ -112,7 +109,7 @@ const WebsitePage: React.FC<IWebsitePage> = ({ match }) => {
 
 					<AddNewButton
 						parentClass="website-page"
-						handler={() => { }}
+						handler={createPagePopup.handler}
 						title="Добавить новую страницу"
 					/>
 

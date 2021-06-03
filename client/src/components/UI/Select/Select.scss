@@ -1,0 +1,53 @@
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+
+.select {
+	width: 100%;
+	display: flex;
+	align-items: center;
+
+	&__name {
+		width: 55%;
+		display: block;
+		font-size: 20px;
+		color: $text-secondary;
+	}
+
+	&__list {
+		width: 100%;
+		height: 60px;
+		box-sizing: border-box;
+		background: linear-gradient(103.43deg, #DDE7F3 18.98%, #EBF3F9 95.42%);
+		box-shadow: inset -3px -3px 10px rgba(255, 255, 255, 0.84), inset 3px 3px 10px #B6C1CD;
+		border-radius: 50px;
+		padding-left: 20px;
+		font-size: 16px;
+		font-family: inherit;
+		color: $text-secondary;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	&__list-wrapper {
+		width: 45%;
+		position: relative;
+		&:before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
+			box-shadow: -4px -4px 19px rgba(255, 255, 255, 0.7), 4px 4px 30px #B3BFC9;
+		}
+	}
+
+	&__option {
+	}
+}
+
