@@ -1,8 +1,7 @@
 import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { useInput } from '../../../hooks/useInput.hook'
+import { useSelect } from '../../../hooks/useSelect.hook'
 import Button from '../Button/Button'
-import Checkbox from '../Checkbox/Checkbox'
 import Select from '../Select/Select'
 import './FontConfig.scss'
 
@@ -15,8 +14,92 @@ const FontConfig: React.FC<IFontConfig> = ({ parentClass, handler }) => {
 
 	const fontConfigClasses = useCreateClassName('font-config', parentClass)
 
-	// const projectName = useInput('')
-	// const urlName = useInput('')
+	const fontTypeSelect = useSelect([
+		{
+			value: 'verdana',
+			label: 'Verdana'
+		},
+		{
+			value: 'sans-serif',
+			label: 'Sans Serif'
+		},
+		{
+			value: 'helvetica',
+			label: 'Helvetica'
+		},
+	], 'helvetica')
+
+	const textSizeSelect = useSelect([
+		{
+			value: '14px',
+			label: '14px'
+		},
+		{
+			value: '16px',
+			label: '16px'
+		},
+		{
+			value: '18px',
+			label: '18px'
+		},
+	], '16px')
+
+	const titleSizeSelect = useSelect([
+		{
+			value: '24px',
+			label: '24px'
+		},
+		{
+			value: '28px',
+			label: '28px'
+		},
+		{
+			value: '32px',
+			label: '32px'
+		},
+		{
+			value: '36px',
+			label: '36px'
+		},
+	], '36px')
+
+	const titleWeightSelect = useSelect([
+		{
+			value: 'normal',
+			label: 'normal'
+		},
+		{
+			value: 'bold',
+			label: 'bold'
+		},
+	], 'bold')
+
+	const getCSSProperties = (type: 'title' | 'text', fontWeight: string | null, fontSize: string | null, fontFamily: string | null): React.CSSProperties => {
+
+		let stylesObj: any = {}
+
+		if (type === 'title') {
+			if (fontWeight === 'bold') stylesObj.fontWeight = fontWeight
+			if (fontWeight === 'normal') stylesObj.fontWeight = fontWeight
+	
+			if (fontSize === '24px') stylesObj.fontSize = fontSize
+			if (fontSize === '28px') stylesObj.fontSize = fontSize
+			if (fontSize === '32px') stylesObj.fontSize = fontSize
+			if (fontSize === '36px') stylesObj.fontSize = fontSize
+		}
+
+		if (type === 'text') {
+			if (fontSize === '14px') stylesObj.fontSize = fontSize
+			if (fontSize === '16px') stylesObj.fontSize = fontSize
+			if (fontSize === '18px') stylesObj.fontSize = fontSize
+		}
+
+		if (fontFamily === 'sans-serif') stylesObj.fontFamily = 'Sans Serif'
+		if (fontFamily === 'verdana') stylesObj.fontFamily = 'Verdana'
+		if (fontFamily === 'helvetica') stylesObj.fontFamily = 'Helvetica'
+
+		return stylesObj
+	}
 
 	return (
 		<div className={fontConfigClasses}>
@@ -29,50 +112,50 @@ const FontConfig: React.FC<IFontConfig> = ({ parentClass, handler }) => {
 								Выберите наименование и размер шрифта, который будет использоваться на сайте
 							</div>
 
-							<Select 
+							<Select
 								parentClass="font-config"
-								options={['Roboto', 'Sans Serif', 'Helvetica']}
+								{...fontTypeSelect.bind}
 							>
 								Шрифт
 							</Select>
-							<Select 
+
+							<Select
 								parentClass="font-config"
-								options={['12px', '14px', '16px', '18px']}
+								{...textSizeSelect.bind}
 							>
 								Размер текста
 							</Select>
 
+							<Select
+								parentClass="font-config"
+								{...titleSizeSelect.bind}
+							>
+								Размер заголовка
+							</Select>
+
+							<Select
+								parentClass="font-config"
+								{...titleWeightSelect.bind}
+							>
+								Толщина заголовка
+							</Select>
 
 
 							<div className="font-config__font-preview">
 								<div className="font-config__font-preview-label">Предпросмотр</div>
-								<h1 
+								<h1
 									className="font-config__font-preview-h1"
-									// style={{}} Здесь будут стили в зависимости от выбранного шрифта
+									style={getCSSProperties('title', titleWeightSelect.value, titleSizeSelect.value, fontTypeSelect.value)}
 								>
 									Roboto
 								</h1>
-								<p 
+								<p
 									className="font-config__font-preview-p"
-									// style={{}} Здесь будут стили в зависимости от выбранного шрифта
+									style={getCSSProperties('text', null, textSizeSelect.value, fontTypeSelect.value)}
 								>
 									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 								</p>
 							</div>
-
-							
-
-							{/* <label
-								htmlFor="font-config-site-name"
-								className="font-config__input-label input-label"
-							>Название страницы
-							</label>
-							<input
-								id="font-config-site-name"
-								type="text"
-								className="font-config__input input"
-								{...projectName.bind}
-							/> */}
 
 							<Button
 								parentClass="font-config"

@@ -8,12 +8,12 @@ import LandingPage from './pages/LandingPage/LandingPage'
 import LearningPage from './pages/LearningPage/LearningPage'
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage'
 import PreviewPage from './pages/PreviewPage/PreviewPage'
-import ProjectsPage from './pages/ProjectsPage/ProjectsPage'
+import ProjectsListPage from './pages/ProjectsListPage/ProjectsListPage'
+import ProjectPage from './pages/ProjectPage/ProjectPage'
 import QuestionPage from './pages/QuestionPage/QuestionPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 import SelectTemplatePage from './pages/SelectTemplatePage/SelectTemplatePage'
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
-import WebsitePage from './pages/WebsitePage/WebsitePage'
 
 export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 
@@ -21,7 +21,7 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 	if (isAuthenticated) {
 		return (
 			<Switch>
-				<Route path="/" component={ProjectsPage} exact />
+				<Route path="/" component={ProjectsListPage} exact />
 				<Route path="/user-profile" component={UserProfilePage} exact />
 				<Route path="/learning" component={LearningPage} exact />
 				<Route path="/question" component={QuestionPage} exact />
@@ -49,7 +49,7 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 					<HelpPage><PageStart title="Начало работы" /></HelpPage>
 				</Route>
 
-				<Route path="/:name" component={WebsitePage} exact />
+				<Route path="/:name" component={ProjectPage} exact />
 				<Route path="/:name/template" component={SelectTemplatePage} exact />
 				<Route path="/:name/:pageId" component={EditPage} exact />
 				<Route path="/:name/:pageId/preview" component={PreviewPage} exact />

@@ -7,9 +7,9 @@ import CreateProject from '../../components/UI/CreateProject/CreateProject'
 import Footer from '../../components/UI/Footer/Footer'
 import ProjectCard from '../../components/UI/ProjectCard/ProjectCard'
 import { usePopup } from '../../hooks/usePopup.hook'
-import './ProjectsPage.scss'
+import './ProjectsListPage.scss'
 
-const ProjectsPage: React.FC = () => {
+const ProjectsListPage: React.FC = () => {
 
 	const popup = usePopup(false, "solid")
 
@@ -73,10 +73,10 @@ const ProjectsPage: React.FC = () => {
 			<Backdrop {...popup.backdropProps}>
 				<TopMenu menuType="auth" />
 				<div className="content-area">
-					<div className="projects-page">
+					<div className="projects-list-page">
 
 						<AddNewButton 
-							parentClass="projects-page" 
+							parentClass="projects-list-page" 
 							handler={popup.handler}
 							title="Создать новый сайт"
 						/>
@@ -86,7 +86,7 @@ const ProjectsPage: React.FC = () => {
 								return (
 									<ProjectCard
 										key={'project-card' + index}
-										parentClass="projects-page"
+										parentClass="projects-list-page"
 										title={i.name}
 										published={i.pusblished}
 										link={i.link}
@@ -104,4 +104,4 @@ const ProjectsPage: React.FC = () => {
 	)
 }
 
-export default ProjectsPage
+export default ProjectsListPage
