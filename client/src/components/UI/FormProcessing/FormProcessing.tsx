@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import { useCheck } from '../../../hooks/useCheck.hook'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../Button/Button'
-import Checkbox from '../Checkbox/Checkbox'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import ToggleWithText from '../ToggleWithText/ToggleWithText'
 import './FormProcessing.scss'
@@ -22,6 +22,8 @@ const FormProcessing: React.FC<IFormProcessing> = ({ parentClass, handler }) => 
 	const additionalEmail = useInput('')
 	const emailTheme = useInput('')
 	const phone = useInput('')
+
+	const phoneToggle = useCheck(false)
 
 	return (
 		<div className={formProcessingClasses}>
@@ -81,19 +83,25 @@ const FormProcessing: React.FC<IFormProcessing> = ({ parentClass, handler }) => 
 								{...emailTheme.bind}
 							/>
 
-							<ToggleWithText 
-								name="form-processing-text-toggle" 
+							<ToggleWithText
+								name="form-processing-text-toggle"
 								parentClass="form-processing"
+								{...phoneToggle.bind}
 							>
 								Включить СМС-уведомления
 							</ToggleWithText>
 
-							<input 
-								type="text" 
-								className="form-processing__input input" 
-								placeholder="Телефонный номер" 
-								{...phone.bind} 
-							/>
+							{ phoneToggle.value
+								? <input
+									type="text"
+									className="form-processing__input input"
+									placeholder="Телефонный номер"
+									{...phone.bind}
+								  />
+								  : null
+						    }
+
+
 
 							<Button
 								parentClass="form-processing"

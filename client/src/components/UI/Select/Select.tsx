@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './Select.scss'
 

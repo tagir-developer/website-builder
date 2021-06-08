@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './ToggleWithText.scss'
 
@@ -6,15 +6,13 @@ interface IToggleWithText {
 	name: string
 	parentClass?: string
 	modClass?: string[]
+	value: boolean
+	handler: (param?: boolean) => void
 }
 
-const ToggleWithText: React.FC<IToggleWithText> = ({children, name, parentClass, modClass }) => {
+const ToggleWithText: React.FC<IToggleWithText> = ({children, name, parentClass, modClass, value, handler }) => {
 
 	const toggleWithTextClasses = useCreateClassName('toggle-with-text', parentClass, modClass)
-
-	const [value, setValue] = useState<boolean>(true)
-
-	console.log(value)
 
 	return (
 		<div className={toggleWithTextClasses}>
@@ -24,7 +22,7 @@ const ToggleWithText: React.FC<IToggleWithText> = ({children, name, parentClass,
 					type="checkbox" 
 					id={name}
 					checked={value}
-					onChange={() => setValue(prev => !prev)}
+					onChange={() => handler()}
 				/>
 				<label className='toggle-with-text__slider' htmlFor={name}></label>
 			</div>

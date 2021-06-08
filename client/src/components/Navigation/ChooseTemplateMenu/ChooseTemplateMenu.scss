@@ -1,0 +1,61 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+@import '../../../styles/mixins/grid.scss';
+
+.choose-template-menu {
+	position: relative;
+	display: flex;
+	justify-content: space-around;
+	max-width: 980px;
+	height: 60px;
+	box-sizing: border-box;
+	background: $main;
+	box-shadow: -10px -10px 30px rgba(255, 255, 255, 0.9), 10px 10px 30px #B3BFC9;
+	border-radius: 50px;
+	overflow: hidden;
+	
+	@include media-breakpoint-down(md) {
+		width: 100%;
+		height: auto;
+		background: none;
+		box-shadow: none;
+		border-radius: 0px;
+		flex-wrap: wrap;
+		overflow: visible;
+	}
+
+	&__item {
+		display: block;
+		@include centering();
+		width: 20%;
+		height: 60px;
+		padding: 0 20px;
+		background: $main;
+		box-sizing: border-box;
+		font-size: 18px;
+		text-decoration: none;
+		color: $text-primary;
+		font-weight: 500;
+		text-align: center;
+		cursor: pointer;
+
+		&:hover {
+			background: linear-gradient(147.79deg, #D9E5EF 6.54%, #E3EDF4 94.43%);
+			box-shadow: inset -2px -2px 7px rgba(255, 255, 255, 0.84), inset 2px 2px 7px #B6C1CD;
+		}
+		&_active {
+			@include hovered-link(30px);
+			background: linear-gradient(147.79deg, #D9E5EF 6.54%, #E3EDF4 94.43%);
+			box-shadow: inset -2px -2px 7px rgba(255, 255, 255, 0.84), inset 2px 2px 7px #B6C1CD;
+		}
+		
+		@include media-breakpoint-down(md) {
+			width: 165px;
+			border-radius: 50px;
+			font-size: 16px;
+			box-shadow: -2px -2px 7px rgba(255, 255, 255, 0.84), 2px 2px 7px #B6C1CD;
+			margin: 10px 5px;
+		}
+	}
+}

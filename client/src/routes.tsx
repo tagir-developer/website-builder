@@ -50,10 +50,9 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 				</Route>
 
 				<Route path="/:name" component={ProjectPage} exact />
-				<Route path="/:name/template" component={SelectTemplatePage} exact />
 				<Route path="/:name/:pageId" component={EditPage} exact />
+				<Route path="/:name/:pageId/template" component={SelectTemplatePage} exact />
 				<Route path="/:name/:pageId/preview" component={PreviewPage} exact />
-				{/* {helpPageRoutes()} */}
 				<Redirect to="/" />
 			</Switch>
 		)

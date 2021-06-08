@@ -8,7 +8,6 @@ import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
 import PageCard from '../../components/UI/PageCard/PageCard'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import { usePopup } from '../../hooks/usePopup.hook'
-import LeftMenu from '../../components/Navigation/leftMenu/LeftMenu'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
 import CreatePage from '../../components/UI/CreatePage/CreatePage'
@@ -29,15 +28,15 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 	const pages = [
 		{
+			pageId: 'page-1',
 			title: "Главная страница",
 			published: true,
-			link: '/page-1',
 			isMainPage: true
 		},
 		{
+			pageId: 'page-2',
 			title: "Дополнительная страница",
 			published: false,
-			link: '/page-2',
 			isMainPage: false
 		}
 	]
@@ -99,7 +98,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 									parentClass="project-page"
 									title={i.title}
 									published={i.published}
-									link={'/' + match.params.name + i.link}
+									link={'/' + match.params.name + '/' + i.pageId}
 									isMainPage={i.isMainPage}
 								/>
 							)
@@ -115,15 +114,6 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 					/>
 
 				</div>
-
-				{/* <h1>Страница отдельного проекта</h1>
-				<h2>{match.params.name}</h2>
-				<Link to={'/' + match.params.name + '/page-1'} >Страница 1</Link>
-				<div></div>
-				<Link to={'/' + match.params.name + '/page-2'} >Страница 2</Link>
-				<div></div>
-				<Link to={'/' + match.params.name + '/template'} >Создать новую страницу</Link> */}
-
 			</div>
 			<Footer />
 			</Backdrop>

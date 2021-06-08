@@ -1,21 +1,33 @@
 import React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../Button/Button'
 import Checkbox from '../Checkbox/Checkbox'
 import './CreatePage.scss'
 
-interface ICreatePage {
+interface IRouteProps {
+	name: string
+}
+
+interface ICreatePage extends RouteComponentProps<IRouteProps> {
 	parentClass?: string
 	handler: any
 }
 
-const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler }) => {
+const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, match }) => {
 
 	const CreatePageClasses = useCreateClassName('create-page', parentClass)
 
 	const projectName = useInput('')
 	const urlName = useInput('')
+
+	const pageId = 'page-1' // ! Временно используем это значение, здесь должно быть генерируемое при создании новой страницы pageID
+
+	const createPageHandler = () => {
+		// ? Сначала надо записать данные нового сайта в базу, а затем перенаправить пользователя на страницу с шаблоном
+		history.push('/' + match.params.name + '/' + pageId + '/template') // ! Возможно, придется добавить в роут pageID для связи шаблона со страницей
+	}
 
 	return (
 		<div className={CreatePageClasses}>
@@ -61,7 +73,7 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler }) => {
 
 							<Button
 								parentClass="create-page"
-								handler={handler}
+								handler={createPageHandler}
 								modClass={['big']}
 							>
 								Создать страницу
@@ -75,4 +87,4 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler }) => {
 	)
 }
 
-export default CreatePage
+export default withRouter(CreatePage)

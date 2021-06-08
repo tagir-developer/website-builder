@@ -1,0 +1,58 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins/mixins.scss';
+@import '../../styles/mixins/breakpoints.scss';
+@import '../../styles/mixins/grid.scss';
+
+.select-template {
+	width: 100%;
+	min-height: 100vh;
+	// display: flex;
+	// flex-direction: column;
+	// align-items: center;
+	box-sizing: border-box;
+	padding: 0px 15px 40px 15px;
+	@include media-breakpoint-down(sm) {
+		padding: 0px;
+	}
+
+	&__page-title {
+		margin: 120px auto 60px auto;
+		@include media-breakpoint-down(sm) {
+			margin: 50px auto 50px auto;
+		}
+	}
+
+	&__choose-template-menu {
+		margin: 0px auto 50px auto;
+	}
+
+	&__template-card-list {
+		// max-width: 980px;
+		// margin: 0px auto 70px auto;
+
+		// display: flex;
+		// flex-wrap: wrap;
+		width: 100%;
+	}
+
+	&__list-container {
+		@include make-container(980px);
+		padding: 0px;
+		@include media-breakpoint-down(sm) {
+			padding: 0px 15px 50px 15px;
+		}
+	}
+
+	&__list-row {
+		@include make-row();
+	}
+
+	&__template-card {
+		@include make-col(6);
+		margin-bottom: 40px;
+		@include media-breakpoint-down(sm) {
+			@include make-col(12);
+			margin-bottom: 50px;
+		}
+	}
+}

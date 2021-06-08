@@ -1,0 +1,97 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+@import '../../../styles/mixins/grid.scss';
+
+.template-card {
+	max-width: 600px;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding: 40px;
+	@include card-styles();
+	@include media-breakpoint-down(md) {
+		padding: 30px 15px;
+		border-radius: 20px;
+	}
+
+	&__image-container {
+		position: relative;
+		width: 100%;
+		margin-bottom: 30px;
+		padding: 3px;
+		background: linear-gradient(118.52deg, #B4C2D3 31.36%, #FFFFFF 68.76%);
+		border-radius: 10px;
+		@include media-breakpoint-down(md) {
+			margin-bottom: 25px;
+		}
+	}
+
+	&__emty-template {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 34px;
+		color: $text-middle;
+		font-weight: bold;
+		text-align: center;
+		@include media-breakpoint-down(lg) {
+			font-size: 26px;
+		}
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
+		border-radius: 10px;
+		// margin-bottom: 30px;
+	}
+
+	&__title {
+		width: 100%;
+		@include h5-pc;
+		margin-bottom: 10px;
+	}
+
+	&__describe {
+		width: 100%;
+		font-size: 16px;
+		color: $text-secondary;
+		margin-bottom: 30px;
+	}
+
+	&__buttons-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-top: auto;
+		@include media-breakpoint-down(lg) {
+			justify-content: space-around;
+		}
+		&_center {
+			justify-content: center;
+		}
+	}
+
+	&__button {
+		width: auto;
+		padding: 0 35px;
+		@include media-breakpoint-down(lg) {
+			width: 100%;
+		}
+	}
+
+	&__secondary-button {
+		width: auto;
+		@include media-breakpoint-down(lg) {
+			width: 100%;
+			margin-bottom: 30px;
+		}
+	}
+
+}
