@@ -47,8 +47,8 @@
 	&__anim-text-copy {
 		display: block;
 		position: absolute;
-		top: 0;
 		left: 0;
+		bottom: 0;
 		font-family: "Helvetica Neue", sans-serif, "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans";
 		line-height: 60px;
 		width: 100%;
@@ -58,7 +58,7 @@
 		box-sizing: border-box;
 		padding-left: 70px;
 		overflow: visible;
-		animation: copy-anim 800ms ease-in-out;
+		animation: copy-anim 850ms ease-in-out;
 		@include media-breakpoint-down(sm) {
 			animation: copy-anim-mobile 850ms ease-in-out;
 			line-height: 30px;

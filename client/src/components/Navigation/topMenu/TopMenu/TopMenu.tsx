@@ -21,7 +21,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 		if (typeMenu === 'auth') return 'top-menu'
 		if (typeMenu === 'auth-project') return 'top-menu'
 		if (typeMenu === 'select-template') return 'top-menu'
-		if (typeMenu === 'edit') return 'top-menu top-menu_dark-theme'
+		if (typeMenu === 'edit') return 'top-menu top-menu_dark-theme top-menu_edit-page'
 		if (typeMenu === 'preview') return 'top-menu top-menu_dark-theme'
 		return 'top-menu'
 	}

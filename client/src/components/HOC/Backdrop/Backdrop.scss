@@ -28,15 +28,15 @@ $delay: 500ms; // Задержка анимации
 		overflow-y: hidden;
 		transition: filter $delay;
 		padding-right: 15px;
+
 		@include media-breakpoint-down(md) {
 			padding-right: 0px;
 		}
 	}
 
-	// &_solid.popup-backdrop_show {
-	// 	overflow-y: hidden;
-	// 	// transition: all $delay;
-	// }
+	&_without-padding {
+		padding-right: 0px;
+	}
 
 	&__darkening {
 		width: 100%;
@@ -49,7 +49,8 @@ $delay: 500ms; // Задержка анимации
 		visibility: hidden;
 		opacity: 0;
 		transition: all $delay;
-		z-index: 200;
+		z-index: 800;
+		// z-index: 200;
 		overflow-y: hidden;
 
 		&_blur {

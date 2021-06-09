@@ -11,6 +11,10 @@
 	color: $text-primary;
 	z-index: 100;
 
+	&_edit-page {
+		z-index: 500;
+	}
+
 	&_dark-theme {
 		color: $footer-main-text;
 	}
