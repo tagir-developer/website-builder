@@ -47,4 +47,15 @@
 		width: 500px;
 		margin: 50px auto;
 	}
+
+	&__page-title {
+		margin: 100px auto 0px auto;
+		@include media-breakpoint-down(sm) {
+			margin-top: 50px;
+		}
+	}
+
+	&__add-new-button {
+		margin: 50px auto 100px auto;
+	}
 }

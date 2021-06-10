@@ -10,6 +10,10 @@ import { useCheck } from '../../hooks/useCheck.hook'
 import BlocksMenu from '../../components/Navigation/BlocksMenu/BlocksMenu'
 import { CSSTransition } from 'react-transition-group'
 import SecondaryButton from '../../components/UI/SecondaryButton/SecondaryButton'
+import BlockSelectionList from '../../components/UI/BlockSelectionList/BlockSelectionList'
+import PageTitle from '../../components/UI/PageTitle/PageTitle'
+import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
+import Header1 from '../../components/UILIbrary/headers/Header1/Header1'
 
 interface IRouteProps {
 	pageId: string
@@ -28,11 +32,13 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	const blocksListPopup = usePopup(false, 'blur')
 
+	const isEmpty = false
+
 
 	return (
 		<>
-			<PopUp {...blocksListPopup.popupProps} withTitle="Список блоков">
-				<BlocksMenu />
+			<PopUp {...blocksListPopup.popupProps} withTitle="Список блоков" modClass={['block-select-list']}>
+				<BlockSelectionList />
 			</PopUp>
 
 			<Backdrop {...blocksListPopup.backdropProps}>
@@ -71,13 +77,26 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							withoutPadding={true}
 						>
 
-							<h1 style={{ textAlign: 'center' }}>Редактор страницы</h1>
+							{isEmpty 
+								? <PageTitle parentClass="edit-page" title="Пустой шаблон">
+									Вы пока не создали ни одного блока. Добавьте свой первый блок на страницу.
+								</PageTitle>
+								// : <EditWrapper>
+								// 	<Header1 />
+								// </EditWrapper>
+								: <Header1 />
+							}
 
-							<SecondaryButton parentClass="edit-page" handler={() => openLeftMenu.handler()}> Открыть/скрыть меню</SecondaryButton>
 
-							{/* <h1>Редактор страницы</h1>
-							<h2>{match.params.pageId}</h2>
-							<Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}
+							<AddNewButton 
+								parentClass="edit-page" 
+								handler={() => openLeftMenu.handler()} title="Добавить новый блок" 
+							/>
+
+
+						
+							{/* <Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}
+
 						</Backdrop>
 					</div>
 				</div>

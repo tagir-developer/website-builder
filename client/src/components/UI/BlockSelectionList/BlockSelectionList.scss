@@ -1,0 +1,22 @@
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+
+.block-selection-list {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 20px 20px 40px 20px;
+	@include media-breakpoint-down(sm) {
+		padding: 15px 15px 20px 15px;
+	}
+
+	&__block-card {
+		margin-bottom: 40px;
+		@include media-breakpoint-down(sm) {
+			margin-bottom: 30px;
+		}
+	}
+
+
+}
