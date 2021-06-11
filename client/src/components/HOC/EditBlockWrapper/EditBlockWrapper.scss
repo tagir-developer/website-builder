@@ -1,0 +1,38 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/mixins.scss';
+
+.edit-block-wrapper {
+	position: relative;
+	box-sizing: border-box;
+
+	&:hover {
+		// border: 3px solid rgb(0, 230, 0);
+		// padding: 3px;
+		cursor: pointer;
+		outline: 3px solid $success;
+		outline-offset: -3px;
+		box-shadow: inset 3px 3px 18px rgba(0, 255, 41, 0.75), inset -3px -3px 18px rgba(0, 255, 41, 0.75),;
+	}
+
+	&__test {
+		position: absolute;
+		height: 100px;
+		width: 100px;
+		top: 20px;
+		left: 20px;
+		background: red;
+		z-index: 10;
+	}
+
+	&__green-light {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		&:hover {
+			box-shadow: inset 3px 3px 18px rgba(0, 255, 41, 0.50), inset -3px -3px 18px rgba(0, 255, 41, 0.50);
+		}
+		
+	}
+}

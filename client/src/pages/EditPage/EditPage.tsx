@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties, Suspense } from 'react'
 import './EditPage.scss'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import Footer from '../../components/UI/Footer/Footer'
@@ -13,16 +13,28 @@ import SecondaryButton from '../../components/UI/SecondaryButton/SecondaryButton
 import BlockSelectionList from '../../components/UI/BlockSelectionList/BlockSelectionList'
 import PageTitle from '../../components/UI/PageTitle/PageTitle'
 import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
-import Header1 from '../../components/UILIbrary/headers/Header1/Header1'
+import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWrapper'
+// import Header1 from '../../components/UILIbrary/headers/Header1/Header1'
+// import Header2 from '../../components/UILIbrary/headers/Header2/Header2'
 
 interface IRouteProps {
 	pageId: string
 	name: string
 }
 
+interface IBlock {
+	blockId: string
+	styles: {
+		[key: string]: CSSProperties
+	}
+	// component: JSX.Element
+	component: string
+}
+
 interface IEditPage extends RouteComponentProps<IRouteProps> {
 
 }
+
 
 const EditPage: React.FC<IEditPage> = ({ match }) => {
 
@@ -33,6 +45,22 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 	const blocksListPopup = usePopup(false, 'blur')
 
 	const isEmpty = false
+
+	const blocksArray: Array<any> = [
+		{
+			path: 'headers/Header1/Header1',
+			styles: {
+				titleStyles: { fontSize: '26px', color: 'white' },
+				buttonStyles: { fontSize: '18px', color: 'white' }
+			}
+		},
+		{
+			path: 'headers/Header2/Header2',
+			styles: {
+				titleStyles: { fontSize: '26px', color: 'white' },
+			}
+		}
+	]
 
 
 	return (
@@ -77,24 +105,37 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							withoutPadding={true}
 						>
 
-							{isEmpty 
+							{blocksArray.map((i, index) => {
+								const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
+								return (
+									<Suspense fallback={<div>Loading...</div>}>
+										<EditBlockWrapper>
+											<BlockComponent />
+										</EditBlockWrapper>
+									</Suspense>
+								)
+							})}
+
+
+
+							{/* {blocksArray.map((i, index) => {
+							const MyComponent = i.component
+							return <MyComponent styles={i.styles} />
+						})} */}
+
+							{/* {isEmpty 
 								? <PageTitle parentClass="edit-page" title="Пустой шаблон">
 									Вы пока не создали ни одного блока. Добавьте свой первый блок на страницу.
 								</PageTitle>
-								// : <EditWrapper>
-								// 	<Header1 />
-								// </EditWrapper>
-								: <Header1 />
-							}
+								: 
+							} */}
 
 
-							<AddNewButton 
-								parentClass="edit-page" 
-								handler={() => openLeftMenu.handler()} title="Добавить новый блок" 
+							<AddNewButton
+								parentClass="edit-page"
+								handler={() => openLeftMenu.handler()} title="Добавить новый блок"
 							/>
 
-
-						
 							{/* <Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}
 
 						</Backdrop>
