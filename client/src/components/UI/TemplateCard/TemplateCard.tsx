@@ -29,11 +29,11 @@ const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, mo
 			{emptyTemplate
 				? <div className="template-card__image-container">
 					<div className="template-card__emty-template">Пустой шаблон</div>
-					<img className="template-card__image" src={img} />
+					<img className="template-card__image" src={img} alt="" />
 				</div>
 				: <div className="template-card__image-container">
 					{/* <img className="template-card__image" src={process.env.PUBLIC_URL + '/img/temp-2.jpg'} /> */}
-					<img className="template-card__image" src={img} />
+					<img className="template-card__image" src={img} alt=""  />
 				</div>
 			}
 

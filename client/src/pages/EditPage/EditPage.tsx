@@ -1,35 +1,23 @@
-import React, { CSSProperties, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import './EditPage.scss'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import Footer from '../../components/UI/Footer/Footer'
-import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import { usePopup } from '../../hooks/usePopup.hook'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import { useCheck } from '../../hooks/useCheck.hook'
 import BlocksMenu from '../../components/Navigation/BlocksMenu/BlocksMenu'
 import { CSSTransition } from 'react-transition-group'
-import SecondaryButton from '../../components/UI/SecondaryButton/SecondaryButton'
 import BlockSelectionList from '../../components/UI/BlockSelectionList/BlockSelectionList'
-import PageTitle from '../../components/UI/PageTitle/PageTitle'
 import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
 import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWrapper'
-// import Header1 from '../../components/UILIbrary/headers/Header1/Header1'
-// import Header2 from '../../components/UILIbrary/headers/Header2/Header2'
 
 interface IRouteProps {
 	pageId: string
 	name: string
 }
 
-interface IBlock {
-	blockId: string
-	styles: {
-		[key: string]: CSSProperties
-	}
-	// component: JSX.Element
-	component: string
-}
 
 interface IEditPage extends RouteComponentProps<IRouteProps> {
 
@@ -98,6 +86,8 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							</div>
 						</CSSTransition>
 
+
+
 						<Backdrop
 							isOpen={openLeftMenu.value}
 							handler={() => openLeftMenu.setNewValue(false)}
@@ -108,7 +98,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							{blocksArray.map((i, index) => {
 								const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
 								return (
-									<Suspense fallback={<div>Loading...</div>}>
+									<Suspense key={index} fallback={<div>Загрузка...</div>}>
 										<EditBlockWrapper>
 											<BlockComponent />
 										</EditBlockWrapper>

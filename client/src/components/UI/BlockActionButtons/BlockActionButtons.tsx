@@ -5,6 +5,7 @@ import './BlockActionButtons.scss'
 
 interface IItems {
 	title: string
+	iconType: string
 	handler: (param?: any) => any
 }
 
@@ -44,9 +45,24 @@ const BlockActionButtons: React.FC<IBlockActionButtons> = ({ parentClass, modCla
 	}
 
 	return (
-		<>
+		<div className={BlockActionButtonsClasses}>
+
+			<div className="block-action-buttons__visible-only-on-pc">
+				{items && items.map((i, index) => {
+					return (
+						<div
+							key={'pc-action-button' + index}
+							className={'block-action-buttons__pc-action-button block-action-buttons__pc-action-button_' + i.iconType}
+							onClick={ () => {} }
+						>
+							<span className="block-action-buttons__pc-tooltip">{i.title}</span>
+						</div>
+					)
+				})}
+			</div>
+
 			<div
-				className={BlockActionButtonsClasses}
+				className="block-action-buttons__visible-only-on-mobile"
 				onClick={() => isOpenHandler(prev => !prev)}
 				
 			>
@@ -64,7 +80,7 @@ const BlockActionButtons: React.FC<IBlockActionButtons> = ({ parentClass, modCla
 							return (
 								<li 
 									key={'menu-list-item' + index}
-									className="block-action-buttons__menu-list-item" 
+									className={'block-action-buttons__menu-list-item block-action-buttons__menu-list-item_' + i.iconType }
 									onClick={e => openSettingInPopup(e, i.handler)}
 								>
 									{i.title}
@@ -75,10 +91,10 @@ const BlockActionButtons: React.FC<IBlockActionButtons> = ({ parentClass, modCla
 						</ul>
 					</CSSTransition>
 				</div>
-
 				<div className="block-action-buttons__icon" ref={showMenuRef}></div>
 			</div>
-		</>
+
+		</div>
 	)
 }
 

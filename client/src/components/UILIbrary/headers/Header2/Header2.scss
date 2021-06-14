@@ -8,17 +8,17 @@
 	justify-content: center;
 	box-sizing: border-box;
 	padding: 30px;
-	background: rgb(87, 87, 87);
+	background: rgb(255, 255, 255);
 
 		&__title {
 			font-size: 50px;
 			font-weight: bold;
-			color: rgb(255, 0, 0);
+			color: rgb(0, 87, 46);
 			margin-bottom: 40px;
 		}
 
 		&__description {
-			color: #fff;
+			color: rgb(34, 34, 34);
 			font-size: 26px;
 			margin-bottom: 60px;
 		}
@@ -27,7 +27,7 @@
 			display: block;
 			padding: 0 80px;
 			height: 70px;
-			background: rgb(202, 74, 0);
+			background: rgb(125, 202, 0);
 			color: #fff;
 			text-align: center;
 			line-height: 70px;
@@ -35,8 +35,9 @@
 			font-weight: bold;
 			transition: background 150ms ease-in;
 			cursor: pointer;
+			border-radius: 20px;
 			&:hover {
-				background: rgb(207, 97, 33);
+				background: rgb(190, 243, 105);
 			}
 		}
 }

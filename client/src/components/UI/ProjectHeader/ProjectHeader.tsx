@@ -1,7 +1,6 @@
 import React from 'react'
 import './ProjectHeader.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { NavLink } from 'react-router-dom'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import Button from '../Button/Button'
 import CopyLink from '../CopyLink/CopyLink'

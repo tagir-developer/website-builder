@@ -14,9 +14,9 @@ const ActionButtons: React.FC<IActionButtons> = ({ parentClass, modClass}) => {
 
 	return (
 		<div className={actionButtonsClasses}>
-			<DarkRoundButton parentClass="action-buttons" modClass={['icon-undo']} />
-			<DarkRoundButton parentClass="action-buttons" modClass={['icon-save']} />
-			<DarkRoundButton parentClass="action-buttons" modClass={['icon-show']} />
+			<DarkRoundButton parentClass="action-buttons" modClass={['icon-undo']} title='Отменить действие' />
+			<DarkRoundButton parentClass="action-buttons" modClass={['icon-save']} title='Сохранить изменения' />
+			<DarkRoundButton parentClass="action-buttons" modClass={['icon-show']} title='Предпросмотр' />
 		</div>
 	)
 }

@@ -18,7 +18,7 @@ const Header2: React.FC<IHeader1> = ({ parentClass, modClass, styles }) => {
 			<div className={classes}>
 				<div className="lib-header-2__title">Заголовок блока</div>
 				<div className="lib-header-2__description">Какой-то текст описывающий свойства продукта или услуги</div>
-				<div className="lib-header-2__button">Кнопка</div>
+				<div className="lib-header-2__button">Кнопка действия</div>
 			</div>
 	)
 }

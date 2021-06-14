@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './ViewOnDevices.scss'
-import {useCreateClassName} from '../../../../hooks/createClassName.hook'
+import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 
 interface IViewOnDevices {
 	parentClass?: string
@@ -10,38 +10,33 @@ const ViewOnDevices: React.FC<IViewOnDevices> = ({ parentClass }) => {
 
 	const classes = useCreateClassName('view-on-devices', parentClass)
 
-	const [mobileClasses, setMobileClasses] = useState('view-on-devices__button')
-	const [tabletClasses, setTabletClasses] = useState('view-on-devices__button')
-	const [desktopClasses, setDesktopClasses] = useState('view-on-devices__button')
+	const [activeItem, setActiveItem] = useState<number>(0)
 
-	const changeDeviceHandler = (device: string): void => {
-		if (device === 'mobile') {
-			setMobileClasses('view-on-devices__button view-on-devices__button_active')
-			setTabletClasses('view-on-devices__button')
-			setDesktopClasses('view-on-devices__button')
-			return
-		}
-		if (device === 'tablet') {
-			setTabletClasses('view-on-devices__button view-on-devices__button_active')
-			setMobileClasses('view-on-devices__button')
-			setDesktopClasses('view-on-devices__button')
-			return
-		}
-		if (device === 'desktop') {
-			setDesktopClasses('view-on-devices__button view-on-devices__button_active')
-			setMobileClasses('view-on-devices__button')
-			setTabletClasses('view-on-devices__button')
-			return
-		}
+	const deviceItems: string[] = ['Смартфон', 'Планшет', 'Компьютер']
+
+	const itemHandler = (index: number) => {
+		setActiveItem(index)
+		// ? Здесь будем запрашивать из базы данных и выводить нужные карточки
 	}
+
 
 	return (
 		<div className={classes}>
-			<div onClick={() => changeDeviceHandler('mobile')} className={mobileClasses}>Смартфон</div>
-			<div className="view-on-devices__devider"></div>
-			<div onClick={() => changeDeviceHandler('tablet')} className={tabletClasses}>Планшет</div>
-			<div className="view-on-devices__devider"></div>
-			<div onClick={() => changeDeviceHandler('desktop')} className={desktopClasses}>Компьютер</div>
+
+			{deviceItems.map((i, index) => {
+				return (
+					<React.Fragment key={'view-on-devices' + index}>
+					{ index !== 0 && <div className="view-on-devices__devider"></div> }
+					<div
+						className={index === activeItem ? 'view-on-devices__button view-on-devices__button_active' : 'view-on-devices__button'}
+						onClick={() => itemHandler(index)}
+					>
+						{i}
+					</div>			
+					</React.Fragment>
+				)
+			})}
+
 		</div>
 	)
 }

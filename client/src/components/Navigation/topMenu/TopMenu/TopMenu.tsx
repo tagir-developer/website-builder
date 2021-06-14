@@ -249,7 +249,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 		if (typeMenu === 'preview') {
 			return (
 				<>
-				<Logo parentClass="top-menu" modClass={['dark-theme']} />
+				<Logo parentClass="top-menu" modClass={['dark-theme', 'hide-on-small-devices']} />
 				<BreadCrumbs 
 					parentClass="top-menu" 
 					modClass={['dark-theme']}

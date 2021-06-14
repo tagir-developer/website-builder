@@ -1,15 +1,98 @@
 @import '../../../styles/variables.scss';
 @import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+@import '../../../styles/mixins/grid.scss';
 
 .block-action-buttons {
-	width: 50px;
-	height: 50px;
-	margin-left: 15px;
-	margin-top: 15px;
-	border-radius: 50%;
-	background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
-	box-shadow: -4px -4px 19px rgba(255, 255, 255, 0.7), 4px 4px 30px #B3BFC9;
-	cursor: pointer;
+
+
+	&__visible-only-on-pc {
+		width: 440px;
+		height: 60px;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		margin-top: 10px;
+		margin-left: 15px;
+		background: $main;
+		box-shadow: 5px 5px 14px rgba(0, 0, 0, 0.4);
+		border-radius: 50px;
+
+		@include media-breakpoint-down(sm) {
+			display: none;
+		}
+	}
+
+	&__pc-action-button {
+		position: relative;
+		width: 40px;
+		height: 40px;
+		border-radius: 10px;
+		background: $main;
+
+		&_config {
+			background: url('./img/configs.svg') center no-repeat;
+		}
+		&_edit {
+			background: url('./img/edit.svg') center no-repeat;
+		}
+		&_show {
+			background: url('./img/show.svg') center no-repeat;
+		}
+		&_hide {
+			background: url('./img/hide.svg') center no-repeat;
+		}
+		&_copy {
+			background: url('./img/copy.svg') center no-repeat;
+		}
+		&_delete {
+			background: url('./img/delete.svg') center no-repeat;
+		}
+
+		&:hover {
+			box-shadow: -5px -5px 11px rgba(255, 255, 255, 0.9), 5px 5px 11px #B3BFC9;
+		}
+
+		&:hover .block-action-buttons__pc-tooltip {
+			visibility: visible;
+			opacity: 1;
+		}
+
+	}
+
+	&__pc-tooltip {
+		display: block;
+		position: absolute;
+		width: 124px;
+		height: 35px;
+		top: -38px;
+		left: -40px;
+		box-sizing: border-box;
+		background: #FDFEFF;
+		box-shadow: 2px 2px 11px rgba(0, 0, 0, 0.25);
+		border-radius: 5px;
+		font-size: 14px;
+		color: $text-primary;
+		text-align: center;
+		line-height: 35px;
+		visibility: hidden;
+		opacity: 0;
+		transition: all 300ms ease;
+	}
+	
+
+	&__visible-only-on-mobile {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
+		box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.3);
+		cursor: pointer;
+
+		@include media-breakpoint-up(sm) {
+			display: none;
+		}
+	}
 
 	&__menu {
 		position: relative;
@@ -19,18 +102,19 @@
 	&__menu-list {
 		position: absolute;
 		top: 25px;
-		right: 25px;
-		width: 260px;
+		left: 25px;
+		width: 220px;
 		margin: 0px;
 		list-style: none;
 		background: #F2F5F9;
-		box-shadow: 3px 3px 21px #C0CCD8;
+		// box-shadow: 3px 3px 21px #C0CCD8;
+		box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.3);
 		border-radius: 10px;
 		overflow: hidden;
 
 		&_show-enter {
 			transform: scale(0, 0);
-			transform-origin: top right;
+			transform-origin: top left;
 
 		}
 	
@@ -41,7 +125,7 @@
 	
 		&_show-exit {
 			transform: scale(1, 1);
-			transform-origin: top right;
+			transform-origin: top left;
 		}
 	
 		&_show-exit-active {
@@ -54,7 +138,8 @@
 		width: 100%;
 		height: 60px;
 		display: block;
-		text-align: center;
+		text-align: left;
+		padding-left: 60px;
 		line-height: 60px;
 		font-size: 16px;
 
@@ -62,8 +147,53 @@
 			background: #EFF4F9;
 			box-shadow: inset -1px -1px 20px rgba(255, 255, 255, 0.9), inset 1px 1px 10px #B6C1CD;
 		}
-	}
 
+		&:before {
+			content: '';
+			display: block;
+			position: absolute;
+			width: 50px;
+			height: 60px;
+			margin-left: -60px;
+			// background: red;
+		}
+
+		&_config {
+			&:before {
+				background: url('./img/configs.svg') center no-repeat;
+			}
+		}
+
+		&_edit {
+			&:before {
+				background: url('./img/edit.svg') center no-repeat;
+			}
+		}
+
+		&_show {
+			&:before {
+				background: url('./img/show.svg') center no-repeat;
+			}
+		}
+
+		&_hide {
+			&:before {
+				background: url('./img/hide.svg') center no-repeat;
+			}
+		}
+
+		&_copy {
+			&:before {
+				background: url('./img/copy.svg') center no-repeat;
+			}
+		}
+
+		&_delete {
+			&:before {
+				background: url('./img/delete.svg') center no-repeat;
+			}
+		}
+	}
 
 	&__icon {
 		width: 100%;
