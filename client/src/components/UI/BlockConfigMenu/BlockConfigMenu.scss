@@ -1,0 +1,15 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+@import '../../../styles/mixins/grid.scss';
+
+.block-configs-menu {
+	position: relative;
+	width: 100%;
+	min-height: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+	background: $main;
+
+
+}

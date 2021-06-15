@@ -7,41 +7,6 @@
 	width: 100%;
 	min-height: 100vh;
 
-	&__blocks-menu-wrapper {
-		width: 345px;
-		height: 100%;
-		position: absolute;
-		top: 60px;
-		left: 0;
-		z-index: 400;
-		box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
-		@include media-breakpoint-down(sm) {
-			width: 100%;
-		}
-
-		&_show-enter {
-			transform: translateX(-100%);
-		}
-	
-		&_show-enter-active {
-			transform: translateX(0);
-			transition: transform 400ms;
-		}
-	
-		&_show-exit {
-			transform: translateX(0);
-		}
-	
-		&_show-exit-active {
-			transform: translateX(-110%);
-			transition: transform 400ms;
-		}
-	}
-
-	&__blocks-menu {
-
-	}
-
 	&__secondary-button {
 		display: block;
 		width: 500px;

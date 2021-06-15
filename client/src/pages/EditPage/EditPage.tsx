@@ -6,12 +6,14 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import { usePopup } from '../../hooks/usePopup.hook'
 import PopUp from '../../components/HOC/PopUp/PopUp'
-import { useCheck } from '../../hooks/useCheck.hook'
 import BlocksMenu from '../../components/Navigation/BlocksMenu/BlocksMenu'
-import { CSSTransition } from 'react-transition-group'
 import BlockSelectionList from '../../components/UI/BlockSelectionList/BlockSelectionList'
 import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
 import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWrapper'
+import LeftBar from '../../components/HOC/LeftBar/LeftBar'
+import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
+import TitleWithCloseBtn from '../../components/UI/TitleWithCloseBtn/TitleWithCloseBtn'
+import BlockConfigMenu from '../../components/UI/BlockConfigMenu/BlockConfigMenu'
 
 interface IRouteProps {
 	pageId: string
@@ -20,7 +22,6 @@ interface IRouteProps {
 
 
 interface IEditPage extends RouteComponentProps<IRouteProps> {
-
 }
 
 
@@ -28,11 +29,17 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	// *Здесь нужна проверка, есть ли такой роут в базе проектов, если нет, то выводим сообщение об ошибке или редиректим на главную
 
-	const openLeftMenu = useCheck(false)
+	// const openLeftMenu = useCheck(false)
+
+	const openLeftMenu = usePopup(false, 'blur')
+	const openBlockConfigs = usePopup(false, 'blur')
+	const openBlockContent = usePopup(false, 'blur')
+
+	const backdropProps = useChooseBackdropProps(openLeftMenu, openBlockConfigs, openBlockContent)
 
 	const blocksListPopup = usePopup(false, 'blur')
 
-	const isEmpty = false
+	// const isEmpty = false  // Если нет ни одного блока
 
 	const blocksArray: Array<any> = [
 		{
@@ -64,34 +71,30 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 				<div className="content-area">
 					<div className="edit-page">
 
-						<CSSTransition
-							in={openLeftMenu.value}
-							timeout={400}
-							classNames="edit-page__blocks-menu-wrapper_show"
-							mountOnEnter
-							unmountOnExit
-						>
-							<div className="edit-page__blocks-menu-wrapper">
-								<BlocksMenu
-									parentClass="edit-page"
-									header={{
-										title: 'Библиотека блоков',
-										closeHandler: () => openLeftMenu.setNewValue(false)
-									}}
-									popup={{
-										popupClosed: !blocksListPopup.isOpen,
-										switchPopup: blocksListPopup.handler
-									}}
-								/>
-							</div>
-						</CSSTransition>
+						<LeftBar isOpen={openLeftMenu.isOpen}>
+							<BlocksMenu
+								header={{
+									title: 'Библиотека блоков',
+									closeHandler: () => openLeftMenu.closePopup()
+								}}
+								popup={{
+									popupClosed: !blocksListPopup.isOpen,
+									switchPopup: blocksListPopup.handler
+								}}
+							/>
+						</LeftBar>
 
+						<LeftBar isOpen={openBlockConfigs.isOpen}>
+							<BlockConfigMenu closeHandler={openBlockConfigs.closePopup} />
+						</LeftBar>
+
+						<LeftBar isOpen={openBlockContent.isOpen}>
+							<TitleWithCloseBtn title="Редактировать контент" closeHandler={openBlockContent.closePopup} />
+						</LeftBar>
 
 
 						<Backdrop
-							isOpen={openLeftMenu.value}
-							handler={() => openLeftMenu.setNewValue(false)}
-							type="blur"
+							{...backdropProps}
 							withoutPadding={true}
 						>
 
@@ -124,6 +127,16 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							<AddNewButton
 								parentClass="edit-page"
 								handler={() => openLeftMenu.handler()} title="Добавить новый блок"
+							/>
+
+							<AddNewButton
+								parentClass="edit-page"
+								handler={openBlockConfigs.openPopup} title="Настройки блока"
+							/>
+
+							<AddNewButton
+								parentClass="edit-page"
+								handler={openBlockContent.openPopup} title="Содержимое блока"
 							/>
 
 							{/* <Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}

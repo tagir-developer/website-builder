@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './BlocksMenu.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import TitleWithCloseBtn from '../../UI/TitleWithCloseBtn/TitleWithCloseBtn'
 
 interface IBlocksMenu {
 	parentClass?: string
@@ -35,7 +36,6 @@ const BlocksMenu: React.FC<IBlocksMenu> = ({ parentClass, modClass, popup, heade
 
 		if (popup && popup.popupClosed) {
 			setActiveItem(null)
-			console.log('Закрыли попап')
 		}
 
 	}, [popup])
@@ -43,14 +43,9 @@ const BlocksMenu: React.FC<IBlocksMenu> = ({ parentClass, modClass, popup, heade
 
 	return (
 		<div className={blocksMenuClasses}>
-			{ header
-				? <>
-					<div className="blocks-menu__title">{header.title}</div>
-					<div className="blocks-menu__devider"></div>
-					<div className="blocks-menu__close-button" onClick={header.closeHandler}></div>
-				</>
-				: null
-			}
+
+			{ header && <TitleWithCloseBtn title={header.title} closeHandler={header.closeHandler} /> }
+
 			{menuItems.map((i, index) => {
 				return (
 					<div

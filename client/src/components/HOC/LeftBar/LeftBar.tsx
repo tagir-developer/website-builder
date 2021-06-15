@@ -5,41 +5,38 @@ import './LeftBar.scss'
 
 interface ILeftBar {
 	parentClass?: string
-	type: 'blur' | 'solid'
 	modClass?: string[]
 	isOpen: boolean
-	handler: () => void
 	transparent?: boolean
 	withTitle?: string
 	backdropBlocked?: boolean
 }
 
-const LeftBar: React.FC<ILeftBar> = ({ parentClass, modClass, type, isOpen, children, handler, transparent, withTitle, backdropBlocked }) => {
+const LeftBar: React.FC<ILeftBar> = ({ parentClass, modClass, isOpen, children, transparent, withTitle, backdropBlocked }) => {
 
 
-	const classes = useCreateClassName('LeftBar', parentClass, modClasses)
+	const classes = useCreateClassName('left-bar', parentClass)
 
 
-	const stopPropagation = (event: React.MouseEvent<HTMLDivElement>): void => {
-		event.preventDefault()
-		event.stopPropagation()
-	}
+	// const stopPropagation = (event: React.MouseEvent<HTMLDivElement>): void => {
+	// 	event.preventDefault()
+	// 	event.stopPropagation()
+	// }
 
 	return (
-		<div className={classes}>
-			<CSSTransition
-				in={isOpen}
-				timeout={400}
-				classNames="left-bar_show"
-				mountOnEnter
-				unmountOnExit
-			>
-				<div className="left-bar__content">
+		<CSSTransition
+			in={isOpen}
+			timeout={400}
+			classNames="left-bar_show"
+			mountOnEnter
+			unmountOnExit
+		>
+			<div className={classes}>
+				{/* <div className="left-bar__content"> */}
 					{children}
-				</div>
-			</CSSTransition>
-		</div>
-
+				{/* </div> */}
+			</div>
+		</CSSTransition >
 	)
 
 }
