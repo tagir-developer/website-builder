@@ -16,6 +16,16 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 
 	const [hovered, setHovered] = useState<boolean>(false)
 
+	const mouseOverHandler = () => {
+		setHovered(true)
+		// ! Здесь необходимо в глобальном стейте записать blockId блока, с которым работаем
+	}
+
+	const mouseLeaveHandler = () => {
+		setHovered(false)
+		// ! Здесь необходимо в глобальном стейте снять blockId блока, с которым работаем
+	}
+
 
 	const isHide = false
 
@@ -50,8 +60,8 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 	return (
 		<div
 			className={blockWrapperClasses}
-			onMouseOver={() => setHovered(true)}
-			onMouseLeave={() => setHovered(false)}
+			onMouseOver={mouseOverHandler}
+			onMouseLeave={mouseLeaveHandler}
 		>
 			{hovered && <>
 				<div className="edit-block-wrapper__green-light"></div>

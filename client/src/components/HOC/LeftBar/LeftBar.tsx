@@ -7,15 +7,12 @@ interface ILeftBar {
 	parentClass?: string
 	modClass?: string[]
 	isOpen: boolean
-	transparent?: boolean
-	withTitle?: string
-	backdropBlocked?: boolean
 }
 
-const LeftBar: React.FC<ILeftBar> = ({ parentClass, modClass, isOpen, children, transparent, withTitle, backdropBlocked }) => {
+const LeftBar: React.FC<ILeftBar> = ({ parentClass, modClass, isOpen, children }) => {
 
 
-	const classes = useCreateClassName('left-bar', parentClass)
+	const classes = useCreateClassName('left-bar', parentClass, modClass)
 
 
 	// const stopPropagation = (event: React.MouseEvent<HTMLDivElement>): void => {

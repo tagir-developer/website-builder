@@ -43,6 +43,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	const blocksArray: Array<any> = [
 		{
+			blockId: 'asdadasdassdfsdfd',
 			path: 'headers/Header1/Header1',
 			styles: {
 				titleStyles: { fontSize: '26px', color: 'white' },
@@ -50,6 +51,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 			}
 		},
 		{
+			blockId: 'adadadadsasdasd',
 			path: 'headers/Header2/Header2',
 			styles: {
 				titleStyles: { fontSize: '26px', color: 'white' },
@@ -84,11 +86,11 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							/>
 						</LeftBar>
 
-						<LeftBar isOpen={openBlockConfigs.isOpen}>
+						<LeftBar isOpen={openBlockConfigs.isOpen} modClass={['wide']} >
 							<BlockConfigMenu closeHandler={openBlockConfigs.closePopup} />
 						</LeftBar>
 
-						<LeftBar isOpen={openBlockContent.isOpen}>
+						<LeftBar isOpen={openBlockContent.isOpen} modClass={['wide']} >
 							<TitleWithCloseBtn title="Редактировать контент" closeHandler={openBlockContent.closePopup} />
 						</LeftBar>
 

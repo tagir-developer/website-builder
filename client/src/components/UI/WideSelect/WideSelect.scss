@@ -1,0 +1,88 @@
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+
+.wide-select {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__name {
+		width: 100%;
+		display: block;
+		box-sizing: border-box;
+		// padding-right: 20px;
+		font-size: 20px;
+		color: $text-secondary;
+		margin-bottom: 15px;
+		@include media-breakpoint-down(sm) {
+			// width: 40%;
+			font-size: 16px;
+		}
+	}
+
+	&__list {
+		position: relative;
+		width: 100%;
+		height: 60px;
+		box-sizing: border-box;
+		background: transparent;
+		padding-left: 20px;
+		font-size: 16px;
+		font-family: inherit;
+		color: $text-secondary;
+		appearance: none;
+		cursor: pointer;
+		line-height: 30px;
+		z-index: 3;
+		@include media-breakpoint-down(sm) {
+			padding-right: 60px;
+			overflow: hidden;
+		}
+	}
+
+	&__list-wrapper {
+		width: 100%;
+		position: relative;
+		border-radius: 50px;
+		overflow: hidden;
+		@include media-breakpoint-down(sm) {
+			width: 60%;
+		}
+	}
+
+	&__list-background {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(103.43deg, #DDE7F3 18.98%, #EBF3F9 95.42%);
+		box-shadow: inset -3px -3px 10px rgba(255, 255, 255, 0.84), inset 3px 3px 10px #B6C1CD;
+		border-radius: 50px;
+		z-index: 1;
+	}
+
+	&__list-button {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
+		box-shadow: -4px -4px 19px rgba(255, 255, 255, 0.7), 4px 4px 30px #B3BFC9;
+		z-index: 2;
+		&:before {
+			content: '';
+			display: block;
+			width: 50px;
+			height: 50px;
+			background: url('./img/arrow-down.svg') center no-repeat;
+		}
+	}
+
+	// &__option {
+	// }
+}
+
