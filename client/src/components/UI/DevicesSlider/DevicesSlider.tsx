@@ -1,40 +1,37 @@
 import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { Slider, Handles, Tracks } from 'react-compound-slider'
 import './DevicesSlider.scss'
+import RangeSlider from '../RangeSlider/RangeSlider'
 
 interface IDevicesSlider {
 	parentClass?: string
 	modClass?: string[]
+	title?: string
 }
 
-const DevicesSlider: React.FC<IDevicesSlider> = ({ children, parentClass, modClass }) => {
+const DevicesSlider: React.FC<IDevicesSlider> = ({ parentClass, modClass, title }) => {
 
 	const devicesSliderClasses = useCreateClassName('devices-slider', parentClass)
-
+	  
 
 	return (
 		<div className={devicesSliderClasses}>
 
+			{title && <div className="devices-slider__title">{title}</div>}
 
-			<Slider
-				rootStyle={sliderStyle}
-				domain={[0, 100]} // [min, max]
-				values={[0, 50, 100]} // slider values
-			>
-				<Rail>
+			<div className="devices-slider__icons-container">
+				<div className="devices-slider__icon devices-slider__icon_mobile"></div>
+				<div className="devices-slider__icon devices-slider__icon_tablet"></div>
+				<div className="devices-slider__icon devices-slider__icon_pc"></div>
+			</div>
 
-				</Rail>
-				<Handles>
+			<RangeSlider 
+				parentClass="devices-slider" 
+				domain={[0, 2]} 
+				defaultValues={[2]} 
+				step={1} 
+			/>
 
-				</Handles>
-				<Tracks left={false} right={false}>
-
-				</Tracks>
-				<Ticks count={10}>
-
-				</Ticks>
-			</Slider>
 		</div>
 	)
 }

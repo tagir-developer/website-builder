@@ -8,9 +8,10 @@ import { useState } from 'react'
 interface IEditBlockWrapper {
 	parentClass?: string
 	modClass?: string[]
+	openConfig: () => void
 }
 
-const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass }) => {
+const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass, openConfig }) => {
 
 	const blockWrapperClasses = useCreateClassName("edit-block-wrapper", parentClass, modClass)
 
@@ -33,7 +34,7 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 		{
 			title: 'Настройки',
 			iconType: 'config',
-			handler: () => { }
+			handler: openConfig
 		},
 		{
 			title: 'Редактировать',
@@ -65,7 +66,10 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 		>
 			{hovered && <>
 				<div className="edit-block-wrapper__green-light"></div>
-				<BlockActionButtons parentClass="edit-block-wrapper" items={items} />
+				<BlockActionButtons 
+					parentClass="edit-block-wrapper" 
+					items={items}
+				/>
 				<BlockMoveBtn parentClass="edit-block-wrapper" handler={() => { }} />
 			</>}
 

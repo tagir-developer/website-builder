@@ -20,6 +20,19 @@
 
 	&__container {
 		display: flex;
+		@include media-breakpoint-down(sm) {
+			flex-direction: column;
+		}
+	}
+
+	&__col-palette {
+		width: 150px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		@include media-breakpoint-down(sm) {
+			width: 60%;
+		}
 	}
 
 	&__palette-window {
@@ -44,8 +57,8 @@
 		border-radius: 50%;
 		background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
 		box-shadow: -4px -4px 19px rgba(255, 255, 255, 0.7), 4px 4px 30px #B3BFC9;
-		margin-left: 20px;
-		margin-top: 15px;
+		// margin-left: 20px;
+		// margin-top: 15px;
 		cursor: pointer;
 
 		&:after {
@@ -61,10 +74,16 @@
 		width: 250px;
 		height: auto;
 		margin-left: auto;
+		@include media-breakpoint-down(sm) {
+			width: 100%;
+		}
 	}
 
 	&__palette-popup {
-
+		transition: all 300ms ease-in;
+		@include media-breakpoint-down(sm) {
+			margin-top: 30px;
+		}
 	}
 
 	

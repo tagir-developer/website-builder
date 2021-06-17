@@ -53,7 +53,7 @@ const BlockActionButtons: React.FC<IBlockActionButtons> = ({ parentClass, modCla
 						<div
 							key={'pc-action-button' + index}
 							className={'block-action-buttons__pc-action-button block-action-buttons__pc-action-button_' + i.iconType}
-							onClick={ () => {} }
+							onClick={i.handler}
 						>
 							<span className="block-action-buttons__pc-tooltip">{i.title}</span>
 						</div>

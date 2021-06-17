@@ -21,17 +21,19 @@ const ColorPicker: React.FC<IColorPicker> = ({ children, parentClass, modClass, 
 			<div className="color-picker__label">{children}</div>
 
 			<div className="color-picker__container">
-				<div className="color-picker__palette-window">
-					<div className="color-picker__palette-color" style={{ background: colorPicker.color }}></div>
-				</div>
 
-				<div className="color-picker__palette-button" onClick={colorPicker.openPalette}></div>
+				<div className="color-picker__col-palette">
+					<div className="color-picker__palette-window">
+						<div className="color-picker__palette-color" style={{ background: colorPicker.color }}></div>
+					</div>
+					<div className="color-picker__palette-button" onClick={colorPicker.openPalette}></div>
+				</div>
 
 
 				<div className="color-picker__popup-container">
 
-					<PalettePopup {...colorPicker.bind} />
-					
+					<PalettePopup parentClass="color-picker" {...colorPicker.bind} />
+
 				</div>
 
 			</div>

@@ -104,7 +104,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 								const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
 								return (
 									<Suspense key={index} fallback={<div>Загрузка...</div>}>
-										<EditBlockWrapper>
+										<EditBlockWrapper openConfig={openBlockConfigs.openPopup}>
 											<BlockComponent />
 										</EditBlockWrapper>
 									</Suspense>
@@ -131,10 +131,10 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 								handler={() => openLeftMenu.handler()} title="Добавить новый блок"
 							/>
 
-							<AddNewButton
+							{/* <AddNewButton
 								parentClass="edit-page"
 								handler={openBlockConfigs.openPopup} title="Настройки блока"
-							/>
+							/> */}
 
 							<AddNewButton
 								parentClass="edit-page"

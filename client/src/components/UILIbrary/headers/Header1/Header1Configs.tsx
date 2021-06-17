@@ -5,6 +5,7 @@ import { useSelect } from '../../../../hooks/useSelect.hook'
 import WideSelect from '../../../UI/WideSelect/WideSelect'
 import ColorPicker from '../../../UI/ColorPicker/ColorPicker'
 import DevicesSlider from '../../../UI/DevicesSlider/DevicesSlider'
+import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 
 interface IHeader1Configs {
 	parentClass?: string
@@ -129,7 +130,15 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
 
 			<ColorPicker initialColor="#fc0" parentClass="lib-header-1-configs">Цвет кнопки</ColorPicker>
 
-			<DevicesSlider />
+			<DevicesSlider title="Видимость на устройствах" />
+
+			<SecondaryButton 
+				parentClass="lib-header-1-configs" 
+				handler={() => {}} 
+			>
+				Применить настройки
+			</SecondaryButton>
+			
 		</div>
 	)
 }
