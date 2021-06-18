@@ -12,7 +12,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
 
 // Scrollbar custom styles
-@include scrollbars(15px, #a7b3be);
+// @include scrollbars(15px, #a7b3be);
+@include scrollbars(5px, #a7b3be);
 
 // Default styles reset
 * {
@@ -109,5 +110,12 @@ button {
     border-radius: 30px;
     box-sizing: border-box;
     padding: 20px;
+    resize: none;
 }
+
+// .relative-block {
+//   width: 10px;
+//   height: 2000px;
+//   background: crimson;
+// }
 

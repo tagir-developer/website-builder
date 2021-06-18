@@ -1,0 +1,21 @@
+@import '../../../styles/variables.scss';
+
+.upload-images {
+	
+	&__label {
+		display: block;
+ 		font-size: 20px;
+  		margin-bottom: 20px;
+  		color: $text-secondary;
+	}
+
+	&__upload-image-card {
+		margin-bottom: 20px;
+	}
+
+	&__small-icon-button {
+		display: block;
+		margin: 45px auto 0 auto;
+	}
+
+}

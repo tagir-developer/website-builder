@@ -9,9 +9,10 @@ interface IEditBlockWrapper {
 	parentClass?: string
 	modClass?: string[]
 	openConfig: () => void
+	openContent: () => void
 }
 
-const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass, openConfig }) => {
+const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass, openConfig, openContent }) => {
 
 	const blockWrapperClasses = useCreateClassName("edit-block-wrapper", parentClass, modClass)
 
@@ -39,7 +40,7 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 		{
 			title: 'Редактировать',
 			iconType: 'edit',
-			handler: () => { }
+			handler: openContent
 		},
 		{
 			title: 'Дублировать',

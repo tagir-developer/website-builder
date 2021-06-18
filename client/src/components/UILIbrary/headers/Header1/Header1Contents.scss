@@ -1,0 +1,30 @@
+.lib-header-1-contents {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 0 10px;
+
+	&__wide-select {
+		margin-bottom: 40px;
+	}
+
+	&__color-picker {
+		margin-bottom: 40px;
+	}
+
+	&__secondary-button {
+		margin: 90px auto;
+	}
+
+	&__input-basic {
+		margin-bottom: 40px;
+	}
+
+	&__textarea-basic {
+		margin-bottom: 40px;
+	}
+
+	&__upload-images {
+		
+	}
+}

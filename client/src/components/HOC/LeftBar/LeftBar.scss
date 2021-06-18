@@ -10,6 +10,8 @@
 	left: 0;
 	z-index: 400;
 	box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+	overflow-y: scroll;
+
 	&_wide {
 		width: 470px;
 	}
@@ -34,5 +36,6 @@
 		transform: translateX(-110%);
 		transition: transform 400ms;
 	}
+
 
 }

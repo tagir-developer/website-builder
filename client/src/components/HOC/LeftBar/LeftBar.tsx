@@ -11,14 +11,7 @@ interface ILeftBar {
 
 const LeftBar: React.FC<ILeftBar> = ({ parentClass, modClass, isOpen, children }) => {
 
-
 	const classes = useCreateClassName('left-bar', parentClass, modClass)
-
-
-	// const stopPropagation = (event: React.MouseEvent<HTMLDivElement>): void => {
-	// 	event.preventDefault()
-	// 	event.stopPropagation()
-	// }
 
 	return (
 		<CSSTransition
@@ -29,9 +22,7 @@ const LeftBar: React.FC<ILeftBar> = ({ parentClass, modClass, isOpen, children }
 			unmountOnExit
 		>
 			<div className={classes}>
-				{/* <div className="left-bar__content"> */}
-					{children}
-				{/* </div> */}
+				{children}
 			</div>
 		</CSSTransition >
 	)

@@ -12,7 +12,6 @@ import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
 import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWrapper'
 import LeftBar from '../../components/HOC/LeftBar/LeftBar'
 import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
-import TitleWithCloseBtn from '../../components/UI/TitleWithCloseBtn/TitleWithCloseBtn'
 import BlockConfigMenu from '../../components/UI/BlockConfigMenu/BlockConfigMenu'
 
 interface IRouteProps {
@@ -87,11 +86,11 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 						</LeftBar>
 
 						<LeftBar isOpen={openBlockConfigs.isOpen} modClass={['wide']} >
-							<BlockConfigMenu closeHandler={openBlockConfigs.closePopup} />
+							<BlockConfigMenu type="Configs" title="Настройки блока" closeHandler={openBlockConfigs.closePopup} />
 						</LeftBar>
 
 						<LeftBar isOpen={openBlockContent.isOpen} modClass={['wide']} >
-							<TitleWithCloseBtn title="Редактировать контент" closeHandler={openBlockContent.closePopup} />
+							<BlockConfigMenu type="Contents" title="Редактировать контент" closeHandler={openBlockContent.closePopup} />
 						</LeftBar>
 
 
@@ -104,7 +103,10 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 								const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
 								return (
 									<Suspense key={index} fallback={<div>Загрузка...</div>}>
-										<EditBlockWrapper openConfig={openBlockConfigs.openPopup}>
+										<EditBlockWrapper 
+											openConfig={openBlockConfigs.openPopup} 
+											openContent={openBlockContent.openPopup}
+										>
 											<BlockComponent />
 										</EditBlockWrapper>
 									</Suspense>
@@ -131,19 +133,11 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 								handler={() => openLeftMenu.handler()} title="Добавить новый блок"
 							/>
 
-							{/* <AddNewButton
-								parentClass="edit-page"
-								handler={openBlockConfigs.openPopup} title="Настройки блока"
-							/> */}
-
-							<AddNewButton
-								parentClass="edit-page"
-								handler={openBlockContent.openPopup} title="Содержимое блока"
-							/>
-
 							{/* <Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}
+	
 
 						</Backdrop>
+
 					</div>
 				</div>
 				<Footer />

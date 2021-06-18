@@ -101,6 +101,20 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
 				parentClass="lib-header-1-configs"
 				{...horizontalAlign.bind}
 			>
+				Удалить
+			</WideSelect>
+			<WideSelect
+				parentClass="lib-header-1-configs"
+				{...horizontalAlign.bind}
+			>
+				Удалить
+			</WideSelect>
+
+
+			<WideSelect
+				parentClass="lib-header-1-configs"
+				{...horizontalAlign.bind}
+			>
 				Горизонтальное выравнивание
 			</WideSelect>
 			<WideSelect

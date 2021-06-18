@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import './BlockConfigMenu.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import TitleWithCloseBtn from '../TitleWithCloseBtn/TitleWithCloseBtn'
@@ -8,9 +8,11 @@ interface IBlockConfigMenu {
 	modClass?: string[]
 	closeHandler: (param?: any) => void
 	blockId?: string
+	title: string
+	type: 'Contents' | 'Configs'
 }
 
-const BlockConfigMenu: React.FC<IBlockConfigMenu> = ({ parentClass, modClass, closeHandler, blockId }) => {
+const BlockConfigMenu: React.FC<IBlockConfigMenu> = ({ parentClass, modClass, closeHandler, blockId, title, type }) => {
 
 	const blockConfigMenuClasses = useCreateClassName('block-configs-menu', parentClass, modClass)
 
@@ -24,12 +26,12 @@ const BlockConfigMenu: React.FC<IBlockConfigMenu> = ({ parentClass, modClass, cl
 		}
 	} // ! Получаем активный блок, используя значение id активного блока (пока заглушка)
 
-	const BlockConfigs = React.lazy(() => import('../../UILIbrary/' + activeBlock.path + 'Configs')) // ! Используя динамический импорт, записываем в переменную компонент с конфигурациями для конкретного блока
+	const BlockConfigs = React.lazy(() => import('../../UILIbrary/' + activeBlock.path + type)) // ! Используя динамический импорт, записываем в переменную компонент с конфигурациями для конкретного блока
 
 	return (
 		<div className={blockConfigMenuClasses}>
 
-			<TitleWithCloseBtn title="Настройки блока" closeHandler={closeHandler} />
+			<TitleWithCloseBtn title={title} closeHandler={closeHandler} />
 
 			<Suspense fallback={<div>Загрузка...</div>}>
 				<BlockConfigs />
