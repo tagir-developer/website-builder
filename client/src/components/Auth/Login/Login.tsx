@@ -1,8 +1,10 @@
 import React from 'react'
+import { useState } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../../UI/Button/Button'
+import Input from '../../UI/Input/Input'
 import SmallIconButton from '../../UI/SmallIconButton/SmallIconButton'
 import './Login.scss'
 
@@ -14,8 +16,18 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 
 	const loginClasses = useCreateClassName('login', parentClass)
 
-	const emailInput = useInput('')
-	const passwordInput = useInput('')
+	const [form, setForm] = useState({
+		email: '', password: ''
+	})
+
+	const changeHandler = (event: React.FormEvent & { target: HTMLInputElement }): void => {
+		setForm({...form, [event.target.name]: event.target.value})
+	}
+
+	// const emailInput = useInput('')
+	// const passwordInput = useInput('')
+
+	console.log('form', form)
 
 	return (
 		<div className={loginClasses}>
@@ -23,7 +35,21 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 				<div className="login__row">
 					<div className="login__form-container">
 						<div className="login__form">
-							<input 
+							<Input 
+								parentClass="login"
+								type="email"
+								name="email"
+								placeholder="Электронная почта"
+								onChange={changeHandler}
+							/>
+							<Input 
+								parentClass="login"
+								type="text"
+								name="password"
+								placeholder="Пароль"
+								onChange={changeHandler}
+							/>
+							{/* <input 
 								type="text" 
 								className="login__input input" 
 								placeholder="Электронная почта" 
@@ -33,7 +59,7 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 								type="password" 
 								className="login__input input" 
 								placeholder="Пароль" 
-								{...passwordInput.bind} />
+								{...passwordInput.bind} /> */}
 
 							<Button 
 								parentClass="login" 

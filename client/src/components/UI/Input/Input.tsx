@@ -7,12 +7,13 @@ interface IInput {
 	parentClass?: string
 	modClass?: string[]
 	type: string
-	value: string
+	value?: string
 	onChange: (param?: any) => void
 	placeholder?: string
+	name?: string
 }
 
-const Input: React.FC<IInput> = ({ children, parentClass, modClass, type, value, onChange, placeholder }) => {
+const Input: React.FC<IInput> = ({ children, parentClass, modClass, name, type, value, onChange, placeholder }) => {
 
 	const inputClasses = useCreateClassName('input-basic', parentClass)
 
@@ -21,19 +22,19 @@ const Input: React.FC<IInput> = ({ children, parentClass, modClass, type, value,
 	return (
 		<>
 			{children && <label
-				// htmlFor="form-processing-site-name"
 				className="input-basic__label"
 			>
 				{children}
 			</label>}
 			
 			<input
-				// id="form-processing-site-name"
 				type={type}
 				className={inputClasses}
-				value={value}
+				value={value || ''}
+				name={name || ''}
 				onChange={onChange}
-				placeholder={placeholder ? placeholder : ""}
+				// placeholder={placeholder ? placeholder : ""}
+				placeholder={placeholder || ''}
 			/>
 		</>
 	)
