@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import { useTypedDispatch } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
+import { register } from '../../../store/actionCreators/register'
 import Button from '../../UI/Button/Button'
+import Input from '../../UI/Input/Input'
 import SmallIconButton from '../../UI/SmallIconButton/SmallIconButton'
 import './RegisterForm.scss'
 
@@ -19,13 +22,49 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 	const passwordInput = useInput('')
 	const confirmPasswordInput = useInput('')
 
+	const dispatch = useTypedDispatch()
+
+	// const registerHandler = useCallback(() => {
+	// 	dispatch(register(emailInput.value, passwordInput.value, confirmPasswordInput.value, nameInput.value))
+	// }, [])
+
+	const registerHandler = () => {
+		dispatch<any>(register('test@mail.ru', 'Password12345', 'Password12345', 'Roman'))
+	}
+
 	return (
 		<div className={registerFormClasses}>
 			<div className="register-form__container">
 				<div className="register-form__row">
 					<div className="register-form__form-container">
 						<div className="register-form__form">
-							<input
+
+						<Input
+								type="text"
+								parentClass="register-form"
+								placeholder="Ваше имя"
+								{...nameInput.bind}
+							/>
+							<Input
+								type="text"
+								parentClass="register-form"
+								placeholder="Электронная почта"
+								{...emailInput.bind}
+							/>
+							<Input
+								type="text"
+								parentClass="register-form"
+								placeholder="Придумайте пароль"
+								{...passwordInput.bind}
+							/>
+							<Input
+								type="password"
+								parentClass="register-form"
+								placeholder="Повторите пароль"
+								{...confirmPasswordInput.bind} 
+							/>
+
+							{/* <input
 								type="text"
 								className="register-form__input input"
 								placeholder="Ваше имя"
@@ -47,12 +86,12 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 								type="password"
 								className="register-form__input input"
 								placeholder="Повторите пароль"
-								{...confirmPasswordInput.bind} />
+								{...confirmPasswordInput.bind} /> */}
 
 							<Button
 								parentClass="register-form"
-								handler={() => console.log('Registration Btn click')}
 								modClass={['big']}
+								handler={registerHandler}
 							>
 								Регистрация
 							</Button>

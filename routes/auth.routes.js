@@ -19,11 +19,15 @@ router.post('/register', registerValidators, async (req, res) => {
 			})
 		}
 
-		const {name, email, password} = req.body
+		const {email, password, passwordConfirm, name} = req.body
+
+		if (password !== passwordConfirm) {
+			return res.status(400).json({message: "Пароли не совпадают"}) // Возможно эту проверку лучше перенести в валидаторы
+		}
 
 		const hashedPassword = await bcrypt.hash(password, 12)
 
-		const user = new User({name, email, password: hashedPassword})
+		const user = new User({email, password: hashedPassword, name})
 
 		await user.save()
 

@@ -7,6 +7,11 @@ import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
 import SmallIconButton from '../../UI/SmallIconButton/SmallIconButton'
 import './Login.scss'
+import {compose} from 'redux'
+import {connect} from 'react-redux'
+import { useTypedSelector, useTypedDispatch } from '../../../hooks/reduxHooks'
+import { useCallback } from 'react'
+// import { login } from '../../../store/actionCreators/login'
 
 interface ILogin extends RouteComponentProps {
 	parentClass: string
@@ -16,18 +21,26 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 
 	const loginClasses = useCreateClassName('login', parentClass)
 
-	const [form, setForm] = useState({
-		email: '', password: ''
-	})
+	// const [form, setForm] = useState({
+	// 	email: '', password: ''
+	// })
 
-	const changeHandler = (event: React.FormEvent & { target: HTMLInputElement }): void => {
-		setForm({...form, [event.target.name]: event.target.value})
-	}
+	// const changeHandler = (event: React.FormEvent & { target: HTMLInputElement }): void => {
+	// 	setForm({...form, [event.target.name]: event.target.value})
+	// }
 
-	// const emailInput = useInput('')
-	// const passwordInput = useInput('')
+	const emailInput = useInput('')
+	const passwordInput = useInput('')
 
-	console.log('form', form)
+	// const email = useAppSelector(state => state.auth.email)
+	// const password = useAppSelector(state => state.auth.password)
+
+	const dispatch = useTypedDispatch()
+
+	// const loginHandler = useCallback(() => {
+	// 	dispatch(login(emailInput.value, passwordInput.value))
+	// }, [])
+
 
 	return (
 		<div className={loginClasses}>
@@ -40,14 +53,14 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 								type="email"
 								name="email"
 								placeholder="Электронная почта"
-								onChange={changeHandler}
+								{...emailInput.bind}
 							/>
 							<Input 
 								parentClass="login"
 								type="text"
 								name="password"
 								placeholder="Пароль"
-								onChange={changeHandler}
+								{...passwordInput.bind}
 							/>
 							{/* <input 
 								type="text" 
@@ -73,7 +86,8 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 							<SmallIconButton 
 								parentClass="login"
 								modClass={["register-icon"]}
-								handler={() => history.push('./registration')}
+								// handler={loginHandler}
+								handler={() => {}}
 							>
 								Регистрация
 							</SmallIconButton>
@@ -88,3 +102,14 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 }
 
 export default withRouter(Login)
+
+// function mapDispatchToProps() {
+// 	return {
+// 		login: (email, password) => dispatch(login(email, password))
+// 	}
+// }
+
+// export default compose(
+// 	withRouter,
+// 	connect(null, mapDispatchToProps)
+//   )(Login)
