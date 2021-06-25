@@ -9,11 +9,15 @@ export function register(email: string, password: string, passwordConfirm: strin
 			email, password, passwordConfirm, name
 		}
 
+		// const response = await axios.post('http://localhost:5000/api/auth/register', authData)
 		const response = await axios.post('/api/auth/register', authData)
 
-		console.log("ATTENTION", response.data.message)
+		
+			// const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1')
 
-		dispatch<any>({type: authActionTypes.REGISTER_SUCCESS, payload: response.data.message})
+
+		// dispatch<any>({type: authActionTypes.REGISTER_SUCCESS, payload: response.data.message})
+		dispatch<any>({type: authActionTypes.REGISTER_SUCCESS, payload: response.data})
 
 	}
 }

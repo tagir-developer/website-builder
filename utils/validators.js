@@ -1,4 +1,4 @@
-const {body} = require('express-validator')
+const {body, check} = require('express-validator')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
 
@@ -6,7 +6,7 @@ const basicLoginErrorMessage = 'Вы ввели неверное имя поль
 
 exports.registerValidators = [
 	// body('name', 'Имя не может состоять из одних цифр') Пока не знаю что делать, если параметр формы не обязательный
-	body('email')
+	check('email')
 		.isEmail().normalizeEmail().withMessage('Введите корректный email')
 		.custom(async (value, {req}) => {
 		try {
@@ -16,15 +16,16 @@ exports.registerValidators = [
 			console.log(e)
 		}
 		}).withMessage('Такой email уже занят'),
-	body('password')
+	check('password')
 		.isLength({ min: 6 }).withMessage('Пароль должен быть минимум 6 символов'),
-	body('confirmPassword')
+	check('passwordConfirm')
 		.custom((value, {req}) => {
 		if (value !== req.body.password) {
 			throw new Error('Пароли должны совпадать')
 		}
 		return true // уточнить когда используем true
 		}).withMessage('Пароли должны совпадать'),
+	check('name').isString()
 ]
 
 exports.loginValidators = [

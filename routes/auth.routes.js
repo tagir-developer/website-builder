@@ -66,4 +66,13 @@ router.post('/login', loginValidators, async (req, res) => {
 	}
 })
 
+router.get('/test', (req, res) => {
+	try {
+		res.json({message: 'СРАБОТАЛО!'})
+
+	} catch (e) {
+		res.status(500).json({message: "Что-то пошло не так, поробуйте снова"})
+	}
+})
+
 module.exports = router

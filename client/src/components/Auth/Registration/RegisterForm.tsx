@@ -1,7 +1,8 @@
+import axios from 'axios'
 import React, { useCallback } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { useTypedDispatch } from '../../../hooks/reduxHooks'
+import { useTypedDispatch, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
 import { register } from '../../../store/actionCreators/register'
 import Button from '../../UI/Button/Button'
@@ -24,6 +25,8 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 
 	const dispatch = useTypedDispatch()
 
+	const {error, message} = useTypedSelector(state => state.auth)
+
 	// const registerHandler = useCallback(() => {
 	// 	dispatch(register(emailInput.value, passwordInput.value, confirmPasswordInput.value, nameInput.value))
 	// }, [])
@@ -31,6 +34,14 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 	const registerHandler = () => {
 		dispatch<any>(register('test@mail.ru', 'Password12345', 'Password12345', 'Roman'))
 	}
+
+	// const registerHandler = async () => {
+	// 	const response = await axios.get('/api/auth/test')
+	// 	console.log(response.data.message)
+	// }
+
+	console.log('ERROR', error)
+	console.log('MESSAGE', message)
 
 	return (
 		<div className={registerFormClasses}>
