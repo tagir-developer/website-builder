@@ -1,10 +1,8 @@
-import axios from 'axios'
 import React, { useCallback } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { useTypedDispatch, useTypedSelector } from '../../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
-import { register } from '../../../store/actionCreators/register'
 import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
 import SmallIconButton from '../../UI/SmallIconButton/SmallIconButton'
@@ -18,27 +16,19 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 
 	const registerFormClasses = useCreateClassName('register-form', parentClass)
 
-	const nameInput = useInput('')
 	const emailInput = useInput('')
 	const passwordInput = useInput('')
-	const confirmPasswordInput = useInput('')
+	const passwordConfirmInput = useInput('')
+	const nameInput = useInput('')
 
-	const dispatch = useTypedDispatch()
+	const { error, message } = useTypedSelector(state => state.auth)
+	const {register} = useActions()
 
-	const {error, message} = useTypedSelector(state => state.auth)
 
-	// const registerHandler = useCallback(() => {
-	// 	dispatch(register(emailInput.value, passwordInput.value, confirmPasswordInput.value, nameInput.value))
-	// }, [])
+	const registerHandler = useCallback(() => {
+		register(emailInput.value, passwordInput.value, passwordConfirmInput.value, nameInput.value)
+	}, [register])
 
-	const registerHandler = () => {
-		dispatch<any>(register('test@mail.ru', 'Password12345', 'Password12345', 'Roman'))
-	}
-
-	// const registerHandler = async () => {
-	// 	const response = await axios.get('/api/auth/test')
-	// 	console.log(response.data.message)
-	// }
 
 	console.log('ERROR', error)
 	console.log('MESSAGE', message)
@@ -50,7 +40,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 					<div className="register-form__form-container">
 						<div className="register-form__form">
 
-						<Input
+							<Input
 								type="text"
 								parentClass="register-form"
 								placeholder="Ваше имя"
@@ -63,7 +53,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 								{...emailInput.bind}
 							/>
 							<Input
-								type="text"
+								type="password"
 								parentClass="register-form"
 								placeholder="Придумайте пароль"
 								{...passwordInput.bind}
@@ -72,32 +62,8 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 								type="password"
 								parentClass="register-form"
 								placeholder="Повторите пароль"
-								{...confirmPasswordInput.bind} 
+								{...passwordConfirmInput.bind}
 							/>
-
-							{/* <input
-								type="text"
-								className="register-form__input input"
-								placeholder="Ваше имя"
-								{...nameInput.bind}
-							/>
-							<input
-								type="text"
-								className="register-form__input input"
-								placeholder="Электронная почта"
-								{...emailInput.bind}
-							/>
-							<input
-								type="text"
-								className="register-form__input input"
-								placeholder="Придумайте пароль"
-								{...passwordInput.bind}
-							/>
-							<input
-								type="password"
-								className="register-form__input input"
-								placeholder="Повторите пароль"
-								{...confirmPasswordInput.bind} /> */}
 
 							<Button
 								parentClass="register-form"
@@ -115,7 +81,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 									handler={() => history.push('./login')}
 								>
 									Войти
-							</SmallIconButton>
+								</SmallIconButton>
 							</div>
 						</div>
 					</div>
@@ -123,7 +89,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 				<div className="register-form__row-terms">
 					<div className="register-form__terms">
 						Нажимая кнопку регистрации, вы принимаете условия
-					<Link to="/" className="register-form__terms-link">Пользовательского соглашения</Link>
+						<Link to="/" className="register-form__terms-link">Пользовательского соглашения</Link>
 					</div>
 				</div>
 			</div>

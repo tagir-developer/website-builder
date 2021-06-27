@@ -2,8 +2,15 @@ import axios from "axios"
 import { AnyAction, Dispatch } from "redux"
 import { authActionTypes, IAuthAction } from "../types/auth"
 
+// interface IregisterParams {
+// 	email: string
+// 	password: string
+// 	passwordConfirm: string
+// 	name?: string
+// }
 
-export function register(email: string, password: string, passwordConfirm: string, name?: string) {
+
+export const register = (email: string, password: string, passwordConfirm: string, name?: string) => {
 	return async (dispatch: Dispatch<IAuthAction>) => {
 		const authData = {
 			email, password, passwordConfirm, name
