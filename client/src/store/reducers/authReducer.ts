@@ -14,10 +14,10 @@ export default function authReducer(state = initialState, action: IAuthAction): 
 			...state, loading: true
 		}
 		case authActionTypes.REGISTER_SUCCESS: return {
-			...state, loading: false, error: null, message: action.payload.message
+			...state, loading: false, error: action.payload, message: action.payload.message
 		}
 		case authActionTypes.REGISTER_ERROR: return {
-			...state, loading: false, error: action.payload.message
+			...state, loading: false, error: action.payload, message: action.payload.message
 		}
 		default:
 			return state

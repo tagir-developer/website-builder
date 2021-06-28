@@ -22,9 +22,9 @@ router.post('/register', registerValidators, async (req, res) => {
 		const {email, password, passwordConfirm, name} = req.body
 
 
-		if (password !== passwordConfirm) {
-			return res.status(400).json({message: "Пароли не совпадают"}) // Возможно эту проверку лучше перенести в валидаторы
-		}
+		// if (password !== passwordConfirm) {
+		// 	return res.status(400).json({message: "Пароли не совпадают"}) // Возможно эту проверку лучше перенести в валидаторы
+		// }
 
 		const hashedPassword = await bcrypt.hash(password, 12)
 
