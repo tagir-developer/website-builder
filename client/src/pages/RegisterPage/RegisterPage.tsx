@@ -5,30 +5,36 @@ import Alert from '../../components/UI/Alert/Alert'
 import Footer from '../../components/UI/Footer/Footer'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
-import { useTypedSelector } from '../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './RegisterPage.scss'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-const RegisterPage: React.FC = () => {
+const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	const messagePopup = usePopup(false, 'blur')
 
-	const { error, message } = useTypedSelector(state => state.auth)
+	const { message, messageType } = useTypedSelector(state => state.auth)
+	const {clearRegisterMessage} = useActions()
 
 	useEffect(() => {
-		// const alert = <Alert type={"success"} message={message} />
-		message && messagePopup.showHide(2000)
-		console.log('USE EFFECT WORK')
-	}, [message])
+		const alertDelay: number = 2000
 
-	console.log('ERROR', error)
-	console.log('MESSAGE', message)
+		message && messagePopup.showHide(alertDelay)
 
+		if (messageType === 'success') {
+			
+			setTimeout(() => {
+				clearRegisterMessage()
+				history.push('/login')
+			}, alertDelay)
+		}
+	}, [message, messageType])
 
 	return (
 		<>
 			<PopUp {...messagePopup.popupProps} transparent={true}>
-				<Alert type={"success"} message={message} />
+				<Alert type={messageType} message={message} />
 			</PopUp>
 
 			<Backdrop {...messagePopup.backdropProps}>
@@ -46,4 +52,4 @@ const RegisterPage: React.FC = () => {
 	)
 }
 
-export default RegisterPage
+export default withRouter(RegisterPage)

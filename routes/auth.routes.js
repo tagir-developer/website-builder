@@ -15,16 +15,12 @@ router.post('/register', registerValidators, async (req, res) => {
 		if(!errors.isEmpty()) {
 			return res.status(400).json({
 				errors: errors.array(),
-				message: "Некорректные данные при регистрации"
+				messageType: 'danger',
+				message: errors.array()[0].msg
 			})
 		}
 
-		const {email, password, passwordConfirm, name} = req.body
-
-
-		// if (password !== passwordConfirm) {
-		// 	return res.status(400).json({message: "Пароли не совпадают"}) // Возможно эту проверку лучше перенести в валидаторы
-		// }
+		const {email, password, name} = req.body
 
 		const hashedPassword = await bcrypt.hash(password, 12)
 
@@ -32,10 +28,16 @@ router.post('/register', registerValidators, async (req, res) => {
 
 		await user.save()
 
-		return res.status(201).json({ message: "Пользователь успешно создан" })
+		return res.status(201).json({ 
+			messageType: 'success',
+			message: "Пользователь успешно создан" 
+		})
 
 	} catch (e) {
-		return res.status(500).json({message: "Что-то пошло не так, поробуйте снова"})
+		return res.status(500).json({
+			messageType: 'danger',
+			message: "Что-то пошло не так, поробуйте снова"
+		})
 	}
 })
 

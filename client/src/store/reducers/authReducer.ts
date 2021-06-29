@@ -3,9 +3,10 @@ import { authActionTypes, IAuthAction, IAuthState } from "../types/auth"
 const initialState: IAuthState = {
 	email: '',
 	password: '',
+	error: null,
+	messageType: 'basic',
 	message: '',
-	loading: false,
-	error: null
+	loading: false
 }
 
 export default function authReducer(state = initialState, action: IAuthAction): IAuthState {
@@ -14,10 +15,13 @@ export default function authReducer(state = initialState, action: IAuthAction): 
 			...state, loading: true
 		}
 		case authActionTypes.REGISTER_SUCCESS: return {
-			...state, loading: false, error: action.payload, message: action.payload.message
+			...state, loading: false, message: action.payload.message, messageType: action.payload.messageType
 		}
 		case authActionTypes.REGISTER_ERROR: return {
-			...state, loading: false, error: action.payload, message: action.payload.message
+			...state, loading: false, message: action.payload.message, messageType: action.payload.messageType
+		}
+		case authActionTypes.REGISTER_CLEAR_MESSAGE: return {
+			...state, message: '', messageType: 'basic'
 		}
 		default:
 			return state

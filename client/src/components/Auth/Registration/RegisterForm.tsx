@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { useActions } from '../../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
@@ -20,7 +20,8 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 	const passwordInput = useInput('')
 	const passwordConfirmInput = useInput('')
 	const nameInput = useInput('')
-	
+
+	const {loading} = useTypedSelector(state => state.auth)
 	const { register } = useActions()
 
 	const registerHandler = useCallback(() => {
@@ -64,6 +65,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 										parentClass="register-form"
 										modClass={['big']}
 										handler={registerHandler}
+										disabled={loading}
 									>
 										Регистрация
 									</Button>
