@@ -1,21 +1,24 @@
+require('dotenv').config()
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
-app.use(cors())
 app.use(express.json())
+app.use(cookieParser())
+app.use(cors())
 
 app.use('/api/auth/', require('./routes/auth.routes'))
 
-
-const PORT = config.get('port') || 5000
+// const PORT = config.get('port') || 5000
+const PORT = process.env.PORT
 
 async function start() {
 	try {
-		await mongoose.connect(config.get('db-url'), {
+		await mongoose.connect(process.env.DB_URL, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useCreateIndex: true,

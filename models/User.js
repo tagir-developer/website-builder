@@ -1,6 +1,6 @@
 const {Schema, model, Types} = require('mongoose')
 
-const schema = new Schema({
+const UserSchema = new Schema({
 	name: {
 		type: String,
 		required: false
@@ -14,10 +14,17 @@ const schema = new Schema({
 		type: String,
 		required: true,		
 	},
-	customUncknown: {
+	roles: {
 		type: Types.ObjectId,
-		ref: 'customUnknown'
-	}
+		ref: 'Role'
+	},
+	isActivated: {
+		type: Boolean,
+		default: false
+	},
+	activationLink: {
+		type: String
+	},
 })
 
-module.exports = model('User', schema)
+module.exports = model('User', UserSchema)
