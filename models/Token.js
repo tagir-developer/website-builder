@@ -1,6 +1,6 @@
 const {Schema, model, Types} = require('mongoose')
 
-const TokenSchema = new Schema({
+const Token = new Schema({
 	user: {
 		type: Types.ObjectId,
 		ref: 'User',
@@ -11,4 +11,4 @@ const TokenSchema = new Schema({
 	}
 })
 
-module.exports = model('Role', TokenSchema)
+module.exports = model('Token', Token)

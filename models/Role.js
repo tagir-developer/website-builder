@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose')
 
-const RoleSchema = new Schema({
+const Role = new Schema({
 	value: {
 		type: String,
 		unique: true,
@@ -8,4 +8,4 @@ const RoleSchema = new Schema({
 	}
 })
 
-module.exports = model('Role', RoleSchema)
+module.exports = model('Role', Role)

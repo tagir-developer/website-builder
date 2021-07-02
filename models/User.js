@@ -1,9 +1,9 @@
 const {Schema, model, Types} = require('mongoose')
 
-const UserSchema = new Schema({
+const User = new Schema({
 	name: {
 		type: String,
-		required: false
+		default: "Новый пользователь"
 	},
 	email: {
 		type: String,
@@ -14,10 +14,6 @@ const UserSchema = new Schema({
 		type: String,
 		required: true,		
 	},
-	roles: {
-		type: Types.ObjectId,
-		ref: 'Role'
-	},
 	isActivated: {
 		type: Boolean,
 		default: false
@@ -25,6 +21,10 @@ const UserSchema = new Schema({
 	activationLink: {
 		type: String
 	},
+	roles: [{
+		type: String,
+		ref: 'Role'
+	}]
 })
 
-module.exports = model('User', UserSchema)
+module.exports = model('User', User)
