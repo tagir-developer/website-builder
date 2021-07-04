@@ -1,109 +1,116 @@
-// const bcrypt = require('bcrypt')
-// const jwt = require('jsonwebtoken')
 const User = require("../models/User")
 const { validationResult } = require("express-validator")
 const userService = require("../service/userService")
 const { json } = require("body-parser")
+const ApiError = require("../exeptions/apiError")
 
 class authController {
 
-	async registration (req, res, next) {
+	async registration(req, res, next) {
 		try {
 			const errors = validationResult(req)
-			if(!errors.isEmpty()) {
-				return res.status(400).json({
-					errors: errors.array(),
-					messageType: 'danger',
-					message: errors.array()[0].msg
-				})
+			if (!errors.isEmpty()) {
+				return next(ApiError.BadRequest(errors.array()[0].msg, 'danger', errors.array()))
 			}
-	
-			const {email, password, name} = req.body
+
+			const { email, password, name } = req.body
 
 			const userData = await userService.registration(email, password, name)
-			res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, secure: true})
-			return res.json(userData)
-	
-			// const hashedPassword = await bcrypt.hash(password, 12)
+			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
-			// const user = await User.create({email, password: hashedPassword, name})
-	
-	
-			// return res.status(201).json({ 
-			// 	messageType: 'success',
-			// 	message: "Пользователь успешно создан" 
-			// })
-	
+			return res.json({ userData, messageType: 'success', message: "Пользователь успешно создан" })
+
 		} catch (e) {
-			return res.status(500).json({
-				messageType: 'danger',
-				// message: "Что-то пошло не так, поробуйте снова"
-				message: e.message
-			})
-			
+			next(e)
 		}
 	}
 
-	async login (req, res, next) {
-		try {	
+	async login(req, res, next) {
+		try {
 			const errors = validationResult(req)
-			if(!errors.isEmpty()) {
-				res.status(400).json({
-					errors: errors.array(),
-					message: "Некорректные данные при регистрации"
-				})
+			if (!errors.isEmpty()) {
+				return next(ApiError.BadRequest(errors.array()[0].msg, 'danger', errors.array()))
 			}
 
+			const {email, password} = req.body
+
+			const userData = await userService.login(email, password)
+			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+
+			return res.json({ userData, messageType: 'success', message: "Пользователь вошел в систему" })
+
 			// const {email, password} = req.body
-	
+
 			// const user = await User.findOne({ email })
-	
+
 			// const token = jwt.sign(
 			// 	{ userId: user.id },
 			// 	config.get('jwtSecret'),
 			// 	{expiresIn: '1h'}
 			// )
-	
+
 			// return res.json({ token, userId: user.id })
-	
+
 		} catch (e) {
-			res.status(500).json({message: "Что-то пошло не так, поробуйте снова"})
+			next(e)
 		}
 	}
 
-	async logout (req, res, next) {
+	async logout(req, res, next) {
 		try {
-		
+			const {refreshToken} = req.cookies
+			const token = await userService.logout(refreshToken)
+			res.clearCookie('refreshToken')
+			return res.json(token)
 
 		} catch (e) {
-			res.status(500).json({message: "Что-то пошло не так, поробуйте снова"})
+			next(e)
 		}
 	}
 
-	async activate (req, res, next) {
+	async activate(req, res, next) {
 		try {
-		
+			const activationLink = req.params.link
+			await userService.activate(activationLink)
+			return res.redirect(process.env.CLIENT_URL)
 
 		} catch (e) {
-			res.status(500).json({message: "Что-то пошло не так, поробуйте снова"})
+			next(e)
 		}
 	}
 
-	async refresh (req, res, next) {
+	async refresh(req, res, next) {
 		try {
-		
+			const {refreshToken} = req.cookies
+
+			const userData = await userService.refresh(refreshToken)
+			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+
+			return res.json({ tokenData })
 
 		} catch (e) {
-			res.status(500).json({message: "Что-то пошло не так, поробуйте снова"})
+			next(e)
 		}
 	}
 
-	async test (req, res, next) {
+	async users(req, res, next) {
 		try {
-		return res.json('Сервер работает')
+			const users = await userService.getAllUsers()
+			res.json(users)
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async test(req, res, next) {
+		try {
+			// res.cookie('refreshToken', 'Установленный куки', { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+			// console.log('Cookies: ', res.cookies)
+			return res.json('Сервер работает')
+			
 
 		} catch (e) {
-			res.status(500).json({message: "Что-то пошло не так, поробуйте снова"})
+			next(e)
 		}
 	}
 

@@ -4,14 +4,16 @@ const config = require('config')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const errorMiddleware = require('./middlewares/errorMiddleware')
+
 
 const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
-
 app.use('/api/auth/', require('./routes/auth.routes'))
+app.use(errorMiddleware)
 
 // const PORT = config.get('port') || 5000
 const PORT = process.env.PORT

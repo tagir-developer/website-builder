@@ -23,11 +23,12 @@ class MailService {
 			html: 
 			`
 			<div>
-				<h1>Для активации перейдите по ссылке</h1>
+				<h1>Для активации аккаунта перейдите по ссылке</h1>
 				<a href="${link}">${link}</a>
 			</div>
-			
 			`
+		}, (error) => {
+			console.log(error.message)
 		})
 	}
 }
