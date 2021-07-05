@@ -1,5 +1,5 @@
-import * as registerActionCreators from './register'
+import * as authActionCreators from './auth'
 
 export default {
-	...registerActionCreators
+	...authActionCreators
 }

@@ -1,41 +1,46 @@
+import { IUser } from "../../models/IUser";
+import { IAuthResponse } from "../../models/response/AuthResponse";
+
 export interface IAuthState {
-	email: string
-	password: string
+	user: IUser
+	isAuth: boolean
 	messageType: "basic" | "success" | "warning" | "danger"
 	message: string
 	loading: boolean
-	error: null | boolean
+	// error: null | boolean
 }
 
 export enum authActionTypes {
-	REGISTER = 'REGISTER',
-	REGISTER_SUCCESS = 'REGISTER_SUCCESS',
-	REGISTER_ERROR = 'REGISTER_ERROR',
-	REGISTER_CLEAR_MESSAGE = 'REGISTER_CLEAR_MESSAGE'
+	AUTH_START = 'AUTH_START',
+	AUTH_SUCCESS = 'AUTH_SUCCESS',
+	AUTH_ERROR = 'AUTH_ERROR',
+	AUTH_CLEAR_MESSAGE = 'AUTH_CLEAR_MESSAGE',
+	AUTH_LOGOUT = 'AUTH_LOGOUT',
 }
 
-interface registerAction {
-	type: authActionTypes.REGISTER
+interface authStartAction {
+	type: authActionTypes.AUTH_START
 }
 
-interface registerSuccessAction {
-	type: authActionTypes.REGISTER_SUCCESS
+interface authSuccessAction {
+	type: authActionTypes.AUTH_SUCCESS
+	payload: IAuthResponse
+}
+
+interface authErrorAction {
+	type: authActionTypes.AUTH_ERROR
 	payload: {
 		messageType: "basic" | "success" | "warning" | "danger"
 		message: string
 	}
 }
 
-interface registerErrorAction {
-	type: authActionTypes.REGISTER_ERROR
-	payload: {
-		messageType: "basic" | "success" | "warning" | "danger"
-		message: string
-	}
+interface authLogoutAction {
+	type: authActionTypes.AUTH_LOGOUT
 }
 
-interface registerClearMessageAction {
-	type: authActionTypes.REGISTER_CLEAR_MESSAGE
+interface authClearMessageAction {
+	type: authActionTypes.AUTH_CLEAR_MESSAGE
 }
 
-export type IAuthAction = registerAction | registerSuccessAction | registerErrorAction | registerClearMessageAction
+export type IAuthAction = authStartAction | authSuccessAction | authErrorAction | authClearMessageAction | authLogoutAction

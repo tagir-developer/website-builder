@@ -39,18 +39,6 @@ class authController {
 
 			return res.json({ userData, messageType: 'success', message: "Пользователь вошел в систему" })
 
-			// const {email, password} = req.body
-
-			// const user = await User.findOne({ email })
-
-			// const token = jwt.sign(
-			// 	{ userId: user.id },
-			// 	config.get('jwtSecret'),
-			// 	{expiresIn: '1h'}
-			// )
-
-			// return res.json({ token, userId: user.id })
-
 		} catch (e) {
 			next(e)
 		}
@@ -86,7 +74,7 @@ class authController {
 			const userData = await userService.refresh(refreshToken)
 			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
-			return res.json({ tokenData })
+			return res.json({ userData })
 
 		} catch (e) {
 			next(e)
