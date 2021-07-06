@@ -111,14 +111,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					items={[
 						{ title: 'Справка', link: '/help', bold: false },
 						{ title: 'Аккаунт', link: '/user-profile', bold: false },
-						{ title: 'Выход', link: '/', bold: true },
+						{ title: 'Выход', link: '/logout', bold: true },
 					]}
 				/>
 				<MobileMenu 
 					items={[
 						{ title: 'Справочная информация', link: '/help', bold: false },
 						{ title: 'Настройки аккаунта', link: '/user-profile', bold: false },
-						{ title: 'Выход', link: '/', bold: false },
+						{ title: 'Выход', link: '/logout', bold: false },
 					]} 
 					parentClass="top-menu"
 				/>
@@ -149,14 +149,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					items={[
 						{ title: 'Справка', link: '/help', bold: false },
 						{ title: 'Аккаунт', link: '/user-profile', bold: false },
-						{ title: 'Выход', link: '/', bold: true },
+						{ title: 'Выход', link: '/logout', bold: true },
 					]}
 				/>
 				<MobileMenu 
 					items={[
 						{ title: 'Справочная информация', link: '/help', bold: false },
 						{ title: 'Настройки аккаунта', link: '/user-profile', bold: false },
-						{ title: 'Выход', link: '/', bold: false },
+						{ title: 'Выход', link: '/logout', bold: false },
 					]} 
 					parentClass="top-menu"
 				/>
@@ -187,14 +187,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType='main' }) => {
 					items={[
 						{ title: 'Справка', link: '/help', bold: false },
 						{ title: 'Аккаунт', link: '/user-profile', bold: false },
-						{ title: 'Выход', link: '/', bold: true },
+						{ title: 'Выход', link: '/logout', bold: true },
 					]}
 				/>
 				<MobileMenu 
 					items={[
 						{ title: 'Справочная информация', link: '/help', bold: false },
 						{ title: 'Настройки аккаунта', link: '/user-profile', bold: false },
-						{ title: 'Выход', link: '/', bold: false },
+						{ title: 'Выход', link: '/logout', bold: false },
 					]} 
 					parentClass="top-menu"
 				/>

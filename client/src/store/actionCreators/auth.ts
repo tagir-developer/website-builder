@@ -1,5 +1,7 @@
-import { AxiosError } from "axios"
+import axios, { AxiosError } from "axios"
 import { Dispatch } from "redux"
+import { API_URL } from "../../http"
+import { IAuthResponse } from "../../models/response/AuthResponse"
 import AuthService from "../../services/AuthService"
 import { authActionTypes, IAuthAction } from "../types/auth"
 
@@ -10,15 +12,14 @@ export const register = (email: string, password: string, passwordConfirm: strin
 
 		try {
 			const response = await AuthService.registration(email, password, passwordConfirm, name)
+			console.log(response)
 			localStorage.setItem('token', response.data.accessToken)
 
-			// dispatch({ type: authActionTypes.AUTH_SUCCESS, payload: response.data })
 			dispatch(authSuccessCreator(response.data))
 
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				// dispatch({type: authActionTypes.AUTH_ERROR, payload: e.response.data})
 				dispatch(authErrorCreator(e.response.data))
 			}
 
@@ -33,6 +34,30 @@ export const login = (email: string, password: string) => {
 
 		try {
 			const response = await AuthService.login(email, password)
+			console.log(response)
+			localStorage.setItem('token', response.data.accessToken)
+
+			dispatch(authSuccessCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(authErrorCreator(e.response.data))
+			}
+
+		}
+
+	}
+}
+
+export const checkAuth = () => {
+	return async (dispatch: Dispatch<IAuthAction>) => {
+
+		dispatch(authStartCreator())
+
+		try {
+			const response = await axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
+			console.log(response)
 			localStorage.setItem('token', response.data.accessToken)
 
 			dispatch(authSuccessCreator(response.data))

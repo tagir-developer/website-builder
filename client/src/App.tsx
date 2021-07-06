@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Layout from './components/HOC/Layout/Layout'
-import { useRoutes } from './routes'
+import { Routes } from './routes'
 import ScrollToTop from './utils/ScrollToTop/ScrollToTop'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import {rootReducer} from './store/reducers/rootReducer'
+import { rootReducer } from './store/reducers/rootReducer'
 import thunk from 'redux-thunk'
 
 declare global {
@@ -16,7 +16,7 @@ declare global {
 
 const composeEnhancers =
   typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
     }) : compose
 
@@ -29,8 +29,6 @@ export type AppDispatch = typeof store.dispatch
 
 const App: React.FC = () => {
 
-  const routes = useRoutes(false)
-
   // ! Если в глобальном стейте открыт попап или алерт, то не рендерить компонент <ScrollToTop />, чтобы не сбивать скролл
 
   return (
@@ -38,7 +36,7 @@ const App: React.FC = () => {
       <Layout>
         <Router>
           <ScrollToTop />
-          {routes}
+          <Routes />
         </Router>
       </Layout>
     </Provider>

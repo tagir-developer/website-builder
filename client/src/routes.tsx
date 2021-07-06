@@ -14,11 +14,14 @@ import QuestionPage from './pages/QuestionPage/QuestionPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 import SelectTemplatePage from './pages/SelectTemplatePage/SelectTemplatePage'
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
+import { useTypedSelector } from './hooks/reduxHooks'
+import Logout from './components/Auth/Logout/Logout'
 
-export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
+export const Routes: React.FC = (): JSX.Element => {
 
+	const { isAuth } = useTypedSelector(state => state.auth)
 
-	if (isAuthenticated) {
+	if (isAuth) {
 		return (
 			<Switch>
 				<Route path="/" component={ProjectsListPage} exact />
@@ -26,6 +29,7 @@ export const useRoutes = (isAuthenticated: boolean): JSX.Element => {
 				<Route path="/learning" component={LearningPage} exact />
 				<Route path="/question" component={QuestionPage} exact />
 				<Route path="/complaint" component={ComplaintPage} exact />
+				<Route path="/logout" component={Logout} exact />
 
 				<Route path="/help/two" exact >
 					<HelpPage><PageStart title="Как создать сайт" /></HelpPage>
