@@ -3,9 +3,13 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import Button from '../../components/UI/Button/Button'
 import Footer from '../../components/UI/Footer/Footer'
+import { useTypedSelector } from '../../hooks/reduxHooks'
 import './LandingPage.scss'
 
 const LandingPage: React.FC<RouteComponentProps> = ({history}) => {
+
+	const {checkAuthLoading} = useTypedSelector(state => state.auth)
+
 	return (
 		<>
 			<TopMenu menuType="main" />

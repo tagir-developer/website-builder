@@ -53,7 +53,7 @@ export const login = (email: string, password: string) => {
 export const checkAuth = () => {
 	return async (dispatch: Dispatch<IAuthAction>) => {
 
-		dispatch(authStartCreator())
+		dispatch(authCeckStartCreator())
 
 		try {
 			const response = await axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
@@ -97,6 +97,10 @@ export const logout = () => {
 
 export const authStartCreator = (): IAuthAction => {
 	return { type: authActionTypes.AUTH_START }
+}
+
+export const authCeckStartCreator = (): IAuthAction => {
+	return { type: authActionTypes.AUTH_CHECK_START }
 }
 
 export const authSuccessCreator = (payload: any): IAuthAction => {

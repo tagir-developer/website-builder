@@ -13,7 +13,7 @@ const AuthPage: React.FC = () => {
 
 	const messagePopup = usePopup(false, 'blur')
 
-	const { message, messageType } = useTypedSelector(state => state.auth)
+	const { message, messageType, errors } = useTypedSelector(state => state.auth)
 	const { clearRegisterMessage } = useActions()
 
 	useEffect(() => {
@@ -27,6 +27,9 @@ const AuthPage: React.FC = () => {
 			}, alertDelay)
 		}
 	}, [message])
+
+	console.log('ERRORS ARRAY: ', errors)
+
 
 	return (
 		<>

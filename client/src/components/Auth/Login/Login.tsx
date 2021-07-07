@@ -36,15 +36,13 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 							<Input 
 								parentClass="login"
 								type="email"
-								name="email"
-								placeholder="Электронная почта"
+								placeholder="Электронная почта*"
 								{...emailInput.bind}
 							/>
 							<Input 
 								parentClass="login"
 								type="password"
-								name="password"
-								placeholder="Пароль"
+								placeholder="Пароль*"
 								{...passwordInput.bind}
 							/>
 

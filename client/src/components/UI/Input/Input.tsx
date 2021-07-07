@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './Input.scss'
@@ -11,13 +12,20 @@ interface IInput {
 	onChange: (param?: any) => void
 	placeholder?: string
 	name?: string
+	isInvalid?: boolean
 }
 
-const Input: React.FC<IInput> = ({ children, parentClass, modClass, name, type, value, onChange, placeholder }) => {
+const Input: React.FC<IInput> = ({ children, parentClass, modClass, name, type, value, onChange, placeholder, isInvalid }) => {
 
 	const inputClasses = useCreateClassName('input-basic', parentClass)
 
 	// const InputId = uuid()
+
+	const inputFinalClass = classNames({
+		[inputClasses]: true,
+		'input-basic input-basic_invalid-input': isInvalid ? isInvalid : false
+		// 'input-basic input-basic_invalid-input': true
+	})
 
 	return (
 		<>
@@ -29,11 +37,10 @@ const Input: React.FC<IInput> = ({ children, parentClass, modClass, name, type, 
 			
 			<input
 				type={type}
-				className={inputClasses}
+				className={inputFinalClass}
 				value={value || ''}
 				name={name || ''}
 				onChange={onChange}
-				// placeholder={placeholder ? placeholder : ""}
 				placeholder={placeholder || ''}
 			/>
 		</>

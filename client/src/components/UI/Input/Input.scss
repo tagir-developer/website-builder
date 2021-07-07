@@ -22,4 +22,14 @@
   		color: $text-secondary;
 	}
 
+	&_invalid-input {
+		box-shadow: 
+		inset 0px 2px 0px $danger, 
+		inset 0px -2px 0px $danger, 
+		inset 2px 0px 0px $danger, 
+		inset -2px 0px 0px $danger;
+	}
+
 }
+
+// box-shadow: inset 0px 2px 17px #e158587a, inset 0px -2px 7px #e7505094, inset 2px 0px 17px #e7505099, inset -2px 0px 7px #e7505096;

@@ -6,7 +6,7 @@ const Layout: React.FC = ({ children }) => {
 
 	// !Когда будем подключать Redux, можно будет задавать тегу main класс с размытием, при открытии алерта
 
-	const { loading } = useTypedSelector(state => state.auth)
+	const { checkAuthLoading } = useTypedSelector(state => state.auth)
 
 	const { checkAuth } = useActions()
 
@@ -18,7 +18,7 @@ const Layout: React.FC = ({ children }) => {
 
 	return (
 		<main className="main">
-			{loading
+			{checkAuthLoading
 				? <div className="center-align-full-screen">
 					<Loader />
 				</div>

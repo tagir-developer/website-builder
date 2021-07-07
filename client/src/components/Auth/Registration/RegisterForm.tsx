@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { useEffect } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
@@ -21,12 +22,23 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 	const passwordConfirmInput = useInput('')
 	const nameInput = useInput('')
 
-	const {loading} = useTypedSelector(state => state.auth)
+	const {loading, errors} = useTypedSelector(state => state.auth)
 	const { register } = useActions()
+
+	
 
 	const registerHandler = useCallback(() => {
 		register(emailInput.value, passwordInput.value, passwordConfirmInput.value, nameInput.value)
 	}, [register])
+
+	const inputHasError = (inputTypeValue: string, errorsArray: any[]): boolean => {
+		const inputErrors: string[] = errorsArray.map(i => i.param)
+		console.log('inputErrors - ', inputErrors)
+		return inputErrors.includes(inputTypeValue)
+	}
+
+	
+	// console.log('inputHasError - ', inputHasError('email', errors))
 
 
 	return (
@@ -45,19 +57,22 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 									<Input
 										type="text"
 										parentClass="register-form"
-										placeholder="Электронная почта"
+										placeholder="Электронная почта*"
+										isInvalid={inputHasError('email', errors)}
 										{...emailInput.bind}
 									/>
 									<Input
 										type="password"
 										parentClass="register-form"
-										placeholder="Придумайте пароль"
+										placeholder="Придумайте пароль*"
+										isInvalid={inputHasError('password', errors)}
 										{...passwordInput.bind}
 									/>
 									<Input
 										type="password"
 										parentClass="register-form"
-										placeholder="Повторите пароль"
+										placeholder="Повторите пароль*"
+										isInvalid={inputHasError('passwordConfirm', errors)}
 										{...passwordConfirmInput.bind}
 									/>
 

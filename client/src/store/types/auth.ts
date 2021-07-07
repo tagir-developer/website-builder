@@ -7,11 +7,13 @@ export interface IAuthState {
 	messageType: "basic" | "success" | "warning" | "danger"
 	message: string
 	loading: boolean
-	// error: null | boolean
+	checkAuthLoading: boolean
+	errors: any
 }
 
 export enum authActionTypes {
 	AUTH_START = 'AUTH_START',
+	AUTH_CHECK_START = 'AUTH_CHECK_START',
 	AUTH_SUCCESS = 'AUTH_SUCCESS',
 	AUTH_ERROR = 'AUTH_ERROR',
 	AUTH_CLEAR_MESSAGE = 'AUTH_CLEAR_MESSAGE',
@@ -20,6 +22,10 @@ export enum authActionTypes {
 
 interface authStartAction {
 	type: authActionTypes.AUTH_START
+}
+
+interface authCheckStartAction {
+	type: authActionTypes.AUTH_CHECK_START
 }
 
 interface authSuccessAction {
@@ -32,6 +38,7 @@ interface authErrorAction {
 	payload: {
 		messageType: "basic" | "success" | "warning" | "danger"
 		message: string
+		errors: any[]
 	}
 }
 
@@ -43,4 +50,4 @@ interface authClearMessageAction {
 	type: authActionTypes.AUTH_CLEAR_MESSAGE
 }
 
-export type IAuthAction = authStartAction | authSuccessAction | authErrorAction | authClearMessageAction | authLogoutAction
+export type IAuthAction = authStartAction | authSuccessAction | authErrorAction | authClearMessageAction | authLogoutAction | authCheckStartAction
