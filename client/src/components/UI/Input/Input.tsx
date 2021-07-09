@@ -23,7 +23,7 @@ const Input: React.FC<IInput> = ({ children, parentClass, modClass, name, type, 
 
 	const inputFinalClass = classNames({
 		[inputClasses]: true,
-		'input-basic input-basic_invalid-input': isInvalid ? isInvalid : false
+		'input-basic_invalid-input': isInvalid ? isInvalid : false
 		// 'input-basic input-basic_invalid-input': true
 	})
 

@@ -51,6 +51,10 @@ export default function authReducer(state = initialState, action: IAuthAction): 
 			message: '', 
 			messageType: 'basic'
 		}
+		case authActionTypes.AUTH_REMOVE_ERROR: return {
+			...state, 
+			errors: action.payload
+		}
 		default:
 			return state
 	}

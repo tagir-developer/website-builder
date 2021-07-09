@@ -14,22 +14,22 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	const messagePopup = usePopup(false, 'blur')
 
-	const { message, messageType } = useTypedSelector(state => state.auth)
+	const { message, messageType, loading } = useTypedSelector(state => state.auth)
 	const {clearRegisterMessage} = useActions()
 
 	useEffect(() => {
 		const alertDelay: number = 2000
 
-		message && messagePopup.showHide(alertDelay)
+		if (message && !loading) messagePopup.showHide(alertDelay)
 
-		if (messageType === 'success') {
+		// if (messageType === 'success') {
 			
-			setTimeout(() => {
-				clearRegisterMessage()
-				history.push('/login')
-			}, alertDelay)
-		}
-	}, [message, messageType])
+		// 	setTimeout(() => {
+		// 		clearRegisterMessage()
+		// 		history.push('/login')
+		// 	}, alertDelay)
+		// }
+	}, [message, messageType, loading])
 
 	return (
 		<>

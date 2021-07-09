@@ -8,7 +8,7 @@ export interface IAuthState {
 	message: string
 	loading: boolean
 	checkAuthLoading: boolean
-	errors: any
+	errors: string[]
 }
 
 export enum authActionTypes {
@@ -16,6 +16,7 @@ export enum authActionTypes {
 	AUTH_CHECK_START = 'AUTH_CHECK_START',
 	AUTH_SUCCESS = 'AUTH_SUCCESS',
 	AUTH_ERROR = 'AUTH_ERROR',
+	AUTH_REMOVE_ERROR = 'AUTH_REMOVE_ERROR',
 	AUTH_CLEAR_MESSAGE = 'AUTH_CLEAR_MESSAGE',
 	AUTH_LOGOUT = 'AUTH_LOGOUT',
 }
@@ -31,6 +32,11 @@ interface authCheckStartAction {
 interface authSuccessAction {
 	type: authActionTypes.AUTH_SUCCESS
 	payload: IAuthResponse
+}
+
+interface authRemoveErrorAction {
+	type: authActionTypes.AUTH_REMOVE_ERROR
+	payload: string[]
 }
 
 interface authErrorAction {
@@ -50,4 +56,4 @@ interface authClearMessageAction {
 	type: authActionTypes.AUTH_CLEAR_MESSAGE
 }
 
-export type IAuthAction = authStartAction | authSuccessAction | authErrorAction | authClearMessageAction | authLogoutAction | authCheckStartAction
+export type IAuthAction = authStartAction | authSuccessAction | authErrorAction | authClearMessageAction | authLogoutAction | authCheckStartAction | authRemoveErrorAction

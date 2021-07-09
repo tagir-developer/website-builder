@@ -124,3 +124,11 @@ export const authLogoutCreator = (): IAuthAction => {
 export const clearRegisterMessage = (): IAuthAction => {
 	return { type: authActionTypes.AUTH_CLEAR_MESSAGE }
 }
+
+export const authRemoveError = (value: string, errors: string[]): IAuthAction => {
+	const payload = errors.filter(i => i !== value)
+	return {
+		type: authActionTypes.AUTH_REMOVE_ERROR, 
+		payload
+	}
+}

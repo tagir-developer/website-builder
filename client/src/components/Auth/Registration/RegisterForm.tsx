@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react'
-import { useEffect } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
@@ -17,29 +16,17 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 
 	const registerFormClasses = useCreateClassName('register-form', parentClass)
 
-	const emailInput = useInput('')
-	const passwordInput = useInput('')
-	const passwordConfirmInput = useInput('')
-	const nameInput = useInput('')
-
 	const {loading, errors} = useTypedSelector(state => state.auth)
-	const { register } = useActions()
+	const { register, authRemoveError } = useActions()
 
-	
+	const email = useInput('', authRemoveError, 'email', errors)
+	const password = useInput('', authRemoveError, 'password', errors)
+	const passwordConfirm = useInput('', authRemoveError, 'passwordConfirm', errors)
+	const name = useInput('')
 
 	const registerHandler = useCallback(() => {
-		register(emailInput.value, passwordInput.value, passwordConfirmInput.value, nameInput.value)
+		register(email.value, password.value, passwordConfirm.value, name.value)
 	}, [register])
-
-	const inputHasError = (inputTypeValue: string, errorsArray: any[]): boolean => {
-		const inputErrors: string[] = errorsArray.map(i => i.param)
-		console.log('inputErrors - ', inputErrors)
-		return inputErrors.includes(inputTypeValue)
-	}
-
-	
-	// console.log('inputHasError - ', inputHasError('email', errors))
-
 
 	return (
 				<div className={registerFormClasses}>
@@ -52,28 +39,28 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 										type="text"
 										parentClass="register-form"
 										placeholder="Ваше имя"
-										{...nameInput.bind}
+										{...name.bind}
 									/>
 									<Input
 										type="text"
 										parentClass="register-form"
 										placeholder="Электронная почта*"
-										isInvalid={inputHasError('email', errors)}
-										{...emailInput.bind}
+										isInvalid={errors.includes('email')}
+										{...email.bind}
 									/>
 									<Input
 										type="password"
 										parentClass="register-form"
 										placeholder="Придумайте пароль*"
-										isInvalid={inputHasError('password', errors)}
-										{...passwordInput.bind}
+										isInvalid={errors.includes('password')}
+										{...password.bind}
 									/>
 									<Input
 										type="password"
 										parentClass="register-form"
 										placeholder="Повторите пароль*"
-										isInvalid={inputHasError('passwordConfirm', errors)}
-										{...passwordConfirmInput.bind}
+										isInvalid={errors.includes('passwordConfirm')}
+										{...passwordConfirm.bind}
 									/>
 
 									<Button

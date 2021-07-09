@@ -10,7 +10,8 @@ class authController {
 		try {
 			const errors = validationResult(req)
 			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array()[0].msg, 'danger', errors.array()))
+				// return next(ApiError.BadRequest(errors.array()[0].msg, 'danger', errors.array().map(i => i.param)))
+				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
 			}
 
 			const { email, password, name } = req.body
