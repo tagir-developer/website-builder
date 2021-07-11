@@ -1,5 +1,6 @@
 import { authActionTypes, IAuthAction, IAuthState } from "../types/auth"
 import { IUser } from "../../models/IUser"
+import { IResetData } from "../../models/IResetData"
 
 const initialState: IAuthState = {
 	user: {} as IUser,
@@ -8,7 +9,8 @@ const initialState: IAuthState = {
 	message: '',
 	loading: false,
 	checkAuthLoading: false,
-	errors: []
+	errors: [],
+	resetData: {} as IResetData
 }
 
 export default function authReducer(state = initialState, action: IAuthAction): IAuthState {
@@ -30,7 +32,7 @@ export default function authReducer(state = initialState, action: IAuthAction): 
 			message: action.payload.message, 
 			messageType: action.payload.messageType
 		}
-		case authActionTypes.AUTH_ERROR: return {
+		case authActionTypes.AUTH_ERROR_OR_MESSAGE: return {
 			...state, 
 			loading: false,
 			checkAuthLoading: false, 
@@ -54,6 +56,15 @@ export default function authReducer(state = initialState, action: IAuthAction): 
 		case authActionTypes.AUTH_REMOVE_ERROR: return {
 			...state, 
 			errors: action.payload
+		}
+		case authActionTypes.AUTH_SET_RESET_DATA: return {
+			...state,
+			loading: false,
+			resetData: action.payload
+		}
+		case authActionTypes.AUTH_CLEAR_RESET_DATA: return {
+			...state, 
+			resetData: {} as IResetData
 		}
 		default:
 			return state

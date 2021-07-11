@@ -1,13 +1,8 @@
-.password-recovery-page {
+.pass-reset-page {
 	width: 100%;
 	min-height: calc(100vh - 60px);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-
-	&__title {
-		text-align: center;
-	}
 
 }

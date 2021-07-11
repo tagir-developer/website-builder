@@ -20,7 +20,7 @@ export const register = (email: string, password: string, passwordConfirm: strin
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				dispatch(authErrorCreator(e.response.data))
+				dispatch(authErrorOrMessageCreator(e.response.data))
 			}
 
 		}
@@ -42,7 +42,7 @@ export const login = (email: string, password: string) => {
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				dispatch(authErrorCreator(e.response.data))
+				dispatch(authErrorOrMessageCreator(e.response.data))
 			}
 
 		}
@@ -53,7 +53,7 @@ export const login = (email: string, password: string) => {
 export const checkAuth = () => {
 	return async (dispatch: Dispatch<IAuthAction>) => {
 
-		dispatch(authCeckStartCreator())
+		dispatch(authCheckStartCreator())
 
 		try {
 			const response = await axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
@@ -65,7 +65,7 @@ export const checkAuth = () => {
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				dispatch(authErrorCreator(e.response.data))
+				dispatch(authErrorOrMessageCreator(e.response.data))
 			}
 
 		}
@@ -87,7 +87,70 @@ export const logout = () => {
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				dispatch(authErrorCreator(e.response.data))
+				dispatch(authErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+
+	}
+}
+
+export const passReset = (email: string) => {
+	return async (dispatch: Dispatch<IAuthAction>) => {
+
+		dispatch(authStartCreator())
+
+		try {
+			const response = await AuthService.reset(email)
+
+			dispatch(authErrorOrMessageCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(authErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+
+	}
+}
+
+export const resetTokenCheck = (token: string) => {
+	return async (dispatch: Dispatch<IAuthAction>) => {
+
+		dispatch(authStartCreator())
+
+		try {
+			const response = await AuthService.password(token)
+
+			dispatch(setResetData(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(authErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+
+	}
+}
+
+export const changePassword = (password: string, passwordConfirm: string, userId: string, token: string) => {
+	return async (dispatch: Dispatch<IAuthAction>) => {
+
+		dispatch(authStartCreator())
+
+		try {
+			const response = await AuthService.changePassword(password, passwordConfirm, userId, token)
+
+			dispatch(authErrorOrMessageCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(authErrorOrMessageCreator(e.response.data))
 			}
 
 		}
@@ -99,8 +162,19 @@ export const authStartCreator = (): IAuthAction => {
 	return { type: authActionTypes.AUTH_START }
 }
 
-export const authCeckStartCreator = (): IAuthAction => {
+export const authCheckStartCreator = (): IAuthAction => {
 	return { type: authActionTypes.AUTH_CHECK_START }
+}
+
+export const setResetData = (payload: any): IAuthAction => {
+	return { 
+		type: authActionTypes.AUTH_SET_RESET_DATA, 
+		payload 
+	}
+}
+
+export const clearResetData = (): IAuthAction => {
+	return { type: authActionTypes.AUTH_CLEAR_RESET_DATA }
 }
 
 export const authSuccessCreator = (payload: any): IAuthAction => {
@@ -110,9 +184,9 @@ export const authSuccessCreator = (payload: any): IAuthAction => {
 	}
 }
 
-export const authErrorCreator = (payload: any): IAuthAction => {
+export const authErrorOrMessageCreator = (payload: any): IAuthAction => {
 	return {
-		type: authActionTypes.AUTH_ERROR, 
+		type: authActionTypes.AUTH_ERROR_OR_MESSAGE, 
 		payload
 	}
 }

@@ -14,7 +14,7 @@
 		@include make-row();
 		justify-content: center;
 		align-items: center;
-		padding: 50px 0px 50px 0px;
+		// padding: 50px 0px 50px 0px;
 		@include media-breakpoint-down(lg) {
 			height: calc(100vh - 60px);
 		}	
@@ -39,7 +39,7 @@
 		}
 	}
 
-	&__input {
+	&__input-basic {
 		margin-bottom: 40px;
 		@include media-breakpoint-down(sm) {
 			margin-bottom: 30px;
@@ -47,7 +47,23 @@
 	}
 
 	&__button {
+		margin-bottom: 40px;
 	}
 
-	
+	&__bottom-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		@include media-breakpoint-down(sm) {
+			flex-direction: column;
+			align-items: center;
+		}	
+	}
+
+	&__small-icon-button {
+		@include media-breakpoint-down(sm) {
+			margin-bottom: 20px;
+		}	
+	}
+
 }

@@ -16,6 +16,7 @@ import SelectTemplatePage from './pages/SelectTemplatePage/SelectTemplatePage'
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
 import { useTypedSelector } from './hooks/reduxHooks'
 import Logout from './components/Auth/Logout/Logout'
+import PassResetPage from './pages/PassResetPage/PassResetPage'
 
 export const Routes: React.FC = (): JSX.Element => {
 
@@ -68,7 +69,8 @@ export const Routes: React.FC = (): JSX.Element => {
 			<Route path="/" component={LandingPage} exact />
 			<Route path="/login" component={AuthPage} exact />
 			<Route path="/registration" component={RegisterPage} exact />
-			<Route path="/recovery" component={PasswordRecoveryPage} exact />
+			<Route path="/password/:token" component={PasswordRecoveryPage} exact />
+			<Route path="/reset" component={PassResetPage} exact />
 			<Route path="/learning" component={LearningPage} exact />
 			<Route path="/question" component={QuestionPage} exact />
 			<Route path="/complaint" component={ComplaintPage} exact />

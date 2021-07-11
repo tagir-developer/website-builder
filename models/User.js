@@ -21,6 +21,8 @@ const User = new Schema({
 	activationLink: {
 		type: String
 	},
+	resetToken: String,
+	resetTokenExp: Date,
 	roles: [{
 		type: String,
 		ref: 'Role'

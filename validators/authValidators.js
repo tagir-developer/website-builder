@@ -67,3 +67,18 @@ exports.loginValidators = [
 			}
 		}).withMessage(basicLoginErrorMessage),
 ]
+
+exports.resetValidators = [
+	check('password')
+		.isLength({ min: 6 }).withMessage('Пароль должен быть минимум 6 символов')
+		.isString().withMessage('Пароль не должен состоять из одних цифр'),
+	check('passwordConfirm')
+		.custom((value, {req}) => {
+		if (value !== req.body.password) {
+			// throw new Error('Пароли должны совпадать')
+			// throw ApiError.BadRequest('Пароли должны совпадать')
+			return Promise.reject('Пароли должны совпадать')
+		}
+		return true
+		}).withMessage('Пароли должны совпадать')
+]

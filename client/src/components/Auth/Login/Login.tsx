@@ -62,7 +62,7 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 							>
 								Регистрация
 							</SmallIconButton>
-							<Link to="/recovery" className="login__recovery-link" >Забыли пароль?</Link>
+							<Link to="/reset" className="login__recovery-link" >Забыли пароль?</Link>
 							</div>				
 						</div>			
 					</div>

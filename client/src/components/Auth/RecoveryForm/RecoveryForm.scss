@@ -1,0 +1,53 @@
+@import '../../../styles/mixins/mixins.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins/grid.scss';
+@import '../../../styles/mixins/breakpoints.scss';
+
+.recovery-form {
+	width: 100%;
+
+	&__container {
+		@include make-container();
+	}
+
+	&__row {
+		@include make-row();
+		justify-content: center;
+		align-items: center;
+		padding: 50px 0px 50px 0px;
+		@include media-breakpoint-down(lg) {
+			height: calc(100vh - 60px);
+		}	
+		@include media-breakpoint-down(sm) {
+			padding: 0px 15px 0px 15px;
+		}	
+	}
+
+	&__form-container {
+		// @include make-col(5);
+		width: 480px;
+		background: $main;
+		box-shadow: -20px -20px 54px rgba(255, 255, 255, 0.5), 20px 20px 56px rgba(169, 190, 210, 0.4);
+		border-radius: 50px;
+	}
+
+	&__form {
+		padding: 50px;
+		padding-bottom: 40px;
+		@include media-breakpoint-down(sm) {
+			padding: 40px 15px 20px 15px;
+		}
+	}
+
+	&__input-basic {
+		margin-bottom: 40px;
+		@include media-breakpoint-down(sm) {
+			margin-bottom: 30px;
+		}
+	}
+
+	&__button {
+	}
+
+	
+}

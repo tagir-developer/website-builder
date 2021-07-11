@@ -12,6 +12,18 @@ export default class AuthService {
 		return $api.post<IAuthResponse>('auth/register', {email, password, passwordConfirm, name})
 	}
 
+	static async reset(email: string): Promise<AxiosResponse<IAuthResponse>> {
+		return $api.post<IAuthResponse>('auth/reset', {email})
+	}
+
+	static async password(token: string): Promise<AxiosResponse<IAuthResponse>> {
+		return $api.get<IAuthResponse>(`auth/password/${token}`)
+	}
+
+	static async changePassword(password: string, passwordConfirm: string, userId: string, token: string): Promise<AxiosResponse<IAuthResponse>> {
+		return $api.post<IAuthResponse>('auth/password', {password, passwordConfirm, userId, token})
+	}
+
 	static async logout(): Promise<void> {
 		return $api.post('auth/logout')
 	}
