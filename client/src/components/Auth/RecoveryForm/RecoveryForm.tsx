@@ -18,12 +18,13 @@ const RecoveryForm: React.FC<IRecoveryForm> = ({ parentClass }) => {
 	const { loading, errors, resetData } = useTypedSelector(state => state.auth)
 	const { authRemoveError, changePassword } = useActions()
 
-	const password = useInput('', authRemoveError, 'email', errors)
-	const passwordConfirm = useInput('', authRemoveError, 'email', errors)
+	const password = useInput('', authRemoveError, 'password', errors)
+	const passwordConfirm = useInput('', authRemoveError, 'passwordConfirm', errors)
 
 	const sendForm = useCallback(() => {
 		changePassword(password.value, passwordConfirm.value, resetData.userId, resetData.token)
-	}, [resetData, changePassword])
+	}, [resetData, changePassword, password.value, passwordConfirm.value])
+
 
 	return (
 		<div className={RecoveryFormClasses}>

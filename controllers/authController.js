@@ -112,7 +112,7 @@ class authController {
 	async password(req, res, next) {
 		try {
 			const resetData = await userService.password(req.params.token)
-			res.json({resetData})
+			res.json({...resetData})
 			// return res.redirect(`${process.env.CLIENT_URL}/password/${req.params.token}`)
 		} catch (e) {
 			next(e)
@@ -121,11 +121,14 @@ class authController {
 
 	async newPassword(req, res, next) {
 		try {
-
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) {
+				return next(ApiError.BadRequest(errors.array()[0].msg, 'danger', errors.array()))
+			}
 			const {password, userId, token} = req.body
 
 			await userService.newPassword(password, userId, token)
-
+			
 			return res.json({
 				messageType: 'success',
 				message: "Ваш пароль успешно изменен!",

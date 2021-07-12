@@ -2,7 +2,6 @@ import classNames from 'classnames'
 import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './Input.scss'
-// import { v4 as uuid } from 'uuid'
 
 interface IInput {
 	parentClass?: string
@@ -19,12 +18,9 @@ const Input: React.FC<IInput> = ({ children, parentClass, modClass, name, type, 
 
 	const inputClasses = useCreateClassName('input-basic', parentClass)
 
-	// const InputId = uuid()
-
 	const inputFinalClass = classNames({
 		[inputClasses]: true,
 		'input-basic_invalid-input': isInvalid ? isInvalid : false
-		// 'input-basic input-basic_invalid-input': true
 	})
 
 	return (

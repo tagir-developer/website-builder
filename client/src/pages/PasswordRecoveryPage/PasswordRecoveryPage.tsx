@@ -60,7 +60,6 @@ const PasswordRecoveryPage: React.FC = () => {
 		history.push('/reset')
 	}
 
-
 	return (
 		<>
 			<PopUp {...messagePopup.popupProps} transparent={true}>

@@ -5,15 +5,21 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const errorMiddleware = require('./middlewares/errorMiddleware')
+const fileMiddleware = require('./middlewares/fileMiddleware')
+const path = require('path')
 
 const app = express()
 
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
 app.use(cors({
 	credentials: true,
 	origin: process.env.CLIENT_URL
 }))
+app.use('/images', express.static(path.join(__dirname, 'images'))) // ? Возможно не нужно
+app.use(fileMiddleware.single('support-img')) // ? Пока для теста подключим здесь, но потом попробуем подключать в конкретном роуте
+
 app.use('/api/auth/', require('./routes/auth.routes'))
 app.use(errorMiddleware)
 

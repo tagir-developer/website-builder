@@ -25,4 +25,12 @@
   		color: $text-secondary;
 	}
 
+	&_invalid-input {
+		box-shadow: 
+		inset 0px 2px 0px $danger, 
+		inset 0px -2px 0px $danger, 
+		inset 2px 0px 0px $danger, 
+		inset -2px 0px 0px $danger;
+	}
+
 }
