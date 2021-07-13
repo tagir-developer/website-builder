@@ -3,6 +3,7 @@ import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../Button/Button'
+import FileUpload from '../FileUpload/FileUpload'
 import Input from '../Input/Input'
 import SmallButton from '../SmallButton/SmallButton'
 import Textarea from '../Textarea/Textarea'
@@ -69,7 +70,9 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 								placeholder=""
 								/> */}
 
-							<div className="send-question__download-file">
+								<FileUpload parentClass="send-question" />
+
+							{/* <div className="send-question__download-file">
 								<div className="send-question__show-downloaded-files">File name.jpg File name.jpg File name.jpg File name.jpg File name.jpg</div>
 								<SmallButton
 									parentClass="send-question"
@@ -77,7 +80,7 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 								>
 									Прикрепить файл
 								</SmallButton>
-							</div>
+							</div> */}
 
 							<Button
 								parentClass="send-question"

@@ -50,4 +50,9 @@
 			background: no-repeat center url('./img/change.svg');
 		}
 	}
+	&_attach-file-icon {
+		&:before {
+			background: no-repeat center url('./img/attach-file.svg');
+		}
+	}
 }
