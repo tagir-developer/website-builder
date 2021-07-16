@@ -6,7 +6,7 @@ import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
 import SmallIconButton from '../../UI/SmallIconButton/SmallIconButton'
 import './Login.scss'
-import { useActions } from '../../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useCallback } from 'react'
 
 interface ILogin extends RouteComponentProps {
@@ -17,13 +17,14 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 
 	const loginClasses = useCreateClassName('login', parentClass)
 
-	const emailInput = useInput('')
-	const passwordInput = useInput('')
+	const { errors } = useTypedSelector(state => state.auth)
+	const {login, authRemoveError} = useActions()
 
-	const {login} = useActions()
+	const email = useInput('', authRemoveError, 'email', errors)
+	const password = useInput('', authRemoveError, 'password', errors)
 
 	const loginHandler = useCallback(() => {
-		login(emailInput.value, passwordInput.value)
+		login(email.value, password.value)
 	}, [login])
 
 
@@ -37,13 +38,15 @@ const Login: React.FC<ILogin> = ({ parentClass, history }) => {
 								parentClass="login"
 								type="email"
 								placeholder="Электронная почта*"
-								{...emailInput.bind}
+								isInvalid={errors.includes('email')}
+								{...email.bind}
 							/>
 							<Input 
 								parentClass="login"
 								type="password"
 								placeholder="Пароль*"
-								{...passwordInput.bind}
+								isInvalid={errors.includes('email')}
+								{...password.bind}
 							/>
 
 							<Button 

@@ -30,6 +30,7 @@
 
 	&__form {
 		padding: 0px 50px 50px 50px;
+		margin: 0px;
 		@include media-breakpoint-down(sm) {
 			padding: 0px 15px 20px 15px;
 		}
@@ -53,39 +54,7 @@
 	}
 
 	&__file-upload {
-		margin-bottom: 50px;
+		margin-bottom: 20px;
 	}
-
-	// &__download-file {
-	// 	display: flex;
-	// 	flex-direction: row;
-	// 	justify-content: space-between;
-	// 	margin-bottom: 50px;
-	// 	@include media-breakpoint-down(sm) {
-	// 		flex-direction: column-reverse;
-	// 		align-items: center;
-	// 		margin-bottom: 30px;
-	// 	}	
-	// }
-
-	// &__show-downloaded-files{
-	// 	width: 40%;
-	// 	@include centering();
-	// 	font-size: 16px;
-	// 	@include media-breakpoint-down(sm) {
-	// 		width: 50%;
-	// 		text-align: center;
-	// 	}	
-	// }
-
-	// &__small-button {
-	// 	width: 60%;
-	// 	font-size: 16px;
-	// 	@include media-breakpoint-down(sm) {
-	// 		width: auto;
-	// 		font-size: 18px;
-	// 		margin-bottom: 15px;
-	// 	}	
-	// }
 
 }

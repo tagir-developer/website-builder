@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { MutableRefObject } from 'react'
+import { useCallback } from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
+import { useUploadFiles } from '../../../hooks/useUploadFiles.hook'
 import Button from '../Button/Button'
 import FileUpload from '../FileUpload/FileUpload'
 import Input from '../Input/Input'
-import SmallButton from '../SmallButton/SmallButton'
 import Textarea from '../Textarea/Textarea'
 import './SendQuestion.scss'
 
@@ -17,11 +19,16 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 
 	const sendQuestionClasses = useCreateClassName('send-question', parentClass)
 
-	// const {loading, errors} = useTypedSelector(state => state.support)
-	// const { supportRemoveError } = useActions()
+	const {loading, errors} = useTypedSelector(state => state.support)
+	const { sendQuestion, supportRemoveError } = useActions()
 
-	const email = useInput('')
-	const message = useInput('')
+	const email = useInput('', supportRemoveError, 'email', errors)
+	const message = useInput('', supportRemoveError, 'message', errors)
+	const upload = useUploadFiles('question-images')
+
+	const sendForm = useCallback(() => {
+		sendQuestion(email.value, message.value, upload.formData)
+	}, [upload.formData, email.value, message.value, sendQuestion])
 
 	return (
 		<div className={sendQuestionClasses}>
@@ -32,60 +39,30 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 							<Input
 								parentClass="send-question"
 								type="email"
-								// isInvalid={errors.includes('email')}
+								isInvalid={errors.includes('email')}
 								{...email.bind}
 							>
 								Укажите email, на который мы вышлем ответ*:
 							</Input>
 							<Textarea
 								parentClass="send-question"
-								// isInvalid={errors.includes('email')}
+								isInvalid={errors.includes('message')}
 								{...message.bind}
 							>
 								Наберите сообщение*:
 							</Textarea>
-							{/* <input type="file" /> */}
 
-							{/* <label 
-								htmlFor="answer-mail" 
-								className="send-question__input-label input-label"
-							>Укажите email, на который мы вышлем ответ:
-							</label>
-							<input
-								id="answer-mail"
-								type="text"
-								className="send-question__input input"
-								placeholder=""
-								{...email.bind}
+							<FileUpload 
+								parentClass="send-question"
+								multiple={true}
+								{ ...upload.bind }
 							/>
-							<label 
-								htmlFor="question-textarea"
-								className="send-question__input-label input-label"
-							>
-								Наберите сообщение:
-							</label>
-							<textarea
-								id="question-textarea"
-								className="send-question__textarea textarea"
-								placeholder=""
-								/> */}
-
-								<FileUpload parentClass="send-question" />
-
-							{/* <div className="send-question__download-file">
-								<div className="send-question__show-downloaded-files">File name.jpg File name.jpg File name.jpg File name.jpg File name.jpg</div>
-								<SmallButton
-									parentClass="send-question"
-									handler={() => console.log('Прикрепить файл нажата')}
-								>
-									Прикрепить файл
-								</SmallButton>
-							</div> */}
 
 							<Button
 								parentClass="send-question"
-								handler={() => console.log('Btn click')}
+								handler={sendForm}
 								modClass={['big']}
+								disabled={loading}
 							>
 								Отправить
 							</Button>

@@ -5,15 +5,20 @@ const ApiError = require('../exeptions/apiError')
 
 exports.questionValidators = [
 	check('email')
+		// .custom(value => {
+		// 	console.log('VALIDATORS CHECK EMAIL: ', value)
+		// 	return true
+		// })
 		.isEmail().normalizeEmail().withMessage('Введите корректный email'),
 	check('message')
+		.not().isEmpty().withMessage('Поле с сообщением не должно быть пустым')
 		.isString().withMessage('Сообщение не должно состоять из одних цифр'),
-	// ! Здесь нужно еще проверить инпут с файлами (опциональный)
 ]
 
 exports.complaintValidators = [
 	check('email')
 		.isEmail().normalizeEmail().withMessage('Введите корректный email'),
 	check('message')
+		.not().isEmpty().withMessage('Поле с сообщением не должно быть пустым')
 		.isString().withMessage('Сообщение не должно состоять из одних цифр'),
 ]

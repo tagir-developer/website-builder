@@ -28,9 +28,6 @@ const AuthPage: React.FC = () => {
 		}
 	}, [message])
 
-	console.log('ERRORS ARRAY: ', errors)
-
-
 	return (
 		<>
 			<PopUp {...messagePopup.popupProps} transparent={true}>

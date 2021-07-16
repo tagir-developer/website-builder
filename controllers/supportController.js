@@ -3,6 +3,7 @@ const { validationResult } = require("express-validator")
 const userService = require("../service/userService")
 const { json } = require("body-parser")
 const ApiError = require("../exeptions/apiError")
+const mailService = require("../service/mailService")
 
 class supportController {
 
@@ -13,7 +14,15 @@ class supportController {
 				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
 			}
 
-		console.log('ЗАГРУЖЕННЫЙ ФАЙЛ', req.body.file)
+		const {email, message} = req.body
+
+		await mailService.sendFooterQuestionMail(email, message, req.files)
+
+		return res.json({
+			messageType: 'success',
+			message: "Сообщение успешно отправлено в службу поддержки",
+			errors: []
+		})
 
 		} catch (e) {
 			next(e)
@@ -27,6 +36,14 @@ class supportController {
 				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
 			}
 
+			const {email, message} = req.body
+			await mailService.sendFooterComplaintMail(email, message)
+	
+			return res.json({
+				messageType: 'success',
+				message: "Жалоба успешно отправлена в службу поддержки",
+				errors: []
+			})
 
 
 		} catch (e) {

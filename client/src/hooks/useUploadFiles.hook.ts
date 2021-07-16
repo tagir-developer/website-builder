@@ -1,34 +1,44 @@
-import React from 'react'
+import React, { MutableRefObject } from 'react'
 import { useState } from "react"
 
 interface IUseUploadFiles {
 	bind: {
-		replaceFiles: (event: React.ChangeEvent<HTMLInputElement>) => void
+		handler: (event: React.ChangeEvent<HTMLInputElement>) => void
+		name: string
+		fileNames: string[]
 	}
 	files: any[]
 	fileNames: string[]
 	replaceFiles: (event: React.ChangeEvent<HTMLInputElement>) => void
 	clearFiles: () => void
-
+	formData: FormData
+	fieldName: string
 }
 
-export const useUploadFiles = (): IUseUploadFiles => {
+export const useUploadFiles = (fieldName: string): IUseUploadFiles => {
 	const [files, setFiles] = useState<any[]>([])
 	const [fileNames, setFileNames] = useState<string[]>([])
+	const [formData, setFormData] = useState<FormData>(new FormData())
+
+	const fileFilter = (file: File, typesArray: string[] = ['image/jpeg', 'image/jpg', 'image/png']): boolean => {
+		return typesArray.includes(file.type)
+	}
 
 	const replaceFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.currentTarget.files) {
 			const fileList = event.currentTarget.files
+			const newFormData = new FormData()
 			setFileNames([])
-			setFiles([])
 			for (let i = 0; i < fileList.length; i++) {
+
+				if (!fileFilter(fileList[i])) continue
+
 				setFileNames(prev => {
 					return [...prev, fileList[i].name]
 				})
-				setFiles(prev => {
-					return [...prev, fileList[i]]
-				})
+				newFormData.append(fieldName, fileList[i])
 			}
+			setFormData(newFormData)
 		}
 	}
 
@@ -37,27 +47,14 @@ export const useUploadFiles = (): IUseUploadFiles => {
 			setFiles([])
 	}
 
-	// const addNewFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
-	// 	if (event.currentTarget.files) {
-	// 		const fileList = event.currentTarget.files	
-	// 		for (let i = 0; i < fileList.length; i++) {
-	// 			setFileNames(prev => {
-	// 				return [...prev, fileList[i].name]
-	// 			})
-	// 			setFiles(prev => {
-	// 				return [...prev, fileList[i]]
-	// 			})
-	// 		}
-	// 	}
-	// }
-
-
 	return {
-		bind: { replaceFiles },
+		bind: { handler: replaceFiles, fileNames, name: fieldName },
 		files,
 		fileNames,
 		replaceFiles,
-		clearFiles
+		clearFiles,
+		formData,
+		fieldName
 	}
 
 }

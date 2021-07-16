@@ -1,8 +1,5 @@
 const {Router} = require('express')
-const config = require('../config/default.json')
 const {loginValidators, registerValidators, resetValidators} = require('../validators/authValidators')
-const User = require('../models/User')
-const Role = require('../models/Role')
 const authController = require('../controllers/authController')
 const authMiddleware = require('../middlewares/authMiddleware')
 

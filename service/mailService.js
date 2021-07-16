@@ -23,7 +23,12 @@ const styles = {
 		color: white;
 		margin-top: 40px;
 		"
-	`
+	`,
+	bold: `
+	style="
+		font-weight: bold;
+		"
+		`,
 }
 
 class MailService {
@@ -36,7 +41,8 @@ class MailService {
 			auth: {
 				user: process.env.SMTP_USER,
 				pass: process.env.SMTP_PASSWORD
-			}
+			},
+			tls : { rejectUnauthorized: false }
 		})
 	}
 
@@ -74,6 +80,45 @@ class MailService {
 			`
 		}, (error) => {
 			console.log(error.message)
+		})
+	}
+
+	async sendFooterQuestionMail(email, message, files) {
+		await this.transporter.sendMail({
+			from: process.env.SMTP_USER,
+			to: 'orlov.marsel@yandex.ru',
+			subject: 'Вопрос от пользователя с сайта ' + process.env.CLIENT_URL,
+			text: '',
+			html: 
+			`
+			<div ${styles.main}>
+				<h1>Пользователь сервиса задал вопрос</h1>
+				<span ${styles.bold}>Email пользователя: </span><p style="color: #22304a">${email}</p>
+				<span ${styles.bold}>Вопрос пользователя: </span><p>${message}</p>
+			</div>
+			`,
+			attachments: files
+		}, (error) => {
+			console.log('Ошибка при отправки письма', error)
+		})
+	}
+
+	async sendFooterComplaintMail(email, message) {
+		await this.transporter.sendMail({
+			from: process.env.SMTP_USER,
+			to: 'orlov.marsel@yandex.ru',
+			subject: 'Жалоба от пользователя с сайта ' + process.env.CLIENT_URL,
+			text: '',
+			html: 
+			`
+			<div ${styles.main}>
+				<h1>Пользователь сервиса подал жалобу</h1>
+				<span ${styles.bold}>Email пользователя: </span><p style="color: #22304a">${email}</p>
+				<span ${styles.bold}>Сообщение: </span><p>${message}</p>
+			</div>
+			`
+		}, (error) => {
+			console.log('Ошибка при отправки письма', error)
 		})
 	}
 

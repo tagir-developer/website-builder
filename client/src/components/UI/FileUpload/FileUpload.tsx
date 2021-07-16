@@ -1,39 +1,34 @@
-import React, { MutableRefObject, useState } from 'react'
-import { useEffect } from 'react'
-import { useRef } from 'react'
+import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { useUploadFiles } from '../../../hooks/useUploadFiles.hook'
-import SecondaryButton from '../SecondaryButton/SecondaryButton'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import './FileUpload.scss'
 
 interface IFileUpload {
 	parentClass: string
 	modClass?: string[]
+	multiple?: boolean
+	accept?: string
+	name: string
+	handler: (param?: any) => any
+	fileNames: string[]
 }
 
-const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass }) => {
+const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, accept, name, handler, fileNames }) => {
 
 	const fileUploadClasses = useCreateClassName('file-upload', parentClass, modClass)
-
-	const {files, fileNames, replaceFiles} = useUploadFiles()
-
-	console.log('FILENAMES', fileNames.join('; '))
-	console.log('FILES', files)
-
 
 	return (
 		<div className={fileUploadClasses}>
 			<input
 				type="file"
-				name="support-img"
-				id="question-file-input"
+				name={name}
+				id={`${name}-file-input`}
 				className="file-upload__hidden-input"
-				multiple
-				accept='image/png, image/jpeg, image/jpg'
-				onChange={replaceFiles}
+				multiple={multiple}
+				accept={accept ? accept : 'image/png, image/jpeg, image/jpg'}
+				onChange={handler}
 			/>
-			<label htmlFor="question-file-input">
+			<label htmlFor={`${name}-file-input`}>
 				<SmallIconButton
 					parentClass="file-upload"
 					modClass={['attach-file-icon']}

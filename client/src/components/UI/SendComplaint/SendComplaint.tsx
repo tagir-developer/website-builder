@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../Button/Button'
+import Input from '../Input/Input'
+import Textarea from '../Textarea/Textarea'
 import './SendComplaint.scss'
 
 interface ISendComplaint {
@@ -12,7 +15,15 @@ const SendComplaint: React.FC<ISendComplaint> = ({ parentClass }) => {
 
 	const sendComplaintClasses = useCreateClassName('send-complaint', parentClass)
 
-	const emailInput = useInput('')
+	const { loading, errors } = useTypedSelector(state => state.support)
+	const { sendComplaint, supportRemoveError } = useActions()
+
+	const email = useInput('', supportRemoveError, 'email', errors)
+	const message = useInput('', supportRemoveError, 'message', errors)
+
+	const sendForm = useCallback(() => {
+		sendComplaint(email.value, message.value)
+	}, [email.value, message.value, sendComplaint])
 
 	return (
 		<div className={sendComplaintClasses}>
@@ -20,32 +31,27 @@ const SendComplaint: React.FC<ISendComplaint> = ({ parentClass }) => {
 				<div className="send-complaint__row">
 					<div className="send-complaint__form-container">
 						<div className="send-complaint__form">
-							<label 
-								htmlFor="answer-mail" 
-								className="send-complaint__input-label input-label"
-							>Укажите email, на который мы вышлем ответ:
-							</label>
-							<input
-								id="answer-mail"
-								type="text"
-								className="send-complaint__input input"
-								{...emailInput.bind}
-							/>
-							<label 
-								htmlFor="question-textarea"
-								className="send-complaint__input-label input-label"
+							<Input
+								parentClass="send-complaint"
+								type="email"
+								isInvalid={errors.includes('email')}
+								{...email.bind}
 							>
-								Наберите сообщение:
-							</label>
-							<textarea
-								id="question-textarea"
-								className="send-complaint__textarea textarea"
-							/>
+								Укажите email, на который мы вышлем ответ*:
+							</Input>
+							<Textarea
+								parentClass="send-complaint"
+								isInvalid={errors.includes('message')}
+								{...message.bind}
+							>
+								Наберите сообщение*:
+							</Textarea>
 
 							<Button
 								parentClass="send-complaint"
-								handler={() => console.log('Btn click')}
+								handler={sendForm}
 								modClass={['big']}
+								disabled={loading}
 							>
 								Отправить жалобу
 							</Button>
