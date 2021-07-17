@@ -15,15 +15,14 @@ const SendComplaint: React.FC<ISendComplaint> = ({ parentClass }) => {
 
 	const sendComplaintClasses = useCreateClassName('send-complaint', parentClass)
 
-	const { loading, errors } = useTypedSelector(state => state.support)
-	const { sendComplaint, supportRemoveError } = useActions()
+	const { loading } = useTypedSelector(state => state.support)
+	const { errors } = useTypedSelector(state => state.alert)
+	const { sendComplaint, alertRemoveError } = useActions()
 
-	const email = useInput('', supportRemoveError, 'email', errors)
-	const message = useInput('', supportRemoveError, 'message', errors)
+	const email = useInput('', alertRemoveError, 'email', errors)
+	const message = useInput('', alertRemoveError, 'message', errors)
 
-	const sendForm = useCallback(() => {
-		sendComplaint(email.value, message.value)
-	}, [email.value, message.value, sendComplaint])
+	const sendForm = () => sendComplaint(email.value, message.value)
 
 	return (
 		<div className={sendComplaintClasses}>
@@ -34,14 +33,12 @@ const SendComplaint: React.FC<ISendComplaint> = ({ parentClass }) => {
 							<Input
 								parentClass="send-complaint"
 								type="email"
-								isInvalid={errors.includes('email')}
 								{...email.bind}
 							>
 								Укажите email, на который мы вышлем ответ*:
 							</Input>
 							<Textarea
 								parentClass="send-complaint"
-								isInvalid={errors.includes('message')}
 								{...message.bind}
 							>
 								Наберите сообщение*:

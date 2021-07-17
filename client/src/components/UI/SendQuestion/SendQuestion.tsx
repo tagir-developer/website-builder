@@ -1,6 +1,4 @@
-import React, { useRef } from 'react'
-import { MutableRefObject } from 'react'
-import { useCallback } from 'react'
+import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
@@ -19,16 +17,15 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 
 	const sendQuestionClasses = useCreateClassName('send-question', parentClass)
 
-	const {loading, errors} = useTypedSelector(state => state.support)
-	const { sendQuestion, supportRemoveError } = useActions()
+	const {loading} = useTypedSelector(state => state.support)
+	const { errors } = useTypedSelector(state => state.alert)
+	const { sendQuestion, alertRemoveError } = useActions()
 
-	const email = useInput('', supportRemoveError, 'email', errors)
-	const message = useInput('', supportRemoveError, 'message', errors)
+	const email = useInput('', alertRemoveError, 'email', errors)
+	const message = useInput('', alertRemoveError, 'message', errors)
 	const upload = useUploadFiles('question-images')
 
-	const sendForm = useCallback(() => {
-		sendQuestion(email.value, message.value, upload.formData)
-	}, [upload.formData, email.value, message.value, sendQuestion])
+	const sendForm = () => sendQuestion(email.value, message.value, upload.formData)
 
 	return (
 		<div className={sendQuestionClasses}>
@@ -39,14 +36,12 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 							<Input
 								parentClass="send-question"
 								type="email"
-								isInvalid={errors.includes('email')}
 								{...email.bind}
 							>
 								Укажите email, на который мы вышлем ответ*:
 							</Input>
 							<Textarea
 								parentClass="send-question"
-								isInvalid={errors.includes('message')}
 								{...message.bind}
 							>
 								Наберите сообщение*:

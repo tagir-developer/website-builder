@@ -5,6 +5,7 @@ interface IUseInputResult {
 	bind: {
 		value: string
 		onChange: (event: React.FormEvent & { target: HTMLInputElement }) => void
+		isInvalid?: boolean
 	}
 	value: string
 	clear: () => void
@@ -23,8 +24,10 @@ export const useInput = (initialValue: string, customFunc?: (param: string, arra
 	const clear = (): void => setValue('')
 	const setNewValue = (param: string): void => setValue(param)
 
+	const bindObject = errors && inputType ? {value, onChange, isInvalid: errors.includes(inputType)} : {value, onChange}
+
 	return {
-		bind: {value, onChange},
+		bind: bindObject,
 		value,
 		clear,
 		setNewValue

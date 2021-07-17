@@ -2,6 +2,7 @@ import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import SupportService from "../../services/SupportService"
 import { ISupportAction, supportActionTypes } from "../types/support"
+import { alertErrorOrMessageCreator } from "./alert"
 
 export const sendQuestion = (email: string, message: string, formData: FormData) => {
 	return async (dispatch: Dispatch<ISupportAction>) => {
@@ -15,12 +16,14 @@ export const sendQuestion = (email: string, message: string, formData: FormData)
 
 			const response = await SupportService.question(formData)
 
-			dispatch(supportErrorOrMessageCreator(response.data))
+			dispatch(supportEndCreator())
+			dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				dispatch(supportErrorOrMessageCreator(e.response.data))
+				dispatch(supportEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 
 		}
@@ -36,12 +39,14 @@ export const sendComplaint = (email: string, message: string) => {
 
 			const response = await SupportService.complaint(email, message)
 
-			dispatch(supportErrorOrMessageCreator(response.data))
+			dispatch(supportEndCreator())
+			dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				dispatch(supportErrorOrMessageCreator(e.response.data))
+				dispatch(supportEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 
 		}
@@ -52,21 +57,6 @@ export const supportStartCreator = (): ISupportAction => {
 	return { type: supportActionTypes.SUPPORT_START }
 }
 
-export const supportErrorOrMessageCreator = (payload: any): ISupportAction => {
-	return {
-		type: supportActionTypes.SUPPORT_ERROR_OR_MESSAGE, 
-		payload
-	}
-}
-
-export const supportClearRegisterMessage = (): ISupportAction => {
-	return { type: supportActionTypes.SUPPORT_CLEAR_MESSAGE }
-}
-
-export const supportRemoveError = (value: string, errors: string[]): ISupportAction => {
-	const payload = errors.filter(i => i !== value)
-	return {
-		type: supportActionTypes.SUPPORT_REMOVE_ERROR, 
-		payload
-	}
+export const supportEndCreator = (): ISupportAction => {
+	return { type: supportActionTypes.SUPPORT_END }
 }
