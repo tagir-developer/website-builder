@@ -1,7 +1,6 @@
-const {body, check} = require('express-validator')
+const {check} = require('express-validator')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
-const ApiError = require('../exeptions/apiError')
 
 const basicLoginErrorMessage = 'Вы ввели неверное имя пользователя или пароль'
 
@@ -14,7 +13,6 @@ exports.registerValidators = [
 
 			if (user) {
 				return Promise.reject('Такой email уже занят')
-				// throw ApiError.BadRequest('Такой email уже занят')
 			}
 			return true		
 
@@ -24,15 +22,15 @@ exports.registerValidators = [
 		}).withMessage('Этот email уже занят'),
 	check('password')
 		.isLength({ min: 6 }).withMessage('Пароль должен быть минимум 6 символов')
-		.isString().withMessage('Пароль не должен состоять из одних цифр'),
+		.isString().withMessage('Пароль не должен состоять из одних цифр')
+		.matches(/\d/).withMessage('Пароль должен содержать хотя бы одну цифру'),
+		// .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/).withMessage('Пароль должен содержать строчные и заглавные латинские буквы и хотя бы одну цифру'),
 	check('passwordConfirm')
 		.custom((value, {req}) => {
 		if (value !== req.body.password) {
-			// throw new Error('Пароли должны совпадать')
-			// throw ApiError.BadRequest('Пароли должны совпадать')
 			return Promise.reject('Пароли должны совпадать')
 		}
-		return true // уточнить когда используем true
+		return true 
 		}).withMessage('Пароли должны совпадать'),
 	check('name').optional().isString()
 ]

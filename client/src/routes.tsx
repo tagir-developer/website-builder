@@ -20,7 +20,9 @@ import PassResetPage from './pages/PassResetPage/PassResetPage'
 
 export const Routes: React.FC = (): JSX.Element => {
 
-	const { isAuth } = useTypedSelector(state => state.auth)
+	// const { isAuth } = useTypedSelector(state => state.auth) //! Пока убираем авторизацию, потом вернем
+
+	const isAuth = true
 
 	if (isAuth) {
 		return (
