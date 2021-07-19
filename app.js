@@ -21,6 +21,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')))
 
 app.use('/api/auth/', require('./routes/auth.routes'))
 app.use('/api/support/', require('./routes/support.routes'))
+app.use('/api/projects/', require('./routes/projects.routes'))
 app.use(errorMiddleware)
 
 // const PORT = config.get('port') || 5000
@@ -31,7 +32,7 @@ async function start() {
 		await mongoose.connect(process.env.DB_URL, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
-			useCreateIndex: true,
+			useCreateIndex: true
 		})
 		app.listen(PORT, () => {
 			console.log(`App has been started on port ${PORT}...`)

@@ -8,6 +8,7 @@ import PopUp from '../../components/HOC/PopUp/PopUp'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import { usePopup } from '../../hooks/usePopup.hook'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
+import { useHistory } from 'react-router-dom'
 
 const AuthPage: React.FC = () => {
 
@@ -16,16 +17,34 @@ const AuthPage: React.FC = () => {
 	const { message, messageType, errors } = useTypedSelector(state => state.auth)
 	const { clearRegisterMessage } = useActions()
 
+	const history = useHistory()
+
 	useEffect(() => {
 
 		const alertDelay: number = 2000
-		
+
+		// 	if (message) {
+		// 		messagePopup.showHide(alertDelay)
+		// 		setTimeout(() => {
+		// 			clearRegisterMessage()
+		// 		}, alertDelay)
+		// 	}
+		// }, [message])
+
+		if (message && messageType === 'success') {
+			clearRegisterMessage()
+			history.push('/')
+		}
+
+
 		if (message) {
 			messagePopup.showHide(alertDelay)
 			setTimeout(() => {
 				clearRegisterMessage()
 			}, alertDelay)
+
 		}
+
 	}, [message])
 
 	return (

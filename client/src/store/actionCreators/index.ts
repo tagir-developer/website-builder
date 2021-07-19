@@ -1,9 +1,20 @@
 import * as authActionCreators from './auth'
 import * as supportActionCreators from './support'
 import * as alertActionCreators from './alert'
+import * as projectsActionCreators from './projects'
 
-export default {
+const allActionCreators = {
 	...authActionCreators,
 	...supportActionCreators,
-	...alertActionCreators
+	...alertActionCreators,
+	...projectsActionCreators
 }
+
+export default allActionCreators
+
+// export default {
+// 	...authActionCreators,
+// 	...supportActionCreators,
+// 	...alertActionCreators,
+// 	...projectsActionCreators
+// }

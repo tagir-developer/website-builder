@@ -12,7 +12,7 @@ export const register = (email: string, password: string, passwordConfirm: strin
 
 		try {
 			const response = await AuthService.registration(email, password, passwordConfirm, name)
-			console.log(response)
+			console.log('REGISTER TOKEN', response)
 			localStorage.setItem('token', response.data.accessToken)
 
 			dispatch(authSuccessCreator(response.data))
@@ -34,8 +34,9 @@ export const login = (email: string, password: string) => {
 
 		try {
 			const response = await AuthService.login(email, password)
-			console.log(response)
+			console.log('AUTH TOKEN', response)
 			localStorage.setItem('token', response.data.accessToken)
+			console.log('LOCAL STORAGE AFTER LOGIN', localStorage.getItem('token'))
 
 			dispatch(authSuccessCreator(response.data))
 
