@@ -15,29 +15,13 @@ const AuthPage: React.FC = () => {
 	const messagePopup = usePopup(false, 'blur')
 
 	const { message, messageType, errors } = useTypedSelector(state => state.auth)
-	const { clearRegisterMessage } = useActions()
-
-	const history = useHistory()
+	const { clearRegisterMessage, authClearErrors } = useActions()
 
 	useEffect(() => {
 
 		const alertDelay: number = 2000
 
-		// 	if (message) {
-		// 		messagePopup.showHide(alertDelay)
-		// 		setTimeout(() => {
-		// 			clearRegisterMessage()
-		// 		}, alertDelay)
-		// 	}
-		// }, [message])
-
-		if (message && messageType === 'success') {
-			clearRegisterMessage()
-			history.push('/')
-		}
-
-
-		if (message) {
+		if (message && !!errors.length) {
 			messagePopup.showHide(alertDelay)
 			setTimeout(() => {
 				clearRegisterMessage()
@@ -46,6 +30,13 @@ const AuthPage: React.FC = () => {
 		}
 
 	}, [message])
+
+	useEffect(() => {
+		return () => {
+			clearRegisterMessage()
+			authClearErrors()
+		}
+	}, [])
 
 	return (
 		<>

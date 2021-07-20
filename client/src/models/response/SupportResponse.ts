@@ -1,5 +1,4 @@
-export interface ISupportResponse {
-	message: string
-	messageType: "basic" | "success" | "warning" | "danger"
-	errors: string[]
+import { IAlert } from "../Ialert"
+
+export interface ISupportResponse extends IAlert {
 }

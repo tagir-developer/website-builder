@@ -15,9 +15,10 @@ interface IChangeConfigInput {
 		confirmFunc: (param: boolean) => void
 		isConfirm: boolean
 	}
+	handler: Function
 }
 
-const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType, confirm }) => {
+const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType, confirm, handler }) => {
 
 	const inputClasses = useCreateClassName('change-config-input', parentClass, modClass)
 
@@ -52,7 +53,8 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 	useEffect(() => {
 
 		const saveNewValue = async () => {
-			await setConfigValue(input.value)
+			// await setConfigValue(input.value)
+			handler() // ! Здесь нужно запустить экшн обновления значения в базе данных
 			setIsEdit(false)
 		}
 
@@ -70,7 +72,7 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 
 	return (
 		<div className={inputClasses}>
-			{ isEdit
+			{isEdit
 				? (
 					<div
 						className={"change-config-input__button change-config-input__button_save-changes"}

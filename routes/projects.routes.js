@@ -6,8 +6,7 @@ const { createProjectValidators } = require('../validators/projectValidators')
 const router = Router()
 
 router.post('/create-new-project', authMiddleware, createProjectValidators, projectsController.createProject)
-// router.get('/projects', authMiddleware, projectsController.getAllProjects)
-router.get('/projects', projectsController.getAllProjects)
+router.get('/projects', authMiddleware, projectsController.getAllProjects)
 
 
 module.exports = router

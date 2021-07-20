@@ -12,7 +12,6 @@ export const register = (email: string, password: string, passwordConfirm: strin
 
 		try {
 			const response = await AuthService.registration(email, password, passwordConfirm, name)
-			console.log('REGISTER TOKEN', response)
 			localStorage.setItem('token', response.data.accessToken)
 
 			dispatch(authSuccessCreator(response.data))
@@ -34,9 +33,7 @@ export const login = (email: string, password: string) => {
 
 		try {
 			const response = await AuthService.login(email, password)
-			console.log('AUTH TOKEN', response)
 			localStorage.setItem('token', response.data.accessToken)
-			console.log('LOCAL STORAGE AFTER LOGIN', localStorage.getItem('token'))
 
 			dispatch(authSuccessCreator(response.data))
 
@@ -58,7 +55,6 @@ export const checkAuth = () => {
 
 		try {
 			const response = await axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
-			console.log(response)
 			localStorage.setItem('token', response.data.accessToken)
 
 			dispatch(authSuccessCreator(response.data))
@@ -198,6 +194,10 @@ export const authLogoutCreator = (): IAuthAction => {
 
 export const clearRegisterMessage = (): IAuthAction => {
 	return { type: authActionTypes.AUTH_CLEAR_MESSAGE }
+}
+
+export const authClearErrors = (): IAuthAction => {
+	return { type: authActionTypes.AUTH_CLEAR_ERRORS }
 }
 
 export const authRemoveError = (value: string, errors: string[]): IAuthAction => {

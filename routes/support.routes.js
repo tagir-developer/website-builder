@@ -1,6 +1,6 @@
 const {Router} = require('express')
-const supportController = require('../controllers/supportController')
 const {questionValidators, complaintValidators} = require('../validators/supportValidators')
+const supportController = require('../controllers/supportController')
 const uploadImages = require('../middlewares/fileMiddlewares/uploadImages')
 
 const router = Router()

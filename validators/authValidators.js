@@ -63,7 +63,7 @@ exports.loginValidators = [
 			} catch(e) {
 				console.log(e)
 			}
-		}).withMessage(basicLoginErrorMessage),
+		}).withMessage(basicLoginErrorMessage)
 ]
 
 exports.resetValidators = [

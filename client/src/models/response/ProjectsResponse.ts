@@ -1,3 +1,5 @@
+import { IAlert } from "../Ialert"
+
 
 export interface IProjectsResponse {
 	id: string
@@ -5,4 +7,8 @@ export interface IProjectsResponse {
 	link: string
 	isPublished: boolean
 	hasPages: boolean
+}
+
+export interface ICreateProjectsResponse extends IAlert {
+
 }

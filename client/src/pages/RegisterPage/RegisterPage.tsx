@@ -8,28 +8,34 @@ import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './RegisterPage.scss'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
+const RegisterPage: React.FC = () => {
 
 	const messagePopup = usePopup(false, 'blur')
 
-	const { message, messageType, loading } = useTypedSelector(state => state.auth)
-	const {clearRegisterMessage} = useActions()
+	const { message, messageType, errors } = useTypedSelector(state => state.auth)
+	const {clearRegisterMessage, authClearErrors} = useActions()
 
 	useEffect(() => {
+
 		const alertDelay: number = 2000
 
-		if (message && !loading) messagePopup.showHide(alertDelay)
+		if (message && !!errors.length) {
+			messagePopup.showHide(alertDelay)
+			setTimeout(() => {
+				clearRegisterMessage()
+			}, alertDelay)
 
-		// if (messageType === 'success') {
-			
-		// 	setTimeout(() => {
-		// 		clearRegisterMessage()
-		// 		history.push('/login')
-		// 	}, alertDelay)
-		// }
-	}, [message, messageType, loading])
+		}
+
+	}, [message])
+
+	useEffect(() => {
+		return () => {
+			clearRegisterMessage()
+			authClearErrors()
+		}
+	}, [])
 
 	return (
 		<>
@@ -52,4 +58,4 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
 	)
 }
 
-export default withRouter(RegisterPage)
+export default RegisterPage

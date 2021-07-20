@@ -9,20 +9,21 @@ class supportController {
 
 	async question(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			// const errors = validationResult(req)
+			// if (!errors.isEmpty()) {
+			// 	return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
+			// }
+			ApiError.ValidationErrorChecking(req)
 
-		const {email, message} = req.body
+			const { email, message } = req.body
 
-		await mailService.sendFooterQuestionMail(email, message, req.files)
+			await mailService.sendFooterQuestionMail(email, message, req.files)
 
-		return res.json({
-			messageType: 'success',
-			message: "Сообщение успешно отправлено в службу поддержки",
-			errors: []
-		})
+			return res.json({
+				messageType: 'success',
+				message: "Сообщение успешно отправлено в службу поддержки",
+				errors: []
+			})
 
 		} catch (e) {
 			next(e)
@@ -31,14 +32,12 @@ class supportController {
 
 	async complaint(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			ApiError.ValidationErrorChecking(req)
 
-			const {email, message} = req.body
+			const { email, message } = req.body
+
 			await mailService.sendFooterComplaintMail(email, message)
-	
+
 			return res.json({
 				messageType: 'success',
 				message: "Жалоба успешно отправлена в службу поддержки",

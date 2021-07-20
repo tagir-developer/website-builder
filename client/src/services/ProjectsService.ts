@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import $api from "../http"
-import { IProjectsResponse } from "../models/response/ProjectsResponse"
+import { ICreateProjectsResponse, IProjectsResponse } from "../models/response/ProjectsResponse"
 
 
 export default class ProjectsService {
@@ -9,7 +9,9 @@ export default class ProjectsService {
 		return $api.get<IProjectsResponse[]>('projects/projects')
 	}
 
-	// static async complaint(email: string, message: string): Promise<AxiosResponse<IProjectsResponse>> {
-	// 	return $api.post<ISupportResponse>('support/complaint', {email, message})
-	// }
+	static async createProject(name: string, link: string): Promise<AxiosResponse<ICreateProjectsResponse>> {
+		return $api.post<ICreateProjectsResponse>('projects/create-new-project', {name, link})
+	}
+
+
 }

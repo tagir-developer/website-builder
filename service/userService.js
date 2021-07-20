@@ -40,22 +40,17 @@ class UserService {
 	}
 
 	async refresh(refreshToken) {
-		console.log('REFRESH: START', refreshToken)
 		if (!refreshToken) {
 			throw ApiError.UnauthorizedError()
 		}
 		const userData = tokenService.validateRefreshToken(refreshToken)
-		console.log('REFRESH: ', userData)
 		const tokenFromDb = await tokenService.findToken(refreshToken)
-		console.log('REFRESH: tokenFromDb', tokenFromDb)
 		if (!userData || !tokenFromDb) {
 			throw ApiError.UnauthorizedError()
 		}
 		const user = await User.findById(userData.id)
-		console.log('REFRESH: USER', user)
 		const userDto = new UserDto(user)
 		const tokens = tokenService.generateTokens({ ...userDto })
-		console.log('REFRESH: TOKENS', tokens)
 		await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
 		return { ...tokens, user: userDto }
@@ -117,6 +112,29 @@ class UserService {
 		await user.save()
 	}
 
+	async changeEmail(userId, email) {
+		const user = await User.findOne({ _id: userId })
+
+		if (!user) {
+			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
+		}
+
+		user.email = email
+		await user.save()
+	}
+
+	async changeName(userId, name) {
+		const user = await User.findOne({ _id: userId })
+
+		if (!user) {
+			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
+		}
+
+		user.name = name
+		await user.save()
+	}
+
+	// ! Тестовая функция получения пользователей
 	async getAllUsers() {
 		const users = await User.find()
 		return users

@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useEffect } from 'react'
+import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
@@ -23,61 +24,17 @@ const ProjectsListPage: React.FC = () => {
 		getAllProjects()
 	}, [])
 
-	// const [projects, setProjects] = useState([{
-	// 	name: 'Опубликованный сайт',
-	// 	pusblished: true,
-	// 	link: '/project-1',
-	// 	hasPages: true
-	// },
-	// {
-	// 	name: 'Неопубликованный сайт',
-	// 	pusblished: false,
-	// 	link: '/project-1',
-	// 	hasPages: true
-	// },
-	// {
-	// 	name: 'Сайт без страниц',
-	// 	pusblished: false,
-	// 	link: '/project-1',
-	// 	hasPages: false
-	// }])
-
-	// const addNewProject = () => {
-
-	// // 	setProjects([{
-	// // 		name: 'Опубликованный сайт',
-	// // 		pusblished: true,
-	// // 		link: '/project-1',
-	// // 		hasPages: true
-	// // 	},
-	// // 	{
-	// // 		name: 'Неопубликованный сайт',
-	// // 		pusblished: false,
-	// // 		link: '/project-1',
-	// // 		hasPages: true
-	// // 	},
-	// // 	{
-	// // 		name: 'Сайт без страниц',
-	// // 		pusblished: false,
-	// // 		link: '/project-1',
-	// // 		hasPages: false
-	// // 	},
-	// // 	{
-	// // 		name: 'Новый сайт',
-	// // 		pusblished: false,
-	// // 		link: '/project-1',
-	// // 		hasPages: false
-	// // 	}
-	// // ])
-
-	// 	popup.handler()
-
-	// }
+	const successfulProjectCreation = () => {
+		popup.closePopup()
+		getAllProjects()
+	}
 
 	return (
 		<>
+		<AlertMessage successFunc={successfulProjectCreation}>
+
 			<PopUp {...popup.popupProps} withTitle="Cоздание сайта">
-				<CreateProject handler={() => {}} />
+				<CreateProject />
 			</PopUp>
 
 			<Backdrop {...popup.backdropProps}>
@@ -114,6 +71,8 @@ const ProjectsListPage: React.FC = () => {
 				</div>
 				<Footer />
 			</Backdrop>
+
+			</AlertMessage>
 		</>
 	)
 }

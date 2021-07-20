@@ -24,9 +24,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 	const passwordConfirm = useInput('', authRemoveError, 'passwordConfirm', errors)
 	const name = useInput('')
 
-	const registerHandler = useCallback(() => {
-		register(email.value, password.value, passwordConfirm.value, name.value)
-	}, [register])
+	const registerHandler = () => register(email.value, password.value, passwordConfirm.value, name.value)
 
 	return (
 				<div className={registerFormClasses}>
@@ -45,21 +43,18 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 										type="text"
 										parentClass="register-form"
 										placeholder="Электронная почта*"
-										isInvalid={errors.includes('email')}
 										{...email.bind}
 									/>
 									<Input
 										type="password"
 										parentClass="register-form"
 										placeholder="Придумайте пароль*"
-										isInvalid={errors.includes('password')}
 										{...password.bind}
 									/>
 									<Input
 										type="password"
 										parentClass="register-form"
 										placeholder="Повторите пароль*"
-										isInvalid={errors.includes('passwordConfirm')}
 										{...passwordConfirm.bind}
 									/>
 

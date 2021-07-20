@@ -66,6 +66,10 @@ export default function authReducer(state = initialState, action: IAuthAction): 
 			...state, 
 			resetData: {} as IResetData
 		}
+		case authActionTypes.AUTH_CLEAR_ERRORS: return {
+			...state, 
+			errors: []
+		}
 		default:
 			return state
 	}

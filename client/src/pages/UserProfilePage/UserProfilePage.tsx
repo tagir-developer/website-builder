@@ -6,6 +6,7 @@ import ChangeConfigInput from '../../components/UI/ChangeConfigInput/ChangeConfi
 import Confirm from '../../components/UI/Confirm/Confirm'
 import Footer from '../../components/UI/Footer/Footer'
 import SmallIconButton from '../../components/UI/SmallIconButton/SmallIconButton'
+import { useTypedSelector } from '../../hooks/reduxHooks'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './UserProfilePage.scss'
 
@@ -14,6 +15,10 @@ import './UserProfilePage.scss'
 const UserProfilePage: React.FC = () => {
 
 	const popup = usePopup(false, 'blur')
+
+	const {user} = useTypedSelector(state => state.auth)
+
+	console.log('USER: ', user)
 
 	return (
 		<>
@@ -49,7 +54,7 @@ const UserProfilePage: React.FC = () => {
 										<SmallIconButton
 											parentClass="user-profile"
 											modClass={["delete-icon"]}
-											handler={() => { }}
+											handler={() => {}}
 										>
 											Удалить фото
 										</SmallIconButton>
@@ -60,8 +65,9 @@ const UserProfilePage: React.FC = () => {
 								<ChangeConfigInput
 									parentClass="user-profile"
 									title="Изменить имя"
-									value="Владислав Иванов"
+									value={user.name}
 									confirm={popup.confirm}
+									handler={() => {}}
 								/>
 								</div>
 
@@ -71,8 +77,9 @@ const UserProfilePage: React.FC = () => {
 								<ChangeConfigInput
 									parentClass="user-profile"
 									title="Изменить логин (email)"
-									value="vladislav@mail.ru"
+									value={user.email}
 									confirm={popup.confirm}
+									handler={() => {}}
 								/>
 								<ChangeConfigInput
 									parentClass="user-profile"
@@ -80,6 +87,7 @@ const UserProfilePage: React.FC = () => {
 									value="Password123"
 									inputType="password"
 									confirm={popup.confirm}
+									handler={() => {}}
 								/>
 							</div>
 

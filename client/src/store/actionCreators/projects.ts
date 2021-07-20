@@ -1,7 +1,6 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import ProjectsService from "../../services/ProjectsService"
-import SupportService from "../../services/SupportService"
 import { IProjectsAction, projectsActionTypes } from "../types/projects"
 import { alertErrorOrMessageCreator } from "./alert"
 
@@ -11,13 +10,30 @@ export const getAllProjects = () => {
 		dispatch(projectsStartCreator())
 
 		try {
-
-			// const response = await SupportService.question(formData)
 			const response = await ProjectsService.getProjects()
 
 			dispatch(projectsGetAll(response.data))
 
-			// dispatch(alertErrorOrMessageCreator(response.data))
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(projectsEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
+export const createNewProject = (name: string, link: string) => {
+	return async (dispatch: Dispatch<IProjectsAction>) => {
+
+		dispatch(projectsStartCreator())
+
+		try {
+			const response = await ProjectsService.createProject(name, link)
+
+			dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {
 			const e = error as AxiosError

@@ -23,10 +23,15 @@ export enum authActionTypes {
 	AUTH_LOGOUT = 'AUTH_LOGOUT',
 	AUTH_SET_RESET_DATA = 'AUTH_SET_RESET_DATA',
 	AUTH_CLEAR_RESET_DATA = 'AUTH_CLEAR_RESET_DATA',
+	AUTH_CLEAR_ERRORS = 'AUTH_CLEAR_ERRORS',
 }
 
 interface authStartAction {
 	type: authActionTypes.AUTH_START
+}
+
+interface authClearErrorsAction {
+	type: authActionTypes.AUTH_CLEAR_ERRORS
 }
 
 interface authCheckStartAction {
@@ -69,4 +74,4 @@ interface authClearMessageAction {
 	type: authActionTypes.AUTH_CLEAR_MESSAGE
 }
 
-export type IAuthAction = clearResetDataAction | setResetDataAction | authStartAction | authSuccessAction | authErrorAction | authClearMessageAction | authLogoutAction | authCheckStartAction | authRemoveErrorAction
+export type IAuthAction = clearResetDataAction | setResetDataAction | authStartAction | authSuccessAction | authErrorAction | authClearMessageAction | authLogoutAction | authCheckStartAction | authRemoveErrorAction | authClearErrorsAction
