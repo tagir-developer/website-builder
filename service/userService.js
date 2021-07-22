@@ -113,7 +113,7 @@ class UserService {
 	}
 
 	async changeEmail(userId, email) {
-		const user = await User.findOne({ _id: userId })
+		const user = await User.findById(userId)
 
 		if (!user) {
 			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
@@ -124,7 +124,7 @@ class UserService {
 	}
 
 	async changeName(userId, name) {
-		const user = await User.findOne({ _id: userId })
+		const user = await User.findById(userId)
 
 		if (!user) {
 			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
@@ -132,6 +132,29 @@ class UserService {
 
 		user.name = name
 		await user.save()
+	}
+
+	async changePassword(userId, password) {
+		const user = await User.findById(userId)
+
+		if (!user) {
+			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
+		}
+
+		user.password = await bcrypt.hash(password, 12)
+		await user.save()
+	}
+
+	async getUserData(userId) {
+		const user = await User.findById(userId)
+
+		if (!user) {
+			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
+		}
+
+		const userDto = new UserDto(user)
+
+		return {user: userDto}
 	}
 
 	// ! Тестовая функция получения пользователей

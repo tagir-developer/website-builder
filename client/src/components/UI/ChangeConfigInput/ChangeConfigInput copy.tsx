@@ -15,20 +15,18 @@ interface IChangeConfigInput {
 		confirmFunc: (param: boolean) => void
 		isConfirm: boolean
 	}
-	handler: (id: string, value: string) => void
-	userId: string
+	handler: Function
 }
 
-const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType, confirm, handler, userId }) => {
+const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType, confirm, handler }) => {
 
 	const inputClasses = useCreateClassName('change-config-input', parentClass, modClass)
 
-	const inputId: string = uuid()
+	const inputId: string = uuid();
 
 	const [configValue, setConfigValue] = useState<string>(value) // ! Это значение будем добывать из базы и передавать в пропсах из родителя
 
 	const [isEdit, setIsEdit] = useState<boolean>(false)
-
 
 	const input = useInput(configValue)
 
@@ -53,18 +51,24 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 
 
 	useEffect(() => {
+
+		const saveNewValue = async () => {
+			// await setConfigValue(input.value)
+			handler() // ! Здесь нужно запустить экшн обновления значения в базе данных
+			setIsEdit(false)
+		}
+
 		if (confirm.isConfirm) {
+			saveNewValue()
 			confirm.confirmFunc(false)
 			confirm.setPopup(false)
-			handler(userId, input.value)
 		}
-	}, [confirm.isConfirm])
+
+	}, [confirm, input.value])
 
 	useEffect(() => {
 		isEdit ? document.addEventListener('click', editCanceled) : document.removeEventListener('click', editCanceled)
 	}, [isEdit, editCanceled])
-
-	console.log('Рендер отдельного инпута')
 
 	return (
 		<div className={inputClasses}>
@@ -99,7 +103,6 @@ const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass
 			/>
 		</div>
 	)
-
 }
 
-export default ChangeConfigInput
+// export default ChangeConfigInput

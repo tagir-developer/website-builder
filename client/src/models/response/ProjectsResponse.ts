@@ -1,5 +1,4 @@
-import { IAlert } from "../Ialert"
-
+import { IAlertMessage } from "../IAlertMessage";
 
 export interface IProjectsResponse {
 	id: string
@@ -9,6 +8,6 @@ export interface IProjectsResponse {
 	hasPages: boolean
 }
 
-export interface ICreateProjectsResponse extends IAlert {
+export interface ICreateProjectsResponse extends IAlertMessage {
 
 }

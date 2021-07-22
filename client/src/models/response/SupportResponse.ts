@@ -1,4 +1,4 @@
-import { IAlert } from "../Ialert"
+import { IAlertMessage } from "../IAlertMessage"
 
-export interface ISupportResponse extends IAlert {
+export interface ISupportResponse extends IAlertMessage {
 }

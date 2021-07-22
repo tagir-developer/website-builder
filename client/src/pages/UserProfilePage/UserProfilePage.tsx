@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useCallback } from 'react'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import ChangeConfigInput from '../../components/UI/ChangeConfigInput/ChangeConfigInput'
 import Confirm from '../../components/UI/Confirm/Confirm'
 import Footer from '../../components/UI/Footer/Footer'
+import Loader from '../../components/UI/Loader/Loader'
 import SmallIconButton from '../../components/UI/SmallIconButton/SmallIconButton'
-import { useTypedSelector } from '../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
+import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './UserProfilePage.scss'
 
@@ -14,19 +17,50 @@ import './UserProfilePage.scss'
 
 const UserProfilePage: React.FC = () => {
 
-	const popup = usePopup(false, 'blur')
+	const popupName = usePopup(false, 'blur')
+	const popupEmail = usePopup(false, 'blur')
+	const popupPassword = usePopup(false, 'blur')
+	const backdropProps = useChooseBackdropProps(popupName, popupEmail, popupPassword)
 
-	const {user} = useTypedSelector(state => state.auth)
+	const {user: oldUserData} = useTypedSelector(state => state.auth)
+	const {user, loading, isUpdated} = useTypedSelector(state => state.user)
+	const {changeUserName, getUser} = useActions()
 
-	console.log('USER: ', user)
+	// const changeConfigHandler = useCallback((id: string, func: Function) => {
+
+	// }, [])
+	console.log('Рендер базового компонента', user.name)
+
+	useEffect(() => {
+			getUser(oldUserData.id)
+			console.log('ПЕРВОЕ ПОЛУЧЕНИЕ ДАННЫХ')
+	}, [])
+
+	useEffect(() => {
+		if (isUpdated) {
+			getUser(user.id)
+			console.log('ПОЛУЧЕНЫ АКТУАЛЬНЫЕ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ')
+		}
+	}, [isUpdated])
+
+	// console.log('OLD USER DATA', oldUserData)
+	// console.log('NEW USER DATA', user)
 
 	return (
 		<>
-			<PopUp {...popup.popupProps} transparent={true}>
-				<Confirm handler={popup.confirm}>Сохранить изменения?</Confirm>
+			<PopUp {...popupName.popupProps} transparent={true}>
+				<Confirm handler={popupName.confirm}>Сохранить изменения?</Confirm>
 			</PopUp>
 
-			<Backdrop {...popup.backdropProps}>
+			<PopUp {...popupEmail.popupProps} transparent={true}>
+				<Confirm handler={popupEmail.confirm}>Сохранить изменения?</Confirm>
+			</PopUp>
+
+			<PopUp {...popupPassword.popupProps} transparent={true}>
+				<Confirm handler={popupPassword.confirm}>Вы уверены, что хотите изменить пароль? Подтвердив действие, вам придется снова войти в систему с новым паролем.</Confirm>
+			</PopUp>
+
+			<Backdrop {...backdropProps}>
 
 			<TopMenu menuType="back-to-main" />
 			<div className="content-area">
@@ -62,33 +96,40 @@ const UserProfilePage: React.FC = () => {
 								</div>
 
 								<div className="user-profile__change-name-wrapper">
-								<ChangeConfigInput
+								{loading 
+								? <Loader />
+								:<ChangeConfigInput
 									parentClass="user-profile"
 									title="Изменить имя"
 									value={user.name}
-									confirm={popup.confirm}
-									handler={() => {}}
+									userId={user.id}
+									confirm={popupName.confirm}
+									handler={changeUserName}
 								/>
+								}
+							
 								</div>
 
 							</div>
 
 							<div className="user-profile__email-and-password">
-								<ChangeConfigInput
+								{/* <ChangeConfigInput
 									parentClass="user-profile"
 									title="Изменить логин (email)"
 									value={user.email}
-									confirm={popup.confirm}
+									userId={user.id}
+									confirm={popupEmail.confirm}
 									handler={() => {}}
 								/>
 								<ChangeConfigInput
 									parentClass="user-profile"
 									title="Изменить пароль"
 									value="Password123"
+									userId={user.id}
 									inputType="password"
-									confirm={popup.confirm}
+									confirm={popupPassword.confirm}
 									handler={() => {}}
-								/>
+								/> */}
 							</div>
 
 						</div>
