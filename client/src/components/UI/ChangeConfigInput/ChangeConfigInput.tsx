@@ -1,8 +1,7 @@
-import React, { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
+import React from 'react'
 import './ChangeConfigInput.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { useInput } from '../../../hooks/useInput.hook'
-import { v4 as uuid } from 'uuid'
+import { useChangeConfigInput } from '../../../hooks/useChangeConfigInput'
 
 interface IChangeConfigInput {
 	parentClass?: string
@@ -15,87 +14,46 @@ interface IChangeConfigInput {
 		confirmFunc: (param: boolean) => void
 		isConfirm: boolean
 	}
-	handler: (id: string, value: string) => void
+	handler: (id: string, inputValue: string) => void
 	userId: string
+	isPassword?: boolean
 }
 
-const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType, confirm, handler, userId }) => {
+const ChangeConfigInput: React.FC<IChangeConfigInput> = ({ parentClass, modClass, title, value, inputType, confirm, handler, userId, isPassword }) => {
 
 	const inputClasses = useCreateClassName('change-config-input', parentClass, modClass)
 
-	const inputId: string = uuid()
-
-	const [configValue, setConfigValue] = useState<string>(value) // ! Это значение будем добывать из базы и передавать в пропсах из родителя
-
-	const [isEdit, setIsEdit] = useState<boolean>(false)
-
-
-	const input = useInput(configValue)
-
-	const inputRef = useRef() as MutableRefObject<HTMLInputElement>
-	const btnRef = useRef() as MutableRefObject<HTMLDivElement>
-
-	const startChangeInput = async () => {
-		await setIsEdit(true)
-		inputRef.current.focus()
-	}
-
-	const openConfirmPopup = () => {
-		confirm.setPopup(true)
-	}
-
-	const editCanceled = useCallback((event: MouseEvent): void => {
-		if (event.target !== inputRef.current && event.target !== btnRef.current) {
-			input.setNewValue(configValue)
-			setIsEdit(false)
-		}
-	}, [input, configValue])
-
-
-	useEffect(() => {
-		if (confirm.isConfirm) {
-			confirm.confirmFunc(false)
-			confirm.setPopup(false)
-			handler(userId, input.value)
-		}
-	}, [confirm.isConfirm])
-
-	useEffect(() => {
-		isEdit ? document.addEventListener('click', editCanceled) : document.removeEventListener('click', editCanceled)
-	}, [isEdit, editCanceled])
-
-	console.log('Рендер отдельного инпута')
+	const configInput = useChangeConfigInput(value, confirm, handler, userId, inputType, isPassword)
 
 	return (
 		<div className={inputClasses}>
-			{isEdit
+			{configInput.isEdit
 				? (
 					<div
 						className={"change-config-input__button change-config-input__button_save-changes"}
-						onClick={openConfirmPopup}
-						ref={btnRef}
+						onClick={configInput.openConfirmPopup}
+						ref={configInput.btnRef}
 					></div>
 				)
 				: (
 					<div
 						className={"change-config-input__button change-config-input__button_change-input"}
-						onClick={startChangeInput}
-						ref={btnRef}
+						onClick={configInput.startChangeInput}
+						ref={configInput.btnRef}
 					></div>
 				)
 			}
 			<label
-				htmlFor={inputId}
 				className="change-config-input__input-label"
-			>{title}
+			>
+				{configInput.isEdit && isPassword ? "Придумайте новый пароль" : title}
 			</label>
 			<input
-				id={inputId}
-				type={inputType ? inputType : "text"}
+				type={configInput.inputType}
 				className="change-config-input__input"
-				ref={inputRef}
-				disabled={!isEdit}
-				{...input.bind}
+				ref={configInput.inputRef}
+				disabled={!configInput.isEdit}
+				{...configInput.input.bind}
 			/>
 		</div>
 	)

@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react'
-import { useCallback } from 'react'
+import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import ChangeConfigInput from '../../components/UI/ChangeConfigInput/ChangeConfigInput'
 import Confirm from '../../components/UI/Confirm/Confirm'
+import FileUpload from '../../components/UI/FileUpload/FileUpload'
 import Footer from '../../components/UI/Footer/Footer'
-import Loader from '../../components/UI/Loader/Loader'
+import LoaderHorizontal from '../../components/UI/LoaderHorizontal/LoaderHorizontal'
 import SmallIconButton from '../../components/UI/SmallIconButton/SmallIconButton'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
 import { usePopup } from '../../hooks/usePopup.hook'
+import { useUploadFiles } from '../../hooks/useUploadFiles.hook'
 import './UserProfilePage.scss'
 
 //! Здесь в зависимости от авторизованности выводить разный тип меню
@@ -21,30 +23,19 @@ const UserProfilePage: React.FC = () => {
 	const popupEmail = usePopup(false, 'blur')
 	const popupPassword = usePopup(false, 'blur')
 	const backdropProps = useChooseBackdropProps(popupName, popupEmail, popupPassword)
+	const uploadAvatar = useUploadFiles('avatar')
 
-	const {user: oldUserData} = useTypedSelector(state => state.auth)
-	const {user, loading, isUpdated} = useTypedSelector(state => state.user)
-	const {changeUserName, getUser} = useActions()
-
-	// const changeConfigHandler = useCallback((id: string, func: Function) => {
-
-	// }, [])
-	console.log('Рендер базового компонента', user.name)
+	const { user: { id: userId } } = useTypedSelector(state => state.auth)
+	const { user, loading, isUpdated } = useTypedSelector(state => state.user)
+	const { changeUserName, changeUserEmail, changeUserPassword, getUser } = useActions()
 
 	useEffect(() => {
-			getUser(oldUserData.id)
-			console.log('ПЕРВОЕ ПОЛУЧЕНИЕ ДАННЫХ')
+		getUser(userId)
 	}, [])
 
 	useEffect(() => {
-		if (isUpdated) {
-			getUser(user.id)
-			console.log('ПОЛУЧЕНЫ АКТУАЛЬНЫЕ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ')
-		}
+		if (isUpdated) getUser(userId)
 	}, [isUpdated])
-
-	// console.log('OLD USER DATA', oldUserData)
-	// console.log('NEW USER DATA', user)
 
 	return (
 		<>
@@ -62,84 +53,107 @@ const UserProfilePage: React.FC = () => {
 
 			<Backdrop {...backdropProps}>
 
-			<TopMenu menuType="back-to-main" />
-			<div className="content-area">
-				<div className="user-profile">
-					<div className="user-profile__container">
-						<div className="user-profile__title">Настройки аккаунта</div>
-						<div className="user-profile__subtitle">Личные данные</div>
-						<div className="user-profile__row">
+				<AlertMessage>
+					<TopMenu menuType="back-to-main" />
+					<div className="content-area">
+						<div className="user-profile">
+							<div className="user-profile__container">
+								<div className="user-profile__title">Настройки аккаунта</div>
+								<div className="user-profile__subtitle">Личные данные</div>
+								<div className="user-profile__row">
 
-							<div className="user-profile__photo-and-name">
-								<div className="user-profile__profile-photo-container">
+									<div className="user-profile__photo-and-name">
+										<div className="user-profile__profile-photo-container">
 
-									<div className="user-profile__avatar-container">
-										<div className="user-profile__avatar"></div>
+											<div className="user-profile__avatar-container">
+												{/* <div className="user-profile__avatar"></div> */}
+												<img
+													src="/images/support/2021-07-16T11-24-56.690Z-pexels-anastasiya-gepp-2333715.jpg"
+													alt=""
+													className="user-profile__avatar"
+												></img>
+											</div>
+
+											<div className="user-profile__download-and-delete">
+
+												<FileUpload
+													parentClass="user-profile"
+													modClass={["add-icon"]}
+													listNone
+													plusIcon
+													{...uploadAvatar.bind}
+												>
+													Загрузить фото
+												</FileUpload>
+												{/* <SmallIconButton
+													parentClass="user-profile"
+													modClass={["add-icon"]}
+													handler={() => { }}
+												>
+													Загрузить фото
+												</SmallIconButton> */}
+												<SmallIconButton
+													parentClass="user-profile"
+													modClass={["delete-icon"]}
+													handler={() => { }}
+												>
+													Удалить фото
+												</SmallIconButton>
+											</div>
+										</div>
+
+										<div className="user-profile__change-name-wrapper">
+											{loading
+												? <LoaderHorizontal />
+												: <ChangeConfigInput
+													parentClass="user-profile"
+													title="Изменить имя"
+													value={user.name}
+													userId={userId}
+													confirm={popupName.confirm}
+													handler={changeUserName}
+												/>
+											}
+										</div>
+
 									</div>
 
-									<div className="user-profile__download-and-delete">
-										<SmallIconButton
-											parentClass="user-profile"
-											modClass={["add-icon"]}
-											handler={() => { }}
-										>
-											Загрузить фото
-										</SmallIconButton>
-										<SmallIconButton
-											parentClass="user-profile"
-											modClass={["delete-icon"]}
-											handler={() => {}}
-										>
-											Удалить фото
-										</SmallIconButton>
+									<div className="user-profile__email-and-password">
+										{loading
+											? <LoaderHorizontal />
+											: <ChangeConfigInput
+												parentClass="user-profile"
+												title="Изменить логин (email)"
+												value={user.email}
+												userId={userId}
+												confirm={popupEmail.confirm}
+												handler={changeUserEmail}
+											/>
+										}
+										{loading
+											? <LoaderHorizontal />
+											: <ChangeConfigInput
+												parentClass="user-profile"
+												title="Изменить пароль"
+												value="password"
+												isPassword
+												userId={userId}
+												inputType="password"
+												confirm={popupPassword.confirm}
+												handler={changeUserPassword}
+											/>
+										}
 									</div>
+
 								</div>
-
-								<div className="user-profile__change-name-wrapper">
-								{loading 
-								? <Loader />
-								:<ChangeConfigInput
-									parentClass="user-profile"
-									title="Изменить имя"
-									value={user.name}
-									userId={user.id}
-									confirm={popupName.confirm}
-									handler={changeUserName}
-								/>
-								}
-							
-								</div>
-
-							</div>
-
-							<div className="user-profile__email-and-password">
-								{/* <ChangeConfigInput
-									parentClass="user-profile"
-									title="Изменить логин (email)"
-									value={user.email}
-									userId={user.id}
-									confirm={popupEmail.confirm}
-									handler={() => {}}
-								/>
-								<ChangeConfigInput
-									parentClass="user-profile"
-									title="Изменить пароль"
-									value="Password123"
-									userId={user.id}
-									inputType="password"
-									confirm={popupPassword.confirm}
-									handler={() => {}}
-								/> */}
+								<div className="user-profile__subtitle">Тариф</div>
+								<div className="user-profile__text-block">В данный момент сервис работает в тестовом режиме, поэтому все функции доступны бесплатно.</div>
 							</div>
 
 						</div>
-						<div className="user-profile__subtitle">Тариф</div>
-						<div className="user-profile__text-block">В данный момент сервис работает в тестовом режиме, поэтому все функции доступны бесплатно.</div>
 					</div>
-
-				</div>
-			</div>
-			<Footer />
+					<Footer />
+				</AlertMessage>
 
 			</Backdrop>
 		</>

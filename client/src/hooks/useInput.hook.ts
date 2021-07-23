@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from "react"
 
-interface IUseInputResult {
+export interface IUseInputResult {
 	bind: {
 		value: string
 		onChange: (event: React.FormEvent & { target: HTMLInputElement }) => void

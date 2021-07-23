@@ -8,7 +8,7 @@ const router = Router()
 router.post('/get-user', authMiddleware, getUserValidators, userController.getUser)
 router.put('/change-email', authMiddleware, changeEmailValidators, userController.changeEmail)
 router.put('/change-name', authMiddleware, userController.changeName)
-router.put('/change-password', authMiddleware, changePasswordValidators, userController.changePassword) // ! Возжожно уберем
+router.put('/change-password', authMiddleware, changePasswordValidators, userController.changePassword)
 
 
 module.exports = router

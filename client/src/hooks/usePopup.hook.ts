@@ -1,5 +1,11 @@
 import { useState } from "react"
 
+export interface IPopupConfirm {
+	setPopup: (param: boolean) => void
+	confirmFunc: (param: boolean) => void
+	isConfirm: boolean
+}
+
 interface IUsePopup {
 	popupProps: {
 		type: 'blur' | 'solid'
@@ -10,11 +16,7 @@ interface IUsePopup {
 		type: 'blur' | 'solid'
 		isOpen: boolean
 	}
-	confirm: {
-		setPopup: (param: boolean) => void
-		confirmFunc: (param: boolean) => void
-		isConfirm: boolean
-	}
+	confirm: IPopupConfirm
 	isOpen: boolean
 	handler: () => void
 	closePopup: () => void

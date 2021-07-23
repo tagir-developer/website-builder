@@ -11,14 +11,16 @@ interface IFileUpload {
 	name: string
 	handler: (param?: any) => any
 	fileNames: string[]
+	listNone?: boolean
+	plusIcon?: boolean
 }
 
-const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, accept, name, handler, fileNames }) => {
+const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, accept, name, handler, fileNames, children, listNone, plusIcon }) => {
 
 	const fileUploadClasses = useCreateClassName('file-upload', parentClass, modClass)
 
 	return (
-		<div className={fileUploadClasses}>
+		<div className="file-upload file-upload_plus-icon">
 			<input
 				type="file"
 				name={name}
@@ -31,13 +33,28 @@ const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, ac
 			<label htmlFor={`${name}-file-input`}>
 				<SmallIconButton
 					parentClass="file-upload"
-					modClass={['attach-file-icon']}
+					modClass={plusIcon ? ['add-icon'] : ['attach-file-icon']}
 					isNotButton={true}
 				>
-					Прикрепить файл
+					{children ? children : "Прикрепить файл"}
 				</SmallIconButton>
 			</label>
-			<ul className="file-upload__show-downloaded-files">
+			{listNone
+				? null
+				: <ul className="file-upload__show-downloaded-files">
+					{fileNames.map((i, index) => {
+						return (
+							<li
+								key={index}
+								className="file-upload__show-downloaded-files-item"
+							>
+								{i}
+							</li>
+						)
+					})}
+				</ul>
+			}
+			{/* <ul className="file-upload__show-downloaded-files">
 				{fileNames.map((i, index) => {
 					return (
 						<li
@@ -48,7 +65,7 @@ const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, ac
 						</li>
 					)
 				})}
-			</ul>
+			</ul> */}
 
 		</div>
 	)

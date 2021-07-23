@@ -32,4 +32,4 @@ interface userGetUserAction {
 }
 
 
-export type IUserAction = userStartAction | userEndAction | IAlertAction | userGetUserAction | userUpdatedAction
+export type IUserAction = userStartAction | userEndAction | IAlertAction | userGetUserAction | userUpdatedAction | IAlertAction

@@ -37,14 +37,13 @@ export const changeUserEmail = (userId: string, email: string) => {
 
 			await UserService.changeEmail(userId, email)
 
-			dispatch(userEndCreator())
-			// dispatch(alertErrorOrMessageCreator(response.data))
+			dispatch(userUpdatedCreator())
 
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
 				dispatch(userEndCreator())
-				// dispatch(alertErrorOrMessageCreator(e.response.data))
+				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 
 		}
@@ -53,9 +52,7 @@ export const changeUserEmail = (userId: string, email: string) => {
 
 export const changeUserName = (userId: string, name: string) => {
 	return async (dispatch: Dispatch<IUserAction>) => {
-
 		dispatch(userStartCreator())
-
 		try {
 
 			await UserService.changeName(userId, name)
@@ -65,10 +62,28 @@ export const changeUserName = (userId: string, name: string) => {
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				// dispatch(userEndCreator())
-				// dispatch(alertErrorOrMessageCreator(e.response.data))
+				dispatch(userEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
+		}
+	}
+}
 
+export const changeUserPassword = (userId: string, password: string) => {
+	return async (dispatch: Dispatch<IUserAction>) => {
+		dispatch(userStartCreator())
+		try {
+
+			await UserService.changePassword(userId, password)
+
+			dispatch(userUpdatedCreator())
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(userEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
 		}
 	}
 }
