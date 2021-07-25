@@ -10,7 +10,7 @@ interface IFileUpload {
 	accept?: string
 	name: string
 	handler: (param?: any) => any
-	fileNames: string[]
+	fileNames?: string[]
 	listNone?: boolean
 	plusIcon?: boolean
 }
@@ -20,7 +20,7 @@ const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, ac
 	const fileUploadClasses = useCreateClassName('file-upload', parentClass, modClass)
 
 	return (
-		<div className="file-upload file-upload_plus-icon">
+		<div className={fileUploadClasses}>
 			<input
 				type="file"
 				name={name}
@@ -42,7 +42,7 @@ const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, ac
 			{listNone
 				? null
 				: <ul className="file-upload__show-downloaded-files">
-					{fileNames.map((i, index) => {
+					{fileNames?.map((i, index) => {
 						return (
 							<li
 								key={index}

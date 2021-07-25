@@ -2,10 +2,11 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
 	destination(req, file, cb) {
-		cb(null, 'images/support')
+		cb(null, 'images/avatars')
 	},
 	filename(req, file, cb) {
 		cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
+		// cb(null, file.fieldname + '-' + Date.now())
 	}
 })
 

@@ -19,4 +19,10 @@ export default class UserService {
 	static async changePassword(userId: string, password: string): Promise<AxiosResponse> {
 		return $api.put('user/change-password', {userId, password})
 	}
+
+	static async uploadAvatar(data: FormData): Promise<AxiosResponse<IGetUserResponse>> {
+		return $api.post<IGetUserResponse>('user/set-avatar', data, {headers: {
+			'Content-Type': 'multipart/form-data'
+		}})
+	}
 }

@@ -6,6 +6,7 @@ const tokenService = require('../service/tokenService.js')
 const UserDto = require('../dtos/userDto')
 const Role = require('../models/Role')
 const ApiError = require('../exeptions/apiError')
+const gm = require('gm')
 
 class UserService {
 
@@ -157,11 +158,60 @@ class UserService {
 		return {user: userDto}
 	}
 
+	async uploadAvatar(userId, file) {
+
+		// const avatarPath = './images/avatars/thumb_150/' + file.fieldname + '-' + Date.now()
+		const avatarPath = './images/avatars/thumb_150/' + new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname
+		console.log('Сгенерировали путь для уменьшенной аватарки', avatarPath)
+
+		console.log('Размер изображения!!!!!!!', gm(file.path).size())
+
+		// gm(file.path)
+		// 	.resize(150, 150, '^')
+		// 	.gravity('Center')
+		// 	.extent(150, 150)
+		// 	.noProfile()
+		// 	.write(avatarPath, function(err) {
+		// 		if (err) {
+		// 			console.log('Ошибка при загрузке аватар', err)
+		// 			throw ApiError.BadRequest('При загрузке файла произошла ошибка. Попробуйте еще раз.', 'danger')
+		// 		}
+		// 	})
+
+		gm('../images/avatars/2021-07-24T18-20-32.527Z-Backgrounds_Black_cubic_background_094966_.jpg')
+		.resize(150, 150, '^')
+		.gravity('Center')
+		.extent(150, 150)
+		.noProfile()
+		.write("../images/avatars/thumb_150/new.jpg", function(err) {
+			if (err) {
+				console.log('Ошибка при загрузке аватар', err)
+				throw ApiError.BadRequest('При загрузке файла произошла ошибка. Попробуйте еще раз.', 'danger')
+			}
+		})
+
+		console.log('УСПЕШНАЯ РАБОТА!!!!!!!!!!!!!!!!!')
+
+
+		const user = await User.findById(userId)
+
+		if (!user) {
+			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
+		}
+
+		user.avatar = avatarPath
+		await user.save()
+		const userDto = new UserDto(user)
+
+		// return {user: userDto}
+	}
+
 	// ! Тестовая функция получения пользователей
 	async getAllUsers() {
 		const users = await User.find()
 		return users
 	}
+
 
 
 }

@@ -4,6 +4,7 @@ module.exports = class UserDto {
 	isActivated
 	name
 	roles
+	avatar
 
 	constructor(model) {
 		this.id = model._id
@@ -11,5 +12,6 @@ module.exports = class UserDto {
 		this.isActivated = model.isActivated
 		this.name = model.name
 		this.roles = model.roles
+		this.avatar = model.avatar
 	}
 }

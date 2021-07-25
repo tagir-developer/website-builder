@@ -4,4 +4,5 @@ export interface IUser {
 	isActivated: string
 	id: string
 	roles: string[]
+	avatar: string
 }

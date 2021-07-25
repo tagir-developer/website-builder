@@ -23,11 +23,12 @@ const UserProfilePage: React.FC = () => {
 	const popupEmail = usePopup(false, 'blur')
 	const popupPassword = usePopup(false, 'blur')
 	const backdropProps = useChooseBackdropProps(popupName, popupEmail, popupPassword)
-	const uploadAvatar = useUploadFiles('avatar')
 
 	const { user: { id: userId } } = useTypedSelector(state => state.auth)
 	const { user, loading, isUpdated } = useTypedSelector(state => state.user)
-	const { changeUserName, changeUserEmail, changeUserPassword, getUser } = useActions()
+	const { changeUserName, changeUserEmail, changeUserPassword, getUser, uploadUserAvatar } = useActions()
+
+	const uploadAvatar = useUploadFiles('avatar', true, userId, uploadUserAvatar)
 
 	useEffect(() => {
 		getUser(userId)
@@ -36,6 +37,8 @@ const UserProfilePage: React.FC = () => {
 	useEffect(() => {
 		if (isUpdated) getUser(userId)
 	}, [isUpdated])
+
+	console.log('АВАТАР ПОЛЬЗОВАТЕЛЯ', user)
 
 	return (
 		<>

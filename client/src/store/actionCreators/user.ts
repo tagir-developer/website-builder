@@ -13,8 +13,6 @@ export const getUser = (userId: string) => {
 
 			const response = await UserService.getUser(userId)
 
-			console.log('ДАННЫЕ С СЕРВАКА: ', response.data)
-
 			dispatch(userGetUserCreator(response.data.user))
 
 		} catch (error) {
@@ -90,6 +88,35 @@ export const changeUserPassword = (userId: string, password: string) => {
 
 // ! Нужно еще дописать функцию изменения пароля
 
+export const uploadUserAvatar = (userId: string, formData: FormData) => {
+	return async (dispatch: Dispatch<IUserAction>) => {
+
+		dispatch(userStartCreator())
+
+		try {
+
+			formData.set('id', userId)
+
+			console.log('ЧТО ОТПРАВИМ НА СЕРВЕР ID', userId)
+			console.log('ЧТО ОТПРАВИМ НА СЕРВЕР DATA', formData.get('avatar'))
+
+			const response = await UserService.uploadAvatar(formData)
+
+			console.log('ПОЛУЧЕННЫЕ С СЕРВАКА ДАННЫЕ', response.data)
+
+			dispatch(userGetUserCreator(response.data.user))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(userEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
 export const userStartCreator = (): IUserAction => {
 	return { type: userActionTypes.USER_START }
 }
@@ -108,3 +135,10 @@ export const userGetUserCreator = (payload: any): IUserAction => {
 		payload
 	}
 }
+
+// export const userSetAvatarLinkCreator = (payload: any): IUserAction => {
+// 	return { 
+// 		type: userActionTypes.USER_SET_AVATAR,
+// 		payload
+// 	}
+// }
