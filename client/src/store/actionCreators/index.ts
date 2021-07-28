@@ -3,13 +3,15 @@ import * as supportActionCreators from './support'
 import * as alertActionCreators from './alert'
 import * as projectsActionCreators from './projects'
 import * as userActionCreators from './user'
+import * as popupActionCreators from './popup'
 
 const allActionCreators = {
 	...authActionCreators,
 	...supportActionCreators,
 	...alertActionCreators,
 	...projectsActionCreators,
-	...userActionCreators
+	...userActionCreators,
+	...popupActionCreators
 }
 
 export default allActionCreators

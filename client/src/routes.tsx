@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom'
 import AuthPage from './pages/AuthPage/AuthPage'
 import ComplaintPage from './pages/ComplaintPage/ComplaintPage'
 import EditPage from './pages/EditPage/EditPage'
@@ -17,21 +17,38 @@ import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
 import { useTypedSelector } from './hooks/reduxHooks'
 import Logout from './components/Auth/Logout/Logout'
 import PassResetPage from './pages/PassResetPage/PassResetPage'
+import { useEffect } from 'react'
 
 export const Routes: React.FC = (): JSX.Element => {
 
 	const { isAuth } = useTypedSelector(state => state.auth) //! Пока убираем авторизацию, потом вернем
 
-	// const isAuth = true
+	const history = useHistory()
+	const location = useLocation()
+
+	useEffect(() => {
+		if (isAuth) {
+			const path = localStorage.getItem('path')
+			history.push(path ? path : '/')
+		}
+		// eslint-disable-next-line
+	}, [isAuth])
+
+	useEffect(() => {
+		return () => {
+			localStorage.setItem('path', location.pathname)
+		}
+		// eslint-disable-next-line
+	}, [])
 
 	if (isAuth) {
 		return (
 			<Switch>
 				<Route path="/" component={ProjectsListPage} exact />
-				<Route path="/user-profile" component={UserProfilePage} exact />
 				<Route path="/learning" component={LearningPage} exact />
 				<Route path="/question" component={QuestionPage} exact />
 				<Route path="/complaint" component={ComplaintPage} exact />
+				<Route path="/user-profile" component={UserProfilePage} exact />
 				<Route path="/logout" component={Logout} exact />
 
 				<Route path="/help/two" exact >

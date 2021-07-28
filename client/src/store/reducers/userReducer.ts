@@ -20,8 +20,8 @@ export default function userReducer(state = initialState, action: IUserAction): 
 		}
 		case userActionTypes.USER_GET_USER: return {
 			...state, 
-			loading: false,
-			user: action.payload
+			user: action.payload,
+			loading: false
 		}
 		case userActionTypes.USER_UPDATED: return {
 			...state, 

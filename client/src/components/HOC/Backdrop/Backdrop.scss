@@ -24,6 +24,9 @@ $delay: 500ms; // Задержка анимации
 	}
 
 	&_show {
+		// position: fixed;
+		// left: 0;
+		// right: 0;
 		@include create-blur(4px, 4);
 		overflow-y: hidden;
 		transition: filter $delay;

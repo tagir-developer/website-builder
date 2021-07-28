@@ -99,12 +99,13 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							withoutPadding={true}
 						>
 
+
 							{blocksArray.map((i, index) => {
 								const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
 								return (
 									<Suspense key={index} fallback={<div>Загрузка...</div>}>
-										<EditBlockWrapper 
-											openConfig={openBlockConfigs.openPopup} 
+										<EditBlockWrapper
+											openConfig={openBlockConfigs.openPopup}
 											openContent={openBlockContent.openPopup}
 										>
 											<BlockComponent />
@@ -134,7 +135,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							/>
 
 							{/* <Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}
-	
+
 
 						</Backdrop>
 

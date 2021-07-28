@@ -69,60 +69,21 @@ class userController {
 	async uploadAvatar(req, res, next) {
 		try {
 
-			console.log('ПРАВИЛЬНО ЛИ ПЕРЕДАЕМ ДАННЫЕ ID', req.body.id)
-			console.log('ПРАВИЛЬНО ЛИ ПЕРЕДАЕМ ДАННЫЕ ФАЙЛ', req.file)
+			await userService.uploadAvatar(req.body.id, req.file, next)
 
-			const userData = await userService.uploadAvatar(req.body.id, req.file)
-
-			return res.json({ ...userData, message: "Аватар успешно изменен" })
+			return res.json({ message: "Аватар успешно изменен" })
 
 		} catch (e) {
 			next(e)
 		}
 	}
 
-	async testFunc(req, res, next) {
+	async deleteAvatar(req, res, next) {
 		try {
 
-			// gm('../images/avatars/2021-07-24T18-20-32.527Z-Backgrounds_Black_cubic_background_094966_.jpg')
-			// .resize(150, 150, '^')
-			// .gravity('Center')
-			// .extent(150, 150)
-			// .noProfile()
-			// .write("../images/avatars/thumb_150/new.jpg", function(err) {
-			// 	if (err) {
-			// 		console.log('Ошибка при загрузке аватар', err)
-			// 		throw ApiError.BadRequest('При загрузке файла произошла ошибка. Попробуйте еще раз.', 'danger')
-			// 	}
-			// })
+			await userService.deleteAvatar(req.body.userId)
 
-			// gm("../images/testimg.jpg").identify(function (err, value) {
-			// 	console.log('ДАННЫЕ ИЗОБРАЖЕНИЯ', value)
-
-			// 	if (err) {
-			// 		console.log("ОШИБКА", err)
-			// 	}
-			// });
-
-			console.log('PAAAAAAAAAAAAAATH', path.join(__dirname, 'images'))
-			console.log('PAAAAAAAAAAAAAATH', path.join(__filename))
-
-
-			// gm("testimg.jpg")
-			// 	.resize(150, 150, '^')
-			// 	.gravity('Center')
-			// 	.extent(150, 150)
-			// 	.noProfile()
-			// 	.write('../images/wwewew.jpg', function (err) {
-			// 		if (err) {
-			// 			console.log('Ошибка при загрузке аватар', err)
-			// 			return next(ApiError.BadRequest('При загрузке файла произошла ошибка. Попробуйте еще раз.', 'danger'))
-			// 		}
-
-			// 		return res.json({ message: "Аватар успешно изменен" })
-			// 	})
-
-			// return res.json({ message: "Аватар успешно изменен" })
+			return res.json({ message: "Аватар успешно удален" })
 
 		} catch (e) {
 			next(e)

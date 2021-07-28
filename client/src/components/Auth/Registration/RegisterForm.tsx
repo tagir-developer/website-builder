@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'

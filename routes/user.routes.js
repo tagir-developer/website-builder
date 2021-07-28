@@ -11,9 +11,6 @@ router.put('/change-email', authMiddleware, changeEmailValidators, userControlle
 router.put('/change-name', authMiddleware, userController.changeName)
 router.put('/change-password', authMiddleware, changePasswordValidators, userController.changePassword)
 router.post('/set-avatar', authMiddleware, uploadAvatarMiddleware.single('avatar'), userController.uploadAvatar)
-
-
-router.get('/test', userController.testFunc)
-
+router.put('/delete-avatar', authMiddleware, userController.deleteAvatar)
 
 module.exports = router

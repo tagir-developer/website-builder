@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useInput } from '../../../hooks/useInput.hook'
 import Button from '../../UI/Button/Button'
@@ -24,6 +24,7 @@ const ResetForm: React.FC<IResetForm> = ({ parentClass, history }) => {
 
 	const resetFormHandler = useCallback(() => {
 		passReset(email.value)
+		// eslint-disable-next-line
 	}, [passReset])
 
 

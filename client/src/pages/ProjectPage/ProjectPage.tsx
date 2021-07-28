@@ -2,7 +2,7 @@ import React from 'react'
 import './ProjectPage.scss'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import Footer from '../../components/UI/Footer/Footer'
-import { RouteComponentProps, useParams, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import ProjectHeader from '../../components/UI/ProjectHeader/ProjectHeader'
 import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
 import PageCard from '../../components/UI/PageCard/PageCard'
@@ -55,6 +55,12 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 		fontConfigPopup: fontConfigPopup.handler,
 	}
 
+	// const history = useHistory()
+
+	// useEffect(() => {
+	// 	console.log('История ', history)
+	// })
+
 	return (
 		<>
 			<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
@@ -74,8 +80,11 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 			</PopUp>
 
 			<Backdrop {...backdropProps} >
+			{/* <Backdrop {...createPagePopup.backdropProps} > */}
 
 			<TopMenu menuType="auth-project" />
+
+
 			<div className="content-area">
 
 				<div className="project-page">

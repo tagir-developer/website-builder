@@ -49,6 +49,7 @@ export const useChangeConfigInput = (configValue: string, confirm: IPopupConfirm
 				setIsEdit(false)
 			}
 		}
+		// eslint-disable-next-line
 	}, [input, configValue])
 
 
@@ -58,6 +59,7 @@ export const useChangeConfigInput = (configValue: string, confirm: IPopupConfirm
 			confirm.setPopup(false)
 			handler(userId, input.value)
 		}
+		// eslint-disable-next-line
 	}, [confirm.isConfirm])
 
 	useEffect(() => {

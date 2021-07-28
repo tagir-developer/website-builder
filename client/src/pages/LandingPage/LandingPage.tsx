@@ -1,56 +1,73 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
+import Backdrop from '../../components/HOC/Backdrop/Backdrop'
+import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
+import BasicSettings from '../../components/UI/BasicSettings/BasicSettings'
 import Button from '../../components/UI/Button/Button'
 import Footer from '../../components/UI/Footer/Footer'
-import { useTypedSelector } from '../../hooks/reduxHooks'
+import { usePopup } from '../../hooks/usePopup.hook'
 import './LandingPage.scss'
 
-const LandingPage: React.FC<RouteComponentProps> = ({history}) => {
+const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 
-	const {checkAuthLoading} = useTypedSelector(state => state.auth)
+	const testPopup = usePopup(false, 'blur')
 
 	return (
 		<>
-			<TopMenu menuType="main" />
-			<div className="content-area">
+		{/* <ScrollTo value={testPopup.scroll} dep={testPopup.isOpen} /> */}
 
-				<div className="landing-wrapper">
+			<PopUp {...testPopup.popupProps} withTitle="Основные настройки">
+				<BasicSettings handler={() => { }} />
+			</PopUp>
 
-					<div className="landing-header">
-						<div className="landing-header__container">
-							<div className="landing-header__text-container">
-								<h1 className="landing-header__heading">Хотите создать сайт-визитку для Instagram?</h1>
-								<Button parentClass="landing-header" handler={() => history.push('/registration')} >
-									Создать сайт
-								</Button>
-							</div>
-							<div className="landing-header__image-container">
-								<div className="landing-header__image"></div>
+			<Backdrop {...testPopup.backdropProps} >
+
+				<TopMenu menuType="main" />
+				{/* <div className="content-area" style={testPopup.isOpen ? {marginTop: `-${testPopup.scroll - 60}px`} : undefined} > */}
+				<div className="content-area">
+
+					<div className="landing-wrapper">
+
+						<div className="landing-header">
+							<div className="landing-header__container">
+								<div className="landing-header__text-container">
+									<h1 className="landing-header__heading">Хотите создать сайт-визитку для Instagram?</h1>
+									{/* <Button parentClass="landing-header" handler={() => history.push('/registration')} >
+										Создать сайт
+									</Button> */}
+									<Button parentClass="landing-header" handler={testPopup.handler} >
+										Открыть попап
+									</Button>
+								</div>
+								<div className="landing-header__image-container">
+									<div className="landing-header__image"></div>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="landing-blocks">
-						<div className="landing-blocks__container">
-							<div className="landing-blocks__blocks-wrapper">
-								<div className="landing-blocks__block-light">Блок 2</div>
-								<div className="landing-blocks__block-dark">Блок 3</div>
-								<div className="landing-blocks__block-light">Блок 4</div>
+						<div className="landing-blocks">
+							<div className="landing-blocks__container">
+								<div className="landing-blocks__blocks-wrapper">
+									<div className="landing-blocks__block-light">Блок 2</div>
+									<div className="landing-blocks__block-dark">Блок 3</div>
+									<div className="landing-blocks__block-light">Блок 4</div>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="landing-final">
-						<Button parentClass="landing-final" handler={() => history.push('/registration')} >
-							Создать сайт
-						</Button>
+						<div className="landing-final">
+							<Button parentClass="landing-final" handler={() => history.push('/registration')} >
+								Создать сайт
+							</Button>
+						</div>
+
 					</div>
 
 				</div>
+				<Footer />
 
-			</div>
-			<Footer />
+			</Backdrop>
 		</>
 	)
 }

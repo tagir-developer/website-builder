@@ -4,7 +4,7 @@ import './Backdrop.scss'
 
 interface IBackdrop {
 	isOpen?: boolean
-	type:  'blur' | 'solid'
+	type: 'blur' | 'solid'
 	handler?: (param?: any) => void
 	withoutPadding?: boolean
 }
@@ -25,7 +25,7 @@ const Backdrop: React.FC<IBackdrop> = ({ children, isOpen, type, handler, withou
 			'popup-backdrop_show': isOpen,
 		})
 	}
-	
+
 	if (type === 'solid') {
 		darkeningClasses = classNames({
 			'popup-backdrop__darkening': true,

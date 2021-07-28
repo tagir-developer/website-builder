@@ -27,9 +27,7 @@ interface IUsePopup {
 }
 
 export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUsePopup => {
-
 	const [isOpen, setIsOpen] = useState<boolean>(initialState)
-
 	const [isConfirm, setIsConfirm] = useState<boolean>(false)
 
 	const type = initType
@@ -37,6 +35,7 @@ export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUs
 	const handler = (): void => setIsOpen(prev => !prev)
 	const openPopup = (): void => setIsOpen(true)
 	const closePopup = (): void => setIsOpen(false)
+
 	const setPopup = (param: boolean): void => setIsOpen(param)
 	const showHide = (delay: number): void => {
 		openPopup()
@@ -49,16 +48,16 @@ export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUs
 	const confirmFunc = (param: boolean): void => setIsConfirm(param)
 
 	return {
-		popupProps: {type, isOpen, handler},
-		backdropProps: {type, isOpen},
-		confirm: {setPopup, confirmFunc, isConfirm},
+		popupProps: { type, isOpen, handler },
+		backdropProps: { type, isOpen },
+		confirm: { setPopup, confirmFunc, isConfirm },
 		isOpen,
 		handler,
 		openPopup,
 		closePopup,
 		setPopup,
 		showHide,
-		closeAndGoBack,
+		closeAndGoBack
 	}
 
 }

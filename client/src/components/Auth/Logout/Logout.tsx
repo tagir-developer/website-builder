@@ -7,7 +7,9 @@ const Logout: React.FC = () => {
 	const {logout} = useActions()
 
 	useEffect(() => {
+		localStorage.setItem('path', '/')
 		logout()
+		// eslint-disable-next-line
 	}, [])
 
 	return (<></>)

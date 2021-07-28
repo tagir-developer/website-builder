@@ -8,7 +8,6 @@ import PopUp from '../../components/HOC/PopUp/PopUp'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import { usePopup } from '../../hooks/usePopup.hook'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
-import { useHistory } from 'react-router-dom'
 
 const AuthPage: React.FC = () => {
 
@@ -28,7 +27,7 @@ const AuthPage: React.FC = () => {
 			}, alertDelay)
 
 		}
-
+		// eslint-disable-next-line
 	}, [message])
 
 	useEffect(() => {
@@ -36,6 +35,7 @@ const AuthPage: React.FC = () => {
 			clearRegisterMessage()
 			authClearErrors()
 		}
+		// eslint-disable-next-line
 	}, [])
 
 	return (

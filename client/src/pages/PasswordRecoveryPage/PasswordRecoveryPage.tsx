@@ -25,6 +25,7 @@ const PasswordRecoveryPage: React.FC = () => {
 
 	useEffect(() => {
 		resetTokenCheck(token)
+		// eslint-disable-next-line
 	}, [])
 
 	useEffect(() => {
@@ -53,6 +54,7 @@ const PasswordRecoveryPage: React.FC = () => {
 				clearRegisterMessage()
 			}, alertDelay)
 		}
+		// eslint-disable-next-line
 	}, [message, messageType])
 
 	const errorHandler = () => {

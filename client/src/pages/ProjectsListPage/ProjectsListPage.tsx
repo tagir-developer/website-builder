@@ -22,6 +22,7 @@ const ProjectsListPage: React.FC = () => {
 
 	useEffect(() => {
 		getAllProjects()
+		// eslint-disable-next-line
 	}, [])
 
 	const successfulProjectCreation = () => {

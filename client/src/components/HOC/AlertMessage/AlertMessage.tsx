@@ -27,12 +27,14 @@ const AlertMessage: React.FC<IAlertMessage> = ({ children, alertDelay = 2000, su
 				}, alertDelay)
 			
 		}
+		// eslint-disable-next-line
 	}, [message])
 
 	useEffect(() => {
 		return () => {
 			alertClearErrors()
 		}
+		// eslint-disable-next-line
 	}, [])
 
 	return (

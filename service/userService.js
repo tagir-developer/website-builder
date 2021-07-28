@@ -7,6 +7,7 @@ const UserDto = require('../dtos/userDto')
 const Role = require('../models/Role')
 const ApiError = require('../exeptions/apiError')
 const gm = require('gm')
+const path = require('path')
 
 class UserService {
 
@@ -84,7 +85,7 @@ class UserService {
 		}
 		const user = await User.findOne({
 			resetToken: token,
-			resetTokenExp: {$gt: Date.now()}
+			resetTokenExp: { $gt: Date.now() }
 		})
 		if (!user) {
 			throw ApiError.BadRequest('Ваша ссылка восстановления пароля недействительна или устарела, запросите новую ссылку', 'danger')
@@ -100,7 +101,7 @@ class UserService {
 		const user = await User.findOne({
 			_id: userId,
 			resetToken: token,
-			resetTokenExp: {$gt: Date.now()}
+			resetTokenExp: { $gt: Date.now() }
 		})
 
 		if (!user) {
@@ -155,55 +156,48 @@ class UserService {
 
 		const userDto = new UserDto(user)
 
-		return {user: userDto}
+		return { user: userDto }
 	}
 
-	async uploadAvatar(userId, file) {
+	async uploadAvatar(userId, file, next) {
 
-		// const avatarPath = './images/avatars/thumb_150/' + file.fieldname + '-' + Date.now()
-		const avatarPath = './images/avatars/thumb_150/' + new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname
-		console.log('Сгенерировали путь для уменьшенной аватарки', avatarPath)
+		const fileName = new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname
+		const avatarPath = path.join(__dirname, '..', 'images/avatars/thumb_150', fileName)
 
-		console.log('Размер изображения!!!!!!!', gm(file.path).size())
+		gm(file.path)
+			.resize(150, 150, '^')
+			.gravity('Center')
+			.extent(150, 150)
+			.noProfile()
+			.write(avatarPath, async function (err) {
+				if (err) {
+					console.log('Ошибка при загрузке аватара', err)
+					return next(ApiError.BadRequest('При загрузке файла произошла ошибка. Попробуйте еще раз.', 'danger'))
+				}
 
-		// gm(file.path)
-		// 	.resize(150, 150, '^')
-		// 	.gravity('Center')
-		// 	.extent(150, 150)
-		// 	.noProfile()
-		// 	.write(avatarPath, function(err) {
-		// 		if (err) {
-		// 			console.log('Ошибка при загрузке аватар', err)
-		// 			throw ApiError.BadRequest('При загрузке файла произошла ошибка. Попробуйте еще раз.', 'danger')
-		// 		}
-		// 	})
+			})
 
-		gm('../images/avatars/2021-07-24T18-20-32.527Z-Backgrounds_Black_cubic_background_094966_.jpg')
-		.resize(150, 150, '^')
-		.gravity('Center')
-		.extent(150, 150)
-		.noProfile()
-		.write("../images/avatars/thumb_150/new.jpg", function(err) {
-			if (err) {
-				console.log('Ошибка при загрузке аватар', err)
-				throw ApiError.BadRequest('При загрузке файла произошла ошибка. Попробуйте еще раз.', 'danger')
-			}
-		})
+		const user = await User.findById(userId)
+		if (!user) {
+			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
+		}
+		user.avatar = '/images/avatars/thumb_150/' + fileName
+		await user.save()
 
-		console.log('УСПЕШНАЯ РАБОТА!!!!!!!!!!!!!!!!!')
+		// const userDto = new UserDto(user)
+		// return { ...userDto}
 
+	}
 
+	async deleteAvatar(userId) {
 		const user = await User.findById(userId)
 
 		if (!user) {
 			throw ApiError.BadRequest('Произошла ошибка, пользователь не найден', 'danger')
 		}
 
-		user.avatar = avatarPath
+		user.avatar = ''
 		await user.save()
-		const userDto = new UserDto(user)
-
-		// return {user: userDto}
 	}
 
 	// ! Тестовая функция получения пользователей

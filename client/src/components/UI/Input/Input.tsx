@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { MutableRefObject } from 'react'
+import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './Input.scss'
 

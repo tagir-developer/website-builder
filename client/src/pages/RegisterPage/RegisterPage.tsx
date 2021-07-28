@@ -27,7 +27,7 @@ const RegisterPage: React.FC = () => {
 			}, alertDelay)
 
 		}
-
+		// eslint-disable-next-line
 	}, [message])
 
 	useEffect(() => {
@@ -35,6 +35,7 @@ const RegisterPage: React.FC = () => {
 			clearRegisterMessage()
 			authClearErrors()
 		}
+		// eslint-disable-next-line
 	}, [])
 
 	return (

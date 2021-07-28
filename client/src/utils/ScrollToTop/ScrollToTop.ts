@@ -10,3 +10,21 @@ export default function ScrollToTop(): null {
 
   return null
 }
+
+// const ScrollToTop: React.FC = (): null => {
+
+//   const history = useHistory()
+
+//   useEffect(() => {
+//     const unlisten = history.listen(() => {
+//       window.scrollTo(0, 0)
+//     });
+//     return () => {
+//       unlisten()
+//     }
+//   }, [])
+
+//   return (null)
+// }
+
+// export default ScrollToTop

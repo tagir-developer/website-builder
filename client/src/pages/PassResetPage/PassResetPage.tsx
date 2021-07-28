@@ -36,6 +36,7 @@ const PassResetPage: React.FC = () => {
 				clearRegisterMessage()
 			}, alertDelay)
 		}
+		// eslint-disable-next-line
 	}, [message, messageType])
 
 

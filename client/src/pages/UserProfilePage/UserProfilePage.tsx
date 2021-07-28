@@ -7,6 +7,7 @@ import ChangeConfigInput from '../../components/UI/ChangeConfigInput/ChangeConfi
 import Confirm from '../../components/UI/Confirm/Confirm'
 import FileUpload from '../../components/UI/FileUpload/FileUpload'
 import Footer from '../../components/UI/Footer/Footer'
+import Loader from '../../components/UI/Loader/Loader'
 import LoaderHorizontal from '../../components/UI/LoaderHorizontal/LoaderHorizontal'
 import SmallIconButton from '../../components/UI/SmallIconButton/SmallIconButton'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
@@ -26,19 +27,19 @@ const UserProfilePage: React.FC = () => {
 
 	const { user: { id: userId } } = useTypedSelector(state => state.auth)
 	const { user, loading, isUpdated } = useTypedSelector(state => state.user)
-	const { changeUserName, changeUserEmail, changeUserPassword, getUser, uploadUserAvatar } = useActions()
+	const { changeUserName, changeUserEmail, changeUserPassword, getUser, uploadUserAvatar, deleteUserAvatar } = useActions()
 
 	const uploadAvatar = useUploadFiles('avatar', true, userId, uploadUserAvatar)
 
 	useEffect(() => {
 		getUser(userId)
+		// eslint-disable-next-line
 	}, [])
 
 	useEffect(() => {
 		if (isUpdated) getUser(userId)
+		// eslint-disable-next-line
 	}, [isUpdated])
-
-	console.log('АВАТАР ПОЛЬЗОВАТЕЛЯ', user)
 
 	return (
 		<>
@@ -69,12 +70,17 @@ const UserProfilePage: React.FC = () => {
 										<div className="user-profile__profile-photo-container">
 
 											<div className="user-profile__avatar-container">
-												{/* <div className="user-profile__avatar"></div> */}
-												<img
-													src="/images/support/2021-07-16T11-24-56.690Z-pexels-anastasiya-gepp-2333715.jpg"
-													alt=""
-													className="user-profile__avatar"
-												></img>
+												{loading
+													? <Loader parentClass="user-profile" />
+													: !!user.avatar
+														? <img
+															src={user.avatar}
+															alt={'avatar-' + user.name}
+															className="user-profile__avatar"
+														></img>
+														: <div className="user-profile__avatar"></div>
+												}
+
 											</div>
 
 											<div className="user-profile__download-and-delete">
@@ -82,23 +88,14 @@ const UserProfilePage: React.FC = () => {
 												<FileUpload
 													parentClass="user-profile"
 													modClass={["add-icon"]}
-													listNone
-													plusIcon
 													{...uploadAvatar.bind}
 												>
 													Загрузить фото
 												</FileUpload>
-												{/* <SmallIconButton
-													parentClass="user-profile"
-													modClass={["add-icon"]}
-													handler={() => { }}
-												>
-													Загрузить фото
-												</SmallIconButton> */}
 												<SmallIconButton
 													parentClass="user-profile"
 													modClass={["delete-icon"]}
-													handler={() => { }}
+													handler={!!user.avatar ? () => deleteUserAvatar(userId) : () => {}}
 												>
 													Удалить фото
 												</SmallIconButton>
