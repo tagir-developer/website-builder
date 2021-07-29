@@ -1,5 +1,6 @@
 import { AxiosError } from "axios"
 import { Dispatch } from "redux"
+import { IProjectsResponse } from "../../models/response/ProjectsResponse"
 import ProjectsService from "../../services/ProjectsService"
 import { IProjectsAction, projectsActionTypes } from "../types/projects"
 import { alertErrorOrMessageCreator } from "./alert"
@@ -12,7 +13,9 @@ export const getAllProjects = () => {
 		try {
 			const response = await ProjectsService.getProjects()
 
+			
 			dispatch(projectsGetAll(response.data))
+			dispatch(saveProjectsNames(response.data))
 
 		} catch (error) {
 			const e = error as AxiosError
@@ -53,6 +56,16 @@ export const projectsGetAll = (payload: any): IProjectsAction => {
 	}
 }
 
+export const saveProjectsNames = (projects: IProjectsResponse[]): IProjectsAction => {
+
+	const projectsNames: string[] = projects.map(i => '/' + i.link)
+
+	return { 
+		type: projectsActionTypes.PROJECTS_SAVE_NAMES,
+		payload: projectsNames
+	}
+}
+
 export const projectsStartCreator = (): IProjectsAction => {
 	return { type: projectsActionTypes.PROJECTS_START }
 }
@@ -60,3 +73,5 @@ export const projectsStartCreator = (): IProjectsAction => {
 export const projectsEndCreator = (): IProjectsAction => {
 	return { type: projectsActionTypes.PROJECTS_END }
 }
+
+

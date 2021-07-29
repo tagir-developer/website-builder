@@ -3,7 +3,8 @@ import { IProjectsAction, IProjectsState, projectsActionTypes } from "../types/p
 
 const initialState: IProjectsState = {
 	loading: false,
-	projectsList: [] as IProjectsResponse[]
+	projectsList: [] as IProjectsResponse[],
+	projectsNames: []
 }
 
 export default function projectsReducer(state = initialState, action: IProjectsAction): IProjectsState {
@@ -20,6 +21,10 @@ export default function projectsReducer(state = initialState, action: IProjectsA
 			...state,
 			projectsList: action.payload,
 			loading: false,
+		}
+		case projectsActionTypes.PROJECTS_SAVE_NAMES: return {
+			...state,
+			projectsNames: action.payload
 		}
 		default:
 			return state

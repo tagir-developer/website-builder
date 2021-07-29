@@ -4,12 +4,14 @@ import { IAlertAction } from "./alert";
 export interface IProjectsState {
 	loading: boolean
 	projectsList: IProjectsResponse[]
+	projectsNames: string[]
 }
 
 export enum projectsActionTypes {
 	PROJECTS_START = 'PROJECTS_START',
 	PROJECTS_END = 'PROJECTS_END',
-	PROJECTS_GET_ALL = 'PROJECTS_GET_ALL'
+	PROJECTS_GET_ALL = 'PROJECTS_GET_ALL',
+	PROJECTS_SAVE_NAMES = 'PROJECTS_SAVE_NAMES'
 }
 
 interface projectsStartAction {
@@ -25,5 +27,10 @@ interface projectsGetAll {
 	payload: IProjectsResponse[]
 }
 
+interface projectsSaveNames {
+	type: projectsActionTypes.PROJECTS_SAVE_NAMES
+	payload: string[]
+}
 
-export type IProjectsAction = projectsStartAction | projectsEndAction | projectsGetAll | IAlertAction
+
+export type IProjectsAction = IAlertAction | projectsStartAction | projectsEndAction | projectsGetAll | projectsSaveNames

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ProjectPage.scss'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import Footer from '../../components/UI/Footer/Footer'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router-dom'
 import ProjectHeader from '../../components/UI/ProjectHeader/ProjectHeader'
 import AddNewButton from '../../components/UI/AddNewButton/AddNewButton'
 import PageCard from '../../components/UI/PageCard/PageCard'
@@ -14,6 +14,8 @@ import CreatePage from '../../components/UI/CreatePage/CreatePage'
 import BasicSettings from '../../components/UI/BasicSettings/BasicSettings'
 import FontConfig from '../../components/UI/FontConfig/FontConfig'
 import FormProcessing from '../../components/UI/FormProcessing/FormProcessing'
+import { useTypedSelector } from '../../hooks/reduxHooks'
+import { IUrlParams } from '../../models/IUrlParams'
 
 interface IRouteProps {
 	name: string
@@ -44,10 +46,17 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	const mainConfigPopup = usePopup(false, 'solid')
 	const formProcessingPopup = usePopup(false, 'solid')
 	const fontConfigPopup = usePopup(false, 'solid')
-
 	const createPagePopup = usePopup(false, 'solid')
-
 	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup)
+
+	const { projectsNames } = useTypedSelector(state => state.projects)
+	const history = useHistory()
+	const { name } = useParams<IUrlParams>()
+
+	useEffect(() => {
+		if (!projectsNames.includes('/' + name)) history.push('/')
+		// eslint-disable-next-line
+	}, [])
 
 	const handlers = {
 		mainConfigPopup: mainConfigPopup.handler,
@@ -55,76 +64,70 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 		fontConfigPopup: fontConfigPopup.handler,
 	}
 
-	// const history = useHistory()
-
-	// useEffect(() => {
-	// 	console.log('История ', history)
-	// })
-
 	return (
 		<>
 			<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
-				<BasicSettings handler={() => {}} />
+				<BasicSettings handler={() => { }} />
 			</PopUp>
 
 			<PopUp {...formProcessingPopup.popupProps} withTitle="Обработка форм">
-				<FormProcessing handler={() => {}} />
+				<FormProcessing handler={() => { }} />
 			</PopUp>
 
 			<PopUp {...fontConfigPopup.popupProps} withTitle="Выбрать шрифт">
-				<FontConfig handler={() => {}} />
+				<FontConfig handler={() => { }} />
 			</PopUp>
 
 			<PopUp {...createPagePopup.popupProps} withTitle="Создание страницы" >
-				<CreatePage handler={() => {}} />
+				<CreatePage handler={() => { }} />
 			</PopUp>
 
 			<Backdrop {...backdropProps} >
-			{/* <Backdrop {...createPagePopup.backdropProps} > */}
+				{/* <Backdrop {...createPagePopup.backdropProps} > */}
 
-			<TopMenu menuType="auth-project" />
+				<TopMenu menuType="auth-project" />
 
 
-			<div className="content-area">
+				<div className="content-area">
 
-				<div className="project-page">
-					<ProjectHeader 
-						parentClass="project-page" 
-						name="Название сайта" 
-						handlers={handlers}
-						type='published-updated'
+					<div className="project-page">
+						<ProjectHeader
+							parentClass="project-page"
+							name="Название сайта"
+							handlers={handlers}
+							type='published-updated'
 						// published={true}
 						// hasPages={true}
 						// updated={true}
-					/>
+						/>
 
-					<div className="project-page__pages-list-container">
+						<div className="project-page__pages-list-container">
 
-						{pages.map((i, index) => {
-							return (
-								<PageCard
-									key={'page-card' + index}
-									parentClass="project-page"
-									title={i.title}
-									published={i.published}
-									link={'/' + match.params.name + '/' + i.pageId}
-									isMainPage={i.isMainPage}
-								/>
-							)
-						})}
+							{pages.map((i, index) => {
+								return (
+									<PageCard
+										key={'page-card' + index}
+										parentClass="project-page"
+										title={i.title}
+										published={i.published}
+										link={'/' + match.params.name + '/' + i.pageId}
+										isMainPage={i.isMainPage}
+									/>
+								)
+							})}
 
+
+						</div>
+
+						<AddNewButton
+							parentClass="project-page"
+							handler={createPagePopup.handler}
+							title="Добавить новую страницу"
+						/>
 
 					</div>
-
-					<AddNewButton
-						parentClass="project-page"
-						handler={createPagePopup.handler}
-						title="Добавить новую страницу"
-					/>
-
 				</div>
-			</div>
-			<Footer />
+				<Footer />
 			</Backdrop>
 		</>
 	)
