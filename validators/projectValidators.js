@@ -3,7 +3,7 @@ const Project = require('../models/Project')
 
 exports.createProjectValidators = [
 	check('name')
-		.optional()
+		.trim()
 		.isLength({min: 3}).withMessage('Название сайта должно содержать не менее трех букв')
 		.isLength({max: 60}).withMessage('Название сайта должно содержать не более 60 букв'), // ! Нужно еще добавить отсутствие посторонних символов в кастомном валидаторе
 	check('link')

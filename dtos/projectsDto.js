@@ -4,6 +4,7 @@ module.exports = class ProjectsListDto {
 	link
 	isPublished
 	hasPages
+	updated
 
 	constructor(model) {
 		this.id = model._id
@@ -11,5 +12,6 @@ module.exports = class ProjectsListDto {
 		this.link = model.link
 		this.isPublished = model.published
 		this.hasPages = !!model.pages.length
+		this.updated = model.updated
 	}
 }

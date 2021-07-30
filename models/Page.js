@@ -1,6 +1,6 @@
 const {Schema, model, Types} = require('mongoose')
 
-const Project = new Schema({
+const Page = new Schema({
 	name: {
 		type: String,
 		required: true
@@ -14,6 +14,14 @@ const Project = new Schema({
 		type: Boolean,
 		default: false	
 	},
+	isHomePage: {
+		type: Boolean,
+		default: false	
+	},
+	openInNewWindow: {
+		type: Boolean,
+		default: false	
+	},
 	updated: {
 		type: Boolean,
 		default: false	
@@ -22,13 +30,11 @@ const Project = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	pages: [
-		{
+	project: {
 			type: Types.ObjectId,
-			ref: 'Page'
+			ref: 'Project'
 		}
-	]
 })
 
-module.exports = model('Project', Project)
+module.exports = model('Page', Page)
 

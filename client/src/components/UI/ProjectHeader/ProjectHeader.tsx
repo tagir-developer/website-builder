@@ -5,6 +5,11 @@ import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import Button from '../Button/Button'
 import CopyLink from '../CopyLink/CopyLink'
 import ShowMenuBtn from '../ShowMenuBtn/ShowMenuBtn'
+import { useParams } from 'react-router-dom'
+import { IUrlParams } from '../../../models/IUrlParams'
+import { useTypedSelector } from '../../../hooks/reduxHooks'
+import { useEffect } from 'react'
+import { IProjectsResponse } from '../../../models/response/ProjectsResponse'
 
 interface IProjectHeader {
 	parentClass?: string
@@ -13,43 +18,52 @@ interface IProjectHeader {
 	handlers: {
 		[key: string]: (param?: any) => any
 	}
-	type: 'no-pages' | 'has-pages-unpublished' | 'published-updated' | 'published-not-updated'
-	// published: boolean
-	// hasPages: boolean
-	// updated: boolean
+	published: boolean
+	hasPages: boolean
+	updated: boolean
+	// ? type: 'no-pages' | 'has-pages-unpublished' | 'published-updated' | 'published-not-updated'
 }
 
-const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, handlers, type }) => {
+const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, handlers, published, hasPages, updated }) => {
 
 	const projectHeaderClasses = useCreateClassName('project-header', parentClass, modClass)
+	// const { name: projectUrl } = useParams<IUrlParams>()
+	// const {projectsList} = useTypedSelector(state => state.projects)
+	// const projectData: IProjectsResponse = projectsList.filter(i => i.link === projectUrl)[0]
 
-	let published: boolean = false
-	let hasPages: boolean = false
-	let updated: boolean = false
+	// useEffect(() => {
+	// 	projectData = projectsList.filter(i => i.link === projectUrl)
+	// }, [])
 
-	if (type === 'no-pages') {
-		published = false
-		hasPages = false
-		updated = false
-	}
+	// console.log('PROJECT DATA', projectData)
 
-	if (type === 'has-pages-unpublished') {
-		published = false
-		hasPages = true
-		updated = false
-	}
+	// let published: boolean = false
+	// let hasPages: boolean = false
+	// let updated: boolean = false
 
-	if (type === 'published-updated') {
-		published = true
-		hasPages = true
-		updated = true
-	}
+	// if (type === 'no-pages') {
+	// 	published = false
+	// 	hasPages = false
+	// 	updated = false
+	// }
 
-	if (type === 'published-not-updated') {
-		published = true
-		hasPages = true
-		updated = false
-	}
+	// if (type === 'has-pages-unpublished') {
+	// 	published = false
+	// 	hasPages = true
+	// 	updated = false
+	// }
+
+	// if (type === 'published-updated') {
+	// 	published = true
+	// 	hasPages = true
+	// 	updated = true
+	// }
+
+	// if (type === 'published-not-updated') {
+	// 	published = true
+	// 	hasPages = true
+	// 	updated = false
+	// }
 
 	const projectMenuItems = [
 		{

@@ -26,7 +26,7 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, matc
 
 	const createPageHandler = () => {
 		// ? Сначала надо записать данные нового сайта в базу, а затем перенаправить пользователя на страницу с шаблоном
-		history.push('/' + match.params.name + '/' + pageId + '/template') // ! Возможно, придется добавить в роут pageID для связи шаблона со страницей
+		history.push('/projects/' + match.params.name + '/' + pageId + '/template') // ! Возможно, придется добавить в роут pageID для связи шаблона со страницей
 	}
 
 	return (

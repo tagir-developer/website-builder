@@ -32,7 +32,7 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 				</div>
 
 				<div className="project-card__buttons-container">
-					<Button parentClass="project-card" handler={() => { history.push(link) }} >
+					<Button parentClass="project-card" handler={() => { history.push('/projects/' + link) }} >
 						Редактировать сайт
 					</Button>
 					{!hasPages

@@ -6,6 +6,7 @@ export interface IProjectsResponse {
 	link: string
 	isPublished: boolean
 	hasPages: boolean
+	updated: boolean
 }
 
 export interface ICreateProjectsResponse extends IAlertMessage {

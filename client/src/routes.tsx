@@ -73,10 +73,10 @@ export const Routes: React.FC = (): JSX.Element => {
 					<HelpPage><PageStart title="Начало работы" /></HelpPage>
 				</Route>
 
-				<Route path="/:name" component={ProjectPage} exact />
-				<Route path="/:name/:pageId" component={EditPage} exact />
-				<Route path="/:name/:pageId/template" component={SelectTemplatePage} exact />
-				<Route path="/:name/:pageId/preview" component={PreviewPage} exact />
+				<Route path="/projects/:name" component={ProjectPage} exact />
+				<Route path="/projects/:name/:pageId" component={EditPage} exact />
+				<Route path="/projects/:name/:pageId/template" component={SelectTemplatePage} exact />
+				<Route path="/projects/:name/:pageId/preview" component={PreviewPage} exact />
 				<Redirect to="/" />
 			</Switch>
 		)

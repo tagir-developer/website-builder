@@ -41,16 +41,16 @@ export type AppDispatch = typeof store.dispatch
 
 const App: React.FC = () => {
 
-  const profilerCallback: ProfilerOnRenderCallback = (id, phase, actualTime, baseTime, startTime, commitTime) => {
-    console.log(`${id} - ${phase} phase:`)
-    // console.log(`Actual time: ${actualTime}`) // Время, затраченное на рендеринг зафиксированного обновления.
-    // console.log(`Base time: ${baseTime}`) // Предполагаемое время рендеринга всего поддерева без кеширования.
-    // console.log(`Start time: ${startTime}`) // Время, когда React начал рендерить это обновление.
-    console.log(`Commit time: ${commitTime}`) // Время, когда когда React зафиксировал это обновление.
-  }
+  // const profilerCallback: ProfilerOnRenderCallback = (id, phase, actualTime, baseTime, startTime, commitTime) => {
+  //   console.log(`${id} - ${phase} phase:`)
+  //   console.log(`Actual time: ${actualTime}`) // Время, затраченное на рендеринг зафиксированного обновления.
+  //   console.log(`Base time: ${baseTime}`) // Предполагаемое время рендеринга всего поддерева без кеширования.
+  //   console.log(`Start time: ${startTime}`) // Время, когда React начал рендерить это обновление.
+  //   console.log(`Commit time: ${commitTime}`) // Время, когда когда React зафиксировал это обновление.
+  // }
 
   return (
-    <Profiler id="APP PROFILER" onRender={profilerCallback}>
+    // <Profiler id="APP PROFILER" onRender={profilerCallback}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Layout>
@@ -61,7 +61,7 @@ const App: React.FC = () => {
           </Layout>
         </PersistGate>
       </Provider>
-    </Profiler>
+    // </Profiler>
   )
 }
 

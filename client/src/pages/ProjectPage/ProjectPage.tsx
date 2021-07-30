@@ -16,6 +16,7 @@ import FontConfig from '../../components/UI/FontConfig/FontConfig'
 import FormProcessing from '../../components/UI/FormProcessing/FormProcessing'
 import { useTypedSelector } from '../../hooks/reduxHooks'
 import { IUrlParams } from '../../models/IUrlParams'
+import { IProjectsResponse } from '../../models/response/ProjectsResponse'
 
 interface IRouteProps {
 	name: string
@@ -49,12 +50,15 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	const createPagePopup = usePopup(false, 'solid')
 	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup)
 
-	const { projectsNames } = useTypedSelector(state => state.projects)
+	const { projectsNames, projectsList } = useTypedSelector(state => state.projects)
 	const history = useHistory()
-	const { name } = useParams<IUrlParams>()
+	// const { name } = useParams<IUrlParams>()
+	const { name: projectUrl } = useParams<IUrlParams>()
+	// const {projectsList} = useTypedSelector(state => state.projects)
+	const projectData: IProjectsResponse = projectsList.filter(i => i.link === projectUrl)[0]
 
 	useEffect(() => {
-		if (!projectsNames.includes('/' + name)) history.push('/')
+		if (!projectsNames.includes('/' + projectUrl)) history.push('/')
 		// eslint-disable-next-line
 	}, [])
 
@@ -93,12 +97,12 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 					<div className="project-page">
 						<ProjectHeader
 							parentClass="project-page"
-							name="Название сайта"
+							name={projectData.name}
 							handlers={handlers}
-							type='published-updated'
-						// published={true}
-						// hasPages={true}
-						// updated={true}
+							published={projectData.isPublished}
+							hasPages={projectData.hasPages}
+							updated={projectData.updated}
+							// ? type='published-updated'
 						/>
 
 						<div className="project-page__pages-list-container">
