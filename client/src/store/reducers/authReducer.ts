@@ -44,6 +44,7 @@ export default function authReducer(state = initialState, action: IAuthAction): 
 			...state,
 			user: {} as IUser,
 			loading: false,
+			checkAuthLoading: false,
 			isAuth: false,
 			message: '', 
 			messageType: 'basic',  

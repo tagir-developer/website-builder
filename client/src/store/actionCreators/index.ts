@@ -4,6 +4,7 @@ import * as alertActionCreators from './alert'
 import * as projectsActionCreators from './projects'
 import * as userActionCreators from './user'
 import * as popupActionCreators from './popup'
+import * as pageActionCreators from './page'
 
 const allActionCreators = {
 	...authActionCreators,
@@ -11,7 +12,8 @@ const allActionCreators = {
 	...alertActionCreators,
 	...projectsActionCreators,
 	...userActionCreators,
-	...popupActionCreators
+	...popupActionCreators,
+	...pageActionCreators
 }
 
 export default allActionCreators

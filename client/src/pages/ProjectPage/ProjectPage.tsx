@@ -14,9 +14,10 @@ import CreatePage from '../../components/UI/CreatePage/CreatePage'
 import BasicSettings from '../../components/UI/BasicSettings/BasicSettings'
 import FontConfig from '../../components/UI/FontConfig/FontConfig'
 import FormProcessing from '../../components/UI/FormProcessing/FormProcessing'
-import { useTypedSelector } from '../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { IUrlParams } from '../../models/IUrlParams'
 import { IProjectsResponse } from '../../models/response/ProjectsResponse'
+import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
 
 interface IRouteProps {
 	name: string
@@ -27,23 +28,6 @@ interface IProjectPage extends RouteComponentProps<IRouteProps> {
 
 const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
-	// *Здесь нужна проверка, есть ли такой роут в базе проектов, если нет, то выводим сообщение об ошибке или редиректим на главную
-
-	const pages = [
-		{
-			pageId: 'page-1',
-			title: "Главная страница",
-			published: true,
-			isMainPage: true
-		},
-		{
-			pageId: 'page-2',
-			title: "Дополнительная страница",
-			published: false,
-			isMainPage: false
-		}
-	]
-
 	const mainConfigPopup = usePopup(false, 'solid')
 	const formProcessingPopup = usePopup(false, 'solid')
 	const fontConfigPopup = usePopup(false, 'solid')
@@ -51,14 +35,22 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup)
 
 	const { projectsNames, projectsList } = useTypedSelector(state => state.projects)
+	const { pages: projectPages } = useTypedSelector(state => state.page)
+	const { getProjectPages } = useActions()
+
 	const history = useHistory()
-	// const { name } = useParams<IUrlParams>()
 	const { name: projectUrl } = useParams<IUrlParams>()
-	// const {projectsList} = useTypedSelector(state => state.projects)
 	const projectData: IProjectsResponse = projectsList.filter(i => i.link === projectUrl)[0]
+
+	const projectId = projectsList.filter(i => i.link === projectUrl)[0].id
 
 	useEffect(() => {
 		if (!projectsNames.includes('/' + projectUrl)) history.push('/')
+		// eslint-disable-next-line
+	}, [])
+
+	useEffect(() => {
+		getProjectPages(projectId)
 		// eslint-disable-next-line
 	}, [])
 
@@ -68,71 +60,86 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 		fontConfigPopup: fontConfigPopup.handler,
 	}
 
+	const successfulPageCreation = () => {
+		createPagePopup.closePopup()
+		getProjectPages(projectId)
+	}
+
+	console.log('PAGES: ', projectPages)
+
 	return (
 		<>
-			<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
-				<BasicSettings handler={() => { }} />
-			</PopUp>
+			<AlertMessage successFunc={successfulPageCreation}>
 
-			<PopUp {...formProcessingPopup.popupProps} withTitle="Обработка форм">
-				<FormProcessing handler={() => { }} />
-			</PopUp>
+				<PopUp {...createPagePopup.popupProps} withTitle="Создание страницы" >
+					<CreatePage
+						// handler={() => { }} 
+						projectId={projectId}
+						closePopup={createPagePopup.closePopup}
+					/>
+				</PopUp>
 
-			<PopUp {...fontConfigPopup.popupProps} withTitle="Выбрать шрифт">
-				<FontConfig handler={() => { }} />
-			</PopUp>
+				<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
+					<BasicSettings handler={() => { }} />
+				</PopUp>
 
-			<PopUp {...createPagePopup.popupProps} withTitle="Создание страницы" >
-				<CreatePage handler={() => { }} />
-			</PopUp>
+				<PopUp {...formProcessingPopup.popupProps} withTitle="Обработка форм">
+					<FormProcessing handler={() => { }} />
+				</PopUp>
 
-			<Backdrop {...backdropProps} >
-				{/* <Backdrop {...createPagePopup.backdropProps} > */}
+				<PopUp {...fontConfigPopup.popupProps} withTitle="Выбрать шрифт">
+					<FontConfig handler={() => { }} />
+				</PopUp>
 
-				<TopMenu menuType="auth-project" />
+
+				<Backdrop {...backdropProps} >
+					{/* <Backdrop {...createPagePopup.backdropProps} > */}
+
+					<TopMenu menuType="auth-project" />
 
 
-				<div className="content-area">
+					<div className="content-area">
 
-					<div className="project-page">
-						<ProjectHeader
-							parentClass="project-page"
-							name={projectData.name}
-							handlers={handlers}
-							published={projectData.isPublished}
-							hasPages={projectData.hasPages}
-							updated={projectData.updated}
+						<div className="project-page">
+							<ProjectHeader
+								parentClass="project-page"
+								name={projectData.name}
+								handlers={handlers}
+								published={projectData.isPublished}
+								hasPages={projectData.hasPages}
+								updated={projectData.updated}
 							// ? type='published-updated'
-						/>
+							/>
 
-						<div className="project-page__pages-list-container">
+							<div className="project-page__pages-list-container">
 
-							{pages.map((i, index) => {
-								return (
-									<PageCard
-										key={'page-card' + index}
-										parentClass="project-page"
-										title={i.title}
-										published={i.published}
-										link={'/' + match.params.name + '/' + i.pageId}
-										isMainPage={i.isMainPage}
-									/>
-								)
-							})}
+								{projectPages.map((i, index) => {
+									return (
+										<PageCard
+											key={i.id}
+											parentClass="project-page"
+											title={i.name}
+											published={i.published}
+											link={'/projects/' + projectUrl + '/' + i.link}
+											isMainPage={i.isHomePage}
+										/>
+									)
+								})}
 
+
+							</div>
+
+							<AddNewButton
+								parentClass="project-page"
+								handler={createPagePopup.handler}
+								title="Добавить новую страницу"
+							/>
 
 						</div>
-
-						<AddNewButton
-							parentClass="project-page"
-							handler={createPagePopup.handler}
-							title="Добавить новую страницу"
-						/>
-
 					</div>
-				</div>
-				<Footer />
-			</Backdrop>
+					<Footer />
+				</Backdrop>
+			</AlertMessage>
 		</>
 	)
 }

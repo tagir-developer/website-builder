@@ -21,25 +21,26 @@ import { useEffect } from 'react'
 
 export const Routes: React.FC = (): JSX.Element => {
 
-	const { isAuth } = useTypedSelector(state => state.auth) //! Пока убираем авторизацию, потом вернем
+	const { isAuth } = useTypedSelector(state => state.auth)
 
-	const history = useHistory()
-	const location = useLocation()
+	// const history = useHistory()
+	// const location = useLocation()
 
-	useEffect(() => {
-		if (isAuth) {
-			const path = localStorage.getItem('path')
-			history.push(path ? path : '/')
-		}
-		// eslint-disable-next-line
-	}, [isAuth])
+	// useEffect(() => {
+	// 	if (isAuth) {
+	// 		const path = localStorage.getItem('path')
+	// 		history.push(path ? path : '/')
+	// 	}
+	// 	// eslint-disable-next-line
+	// }, [isAuth])
 
-	useEffect(() => {
-		return () => {
-			localStorage.setItem('path', location.pathname)
-		}
-		// eslint-disable-next-line
-	}, [])
+	// useEffect(() => {
+	// 	console.log('Произошло размонтирование роутинга')
+	// 	return () => {
+	// 		localStorage.setItem('path', location.pathname)
+	// 	}
+	// 	// eslint-disable-next-line
+	// }, [])
 
 	if (isAuth) {
 		return (

@@ -32,7 +32,8 @@ const Page = new Schema({
 	},
 	project: {
 			type: Types.ObjectId,
-			ref: 'Project'
+			ref: 'Project',
+			required: true
 		}
 })
 

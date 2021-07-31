@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {ChangeEventHandler, useState} from 'react'
 
 interface IUseCheck {
 	bind: {
@@ -6,13 +6,13 @@ interface IUseCheck {
 		handler: () => void
 	}
 	value: boolean
-	handler: () => void
+	handler: ChangeEventHandler<HTMLInputElement>
 	setNewValue: (param: boolean) => void
 }
 
 export const useCheck = (initialValue: boolean): IUseCheck => {
 
-	const [value, setValue] = useState(initialValue)
+	const [value, setValue] = useState<boolean>(initialValue)
 
 	const handler = (): void => {
 		setValue(prev => !prev)

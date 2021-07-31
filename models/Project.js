@@ -22,6 +22,11 @@ const Project = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	createdBy: {
+		type: Types.ObjectId,
+		ref: 'User',
+		required: true
+	},
 	pages: [
 		{
 			type: Types.ObjectId,
