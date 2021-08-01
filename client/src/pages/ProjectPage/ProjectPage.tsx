@@ -18,6 +18,9 @@ import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { IUrlParams } from '../../models/IUrlParams'
 import { IProjectsResponse } from '../../models/response/ProjectsResponse'
 import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
+import Loader from '../../components/UI/Loader/Loader'
+import ChangeProject from '../../components/UI/ChangeProject/ChangeProject'
+import Confirm from '../../components/UI/Confirm/Confirm'
 
 interface IRouteProps {
 	name: string
@@ -32,10 +35,12 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	const formProcessingPopup = usePopup(false, 'solid')
 	const fontConfigPopup = usePopup(false, 'solid')
 	const createPagePopup = usePopup(false, 'solid')
-	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup)
+	const changeProjectPopup = usePopup(false, 'solid')
+	const deleteConfirmationPopup = usePopup(false, 'blur')
+	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup, changeProjectPopup, deleteConfirmationPopup)
 
 	const { projectsNames, projectsList } = useTypedSelector(state => state.projects)
-	const { pages: projectPages } = useTypedSelector(state => state.page)
+	const { pages: projectPages, loading } = useTypedSelector(state => state.page)
 	const { getProjectPages } = useActions()
 
 	const history = useHistory()
@@ -58,14 +63,14 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 		mainConfigPopup: mainConfigPopup.handler,
 		formProcessingPopup: formProcessingPopup.handler,
 		fontConfigPopup: fontConfigPopup.handler,
+		changeProjectPopup: changeProjectPopup.handler,
+		deleteConfirmationPopup: deleteConfirmationPopup.handler
 	}
 
 	const successfulPageCreation = () => {
 		createPagePopup.closePopup()
 		getProjectPages(projectId)
 	}
-
-	console.log('PAGES: ', projectPages)
 
 	return (
 		<>
@@ -77,6 +82,14 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 						projectId={projectId}
 						closePopup={createPagePopup.closePopup}
 					/>
+				</PopUp>
+
+				<PopUp {...changeProjectPopup.popupProps} withTitle="Изменить сайт">
+					<ChangeProject />
+				</PopUp>
+
+				<PopUp {...deleteConfirmationPopup.popupProps} transparent={true}>
+					<Confirm handler={deleteConfirmationPopup.confirm}>Вы действительно хотите удалить сайт?</Confirm>
 				</PopUp>
 
 				<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
@@ -108,24 +121,30 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 								published={projectData.isPublished}
 								hasPages={projectData.hasPages}
 								updated={projectData.updated}
+								addPageHandler={createPagePopup.handler}
 							// ? type='published-updated'
 							/>
 
 							<div className="project-page__pages-list-container">
 
-								{projectPages.map((i, index) => {
-									return (
-										<PageCard
-											key={i.id}
-											parentClass="project-page"
-											title={i.name}
-											published={i.published}
-											link={'/projects/' + projectUrl + '/' + i.link}
-											isMainPage={i.isHomePage}
-										/>
-									)
-								})}
-
+								{loading
+									? <Loader parentClass="project-page" />
+									: !!projectsList.length
+										?
+										projectPages.map((i, index) => {
+											return (
+												<PageCard
+													key={i.id}
+													parentClass="project-page"
+													title={i.name}
+													published={i.published}
+													link={'/projects/' + projectUrl + '/' + i.link}
+													isMainPage={i.isHomePage}
+												/>
+											)
+										})
+										: null
+								}
 
 							</div>
 

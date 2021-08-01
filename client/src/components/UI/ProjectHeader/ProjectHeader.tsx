@@ -5,11 +5,6 @@ import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import Button from '../Button/Button'
 import CopyLink from '../CopyLink/CopyLink'
 import ShowMenuBtn from '../ShowMenuBtn/ShowMenuBtn'
-import { useParams } from 'react-router-dom'
-import { IUrlParams } from '../../../models/IUrlParams'
-import { useTypedSelector } from '../../../hooks/reduxHooks'
-import { useEffect } from 'react'
-import { IProjectsResponse } from '../../../models/response/ProjectsResponse'
 
 interface IProjectHeader {
 	parentClass?: string
@@ -21,21 +16,14 @@ interface IProjectHeader {
 	published: boolean
 	hasPages: boolean
 	updated: boolean
+	addPageHandler: (param?: any) => any
 	// ? type: 'no-pages' | 'has-pages-unpublished' | 'published-updated' | 'published-not-updated'
 }
 
-const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, handlers, published, hasPages, updated }) => {
+const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, handlers, published, hasPages, updated, addPageHandler }) => {
 
 	const projectHeaderClasses = useCreateClassName('project-header', parentClass, modClass)
-	// const { name: projectUrl } = useParams<IUrlParams>()
-	// const {projectsList} = useTypedSelector(state => state.projects)
-	// const projectData: IProjectsResponse = projectsList.filter(i => i.link === projectUrl)[0]
 
-	// useEffect(() => {
-	// 	projectData = projectsList.filter(i => i.link === projectUrl)
-	// }, [])
-
-	// console.log('PROJECT DATA', projectData)
 
 	// let published: boolean = false
 	// let hasPages: boolean = false
@@ -93,14 +81,14 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 				<div className="project-header__action-buttons">
 					<SmallIconButton
 						parentClass="project-header"
-						handler={() => { }}
+						handler={handlers.changeProjectPopup}
 						modClass={["change-icon"]}
 					>
 						Изменить
 					</SmallIconButton>
 					<SmallIconButton
 						parentClass="project-header"
-						handler={() => { }}
+						handler={handlers.deleteConfirmationPopup}
 						modClass={["delete-icon"]}
 					>
 						Удалить
@@ -111,7 +99,7 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 						{!published && !hasPages // ? На сайте еще нет ни одной страницы (новый сайт)
 							? <Button
 								parentClass="project-header"
-								handler={() => { }}
+								handler={addPageHandler}
 							>
 								Добавить страницу
 							</Button>

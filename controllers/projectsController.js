@@ -26,6 +26,43 @@ class projectsController {
 		}
 	}
 
+	async changeProject(req, res, next) {
+		try {
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) {
+				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
+			}
+
+			const {projectId, name, link} = req.body
+			await projectService.changeProject(projectId, name, link)
+
+			return res.json({
+				messageType: 'success',
+				message: "Проект успешно изменен",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async deleteProject(req, res, next) {
+		try {
+
+			await projectService.deleteProject(req.params.projectId)
+
+			return res.json({
+				messageType: 'success',
+				message: "Проект успешно удален",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
 
 	async getAllProjects(req, res, next) {
 		try {
