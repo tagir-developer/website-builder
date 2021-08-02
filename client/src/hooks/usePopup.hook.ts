@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export interface IPopupConfirm {
 	setPopup: (param: boolean) => void
@@ -26,7 +26,7 @@ interface IUsePopup {
 	setPopup: (param: boolean) => void
 }
 
-export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUsePopup => {
+export const usePopup = (initialState: boolean, initType: 'blur' | 'solid', confirmFunction?: Function): IUsePopup => {
 	const [isOpen, setIsOpen] = useState<boolean>(initialState)
 	const [isConfirm, setIsConfirm] = useState<boolean>(false)
 
@@ -46,6 +46,13 @@ export const usePopup = (initialState: boolean, initType: 'blur' | 'solid'): IUs
 		setTimeout(() => history.goBack(), 400)
 	}
 	const confirmFunc = (param: boolean): void => setIsConfirm(param)
+
+	useEffect(() => {
+		if (isConfirm) {
+			confirmFunction && confirmFunction()
+		}
+		// eslint-disable-next-line
+	}, [isConfirm])
 
 	return {
 		popupProps: { type, isOpen, handler },

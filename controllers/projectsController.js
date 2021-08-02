@@ -34,9 +34,10 @@ class projectsController {
 			}
 
 			const {projectId, name, link} = req.body
-			await projectService.changeProject(projectId, name, link)
+			const updatedProject = await projectService.changeProject(projectId, name, link)
 
 			return res.json({
+				project: updatedProject,
 				messageType: 'success',
 				message: "Проект успешно изменен",
 				errors: []
@@ -49,6 +50,9 @@ class projectsController {
 
 	async deleteProject(req, res, next) {
 		try {
+
+			console.log('ПОЛУЧАЕМЫЙ АЙ ДИ ПРОЕКТА КОНТРОЛЛЕР)', req.params.projectId)
+
 
 			await projectService.deleteProject(req.params.projectId)
 

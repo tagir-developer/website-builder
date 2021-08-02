@@ -21,6 +21,7 @@ import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
 import Loader from '../../components/UI/Loader/Loader'
 import ChangeProject from '../../components/UI/ChangeProject/ChangeProject'
 import Confirm from '../../components/UI/Confirm/Confirm'
+import { useCallback } from 'react'
 
 interface IRouteProps {
 	name: string
@@ -31,23 +32,26 @@ interface IProjectPage extends RouteComponentProps<IRouteProps> {
 
 const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
+	const { projectsNames, projectsList, activeProject, shouldCreatePageAfterOpenProject } = useTypedSelector(state => state.projects)
+	const { pages: projectPages, loading } = useTypedSelector(state => state.page)
+	const { getProjectPages, deleteProject, createPageAfterOpenProject } = useActions()
+
+	const projectDeletion = () => {
+		deleteProject(activeProject.id)
+		history.push('/')
+	}
+
 	const mainConfigPopup = usePopup(false, 'solid')
 	const formProcessingPopup = usePopup(false, 'solid')
 	const fontConfigPopup = usePopup(false, 'solid')
-	const createPagePopup = usePopup(false, 'solid')
+	const createPagePopup = usePopup(shouldCreatePageAfterOpenProject, 'solid')
 	const changeProjectPopup = usePopup(false, 'solid')
-	const deleteConfirmationPopup = usePopup(false, 'blur')
+	// const deleteConfirmationPopup = usePopup(false, 'blur', () => deleteProject(activeProject.id))
+	const deleteConfirmationPopup = usePopup(false, 'blur', projectDeletion)
 	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup, changeProjectPopup, deleteConfirmationPopup)
-
-	const { projectsNames, projectsList } = useTypedSelector(state => state.projects)
-	const { pages: projectPages, loading } = useTypedSelector(state => state.page)
-	const { getProjectPages } = useActions()
 
 	const history = useHistory()
 	const { name: projectUrl } = useParams<IUrlParams>()
-	const projectData: IProjectsResponse = projectsList.filter(i => i.link === projectUrl)[0]
-
-	const projectId = projectsList.filter(i => i.link === projectUrl)[0].id
 
 	useEffect(() => {
 		if (!projectsNames.includes('/' + projectUrl)) history.push('/')
@@ -55,9 +59,17 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	}, [])
 
 	useEffect(() => {
-		getProjectPages(projectId)
+		getProjectPages(activeProject.id)
 		// eslint-disable-next-line
 	}, [])
+
+	useEffect(() => {
+		if (!createPagePopup.isOpen) {
+			createPageAfterOpenProject(false)
+		}
+		// eslint-disable-next-line
+	}, [createPagePopup.isOpen])
+
 
 	const handlers = {
 		mainConfigPopup: mainConfigPopup.handler,
@@ -67,25 +79,64 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 		deleteConfirmationPopup: deleteConfirmationPopup.handler
 	}
 
-	const successfulPageCreation = () => {
-		createPagePopup.closePopup()
-		getProjectPages(projectId)
-	}
+	// let successFunction = () => {}
+
+	// const successFunction = useCallback(() => {
+
+	// 	console.log('Стартовало переопределение функции')
+
+	// 	const successfulPageCreation = () => {
+	// 		console.log('1 - функция создания страницы')
+	// 		createPagePopup.closePopup()
+	// 		getProjectPages(activeProject.id)
+	// 	}
+
+	// 	const succesfulProjectDeletion = () => {
+	// 		console.log('2 - функция удаления страницы')
+	// 		deleteProject(activeProject.id)
+	// 		history.push('/')
+	// 	}
+
+	// 	if (createPagePopup.isOpen) {
+	// 		console.log('Назначена функция создания страницы')
+	// 		return successfulPageCreation()
+	// 	}
+
+	// 	if (deleteConfirmationPopup.confirm.isConfirm) {
+	// 		// succesfulProjectDeletion()
+	// 		console.log('Назначена функция удаления страницы')
+	// 		return () => succesfulProjectDeletion()
+	// 	}
+
+	// 	console.log('Ни одно условие не сработало и функция пустая')
+	// 	// successFunction =  () => {}
+
+	// }, [createPagePopup.isOpen, deleteConfirmationPopup.confirm.isConfirm])
+
+	// const successfulPageCreation = () => {
+	// 	createPagePopup.closePopup()
+	// 	getProjectPages(activeProject.id)
+	// }
 
 	return (
 		<>
-			<AlertMessage successFunc={successfulPageCreation}>
+			{/* <AlertMessage successFunc={successfulPageCreation}> */}
+			{/* <AlertMessage successFunc={successFunction}> */}
+			<AlertMessage>
 
 				<PopUp {...createPagePopup.popupProps} withTitle="Создание страницы" >
 					<CreatePage
 						// handler={() => { }} 
-						projectId={projectId}
+						projectId={activeProject.id}
 						closePopup={createPagePopup.closePopup}
 					/>
 				</PopUp>
 
 				<PopUp {...changeProjectPopup.popupProps} withTitle="Изменить сайт">
-					<ChangeProject />
+					<ChangeProject
+						projectId={activeProject.id}
+						closePopup={changeProjectPopup.closePopup}
+					/>
 				</PopUp>
 
 				<PopUp {...deleteConfirmationPopup.popupProps} transparent={true}>
@@ -116,11 +167,11 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 						<div className="project-page">
 							<ProjectHeader
 								parentClass="project-page"
-								name={projectData.name}
+								name={activeProject.name}
 								handlers={handlers}
-								published={projectData.isPublished}
-								hasPages={projectData.hasPages}
-								updated={projectData.updated}
+								published={activeProject.isPublished}
+								hasPages={activeProject.hasPages}
+								updated={activeProject.updated}
 								addPageHandler={createPagePopup.handler}
 							// ? type='published-updated'
 							/>

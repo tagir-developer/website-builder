@@ -8,20 +8,25 @@ import './ChangeProject.scss'
 
 interface IChangeProject {
 	parentClass?: string
+	projectId: string
+	closePopup: (param?: any) => any
 }
 
-const ChangeProject: React.FC<IChangeProject> = ({ parentClass }) => {
+const ChangeProject: React.FC<IChangeProject> = ({ parentClass, projectId, closePopup }) => {
 
 	const ChangeProjectClasses = useCreateClassName('change-project', parentClass)
 
 	const { loading } = useTypedSelector(state => state.projects)
 	const { errors } = useTypedSelector(state => state.alert)
-	const { createNewProject, alertRemoveError } = useActions()
+	const { changeProject, alertRemoveError } = useActions()
 
 	const name = useInput('', alertRemoveError, 'name', errors)
 	const link = useInput('', alertRemoveError, 'link', errors)
 
-	const ChangeProjectHandler = () => { createNewProject(name.value, link.value) }
+	const changeProjectHandler = () => {
+		closePopup()
+		changeProject(projectId, name.value, link.value) 
+	}
 
 	return (
 		<div className={ChangeProjectClasses}>
@@ -52,7 +57,7 @@ const ChangeProject: React.FC<IChangeProject> = ({ parentClass }) => {
 							</div>
 							<Button
 								parentClass="change-project"
-								handler={ChangeProjectHandler}
+								handler={changeProjectHandler}
 								modClass={['big']}
 								disabled={loading}
 							>

@@ -12,3 +12,7 @@ export interface IProjectsResponse {
 export interface ICreateProjectsResponse extends IAlertMessage {
 
 }
+
+export interface IUpdateProjectsResponse extends IAlertMessage {
+	project: IProjectsResponse
+}

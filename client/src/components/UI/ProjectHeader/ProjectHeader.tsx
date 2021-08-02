@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ProjectHeader.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import Button from '../Button/Button'
 import CopyLink from '../CopyLink/CopyLink'
 import ShowMenuBtn from '../ShowMenuBtn/ShowMenuBtn'
+import { useTypedSelector } from '../../../hooks/reduxHooks'
 
 interface IProjectHeader {
 	parentClass?: string
@@ -24,6 +25,13 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 
 	const projectHeaderClasses = useCreateClassName('project-header', parentClass, modClass)
 
+	// const {activeProject, loading} = useTypedSelector(state => state.projects)
+
+	// useEffect(() => {
+	// 	// getProjectPages(projectId)
+	// 	setActiveProject(activeProject.id)
+	// 	// eslint-disable-next-line
+	// }, [loading])
 
 	// let published: boolean = false
 	// let hasPages: boolean = false
@@ -52,6 +60,7 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 	// 	hasPages = true
 	// 	updated = false
 	// }
+
 
 	const projectMenuItems = [
 		{

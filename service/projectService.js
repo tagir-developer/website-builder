@@ -16,12 +16,17 @@ class ProjectService {
 	}
 
 	async changeProject(projectId, name, link) {
+		console.log('ПОЛУЧАЕМЫЙ АЙ ДИ ПРОЕКТА', projectId)
 		const project = await Project.findById(projectId)
 		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
 
 		project.name = name
 		project.link = link
 		await project.save()
+
+		const projectDto = new ProjectsListDto(project)
+
+		return {...projectDto}
 	}
 
 	async deleteProject(projectId) {

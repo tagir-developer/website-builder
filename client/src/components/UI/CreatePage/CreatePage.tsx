@@ -25,7 +25,8 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, matc
 	const CreatePageClasses = useCreateClassName('create-page', parentClass)
 
 	const { errors } = useTypedSelector(state => state.alert)
-	const { createNewPage, alertRemoveError } = useActions()
+	const { activeProject } = useTypedSelector(state => state.projects)
+	const { createNewPage, alertRemoveError, getProjectPages } = useActions()
 
 	const name = useInput('', alertRemoveError, 'name', errors)
 	const link = useInput('', alertRemoveError, 'link', errors)
@@ -35,9 +36,8 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, matc
 	const createPageHandler = () => {
 		closePopup()
 		createNewPage(projectId, name.value, link.value, isHomePage.value, openInNewWindow.value)
+		getProjectPages(activeProject.id) // ? Раньше была реализована, как функция при успехе алерта
 	}
-
-	const pageId = 'page-1' // ! Временно используем это значение, здесь должно быть генерируемое при создании новой страницы pageID
 
 	// const createPageHandler = () => {
 	// 	// ? Сначала надо записать данные нового сайта в базу, а затем перенаправить пользователя на страницу с шаблоном
@@ -66,29 +66,6 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, matc
 							>
 								Адрес страницы
 							</Input>
-							{/* <label 
-								htmlFor="create-page-site-name" 
-								className="create-page__input-label input-label"
-							>Название страницы
-							</label>
-							<input
-								id="create-page-site-name"
-								type="text"
-								className="create-page__input input"
-								{...name.bind}
-							/>
-							<label 
-								htmlFor="create-page-project-name"
-								className="create-page__input-label input-label"
-							>
-								Адрес страницы*
-							</label>
-							<input
-								id="create-page-project-name"
-								type="text"
-								className="create-page__input input"
-								{...link.bind}
-							/> */}
 
 							<div className="create-page__checkbox-container">
 								<Checkbox

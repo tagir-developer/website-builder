@@ -43,16 +43,10 @@ const ProjectsListPage: React.FC = () => {
 					<div className="content-area">
 						<div className="projects-list-page">
 
-							{/* <AddNewButton
+							<AddNewButton
 								parentClass="projects-list-page"
 								handler={popup.handler}
 								title="Создать новый сайт"
-							/> */}
-
-							<AddNewButton
-								parentClass="projects-list-page"
-								handler={getAllProjects}
-								title="Тестовая кнопка"
 							/>
 
 							{loading

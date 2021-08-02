@@ -6,6 +6,7 @@ import SecondaryButton from '../SecondaryButton/SecondaryButton'
 import StatusLabel from '../StatusLabel/StatusLabel'
 import CopyLink from '../CopyLink/CopyLink'
 import { RouteComponentProps, withRouter } from 'react-router'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 
 interface IProjectCard extends RouteComponentProps<any> {
 	parentClass?: string
@@ -20,6 +21,20 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 
 	const projectCardClasses = useCreateClassName('project-card', parentClass, modClass)
 
+	const { projectsList } = useTypedSelector(state => state.projects)
+	const { setActiveProject, createPageAfterOpenProject } = useActions()
+	
+
+	const openProject = () => {
+		setActiveProject(projectsList, link)
+		history.push('/projects/' + link)
+	}
+
+	const createNewPage = () => {
+		createPageAfterOpenProject(true)
+		openProject()
+	}
+
 	return (
 		<div className={projectCardClasses}>
 			<div className="project-card__card-container">
@@ -32,11 +47,11 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 				</div>
 
 				<div className="project-card__buttons-container">
-					<Button parentClass="project-card" handler={() => { history.push('/projects/' + link) }} >
+					<Button parentClass="project-card" handler={openProject} >
 						Редактировать сайт
 					</Button>
 					{!hasPages
-						? <SecondaryButton parentClass="project-card" handler={() => { }} >
+						? <SecondaryButton parentClass="project-card" handler={createNewPage} >
 							Создать страницу
 								</SecondaryButton>
 						: null
