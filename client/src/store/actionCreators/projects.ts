@@ -77,9 +77,9 @@ export const deleteProject = (projectId: string) => {
 		dispatch(projectsStartCreator())
 
 		try {
-			await ProjectsService.deleteProject(projectId)
+			const response = await ProjectsService.deleteProject(projectId)
 
-			// dispatch(alertErrorOrMessageCreator(response.data))
+			dispatch(alertErrorOrMessageCreator(response.data))
 			dispatch(projectsEndCreator())
 
 		} catch (error) {

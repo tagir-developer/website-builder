@@ -1,0 +1,97 @@
+import React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
+import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
+import { useCheck } from '../../../hooks/useCheck.hook'
+import { useInput } from '../../../hooks/useInput.hook'
+import Button from '../Button/Button'
+import Checkbox from '../Checkbox/Checkbox'
+import Input from '../Input/Input'
+import './ChangePage.scss'
+
+interface IRouteProps {
+	name: string
+}
+
+interface IChangePage extends RouteComponentProps<IRouteProps> {
+	parentClass?: string
+	handler?: Function
+	closePopup: Function
+	pageId: string
+}
+
+const ChangePage: React.FC<IChangePage> = ({ parentClass, handler, history, match, closePopup, pageId }) => {
+
+	const changePageClasses = useCreateClassName('change-page', parentClass)
+
+	const { errors } = useTypedSelector(state => state.alert)
+	const { activeProject } = useTypedSelector(state => state.projects)
+	const { changePage, alertRemoveError, getProjectPages } = useActions()
+
+	const name = useInput('', alertRemoveError, 'name', errors)
+	const link = useInput('', alertRemoveError, 'link', errors)
+	const isHomePage = useCheck(false)
+	const openInNewWindow = useCheck(false)
+
+	const сhangePageHandler = () => {
+		closePopup()
+		changePage(pageId, name.value, link.value, openInNewWindow.value)
+		getProjectPages(activeProject.id) // ? Раньше была реализована, как функция при успехе алерта
+	}
+
+
+	return (
+		<div className={changePageClasses}>
+			<div className="change-page__container">
+				<div className="change-page__row">
+					<div className="change-page__form-container">
+						<div className="change-page__form">
+							<Input
+								parentClass="change-page"
+								type="email"
+								{...name.bind}
+							>
+								Название страницы
+							</Input>
+							<Input
+								parentClass="change-page"
+								type="email"
+								{...link.bind}
+							>
+								Адрес страницы
+							</Input>
+
+							<div className="change-page__checkbox-container">
+								<Checkbox
+									parentClass="change-page"
+									{...openInNewWindow.bind}
+								>
+									Открывать в новом окне
+								</Checkbox>
+							</div>
+
+							<div className="change-page__annotation">
+								Адрес страницы будет использоваться в адресной строке браузера. В примере ниже подчеркнуто красным цветом. Если имя проекта не указано, то сервис сгенерирует его автоматически. В дальнейшем вы сможете изменить его в настройках или подключить свой домен. Например:
+								<br />
+								<span className="change-page__annotation-bold-text"> http://instasite.com/project-name/</span>
+								<span className="change-page__annotation-bold-red-text">page-name</span>
+							</div>
+
+							<Button
+								parentClass="change-page"
+								// handler={ChangePageHandler}
+								handler={сhangePageHandler}
+								modClass={['big']}
+							>
+								Изменить страницу
+							</Button>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+}
+
+export default withRouter(ChangePage)

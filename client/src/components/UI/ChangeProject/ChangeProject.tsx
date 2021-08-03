@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useInput } from '../../../hooks/useInput.hook'
@@ -18,14 +19,18 @@ const ChangeProject: React.FC<IChangeProject> = ({ parentClass, projectId, close
 
 	const { loading } = useTypedSelector(state => state.projects)
 	const { errors } = useTypedSelector(state => state.alert)
-	const { changeProject, alertRemoveError } = useActions()
+	const { changeProject, alertRemoveError, getAllProjects } = useActions()
+
+	const history = useHistory()
 
 	const name = useInput('', alertRemoveError, 'name', errors)
 	const link = useInput('', alertRemoveError, 'link', errors)
 
 	const changeProjectHandler = () => {
 		closePopup()
-		changeProject(projectId, name.value, link.value) 
+		changeProject(projectId, name.value, link.value)
+		history.push('/')
+		getAllProjects()
 	}
 
 	return (

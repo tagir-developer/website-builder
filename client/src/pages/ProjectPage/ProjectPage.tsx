@@ -22,6 +22,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import ChangeProject from '../../components/UI/ChangeProject/ChangeProject'
 import Confirm from '../../components/UI/Confirm/Confirm'
 import { useCallback } from 'react'
+import ChangePage from '../../components/UI/ChangePage/ChangePage'
 
 interface IRouteProps {
 	name: string
@@ -34,11 +35,15 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 	const { projectsNames, projectsList, activeProject, shouldCreatePageAfterOpenProject } = useTypedSelector(state => state.projects)
 	const { pages: projectPages, loading } = useTypedSelector(state => state.page)
-	const { getProjectPages, deleteProject, createPageAfterOpenProject } = useActions()
+	const { getProjectPages, deleteProject, createPageAfterOpenProject, deletePage, makePageHome, copyPage, changePage } = useActions()
 
 	const projectDeletion = () => {
 		deleteProject(activeProject.id)
 		history.push('/')
+	}
+
+	const pageDeletion = (pageId: string) => {
+		deletePage(pageId) // ! Наверно нужно создать в redux активную страницу, так как id страницы нужен много где
 	}
 
 	const mainConfigPopup = usePopup(false, 'solid')
@@ -46,8 +51,10 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	const fontConfigPopup = usePopup(false, 'solid')
 	const createPagePopup = usePopup(shouldCreatePageAfterOpenProject, 'solid')
 	const changeProjectPopup = usePopup(false, 'solid')
+	const changePagePopup = usePopup(false, 'solid')
 	// const deleteConfirmationPopup = usePopup(false, 'blur', () => deleteProject(activeProject.id))
 	const deleteConfirmationPopup = usePopup(false, 'blur', projectDeletion)
+	const deletePageConfirmationPopup = usePopup(false, 'blur', pageDeletion)
 	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup, changeProjectPopup, deleteConfirmationPopup)
 
 	const history = useHistory()
@@ -71,12 +78,19 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	}, [createPagePopup.isOpen])
 
 
-	const handlers = {
+	const projectHeaderHandlers = {
 		mainConfigPopup: mainConfigPopup.handler,
 		formProcessingPopup: formProcessingPopup.handler,
 		fontConfigPopup: fontConfigPopup.handler,
 		changeProjectPopup: changeProjectPopup.handler,
 		deleteConfirmationPopup: deleteConfirmationPopup.handler
+	}
+
+	const pageHandlers = {
+		changePage: changePagePopup.openPopup,
+		copyPage,
+		makePageHome,
+		deletePage: deletePageConfirmationPopup.openPopup,
 	}
 
 	// let successFunction = () => {}
@@ -122,13 +136,20 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 		<>
 			{/* <AlertMessage successFunc={successfulPageCreation}> */}
 			{/* <AlertMessage successFunc={successFunction}> */}
-			<AlertMessage>
+			{/* <AlertMessage> */}
 
 				<PopUp {...createPagePopup.popupProps} withTitle="Создание страницы" >
 					<CreatePage
 						// handler={() => { }} 
 						projectId={activeProject.id}
 						closePopup={createPagePopup.closePopup}
+					/>
+				</PopUp>
+
+				<PopUp {...changePagePopup.popupProps} withTitle="Изменить страницу" >
+					<ChangePage
+						pageId={activeProject.id} // ! Не знаю как передать сюда id страницы, для которой открыт попап
+						closePopup={changePagePopup.closePopup}
 					/>
 				</PopUp>
 
@@ -141,6 +162,10 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 				<PopUp {...deleteConfirmationPopup.popupProps} transparent={true}>
 					<Confirm handler={deleteConfirmationPopup.confirm}>Вы действительно хотите удалить сайт?</Confirm>
+				</PopUp>
+
+				<PopUp {...deletePageConfirmationPopup.popupProps} transparent={true}>
+					<Confirm handler={deletePageConfirmationPopup.confirm}>Вы действительно хотите удалить страницу?</Confirm>
 				</PopUp>
 
 				<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
@@ -168,7 +193,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 							<ProjectHeader
 								parentClass="project-page"
 								name={activeProject.name}
-								handlers={handlers}
+								handlers={projectHeaderHandlers}
 								published={activeProject.isPublished}
 								hasPages={activeProject.hasPages}
 								updated={activeProject.updated}
@@ -191,6 +216,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 													published={i.published}
 													link={'/projects/' + projectUrl + '/' + i.link}
 													isMainPage={i.isHomePage}
+													handlers={pageHandlers}
 												/>
 											)
 										})
@@ -209,7 +235,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 					</div>
 					<Footer />
 				</Backdrop>
-			</AlertMessage>
+			{/* </AlertMessage> */}
 		</>
 	)
 }

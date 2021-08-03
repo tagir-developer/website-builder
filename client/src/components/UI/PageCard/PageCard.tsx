@@ -13,13 +13,20 @@ interface IPageCard extends RouteComponentProps<any> {
 	published: boolean
 	link: string
 	isMainPage: boolean
+	handlers: {
+		// [key: string]: (param?: any) => any
+		changePage: Function
+		copyPage: Function
+		makePageHome: Function
+		deletePage: Function
+	}
 }
 
-const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published, history, link, isMainPage }) => {
+const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published, history, link, isMainPage, handlers }) => {
 
 	const pageCardClasses = useCreateClassName('page-card', parentClass, modClass)
 
-	const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать'
+	const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать' //! Пока функцию опубликовать и снять с публикации отложим
 
 	const menuItems = [
 		{
@@ -28,19 +35,19 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 		},
 		{
 			title: 'Изменить страницу',
-			handler: () => { }
+			handler: () => handlers.changePage()
 		},
 		{
 			title: 'Создать дубликат',
-			handler: () => { }
+			handler: () => handlers.copyPage()
 		},
 		{
 			title: 'Удалить страницу',
-			handler: () => { }
+			handler: () => handlers.deletePage()
 		},
 		{
 			title: 'Сделать главной',
-			handler: () => { }
+			handler: () => handlers.makePageHome()
 		},
 	]
 

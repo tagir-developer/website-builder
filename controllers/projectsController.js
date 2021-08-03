@@ -50,10 +50,6 @@ class projectsController {
 
 	async deleteProject(req, res, next) {
 		try {
-
-			console.log('ПОЛУЧАЕМЫЙ АЙ ДИ ПРОЕКТА КОНТРОЛЛЕР)', req.params.projectId)
-
-
 			await projectService.deleteProject(req.params.projectId)
 
 			return res.json({
@@ -61,7 +57,6 @@ class projectsController {
 				message: "Проект успешно удален",
 				errors: []
 			})
-
 		} catch (e) {
 			next(e)
 		}

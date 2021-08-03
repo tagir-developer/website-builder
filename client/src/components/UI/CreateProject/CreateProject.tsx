@@ -8,20 +8,26 @@ import './CreateProject.scss'
 
 interface ICreateProject {
 	parentClass?: string
+	// closePopup: (param?: any) => any
+	closePopup: Function
 }
 
-const CreateProject: React.FC<ICreateProject> = ({ parentClass }) => {
+const CreateProject: React.FC<ICreateProject> = ({ parentClass, closePopup }) => {
 
 	const CreateProjectClasses = useCreateClassName('create-project', parentClass)
 
 	const { loading } = useTypedSelector(state => state.projects)
 	const { errors } = useTypedSelector(state => state.alert)
-	const { createNewProject, alertRemoveError } = useActions()
+	const { createNewProject, alertRemoveError, getAllProjects } = useActions()
 
 	const name = useInput('', alertRemoveError, 'name', errors)
 	const link = useInput('', alertRemoveError, 'link', errors)
 
-	const createProjectHandler = () => { createNewProject(name.value, link.value) }
+	const createProjectHandler = () => { 
+		createNewProject(name.value, link.value)
+		closePopup()
+		getAllProjects()
+	}
 
 	return (
 		<div className={CreateProjectClasses}>

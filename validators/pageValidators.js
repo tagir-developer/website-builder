@@ -30,3 +30,20 @@ exports.createPageValidators = [
 			.isBoolean().withMessage('Поле должно иметь значение true или false')
 ]
 
+exports.updatePageValidators = [
+	check('pageId')
+		.trim()
+		.isString().withMessage('pageId должен быть строкой')
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем'),
+	check('name')
+		.trim()
+		.isLength({min: 3}).withMessage('Название страницы должно содержать не менее трех букв')
+		.isLength({max: 60}).withMessage('Название страницы должно содержать не более 60 букв'), // ! Нужно еще добавить отсутствие посторонних символов в кастомном валидаторе
+	check('link')
+		.not().isEmpty().withMessage('Поле с адресом страницы не должно быть пустым')
+		.trim().escape()
+		.matches(/^[a-z0-9][a-z0-9\\-]+[a-z0-9]$/).withMessage('Имя проекта должно содержать только прописные английские буквы, цифры и тире'),
+	check('openInNewWindow')
+		.isBoolean().withMessage('Поле должно иметь значение true или false')
+]
+

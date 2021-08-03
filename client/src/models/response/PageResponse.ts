@@ -15,3 +15,19 @@ export interface IPageResponse {
 export interface ICreatePageResponse extends IAlertMessage {
 
 }
+
+export interface IChangePageResponse extends IAlertMessage {
+
+}
+
+export interface IDeletePageResponse extends IAlertMessage {
+
+}
+
+export interface ICopyPageResponse extends IAlertMessage {
+
+}
+
+export interface IMakePageHomeResponse extends IAlertMessage {
+
+}

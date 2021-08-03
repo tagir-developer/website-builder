@@ -21,21 +21,23 @@ const ProjectsListPage: React.FC = () => {
 	const { getAllProjects } = useActions()
 
 	useEffect(() => {
+		console.log('Получаем проекты')
 		getAllProjects()
 		// eslint-disable-next-line
 	}, [])
 
-	const successfulProjectCreation = () => {
-		popup.closePopup()
-		getAllProjects()
-	}
+	// const successfulProjectCreation = () => {
+	// 	popup.closePopup()
+	// 	getAllProjects()
+	// }
 
 	return (
 		<>
-			<AlertMessage successFunc={successfulProjectCreation}>
+			{/* <AlertMessage successFunc={successfulProjectCreation}> */}
+			<AlertMessage>
 
 				<PopUp {...popup.popupProps} withTitle="Cоздание сайта">
-					<CreateProject />
+					<CreateProject closePopup={popup.closePopup} />
 				</PopUp>
 
 				<Backdrop {...popup.backdropProps}>
