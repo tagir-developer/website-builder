@@ -16,12 +16,10 @@ import FontConfig from '../../components/UI/FontConfig/FontConfig'
 import FormProcessing from '../../components/UI/FormProcessing/FormProcessing'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { IUrlParams } from '../../models/IUrlParams'
-import { IProjectsResponse } from '../../models/response/ProjectsResponse'
 import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
 import Loader from '../../components/UI/Loader/Loader'
 import ChangeProject from '../../components/UI/ChangeProject/ChangeProject'
 import Confirm from '../../components/UI/Confirm/Confirm'
-import { useCallback } from 'react'
 import ChangePage from '../../components/UI/ChangePage/ChangePage'
 
 interface IRouteProps {
@@ -33,32 +31,31 @@ interface IProjectPage extends RouteComponentProps<IRouteProps> {
 
 const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
-	const { projectsNames, projectsList, activeProject, shouldCreatePageAfterOpenProject } = useTypedSelector(state => state.projects)
-	const { pages: projectPages, loading } = useTypedSelector(state => state.page)
-	const { getProjectPages, deleteProject, createPageAfterOpenProject, deletePage, makePageHome, copyPage, changePage } = useActions()
-
-	const projectDeletion = () => {
-		deleteProject(activeProject.id)
-		history.push('/')
-	}
-
-	const pageDeletion = (pageId: string) => {
-		deletePage(pageId) // ! Наверно нужно создать в redux активную страницу, так как id страницы нужен много где
-	}
+	const { projectsNames, activeProject, shouldCreatePageAfterOpenProject } = useTypedSelector(state => state.projects)
+	const { pages: projectPages, loading, activePage } = useTypedSelector(state => state.page)
+	const { getProjectPages, deleteProject, createPageAfterOpenProject, deletePage, makePageHome, copyPage } = useActions()
 
 	const mainConfigPopup = usePopup(false, 'solid')
 	const formProcessingPopup = usePopup(false, 'solid')
 	const fontConfigPopup = usePopup(false, 'solid')
 	const createPagePopup = usePopup(shouldCreatePageAfterOpenProject, 'solid')
 	const changeProjectPopup = usePopup(false, 'solid')
-	const changePagePopup = usePopup(false, 'solid')
-	// const deleteConfirmationPopup = usePopup(false, 'blur', () => deleteProject(activeProject.id))
-	const deleteConfirmationPopup = usePopup(false, 'blur', projectDeletion)
-	const deletePageConfirmationPopup = usePopup(false, 'blur', pageDeletion)
-	const backdropProps = useChooseBackdropProps(mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup, changeProjectPopup, deleteConfirmationPopup)
+	const changePagePopup = usePopup(false, 'blur')
+	const deleteConfirmationPopup = usePopup(false, 'blur')
+	const deletePageConfirmationPopup = usePopup(false, 'blur')
+	const backdropProps = useChooseBackdropProps(changePagePopup, mainConfigPopup, formProcessingPopup, fontConfigPopup, createPagePopup, changeProjectPopup, deleteConfirmationPopup, deletePageConfirmationPopup)
 
 	const history = useHistory()
 	const { name: projectUrl } = useParams<IUrlParams>()
+
+	const projectDeletion = () => {
+		deleteProject(activeProject.id)
+		history.push('/')
+	}
+
+	const pageDeletion = () => {
+		deletePage(activePage?.id, activeProject.id)
+	}
 
 	useEffect(() => {
 		if (!projectsNames.includes('/' + projectUrl)) history.push('/')
@@ -66,9 +63,11 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	}, [])
 
 	useEffect(() => {
+		console.log('1111', activeProject.id)
 		getProjectPages(activeProject.id)
 		// eslint-disable-next-line
 	}, [])
+
 
 	useEffect(() => {
 		if (!createPagePopup.isOpen) {
@@ -87,60 +86,18 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	}
 
 	const pageHandlers = {
-		changePage: changePagePopup.openPopup,
+		changePageOpenPopup: changePagePopup.openPopup,
 		copyPage,
 		makePageHome,
-		deletePage: deletePageConfirmationPopup.openPopup,
+		deletePageOpenPopup: deletePageConfirmationPopup.openPopup,
 	}
-
-	// let successFunction = () => {}
-
-	// const successFunction = useCallback(() => {
-
-	// 	console.log('Стартовало переопределение функции')
-
-	// 	const successfulPageCreation = () => {
-	// 		console.log('1 - функция создания страницы')
-	// 		createPagePopup.closePopup()
-	// 		getProjectPages(activeProject.id)
-	// 	}
-
-	// 	const succesfulProjectDeletion = () => {
-	// 		console.log('2 - функция удаления страницы')
-	// 		deleteProject(activeProject.id)
-	// 		history.push('/')
-	// 	}
-
-	// 	if (createPagePopup.isOpen) {
-	// 		console.log('Назначена функция создания страницы')
-	// 		return successfulPageCreation()
-	// 	}
-
-	// 	if (deleteConfirmationPopup.confirm.isConfirm) {
-	// 		// succesfulProjectDeletion()
-	// 		console.log('Назначена функция удаления страницы')
-	// 		return () => succesfulProjectDeletion()
-	// 	}
-
-	// 	console.log('Ни одно условие не сработало и функция пустая')
-	// 	// successFunction =  () => {}
-
-	// }, [createPagePopup.isOpen, deleteConfirmationPopup.confirm.isConfirm])
-
-	// const successfulPageCreation = () => {
-	// 	createPagePopup.closePopup()
-	// 	getProjectPages(activeProject.id)
-	// }
 
 	return (
 		<>
-			{/* <AlertMessage successFunc={successfulPageCreation}> */}
-			{/* <AlertMessage successFunc={successFunction}> */}
-			{/* <AlertMessage> */}
+			<AlertMessage>
 
 				<PopUp {...createPagePopup.popupProps} withTitle="Создание страницы" >
 					<CreatePage
-						// handler={() => { }} 
 						projectId={activeProject.id}
 						closePopup={createPagePopup.closePopup}
 					/>
@@ -148,7 +105,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 				<PopUp {...changePagePopup.popupProps} withTitle="Изменить страницу" >
 					<ChangePage
-						pageId={activeProject.id} // ! Не знаю как передать сюда id страницы, для которой открыт попап
+						pageId={activePage?.id}
 						closePopup={changePagePopup.closePopup}
 					/>
 				</PopUp>
@@ -161,11 +118,21 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 				</PopUp>
 
 				<PopUp {...deleteConfirmationPopup.popupProps} transparent={true}>
-					<Confirm handler={deleteConfirmationPopup.confirm}>Вы действительно хотите удалить сайт?</Confirm>
+					<Confirm 
+						handler={deleteConfirmationPopup.confirm}
+						successFunc={projectDeletion}
+					>
+						Вы действительно хотите удалить сайт?
+					</Confirm>
 				</PopUp>
 
 				<PopUp {...deletePageConfirmationPopup.popupProps} transparent={true}>
-					<Confirm handler={deletePageConfirmationPopup.confirm}>Вы действительно хотите удалить страницу?</Confirm>
+					<Confirm 
+						handler={deletePageConfirmationPopup.confirm}
+						successFunc={pageDeletion}
+					>
+						Вы действительно хотите удалить страницу?
+					</Confirm>
 				</PopUp>
 
 				<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
@@ -182,10 +149,8 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 
 				<Backdrop {...backdropProps} >
-					{/* <Backdrop {...createPagePopup.backdropProps} > */}
 
 					<TopMenu menuType="auth-project" />
-
 
 					<div className="content-area">
 
@@ -205,12 +170,13 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 								{loading
 									? <Loader parentClass="project-page" />
-									: !!projectsList.length
+									: !!projectPages.length
 										?
 										projectPages.map((i, index) => {
 											return (
 												<PageCard
 													key={i.id}
+													pageId={i.id}
 													parentClass="project-page"
 													title={i.name}
 													published={i.published}
@@ -235,7 +201,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 					</div>
 					<Footer />
 				</Backdrop>
-			{/* </AlertMessage> */}
+			</AlertMessage>
 		</>
 	)
 }

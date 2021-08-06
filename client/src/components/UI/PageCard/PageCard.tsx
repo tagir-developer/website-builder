@@ -5,6 +5,7 @@ import Button from '../Button/Button'
 import StatusLabel from '../StatusLabel/StatusLabel'
 import { RouteComponentProps, withRouter } from 'react-router'
 import ShowMenuBtn from '../ShowMenuBtn/ShowMenuBtn'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 
 interface IPageCard extends RouteComponentProps<any> {
 	parentClass?: string
@@ -13,18 +14,22 @@ interface IPageCard extends RouteComponentProps<any> {
 	published: boolean
 	link: string
 	isMainPage: boolean
+	pageId: string
 	handlers: {
 		// [key: string]: (param?: any) => any
-		changePage: Function
+		changePageOpenPopup: Function
 		copyPage: Function
 		makePageHome: Function
-		deletePage: Function
+		deletePageOpenPopup: Function
 	}
 }
 
-const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published, history, link, isMainPage, handlers }) => {
+const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published, history, link, isMainPage, handlers, pageId }) => {
 
 	const pageCardClasses = useCreateClassName('page-card', parentClass, modClass)
+	const {activeProject} = useTypedSelector(state => state.projects)
+	const {pages} = useTypedSelector(state => state.page)
+	const {setActivePage} = useActions()
 
 	const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать' //! Пока функцию опубликовать и снять с публикации отложим
 
@@ -35,19 +40,25 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 		},
 		{
 			title: 'Изменить страницу',
-			handler: () => handlers.changePage()
+			handler: () => {
+				setActivePage(pages, pageId)
+				handlers.changePageOpenPopup()
+			}
 		},
 		{
 			title: 'Создать дубликат',
-			handler: () => handlers.copyPage()
+			handler: () => handlers.copyPage(pageId)
 		},
 		{
 			title: 'Удалить страницу',
-			handler: () => handlers.deletePage()
+			handler: () => {
+				setActivePage(pages, pageId)
+				handlers.deletePageOpenPopup()
+			}
 		},
 		{
 			title: 'Сделать главной',
-			handler: () => handlers.makePageHome()
+			handler: () => handlers.makePageHome(pageId, activeProject.id)
 		},
 	]
 

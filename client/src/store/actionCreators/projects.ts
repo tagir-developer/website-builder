@@ -36,6 +36,8 @@ export const createNewProject = (name: string, link: string) => {
 		try {
 			const response = await ProjectsService.createProject(name, link)
 
+			dispatch(projectsGetAll(response.data.projects))
+			dispatch(saveProjectsNames(response.data.projects))
 			dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {
@@ -57,7 +59,8 @@ export const changeProject = (projectId: string, name: string, link: string) => 
 		try {
 			const response = await ProjectsService.changeProject(projectId, name, link)
 
-			dispatch(updateActiveProject(response.data.project))
+			dispatch(projectsGetAll(response.data.projects))
+			dispatch(saveProjectsNames(response.data.projects))
 			dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {
@@ -79,8 +82,10 @@ export const deleteProject = (projectId: string) => {
 		try {
 			const response = await ProjectsService.deleteProject(projectId)
 
+			dispatch(projectsGetAll(response.data.projects))
+			dispatch(saveProjectsNames(response.data.projects))
 			dispatch(alertErrorOrMessageCreator(response.data))
-			dispatch(projectsEndCreator())
+			// dispatch(projectsEndCreator())
 
 		} catch (error) {
 			const e = error as AxiosError

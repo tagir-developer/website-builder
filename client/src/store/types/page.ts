@@ -6,6 +6,7 @@ export interface IPageState {
 	pages: IPageResponse[]
 	pagesNames: string[]
 	homePageId: string
+	activePage: IPageResponse
 }
 
 export enum pageActionTypes {
@@ -13,7 +14,8 @@ export enum pageActionTypes {
 	PAGE_END = 'PAGE_END',
 	PAGE_GET_PAGES = 'PAGE_GET_PAGES',
 	PAGE_SAVE_NAMES = 'PAGE_SAVE_NAMES',
-	PAGE_SET_HOME_PAGE = 'PAGE_SET_HOME_PAGE'
+	PAGE_SET_HOME_PAGE = 'PAGE_SET_HOME_PAGE',
+	PAGE_SET_ACTIVE_PAGE = 'PAGE_SET_ACTIVE_PAGE'
 }
 
 interface pageStartAction {
@@ -38,5 +40,9 @@ interface pageSetHomePage {
 	type: pageActionTypes.PAGE_SET_HOME_PAGE
 	payload: string
 }
+interface pageSetActivePage {
+	type: pageActionTypes.PAGE_SET_ACTIVE_PAGE
+	payload: IPageResponse
+}
 
-export type IPageAction = IAlertAction | pageStartAction | pageEndAction | pageGetPages | pageSaveNames | pageSetHomePage
+export type IPageAction = IAlertAction | pageStartAction | pageEndAction | pageGetPages | pageSaveNames | pageSetHomePage | pageSetActivePage

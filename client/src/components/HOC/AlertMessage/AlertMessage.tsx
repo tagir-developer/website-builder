@@ -8,9 +8,10 @@ import PopUp from '../PopUp/PopUp'
 interface IAlertMessage {
 	successFunc?: Function
 	alertDelay?: number
+	runWithoutDelay?: boolean
 }
 
-const AlertMessage: React.FC<IAlertMessage> = ({ children, alertDelay = 2000, successFunc = () => {} }) => {
+const AlertMessage: React.FC<IAlertMessage> = ({ children, alertDelay = 2000, successFunc = () => {}, runWithoutDelay }) => {
 
 	const messagePopup = usePopup(false, 'blur')
 
@@ -18,15 +19,24 @@ const AlertMessage: React.FC<IAlertMessage> = ({ children, alertDelay = 2000, su
 	const { alertClearMessage, alertClearErrors } = useActions()
 
 	useEffect(() => {
-
-		if (message) {
-			messagePopup.showHide(alertDelay)	 
-				setTimeout(() => {
-					alertClearMessage()
+			if (message) {
+				messagePopup.showHide(alertDelay)
+				if (runWithoutDelay) {
+	
 					if (messageType === 'success') successFunc()
-				}, alertDelay)
-			
-		}
+					setTimeout(() => {
+						alertClearMessage()
+					}, alertDelay)
+	
+				} else {
+	
+					setTimeout(() => {
+						alertClearMessage()
+						if (messageType === 'success') successFunc()
+					}, alertDelay)
+	
+				}	
+			}
 		// eslint-disable-next-line
 	}, [message])
 

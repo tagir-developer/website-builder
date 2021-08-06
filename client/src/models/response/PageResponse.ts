@@ -13,21 +13,21 @@ export interface IPageResponse {
 }
 
 export interface ICreatePageResponse extends IAlertMessage {
-
+	pages: IPageResponse[]
 }
 
 export interface IChangePageResponse extends IAlertMessage {
-
+	pages: IPageResponse[]
 }
 
 export interface IDeletePageResponse extends IAlertMessage {
-
+	pages: IPageResponse[]
 }
 
 export interface ICopyPageResponse extends IAlertMessage {
-
+	pages: IPageResponse[]
 }
 
 export interface IMakePageHomeResponse extends IAlertMessage {
-
+	pages: IPageResponse[]
 }

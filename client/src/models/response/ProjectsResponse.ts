@@ -10,9 +10,13 @@ export interface IProjectsResponse {
 }
 
 export interface ICreateProjectsResponse extends IAlertMessage {
+	projects: IProjectsResponse[]
+}
 
+export interface IDeleteProjectResponse extends IAlertMessage {
+	projects: IProjectsResponse[]
 }
 
 export interface IUpdateProjectsResponse extends IAlertMessage {
-	project: IProjectsResponse
+	projects: IProjectsResponse[]
 }

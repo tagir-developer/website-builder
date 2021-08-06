@@ -11,11 +11,10 @@ class projectsController {
 				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
 			}
 
-			const newProject = await projectService.createNewProject(req.user.id, req.body.name, req.body.link)
-
-			if (!newProject) return next(ApiError.BadRequest('Не удалось создать проект, повторите попытку позже', 'danger'))
+			const updatedProjects = await projectService.createNewProject(req.user.id, req.body.name, req.body.link)
 
 			return res.json({
+				projects: updatedProjects,
 				messageType: 'success',
 				message: "Проект успешно создан",
 				errors: []
@@ -34,10 +33,11 @@ class projectsController {
 			}
 
 			const {projectId, name, link} = req.body
-			const updatedProject = await projectService.changeProject(projectId, name, link)
+			
+			const updatedProjects = await projectService.changeProject(req.user.id, projectId, name, link)
 
 			return res.json({
-				project: updatedProject,
+				projects: updatedProjects,
 				messageType: 'success',
 				message: "Проект успешно изменен",
 				errors: []
@@ -50,9 +50,10 @@ class projectsController {
 
 	async deleteProject(req, res, next) {
 		try {
-			await projectService.deleteProject(req.params.projectId)
+			const updatedProjects = await projectService.deleteProject(req.user.id, req.params.projectId)
 
 			return res.json({
+				projects: updatedProjects,
 				messageType: 'success',
 				message: "Проект успешно удален",
 				errors: []

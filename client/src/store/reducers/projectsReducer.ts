@@ -1,7 +1,7 @@
 import { IProjectsResponse } from "../../models/response/ProjectsResponse"
 import { IProjectsAction, IProjectsState, projectsActionTypes } from "../types/projects"
 
-const initialState: IProjectsState = {
+export const initialState: IProjectsState = {
 	loading: false,
 	projectsList: [] as IProjectsResponse[],
 	projectsNames: [],

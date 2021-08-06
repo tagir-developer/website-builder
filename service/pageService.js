@@ -18,14 +18,6 @@ class PageService {
 			await oldHomePage.save()
 		}
 
-		// if (isHomePage) {
-		// 	const oldHomePage = await Page.findOne({ isHomePage: true, project: projectId })
-		// 	if (oldHomePage) {
-		// 		oldHomePage.isHomePage = false
-		// 		await oldHomePage.save()
-		// 	}
-		// }
-
 		const newPage = await Page.create({
 			isHomePage: newPageMustBeHome,
 			name,
@@ -33,16 +25,29 @@ class PageService {
 			openInNewWindow,
 			project: projectId
 		})
-		return newPage
+		if (!newPage) throw ApiError.BadRequest('Не удалось создать страницу, повторите попытку позже', 'danger')
+		
+		const pagesDto = this.getAllPages(projectId)
+		return pagesDto
 	}
 
-	async deletePage(pageId) {
+	async deletePage(pageId, projectId) {
 		const deletedPage = await Page.findByIdAndDelete(pageId)
 		// ! Если к странице будут привязаны еще какие-то коллекции, то не забываем удалять их тоже
 		if (!deletedPage) throw ApiError.BadRequest('Не удалось удалить страницу, попробуйте позже', 'danger')
+
+		const candidateHomePage = await Page.findOne({project: projectId, isHomePage: false})
+
+		if (deletedPage.isHomePage && candidateHomePage) {
+			candidateHomePage.isHomePage = true
+			await candidateHomePage.save()
+		}
+
+		const pagesDto = this.getAllPages(projectId)
+		return pagesDto
 	}
 
-	async copyPage(pageId) {
+	async copyPage(projectId, pageId) {
 		const page = await Page.findById(pageId)
 		if (!page) throw ApiError.BadRequest('Страница не найдена, повторите попытку позже', 'danger')
 
@@ -58,10 +63,11 @@ class PageService {
 
 		if (!pageDuplicate) throw ApiError.BadRequest('Не удалось создать копию, повторите попытку позже', 'danger')
 
-		console.log('Дупликат страницы ', pageDuplicate)
+		const pagesDto = this.getAllPages(projectId)
+		return pagesDto
 	}
 
-	async changePage(pageId, name, link, openInNewWindow) {
+	async changePage(projectId, pageId, name, link, openInNewWindow) {
 		const page = await Page.findById(pageId)
 		if (!page) throw ApiError.BadRequest('Произошла ошибка, страница с таким id не найдена', 'danger')
 
@@ -70,14 +76,16 @@ class PageService {
 		page.openInNewWindow = openInNewWindow
 		await page.save()
 
-		const pageDto = new PageListDto(page)
+		// const pageDto = new PageListDto(page)
 
-		return { ...pageDto }
+		// return { ...pageDto }
+		const pagesDto = this.getAllPages(projectId)
+		return pagesDto
 	}
 
 	async makePageHome(pageId, projectId) {
 
-		const oldHomePage = await Page.findOne({ isHomePage: true, project: projectId })
+		const oldHomePage = await Page.findOne({isHomePage: true, project: projectId})
 		const newHomePage = await Page.findById(pageId)
 
 		if (!oldHomePage || !newHomePage) throw ApiError.BadRequest('Произошла ошибка, попробуйте выполнить операцию позже', 'danger')
@@ -87,6 +95,9 @@ class PageService {
 
 		newHomePage.isHomePage = true
 		await newHomePage.save()
+
+		const pagesDto = this.getAllPages(projectId)
+		return pagesDto
 
 	}
 

@@ -9,7 +9,7 @@ router.post('/create-new-page', authMiddleware, createPageValidators, pageContro
 router.put('/change-page', authMiddleware, updatePageValidators, pageController.changePage)
 router.put('/make-page-home', authMiddleware, pageController.makePageHome)
 router.get('/get-pages/:projectId', authMiddleware, pageController.getAllPages)
-router.delete('/delete-page/:pageId', authMiddleware, pageController.deletePage)
-router.post('/create-copy/:pageId', authMiddleware, pageController.copyPage)
+router.delete('/delete-page/:projectId/:pageId', authMiddleware, pageController.deletePage)
+router.post('/create-copy', authMiddleware, pageController.copyPage)
 
 module.exports = router

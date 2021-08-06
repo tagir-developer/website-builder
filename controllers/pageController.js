@@ -13,11 +13,10 @@ class pageController {
 
 			const { projectId, name, link, isHomePage, openInNewWindow } = req.body
 
-			const newPage = await pageService.createNewPage(projectId, name, link, isHomePage, openInNewWindow)
-
-			if (!newPage) return next(ApiError.BadRequest('Не удалось создать страницу, повторите попытку позже', 'danger'))
+			const pagesDto = await pageService.createNewPage(projectId, name, link, isHomePage, openInNewWindow)
 
 			return res.json({
+				pages: pagesDto,
 				messageType: 'success',
 				message: "Страница успешно создана",
 				errors: []
@@ -31,9 +30,13 @@ class pageController {
 	async deletePage(req, res, next) {
 		try {
 
-			await pageService.deletePage(req.params.pageId)
+			const {pageId, projectId} = req.params
+
+			// const pagesDto = pageService.deletePage(req.params.pageId)
+			const pagesDto = await pageService.deletePage(pageId, projectId)
 
 			return res.json({
+				pages: pagesDto,
 				messageType: 'success',
 				message: "Страница успешно удалена",
 				errors: []
@@ -45,10 +48,12 @@ class pageController {
 
 	async copyPage(req, res, next) {
 		try {
+			const {projectId, pageId} = req.body
 			
-			await pageService.copyPage(req.params.pageId)
+			const updatedProjectPages = await pageService.copyPage(projectId, pageId)
 
 			return res.json({
+				pages: updatedProjectPages,
 				messageType: 'success',
 				message: "Создана копия страницы",
 				errors: []
@@ -65,11 +70,11 @@ class pageController {
 				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
 			}
 
-			const {pageId, name, link, openInNewWindow} = req.body
-			const updatedPage = await pageService.changePage(pageId, name, link, openInNewWindow)
+			const {projectId, pageId, name, link, openInNewWindow} = req.body
+			const updatedProjectPages = await pageService.changePage(projectId, pageId, name, link, openInNewWindow)
 
 			return res.json({
-				page: updatedPage,
+				pages: updatedProjectPages,
 				messageType: 'success',
 				message: "Страница успешно изменена",
 				errors: []
@@ -85,9 +90,10 @@ class pageController {
 
 			const {pageId, projectId} = req.body
 
-			await pageService.makePageHome(pageId, projectId)
+			const updatedProjectPages = await pageService.makePageHome(pageId, projectId)
 
 			return res.json({
+				pages: updatedProjectPages,
 				messageType: 'success',
 				message: "Главная страница изменена",
 				errors: []

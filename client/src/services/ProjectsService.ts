@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios"
 import $api from "../http"
-import { IAlertMessage } from "../models/IAlertMessage"
-import { ICreateProjectsResponse, IProjectsResponse, IUpdateProjectsResponse } from "../models/response/ProjectsResponse"
+import { ICreateProjectsResponse, IDeleteProjectResponse, IProjectsResponse, IUpdateProjectsResponse } from "../models/response/ProjectsResponse"
 
 
 export default class ProjectsService {
@@ -18,8 +17,8 @@ export default class ProjectsService {
 		return $api.put<IUpdateProjectsResponse>('projects/change-project', {projectId, name, link})
 	}
 
-	static async deleteProject(projectId: string): Promise<AxiosResponse<IAlertMessage>> {
-		return $api.delete<IAlertMessage>(`projects/delete-project/${projectId}`)
+	static async deleteProject(projectId: string): Promise<AxiosResponse<IDeleteProjectResponse>> {
+		return $api.delete<IDeleteProjectResponse>(`projects/delete-project/${projectId}`)
 	}
 
 

@@ -1,11 +1,12 @@
 import { IPageResponse } from "../../models/response/PageResponse"
 import { IPageAction, IPageState, pageActionTypes } from "../types/page"
 
-const initialState: IPageState = {
+export const initialState: IPageState = {
 	loading: false,
 	pages: [] as IPageResponse[],
 	pagesNames: [],
-	homePageId: ''
+	homePageId: '',
+	activePage: {} as IPageResponse
 }
 
 export default function pageReducer(state = initialState, action: IPageAction): IPageState {
@@ -30,6 +31,10 @@ export default function pageReducer(state = initialState, action: IPageAction): 
 		case pageActionTypes.PAGE_SET_HOME_PAGE: return {
 			...state,
 			homePageId: action.payload
+		}		
+		case pageActionTypes.PAGE_SET_ACTIVE_PAGE: return {
+			...state,
+			activePage: action.payload
 		}
 		default:
 			return state

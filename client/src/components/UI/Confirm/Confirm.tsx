@@ -12,9 +12,10 @@ interface IConfirm {
 		confirmFunc: (param: boolean) => void
 		isConfirm: boolean
 	}
+	successFunc?: Function
 }
 
-const Confirm: React.FC<IConfirm> = ({ parentClass, modClass, children, handler }) => {
+const Confirm: React.FC<IConfirm> = ({ parentClass, modClass, children, handler, successFunc }) => {
 
 	// const modClasses: string[] = modClass ? modClass.concat([type]) : [type]
 
@@ -23,6 +24,7 @@ const Confirm: React.FC<IConfirm> = ({ parentClass, modClass, children, handler 
 	const confirmHandler = (value: boolean): void => {
 		handler.confirmFunc(value)
 		handler.setPopup(false)
+		if (successFunc && value) successFunc()
 	}
 
 	return (
