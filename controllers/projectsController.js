@@ -63,6 +63,75 @@ class projectsController {
 		}
 	}
 
+	async addProjectScripts(req, res, next) {
+		try {
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) {
+				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
+			}
+
+			const {projectId, scripts} = req.body
+			
+			const updatedProject = await projectService.addScripts(projectId, scripts)
+
+			return res.json({
+				project: updatedProject,
+				messageType: 'success',
+				message: "Скрипты успешно добавлены на ваш сайт",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async setFontConfigs(req, res, next) {
+		try {
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) {
+				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
+			}
+
+			const {projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs} = req.body
+			
+			const updatedProject = await projectService.setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs)
+
+			return res.json({
+				project: updatedProject,
+				messageType: 'success',
+				message: "Настройки шрифта проекта изменены",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async formProcessing(req, res, next) {
+		try {
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) {
+				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
+			}
+
+			const {projectId, email, secondaryEmail, letterSubject, phoneNumber} = req.body
+			
+			const updatedProject = await projectService.formProcessing(projectId, email, secondaryEmail, letterSubject, phoneNumber)
+
+			return res.json({
+				project: updatedProject,
+				messageType: 'success',
+				message: "Настройки обработки форм проекта успешно изменены",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
 
 	async getAllProjects(req, res, next) {
 		try {

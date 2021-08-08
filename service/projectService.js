@@ -26,10 +26,6 @@ class ProjectService {
 		project.link = link
 		await project.save()
 
-		// const projectDto = new ProjectsListDto(project)
-
-		// return {...projectDto}
-
 		const projects = this.getAllProjects(userId)
 		return projects
 	}
@@ -42,6 +38,46 @@ class ProjectService {
 
 		const projects = this.getAllProjects(userId)
 		return projects
+	}
+
+	async addScripts(projectId, scripts) {
+		const project = await Project.findById(projectId)
+		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
+
+		project.additionalScripts = scripts
+		await project.save()
+
+		const updatedProject = new ProjectsListDto(project)
+		return updatedProject
+	}
+
+	async setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs) {
+		const project = await Project.findById(projectId)
+		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
+
+		project.projectFontConfigs.switchedOn = useDefaultConfigs
+		project.projectFontConfigs.fontFamily = fontFamily
+		project.projectFontConfigs.title.fontSize = titleSize
+		project.projectFontConfigs.title.fontWeight = titleWeight
+		project.projectFontConfigs.text.fontSize = textSize
+		await project.save()
+
+		const updatedProject = new ProjectsListDto(project)
+		return updatedProject
+	}
+
+	async formProcessing(projectId, email, secondaryEmail, letterSubject, phoneNumber) {
+		const project = await Project.findById(projectId)
+		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
+
+		project.formProcessing.email = email
+		project.formProcessing.secondaryEmail = secondaryEmail
+		project.formProcessing.letterSubject = letterSubject
+		project.formProcessing.phoneNumber = phoneNumber
+		await project.save()
+
+		const updatedProject = new ProjectsListDto(project)
+		return updatedProject
 	}
 
 	async getAllProjects(userId) {

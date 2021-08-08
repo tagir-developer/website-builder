@@ -34,7 +34,8 @@ const Page = new Schema({
 			type: Types.ObjectId,
 			ref: 'Project',
 			required: true
-		}
+	}
+
 })
 
 module.exports = model('Page', Page)

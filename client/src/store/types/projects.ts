@@ -1,4 +1,4 @@
-import { IProjectsResponse } from "../../models/response/ProjectsResponse";
+import { IProjectsResponse } from "../../models/response/ProjectsResponse"
 import { IAlertAction } from "./alert";
 
 export interface IProjectsState {

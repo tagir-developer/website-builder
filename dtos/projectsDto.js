@@ -5,6 +5,9 @@ module.exports = class ProjectsListDto {
 	isPublished
 	hasPages
 	updated
+	scripts
+	fontConfigs
+	formProcessing
 
 	constructor(model) {
 		this.id = model._id
@@ -13,5 +16,8 @@ module.exports = class ProjectsListDto {
 		this.isPublished = model.published
 		this.hasPages = !!model.pages.length
 		this.updated = model.updated
+		this.scripts = model.additionalScripts
+		this.fontConfigs = model.projectFontConfigs
+		this.formProcessing = model.formProcessing
 	}
 }

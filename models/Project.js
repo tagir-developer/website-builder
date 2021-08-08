@@ -27,7 +27,55 @@ const Project = new Schema({
 		ref: 'User',
 		required: true
 	},
-	pages: [
+	additionalScripts: {
+		type: String,
+		default: ''
+	},
+	projectFontConfigs: {
+		switchedOn: {
+			type: Boolean,
+			default: false
+		},
+		fontFamily: {
+			type: String,
+			default: ''
+		},
+		title: {
+			fontSize: {
+				type: String,
+				default: ''
+			},
+			fontWeight: {
+				type: String,
+				default: ''
+			}
+		},
+		text: {
+			fontSize: {
+				type: String,
+				default: ''
+			}
+		}
+	},
+	formProcessing: {
+		email: {
+			type: String,
+			default: ''
+		},
+		secondaryEmail: {
+			type: String,
+			default: ''
+		},
+		letterSubject: {
+			type: String,
+			default: 'Заполнена форма на сайте: ' + process.env.CLIENT_URL
+		},
+		phoneNumber: {
+			type: String,
+			default: ''
+		}
+	},
+	pages: [ // ? Возможно список страниц не нужен и его можно будет удалить
 		{
 			type: Types.ObjectId,
 			ref: 'Page'

@@ -26,3 +26,46 @@ exports.createProjectValidators = [
 			}).withMessage('Такое имя проекта уже занято')
 ]
 
+exports.addScriptsValidators = [
+	check('scripts')
+		.trim()
+		.isString().withMessage('Поле с подключаемыми скриптами должно быть строкой')
+		.matches(/(^<script(.*\n)*.+script>$)|(^\s*$)/gm).withMessage('Поле с подключаемыми скриптами должно содержать теги <script... и </script> или быть пустым')
+]
+
+exports.setFontConfigsValidators = [
+	check('projectId')
+		.isString().withMessage('Передаваемое значение projectId должно быть строкой'),
+	check('fontFamily')
+		.trim()
+		.isString().withMessage('Передаваемое значение fontFamily должно быть строкой'),
+				// ? Возможно, нужно проверять шрифт, есть ли такой в списке разрешенных
+	check('titleSize')
+		.trim()
+		.isString().withMessage('Передаваемое значение titleSize должно быть строкой'),
+	check('titleWeight')
+		.trim()
+		.isString().withMessage('Передаваемое значение titleWeight должно быть строкой'),
+	check('textSize')
+		.trim()
+		.isString().withMessage('Передаваемое значение textSize должно быть строкой'),
+	check('useDefaultConfigs')
+		.isBoolean().withMessage('Поле дефолтных настроек useDefaultConfigs должно быть иметь булев тип')
+]
+
+exports.formProcessingValidators = [
+	check('projectId')
+		.isString().withMessage('Передаваемое значение projectId должно быть строкой'),
+	check('email')
+		.trim()
+		.isEmail().normalizeEmail().withMessage('Введите корректный email'),
+	check('secondaryEmail')
+		.trim()
+		.isEmail().normalizeEmail().withMessage('Введите корректный email'),
+	check('letterSubject')
+		.trim()
+		.isString().withMessage('Передаваемое значение letterSubject должно быть строкой'),
+	check('phoneNumber')
+		.trim()
+		.isMobilePhone('ru-RU').withMessage('Передаваемое значение phoneNumber должно быть номером телефона')
+]

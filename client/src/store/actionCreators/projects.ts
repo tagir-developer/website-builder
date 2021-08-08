@@ -98,6 +98,67 @@ export const deleteProject = (projectId: string) => {
 	}
 }
 
+export const addProjectScripts = (projectId: string, scripts: string) => {
+	return async (dispatch: Dispatch<IProjectsAction>) => {
+
+		// dispatch(projectsStartCreator())
+
+		try {
+			const response = await ProjectsService.addScripts(projectId, scripts)
+
+			dispatch(updateActiveProject(response.data.project))
+			dispatch(alertErrorOrMessageCreator(response.data))
+			// dispatch(projectsEndCreator())
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				// dispatch(projectsEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
+export const setFontConfigs = (projectId: string, fontFamily: string, titleSize: string, titleWeight: string, textSize: string, useDefaultConfigs: boolean) => {
+	return async (dispatch: Dispatch<IProjectsAction>) => {
+
+		try {
+			const response = await ProjectsService.setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs)
+
+			dispatch(updateActiveProject(response.data.project))
+			dispatch(alertErrorOrMessageCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
+export const customizeFormProcessing = (projectId: string, email: string, letterSubject: string, phoneNumber: string = '', secondaryEmail: string = '') => {
+	return async (dispatch: Dispatch<IProjectsAction>) => {
+
+		try {
+			const response = await ProjectsService.formProcessing(projectId, email, letterSubject, phoneNumber, secondaryEmail)
+
+			dispatch(updateActiveProject(response.data.project))
+			dispatch(alertErrorOrMessageCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
 export const projectsGetAll = (payload: any): IProjectsAction => {
 	return { 
 		type: projectsActionTypes.PROJECTS_GET_ALL,
