@@ -18,7 +18,7 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 		{/* <ScrollTo value={testPopup.scroll} dep={testPopup.isOpen} /> */}
 
 			<PopUp {...testPopup.popupProps} withTitle="Основные настройки">
-				<BasicSettings handler={() => { }} />
+				{/* <BasicSettings handler={() => { }} /> */}
 			</PopUp>
 
 			<Backdrop {...testPopup.backdropProps} >

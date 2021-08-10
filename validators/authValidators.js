@@ -78,3 +78,16 @@ exports.resetValidators = [
 		return true
 		}).withMessage('Пароли должны совпадать')
 ]
+
+exports.testValidators = [
+	check('name')
+		.isString().withMessage('Поле name должно быть строкой'),
+	check('text')
+		// .isString().withMessage('Поле name должно быть строкой')
+		// .optional({checkFalsy: true})
+		.if(check('text').isString().withMessage('Поле name должно быть строкой'))
+		.optional({checkFalsy: true})
+		.isString().withMessage('Поле name должно быть строкой')
+		.isEmail().withMessage('Поле name должно быть email')
+]
+

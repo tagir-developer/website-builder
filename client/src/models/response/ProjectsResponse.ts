@@ -21,9 +21,9 @@ export interface IProjectsResponse {
 	}
 	formProcessing: {
 		email: string
-		secondaryEmail?: string
+		secondaryEmail: string
 		letterSubject: string
-		phoneNumber?: string
+		phoneNumber: string
 	}
 }
 

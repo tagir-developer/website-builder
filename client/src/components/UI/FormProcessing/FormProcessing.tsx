@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useCheck } from '../../../hooks/useCheck.hook'
 import { useInput } from '../../../hooks/useInput.hook'
+import AlertMessage from '../../HOC/AlertMessage/AlertMessage'
 import Button from '../Button/Button'
+import Input from '../Input/Input'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import ToggleWithText from '../ToggleWithText/ToggleWithText'
 import './FormProcessing.scss'
@@ -10,112 +13,105 @@ import './FormProcessing.scss'
 interface IFormProcessing {
 	parentClass?: string
 	handler: any
+	closePopup: Function
 }
 
-const FormProcessing: React.FC<IFormProcessing> = ({ parentClass, handler }) => {
+const FormProcessing: React.FC<IFormProcessing> = ({ parentClass, handler, closePopup }) => {
 
 	const formProcessingClasses = useCreateClassName('form-processing', parentClass)
 
-	const [showAdditionalEmail, setShowAdditionalEmail] = useState<boolean>(false)
+	const { errors } = useTypedSelector(state => state.alert)
+	const { activeProject } = useTypedSelector(state => state.projects)
+	const { customizeFormProcessing, alertRemoveError } = useActions()
 
-	const email = useInput('')
-	const additionalEmail = useInput('')
-	const emailTheme = useInput('')
-	const phone = useInput('')
+	const email = useInput(activeProject.formProcessing.email, alertRemoveError, 'email', errors)
+	const secondaryEmail = useInput(activeProject.formProcessing.secondaryEmail, alertRemoveError, 'secondaryEmail', errors)
+	const letterSubject = useInput(activeProject.formProcessing.letterSubject, alertRemoveError, 'letterSubject', errors)
+	const phoneNumber = useInput(activeProject.formProcessing.phoneNumber, alertRemoveError, 'phoneNumber', errors)
 
-	const phoneToggle = useCheck(false)
+	const [showsecondaryEmail, setShowsecondaryEmail] = useState<boolean>(false)
+	const phoneNumberToggle = useCheck(false)
+
+	const formHandler = () => {
+		customizeFormProcessing(activeProject.id, email.value, letterSubject.value, phoneNumber.value, secondaryEmail.value)
+	}
 
 	return (
-		<div className={formProcessingClasses}>
-			<div className="form-processing__container">
-				<div className="form-processing__row">
-					<div className="form-processing__form-container">
-						<div className="form-processing__form">
-							<label
-								htmlFor="form-processing-site-name"
-								className="form-processing__input-label input-label"
-							>Укажите email, на который нужно отправлять данные из форм
-							</label>
-							<input
-								id="form-processing-site-name"
-								type="email"
-								className="form-processing__input input"
-								{...email.bind}
-							/>
+		<AlertMessage successFunc={closePopup} runWithoutDelay>
+			<div className={formProcessingClasses}>
+				<div className="form-processing__container">
+					<div className="form-processing__row">
+						<div className="form-processing__form-container">
+							<div className="form-processing__form">
 
-							<div className="form-processing__add-btn-container">
-								<SmallIconButton
+								<Input
 									parentClass="form-processing"
-									modClass={["add-icon"]}
-									handler={() => setShowAdditionalEmail(prev => !prev)}
+									type="email"
+									{...email.bind}
 								>
-									{showAdditionalEmail ? 'Удалить email ' : 'Добавить email'}
-								</SmallIconButton>
-							</div>
+									Укажите email, на который нужно отправлять данные из форм
+								</Input>
 
-							{showAdditionalEmail
-								? <>
-									<label
-										htmlFor="form-processing-project-name"
-										className="form-processing__input-label input-label"
+								<div className="form-processing__add-btn-container">
+									<SmallIconButton
+										parentClass="form-processing"
+										modClass={["add-icon"]}
+										handler={() => setShowsecondaryEmail(prev => !prev)}
+									>
+										{showsecondaryEmail ? 'Удалить email ' : 'Добавить email'}
+									</SmallIconButton>
+								</div>
+
+								{showsecondaryEmail
+									? <Input
+										parentClass="form-processing"
+										type="email"
+										{...secondaryEmail.bind}
 									>
 										Дополнительный адрес (если адресов несколько, разделите их запятой)
-									</label>
-									<input
-										id="form-processing-project-name"
-										type="email"
-										className="form-processing__input input"
-										{...additionalEmail.bind}
-									/>
-								</>
-								: null}
+									</Input>
+									: null}
 
-							<label
-								htmlFor="form-processing-site-name"
-								className="form-processing__input-label input-label"
-							>
-								Напишите тему, которая будет указана в письме
-							</label>
-							<input
-								id="form-processing-site-name"
-								type="text"
-								className="form-processing__input input"
-								{...emailTheme.bind}
-							/>
-
-							<ToggleWithText
-								name="form-processing-text-toggle"
-								parentClass="form-processing"
-								{...phoneToggle.bind}
-							>
-								Включить СМС-уведомления
-							</ToggleWithText>
-
-							{ phoneToggle.value
-								? <input
+								<Input
+									parentClass="form-processing"
 									type="text"
-									className="form-processing__input input"
-									placeholder="Телефонный номер"
-									{...phone.bind}
-								  />
-								  : null
-						    }
+									{...letterSubject.bind}
+								>
+									Напишите тему, которая будет указана в письме
+								</Input>
 
+								<ToggleWithText
+									name="form-processing-text-toggle"
+									parentClass="form-processing"
+									{...phoneNumberToggle.bind}
+								>
+									Включить СМС-уведомления
+								</ToggleWithText>
 
+								{phoneNumberToggle.value
+									? <Input
+										parentClass="form-processing"
+										type="text"
+										placeholder="Телефонный номер"
+										{...phoneNumber.bind}
+									/>
+									: null
+								}
 
-							<Button
-								parentClass="form-processing"
-								handler={handler}
-								modClass={['big']}
-							>
-								Сохранить
-							</Button>
+								<Button
+									parentClass="form-processing"
+									handler={formHandler}
+									modClass={['big']}
+								>
+									Сохранить
+								</Button>
 
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</AlertMessage>
 	)
 }
 

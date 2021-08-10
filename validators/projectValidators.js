@@ -61,11 +61,18 @@ exports.formProcessingValidators = [
 		.isEmail().normalizeEmail().withMessage('Введите корректный email'),
 	check('secondaryEmail')
 		.trim()
-		.isEmail().normalizeEmail().withMessage('Введите корректный email'),
+		.optional({checkFalsy: true})
+		.isEmail().normalizeEmail().withMessage('Введите корректный дополнительный email, либо оставьте это поле пустым'),
 	check('letterSubject')
 		.trim()
+		.not().isEmpty().withMessage('Поле с темой письма не должно быть пустым')
 		.isString().withMessage('Передаваемое значение letterSubject должно быть строкой'),
 	check('phoneNumber')
 		.trim()
-		.isMobilePhone('ru-RU').withMessage('Передаваемое значение phoneNumber должно быть номером телефона')
+		.optional({checkFalsy: true})
+		.customSanitizer(value => {
+			const normalizedPhone = value.replace(/[\s-()+]/g, '').replace(/^8/g, '7')
+			return normalizedPhone
+		})
+		.isMobilePhone('ru-RU').withMessage('Введите корректный номер телефона, либо оставьте это поле пустым')
 ]

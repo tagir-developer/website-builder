@@ -111,10 +111,11 @@ class projectsController {
 
 	async formProcessing(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			// const errors = validationResult(req)
+			// if (!errors.isEmpty()) {
+			// 	return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
+			// }
+			ApiError.ValidationErrorChecking(req)
 
 			const {projectId, email, secondaryEmail, letterSubject, phoneNumber} = req.body
 			

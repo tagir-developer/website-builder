@@ -144,6 +144,7 @@ class authController {
 
 	async test(req, res, next) {
 		try {
+			ApiError.ValidationErrorChecking(req)
 			// res.cookie('refreshToken', 'Установленный куки', { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
 			// console.log('Cookies: ', res.cookies)
 			return res.json('Сервер работает')

@@ -136,11 +136,18 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 				</PopUp>
 
 				<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
-					<BasicSettings handler={() => { }} />
+					<BasicSettings 
+						handler={() => {}}
+						closePopup={mainConfigPopup.closePopup}
+						projectId={activeProject.id}
+					/>
 				</PopUp>
 
 				<PopUp {...formProcessingPopup.popupProps} withTitle="Обработка форм">
-					<FormProcessing handler={() => { }} />
+					<FormProcessing 
+						handler={() => { }}
+						closePopup={formProcessingPopup.closePopup}
+					/>
 				</PopUp>
 
 				<PopUp {...fontConfigPopup.popupProps} withTitle="Выбрать шрифт">
