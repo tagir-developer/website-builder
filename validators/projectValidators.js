@@ -48,9 +48,7 @@ exports.setFontConfigsValidators = [
 		.isString().withMessage('Передаваемое значение titleWeight должно быть строкой'),
 	check('textSize')
 		.trim()
-		.isString().withMessage('Передаваемое значение textSize должно быть строкой'),
-	check('useDefaultConfigs')
-		.isBoolean().withMessage('Поле дефолтных настроек useDefaultConfigs должно быть иметь булев тип')
+		.isString().withMessage('Передаваемое значение textSize должно быть строкой')
 ]
 
 exports.formProcessingValidators = [

@@ -21,8 +21,8 @@ export default class ProjectsService {
 		return $api.put<IAddProjectScriptsResponse>('projects/add-scripts', {projectId, scripts})
 	}
 
-	static async setFontConfigs(projectId: string, fontFamily: string, titleSize: string, titleWeight: string, textSize: string, useDefaultConfigs: boolean): Promise<AxiosResponse<ISetFontConfigsResponse>> {
-		return $api.put<ISetFontConfigsResponse>('projects/set-font-configs', {projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs})
+	static async setFontConfigs(projectId: string, fontFamily: string, titleSize: string, titleWeight: string, textSize: string): Promise<AxiosResponse<ISetFontConfigsResponse>> {
+		return $api.put<ISetFontConfigsResponse>('projects/set-font-configs', {projectId, fontFamily, titleSize, titleWeight, textSize})
 	}
 
 	static async formProcessing(projectId: string, email: string, letterSubject: string, phoneNumber: string = '', secondaryEmail: string = ''): Promise<AxiosResponse<IFormProcessingResponse>> {

@@ -82,7 +82,7 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 						}
 					</div>
 					<div className="page-card__col-2">
-						<Button parentClass="page-card" handler={() => { history.push(link) }} >
+						<Button parentClass="page-card" handler={() => { history.push(link + '/template') }} >
 							Редактировать страницу
 					</Button>
 					</div>

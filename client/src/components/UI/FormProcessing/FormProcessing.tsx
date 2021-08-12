@@ -12,11 +12,10 @@ import './FormProcessing.scss'
 
 interface IFormProcessing {
 	parentClass?: string
-	handler: any
 	closePopup: Function
 }
 
-const FormProcessing: React.FC<IFormProcessing> = ({ parentClass, handler, closePopup }) => {
+const FormProcessing: React.FC<IFormProcessing> = ({ parentClass, closePopup }) => {
 
 	const formProcessingClasses = useCreateClassName('form-processing', parentClass)
 

@@ -6,6 +6,7 @@ import projectsReducer from './projectsReducer'
 import supportReducer from './supportReducer'
 import userReducer from './userReducer'
 import pageReducer from './pageReducer'
+import templateReducer from './templateReducer'
 
 export const rootReducer = combineReducers({
 	alert: alertReducer,
@@ -14,7 +15,8 @@ export const rootReducer = combineReducers({
 	projects: projectsReducer,
 	user: userReducer,
 	popup: popupReducer,
-	page: pageReducer
+	page: pageReducer,
+	template: templateReducer
 })
 
 // export type RootState = ReturnType<typeof rootReducer>

@@ -26,6 +26,9 @@
 		&_block-select-list {
 			max-width: 580px;
 		}
+		&_template-preview {
+			max-width: 980px;
+		}
 
 		&_blur {
 			box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.4);
@@ -89,7 +92,8 @@
 		color: $text-middle;
 		@include media-breakpoint-down(sm) {
 			width: 75%;
-			padding: 40px 0px 40px 15px;
+			padding: 40px 0px 30px 15px;
+			font-size: 22px;
 		}
 	}
 

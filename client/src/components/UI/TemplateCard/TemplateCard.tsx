@@ -9,12 +9,13 @@ interface ITemplateCard extends RouteComponentProps<any> {
 	parentClass?: string
 	modClass?: string[]
 	title: string
-	describe: string
+	description: string
 	img?: string
 	emptyTemplate?: boolean
+	openPreview?: Function
 }
 
-const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, modClass, title, describe, img, emptyTemplate }) => {
+const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, modClass, title, description, img, emptyTemplate, openPreview = () => {} }) => {
 
 	const templateCardClasses = useCreateClassName('template-card', parentClass, modClass)
 
@@ -38,7 +39,7 @@ const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, mo
 			}
 
 			<div className="template-card__title">{title}</div>
-			<div className="template-card__describe">{describe}</div>
+			<div className="template-card__description">{description}</div>
 			<div className={emptyTemplate ? "template-card__buttons-container template-card__buttons-container_center" : "template-card__buttons-container"}>
 
 				{emptyTemplate
@@ -52,7 +53,7 @@ const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, mo
 						<SecondaryButton
 							parentClass="template-card"
 							modClass={['']}
-							handler={() => { }}
+							handler={() => openPreview()}
 						>
 							Просмотреть
 						</SecondaryButton>

@@ -121,11 +121,11 @@ export const addProjectScripts = (projectId: string, scripts: string) => {
 	}
 }
 
-export const setFontConfigs = (projectId: string, fontFamily: string, titleSize: string, titleWeight: string, textSize: string, useDefaultConfigs: boolean) => {
+export const setFontConfigs = (projectId: string, fontFamily: string, titleSize: string, titleWeight: string, textSize: string) => {
 	return async (dispatch: Dispatch<IProjectsAction>) => {
 
 		try {
-			const response = await ProjectsService.setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs)
+			const response = await ProjectsService.setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize)
 
 			dispatch(updateActiveProject(response.data.project))
 			dispatch(alertErrorOrMessageCreator(response.data))

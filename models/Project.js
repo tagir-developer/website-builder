@@ -1,4 +1,5 @@
 const {Schema, model, Types} = require('mongoose')
+// const {fontConfigProps} = require('../client/src/components/UI/FontConfig/fontConfigProps')
 
 const Project = new Schema({
 	name: {
@@ -32,28 +33,24 @@ const Project = new Schema({
 		default: ''
 	},
 	projectFontConfigs: {
-		switchedOn: {
-			type: Boolean,
-			default: false
-		},
 		fontFamily: {
 			type: String,
-			default: ''
+			default: 'helvetica'
 		},
 		title: {
 			fontSize: {
 				type: String,
-				default: ''
+				default: '36px'
 			},
 			fontWeight: {
 				type: String,
-				default: ''
+				default: 'bold'
 			}
 		},
 		text: {
 			fontSize: {
 				type: String,
-				default: ''
+				default: '16px'
 			}
 		}
 	},

@@ -63,11 +63,9 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	}, [])
 
 	useEffect(() => {
-		console.log('1111', activeProject.id)
 		getProjectPages(activeProject.id)
 		// eslint-disable-next-line
 	}, [])
-
 
 	useEffect(() => {
 		if (!createPagePopup.isOpen) {
@@ -137,21 +135,18 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 				<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
 					<BasicSettings 
-						handler={() => {}}
 						closePopup={mainConfigPopup.closePopup}
-						projectId={activeProject.id}
 					/>
 				</PopUp>
 
 				<PopUp {...formProcessingPopup.popupProps} withTitle="Обработка форм">
 					<FormProcessing 
-						handler={() => { }}
 						closePopup={formProcessingPopup.closePopup}
 					/>
 				</PopUp>
 
 				<PopUp {...fontConfigPopup.popupProps} withTitle="Выбрать шрифт">
-					<FontConfig handler={() => { }} />
+					<FontConfig closePopup={fontConfigPopup.closePopup} />
 				</PopUp>
 
 

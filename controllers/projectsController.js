@@ -88,14 +88,11 @@ class projectsController {
 
 	async setFontConfigs(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs} = req.body
+			const {projectId, fontFamily, titleSize, titleWeight, textSize} = req.body
 			
-			const updatedProject = await projectService.setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs)
+			const updatedProject = await projectService.setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize)
 
 			return res.json({
 				project: updatedProject,
@@ -111,10 +108,7 @@ class projectsController {
 
 	async formProcessing(req, res, next) {
 		try {
-			// const errors = validationResult(req)
-			// if (!errors.isEmpty()) {
-			// 	return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			// }
+
 			ApiError.ValidationErrorChecking(req)
 
 			const {projectId, email, secondaryEmail, letterSubject, phoneNumber} = req.body

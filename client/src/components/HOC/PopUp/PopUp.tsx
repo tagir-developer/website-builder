@@ -8,7 +8,7 @@ interface IPopUp {
 	type: 'blur' | 'solid'
 	modClass?: string[]
 	isOpen: boolean
-	handler: () => void
+	handler: (param?: any) => void
 	transparent?: boolean
 	withTitle?: string
 	backdropBlocked?: boolean

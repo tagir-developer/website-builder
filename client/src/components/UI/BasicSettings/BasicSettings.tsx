@@ -9,12 +9,10 @@ import './BasicSettings.scss'
 
 interface IBasicSettings {
 	parentClass?: string
-	handler: () => any
 	closePopup: Function
-	projectId: string
 }
 
-const BasicSettings: React.FC<IBasicSettings> = ({ parentClass, handler, closePopup, projectId }) => {
+const BasicSettings: React.FC<IBasicSettings> = ({ parentClass, closePopup }) => {
 
 	const basicSettingsClasses = useCreateClassName('basic-settings', parentClass)
 

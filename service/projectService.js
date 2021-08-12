@@ -51,11 +51,10 @@ class ProjectService {
 		return updatedProject
 	}
 
-	async setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize, useDefaultConfigs) {
+	async setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize) {
 		const project = await Project.findById(projectId)
 		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
 
-		project.projectFontConfigs.switchedOn = useDefaultConfigs
 		project.projectFontConfigs.fontFamily = fontFamily
 		project.projectFontConfigs.title.fontSize = titleSize
 		project.projectFontConfigs.title.fontWeight = titleWeight

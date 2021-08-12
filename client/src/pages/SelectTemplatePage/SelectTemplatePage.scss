@@ -55,4 +55,18 @@
 			margin-bottom: 50px;
 		}
 	}
+
+	&__popup-preview {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 0px 20px 40px 20px;
+	}
+
+	&__loader-ring {
+		display: block;
+		margin: 100px auto 300px auto;
+		@include media-breakpoint-down(sm) {
+			margin: 20px auto 150px auto;
+		}
+	}
 }

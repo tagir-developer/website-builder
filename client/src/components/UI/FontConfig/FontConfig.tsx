@@ -1,107 +1,70 @@
 import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useSelect } from '../../../hooks/useSelect.hook'
+import AlertMessage from '../../HOC/AlertMessage/AlertMessage'
 import Button from '../Button/Button'
 import Select from '../Select/Select'
+import SmallButton from '../SmallButton/SmallButton'
 import './FontConfig.scss'
+import { fontConfigProps } from './fontConfigProps'
 
 interface IFontConfig {
 	parentClass?: string
-	handler: any
+	closePopup?: Function
 }
 
-const FontConfig: React.FC<IFontConfig> = ({ parentClass, handler }) => {
+const FontConfig: React.FC<IFontConfig> = ({ parentClass, closePopup }) => {
 
 	const fontConfigClasses = useCreateClassName('font-config', parentClass)
 
-	const fontTypeSelect = useSelect([
-		{
-			value: 'verdana',
-			label: 'Verdana'
-		},
-		{
-			value: 'sans-serif',
-			label: 'Sans Serif'
-		},
-		{
-			value: 'helvetica',
-			label: 'Helvetica'
-		},
-	], 'helvetica')
+	const { activeProject } = useTypedSelector(state => state.projects)
+	const { setFontConfigs } = useActions()
 
-	const textSizeSelect = useSelect([
-		{
-			value: '14px',
-			label: '14px'
-		},
-		{
-			value: '16px',
-			label: '16px'
-		},
-		{
-			value: '18px',
-			label: '18px'
-		},
-	], '16px')
-
-	const titleSizeSelect = useSelect([
-		{
-			value: '24px',
-			label: '24px'
-		},
-		{
-			value: '28px',
-			label: '28px'
-		},
-		{
-			value: '32px',
-			label: '32px'
-		},
-		{
-			value: '36px',
-			label: '36px'
-		},
-	], '36px')
-
-	const titleWeightSelect = useSelect([
-		{
-			value: 'normal',
-			label: 'normal'
-		},
-		{
-			value: 'bold',
-			label: 'bold'
-		},
-	], 'bold')
+	const fontTypeSelect = useSelect(fontConfigProps.fontFamily, activeProject.fontConfigs.fontFamily)
+	const textSizeSelect = useSelect(fontConfigProps.textSize, activeProject.fontConfigs.text.fontSize)
+	const titleSizeSelect = useSelect(fontConfigProps.titleSize, activeProject.fontConfigs.title.fontSize)
+	const titleWeightSelect = useSelect(fontConfigProps.titleWeight, activeProject.fontConfigs.title.fontWeight)
 
 	const getCSSProperties = (type: 'title' | 'text', fontWeight: string | null, fontSize: string | null, fontFamily: string | null): React.CSSProperties => {
 
 		let stylesObj: any = {}
 
 		if (type === 'title') {
-			if (fontWeight === 'bold') stylesObj.fontWeight = fontWeight
-			if (fontWeight === 'normal') stylesObj.fontWeight = fontWeight
-	
-			if (fontSize === '24px') stylesObj.fontSize = fontSize
-			if (fontSize === '28px') stylesObj.fontSize = fontSize
-			if (fontSize === '32px') stylesObj.fontSize = fontSize
-			if (fontSize === '36px') stylesObj.fontSize = fontSize
+			fontConfigProps.titleWeight.forEach(i => {
+				if (fontWeight === i.value) stylesObj.fontWeight = i.value
+			})
+			fontConfigProps.titleSize.forEach(i => {
+				if (fontSize === i.value) stylesObj.fontSize = i.value
+			})
 		}
 
 		if (type === 'text') {
-			if (fontSize === '14px') stylesObj.fontSize = fontSize
-			if (fontSize === '16px') stylesObj.fontSize = fontSize
-			if (fontSize === '18px') stylesObj.fontSize = fontSize
+			fontConfigProps.textSize.forEach(i => {
+				if (fontSize === i.value) stylesObj.fontSize = i.value
+			})
 		}
 
-		if (fontFamily === 'sans-serif') stylesObj.fontFamily = 'Sans Serif'
-		if (fontFamily === 'verdana') stylesObj.fontFamily = 'Verdana'
-		if (fontFamily === 'helvetica') stylesObj.fontFamily = 'Helvetica'
+		fontConfigProps.fontFamily.forEach(i => {
+			if (fontFamily === i.value) stylesObj.fontFamily = i.label
+		})
 
 		return stylesObj
 	}
 
+	const saveFontChanges = () => {
+		setFontConfigs(activeProject.id, fontTypeSelect.value, titleSizeSelect.value, titleWeightSelect.value, textSizeSelect.value)
+	}
+
+	const setDefaultConfigs = () => {
+		fontTypeSelect.setNewValue(fontConfigProps.default.fontFamily)
+		textSizeSelect.setNewValue(fontConfigProps.default.textSize)
+		titleSizeSelect.setNewValue(fontConfigProps.default.titleSize)
+		titleWeightSelect.setNewValue(fontConfigProps.default.titleWeight)
+	}
+
 	return (
+		<AlertMessage successFunc={closePopup} runWithoutDelay>
 		<div className={fontConfigClasses}>
 			<div className="font-config__container">
 				<div className="font-config__row">
@@ -140,6 +103,15 @@ const FontConfig: React.FC<IFontConfig> = ({ parentClass, handler }) => {
 								Толщина заголовка
 							</Select>
 
+							<div className="font-config__use-default-btn-container">
+								<SmallButton
+									parentClass="font-config"
+									handler={setDefaultConfigs}
+								>
+									По умолчанию
+								</SmallButton>
+							</div>
+
 
 							<div className="font-config__font-preview">
 								<div className="font-config__font-preview-label">Предпросмотр</div>
@@ -157,9 +129,10 @@ const FontConfig: React.FC<IFontConfig> = ({ parentClass, handler }) => {
 								</p>
 							</div>
 
+
 							<Button
 								parentClass="font-config"
-								handler={handler}
+								handler={saveFontChanges}
 								modClass={['big']}
 							>
 								Сохранить
@@ -170,6 +143,7 @@ const FontConfig: React.FC<IFontConfig> = ({ parentClass, handler }) => {
 				</div>
 			</div>
 		</div>
+		</AlertMessage>
 	)
 }
 

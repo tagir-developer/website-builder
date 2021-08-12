@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from "react"
 
-interface IOptions {
+export interface IOptions {
 	value: string
 	label: string
 }
