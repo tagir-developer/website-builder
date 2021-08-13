@@ -97,19 +97,6 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
 
 	return (
 		<div className={classes}>
-			<WideSelect
-				parentClass="lib-header-1-configs"
-				{...horizontalAlign.bind}
-			>
-				Удалить
-			</WideSelect>
-			<WideSelect
-				parentClass="lib-header-1-configs"
-				{...horizontalAlign.bind}
-			>
-				Удалить
-			</WideSelect>
-
 
 			<WideSelect
 				parentClass="lib-header-1-configs"

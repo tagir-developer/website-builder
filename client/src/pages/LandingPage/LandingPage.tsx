@@ -6,6 +6,7 @@ import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import BasicSettings from '../../components/UI/BasicSettings/BasicSettings'
 import Button from '../../components/UI/Button/Button'
 import Footer from '../../components/UI/Footer/Footer'
+import { StyledButton } from '../../components/UILIbrary/commonStyledComponents/StyledButton'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './LandingPage.scss'
 
@@ -15,7 +16,7 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	return (
 		<>
-		{/* <ScrollTo value={testPopup.scroll} dep={testPopup.isOpen} /> */}
+			{/* <ScrollTo value={testPopup.scroll} dep={testPopup.isOpen} /> */}
 
 			<PopUp {...testPopup.popupProps} withTitle="Основные настройки">
 				{/* <BasicSettings handler={() => { }} /> */}
@@ -39,6 +40,14 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 									<Button parentClass="landing-header" handler={testPopup.handler} >
 										Открыть попап
 									</Button>
+
+									<StyledButton
+										outlined
+										color="red"
+									>
+										Кнопка
+									</StyledButton>
+
 								</div>
 								<div className="landing-header__image-container">
 									<div className="landing-header__image"></div>

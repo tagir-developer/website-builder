@@ -1,4 +1,4 @@
-const {Schema, model, Types} = require('mongoose')
+const { Schema, model, Types } = require('mongoose')
 
 const Page = new Schema({
 	name: {
@@ -12,29 +12,38 @@ const Page = new Schema({
 	},
 	published: {
 		type: Boolean,
-		default: false	
+		default: false
 	},
 	isHomePage: {
 		type: Boolean,
-		default: false	
+		default: false
 	},
 	openInNewWindow: {
 		type: Boolean,
-		default: false	
+		default: false
 	},
 	updated: {
 		type: Boolean,
-		default: false	
+		default: false
 	},
 	createdAt: {
 		type: Date,
 		default: Date.now
 	},
 	project: {
-			type: Types.ObjectId,
-			ref: 'Project',
-			required: true
-	}
+		type: Types.ObjectId,
+		ref: 'Project',
+		required: true
+	},
+	blocks: [
+		{
+			block: {
+				type: Types.ObjectId,
+				ref: 'Block'
+			},
+			configs: {Object}
+		}
+	]
 
 })
 

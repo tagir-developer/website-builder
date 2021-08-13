@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import './EditPage.scss'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
 import Footer from '../../components/UI/Footer/Footer'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router-dom'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import { usePopup } from '../../hooks/usePopup.hook'
 import PopUp from '../../components/HOC/PopUp/PopUp'
@@ -13,6 +13,8 @@ import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWra
 import LeftBar from '../../components/HOC/LeftBar/LeftBar'
 import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
 import BlockConfigMenu from '../../components/UI/BlockConfigMenu/BlockConfigMenu'
+import { useTypedSelector } from '../../hooks/reduxHooks'
+import { IUrlParams } from '../../models/IUrlParams'
 
 interface IRouteProps {
 	pageId: string
@@ -29,6 +31,11 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 	// *Здесь нужна проверка, есть ли такой роут в базе проектов, если нет, то выводим сообщение об ошибке или редиректим на главную
 
 	// const openLeftMenu = useCheck(false)
+	const {pagesNames} = useTypedSelector(state => state.page)
+	const {activeProject} = useTypedSelector(state => state.projects)
+	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
+	const history = useHistory()
+	
 
 	const openLeftMenu = usePopup(false, 'blur')
 	const openBlockConfigs = usePopup(false, 'blur')
@@ -57,6 +64,11 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 			}
 		}
 	]
+
+	useEffect(() => {
+		if (!pagesNames.includes('/' + pageUrl)) history.push('/projects/' + projectUrl)
+		// eslint-disable-next-line
+	}, [])
 
 
 	return (
