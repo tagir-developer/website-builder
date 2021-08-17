@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { Slider, Handles, Tracks, Rail } from 'react-compound-slider'
 import './RangeSlider.scss'
@@ -6,22 +6,15 @@ import { SliderRail, Handle, ProgressLine } from './SliderUIComponents'
 
 interface IRangeSlider {
 	parentClass?: string
-	modClass?: string[]
 	domain: number[]
-	defaultValues: number[]
 	step: number
+	values: readonly number[]
+	onChange: (valuesParam: ReadonlyArray<number>) => void
 }
 
-const RangeSlider: React.FC<IRangeSlider> = ({ parentClass, modClass, domain, defaultValues, step }) => {
+const RangeSlider: React.FC<IRangeSlider> = ({ parentClass, domain, step, values, onChange }) => {
 
 	const rangeSliderClasses = useCreateClassName('range-slider', parentClass)
-
-
-	const [values, setValues] = useState<readonly number[]>(defaultValues)
-
-	const onChange = (valuesParam: ReadonlyArray<number>): void => {
-		setValues(valuesParam)
-	}
 
 	return (
 		<div className={rangeSliderClasses}>

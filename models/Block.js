@@ -10,7 +10,7 @@ const Block = new Schema({
 		type: String,
 		required: true
 	},
-	image: {
+	preview: {
 		type: String,
 		required: true
 	},

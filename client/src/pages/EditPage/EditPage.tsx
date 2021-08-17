@@ -15,27 +15,28 @@ import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
 import BlockConfigMenu from '../../components/UI/BlockConfigMenu/BlockConfigMenu'
 import { useTypedSelector } from '../../hooks/reduxHooks'
 import { IUrlParams } from '../../models/IUrlParams'
+import styled, { ThemeProvider } from 'styled-components'
+import { myTheme } from '../../components/UILIbrary/themes/themes'
+import GlobalStylesWrapper from '../../components/HOC/GlobalStylesWrapper/GlobalStylesWrapper'
 
 interface IRouteProps {
 	pageId: string
 	name: string
 }
 
-
 interface IEditPage extends RouteComponentProps<IRouteProps> {
 }
-
 
 const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	// *Здесь нужна проверка, есть ли такой роут в базе проектов, если нет, то выводим сообщение об ошибке или редиректим на главную
 
 	// const openLeftMenu = useCheck(false)
-	const {pagesNames} = useTypedSelector(state => state.page)
-	const {activeProject} = useTypedSelector(state => state.projects)
+	const { pagesNames } = useTypedSelector(state => state.page)
+	const { activeProject } = useTypedSelector(state => state.projects)
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
 	const history = useHistory()
-	
+
 
 	const openLeftMenu = usePopup(false, 'blur')
 	const openBlockConfigs = usePopup(false, 'blur')
@@ -111,20 +112,23 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							withoutPadding={true}
 						>
 
-
-							{blocksArray.map((i, index) => {
-								const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
-								return (
-									<Suspense key={index} fallback={<div>Загрузка...</div>}>
-										<EditBlockWrapper
-											openConfig={openBlockConfigs.openPopup}
-											openContent={openBlockContent.openPopup}
-										>
-											<BlockComponent />
-										</EditBlockWrapper>
-									</Suspense>
-								)
-							})}
+							<ThemeProvider theme={myTheme}>
+								{blocksArray.map((i, index) => {
+									const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
+									return (
+										<Suspense key={index} fallback={<div>Загрузка...</div>}>
+											<EditBlockWrapper
+												openConfig={openBlockConfigs.openPopup}
+												openContent={openBlockContent.openPopup}
+											>
+												<GlobalStylesWrapper>
+													<BlockComponent />
+												</GlobalStylesWrapper>
+											</EditBlockWrapper>
+										</Suspense>
+									)
+								})}
+							</ThemeProvider>
 
 
 

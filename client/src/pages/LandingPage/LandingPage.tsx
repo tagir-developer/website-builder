@@ -9,6 +9,16 @@ import Footer from '../../components/UI/Footer/Footer'
 import { StyledButton } from '../../components/UILIbrary/commonStyledComponents/StyledButton'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './LandingPage.scss'
+import styled, { ThemeProvider } from 'styled-components'
+import { myTheme } from '../../components/UILIbrary/themes/themes'
+
+// const theme = {
+// 	media: {
+// 		phone: "(max-width: 576px)",
+// 		tablete: "(max-width: 768px) and (min-width: 576px)",
+// 		pc: "(min-width: 768px)"
+// 	}
+// }
 
 const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 
@@ -40,13 +50,15 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 									<Button parentClass="landing-header" handler={testPopup.handler} >
 										Открыть попап
 									</Button>
-
-									<StyledButton
-										outlined
-										color="red"
-									>
-										Кнопка
-									</StyledButton>
+									<ThemeProvider theme={myTheme}>
+										<StyledButton
+											outlined
+											color="red"
+											animation="scale"
+										>
+											Кнопка
+										</StyledButton>
+									</ThemeProvider>
 
 								</div>
 								<div className="landing-header__image-container">

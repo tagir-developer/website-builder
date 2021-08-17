@@ -8,17 +8,17 @@
 	justify-content: center;
 	box-sizing: border-box;
 	padding: 30px;
-	background: rgb(255, 255, 255);
+	background: #ffffff;
 
 		&__title {
 			font-size: 50px;
 			font-weight: bold;
-			color: rgb(0, 87, 46);
+			color: #004223;
 			margin-bottom: 40px;
 		}
 
 		&__description {
-			color: rgb(34, 34, 34);
+			color: #222222;
 			font-size: 26px;
 			margin-bottom: 60px;
 		}
@@ -27,7 +27,7 @@
 			display: block;
 			padding: 0 80px;
 			height: 70px;
-			background: rgb(125, 202, 0);
+			background: #7dca00;
 			color: #fff;
 			text-align: center;
 			line-height: 70px;
@@ -37,7 +37,7 @@
 			cursor: pointer;
 			border-radius: 20px;
 			&:hover {
-				background: rgb(190, 243, 105);
+				background: #bef369;
 			}
 		}
 }

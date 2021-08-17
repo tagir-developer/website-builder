@@ -16,7 +16,7 @@ interface IInput {
 
 const Input: React.FC<IInput> = ({ children, parentClass, modClass, name, type, value, onChange, placeholder, isInvalid }) => {
 
-	const inputClasses = useCreateClassName('input-basic', parentClass)
+	const inputClasses = useCreateClassName('input-basic', parentClass, modClass)
 
 	const inputFinalClass = classNames({
 		[inputClasses]: true,

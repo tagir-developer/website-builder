@@ -2,19 +2,17 @@ import React from 'react'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import './ColorPicker.scss'
 import PalettePopup from '../PalettePopup/PalettePopup'
-import { useColorPicker } from '../../../hooks/useColorPicker.hook'
+import { IUseColorPicker } from '../../../hooks/useColorPicker.hook'
 
 interface IColorPicker {
 	parentClass?: string
-	modClass?: string[]
-	initialColor: string
+	initialColor?: string
+	colorPicker: IUseColorPicker
 }
 
-const ColorPicker: React.FC<IColorPicker> = ({ children, parentClass, modClass, initialColor }) => {
+const ColorPicker: React.FC<IColorPicker> = ({ children, parentClass, colorPicker }) => {
 
 	const colorPickerClasses = useCreateClassName('color-picker', parentClass)
-
-	const colorPicker = useColorPicker(initialColor)
 
 	return (
 		<div className={colorPickerClasses}>

@@ -1,0 +1,27 @@
+.styled-components-global-styles {
+	box-sizing: border-box;
+}
+
+.styled-components-global-styles h1, h2, h3, h4, h5 {
+	font-weight: var(--titleWeight);
+}
+
+.styled-components-global-styles h1 {
+	font-size: var(--titleSize);
+}
+
+.styled-components-global-styles h2 {
+	font-size: calc(var(--titleSize) * 0.8);
+}
+
+.styled-components-global-styles h3 {
+	font-size: calc(var(--titleSize) * 0.6);
+}
+
+.styled-components-global-styles h4 {
+	font-size: calc(var(--titleSize) * 0.4);
+}
+
+.styled-components-global-styles h5 {
+	font-size: calc(var(--titleSize) * 0.3);
+}

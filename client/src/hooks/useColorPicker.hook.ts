@@ -2,7 +2,7 @@
 import { useState } from "react"
 
 
-interface IUseColorPicker {
+export interface IUseColorPicker {
 	bind: {
 		isOpen: boolean
 		color: string

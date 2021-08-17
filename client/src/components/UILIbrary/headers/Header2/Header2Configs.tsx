@@ -1,26 +1,26 @@
 import React from 'react'
-import './Header1Configs.scss'
+import './Header2Configs.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import { useSelect } from '../../../../hooks/useSelect.hook'
 import WideSelect from '../../../UI/WideSelect/WideSelect'
 import ColorPicker from '../../../UI/ColorPicker/ColorPicker'
 import DevicesSlider from '../../../UI/DevicesSlider/DevicesSlider'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
-import { header1ConfigProps } from './Configs'
+import { header2ConfigProps } from './Configs'
 import { useSlider } from '../../../../hooks/useSlider'
 import { useColorPicker } from '../../../../hooks/useColorPicker.hook'
 
-interface IHeader1Configs {
+interface IHeader2Configs {
 	parentClass?: string
 	modClass?: string[]
 }
 
-const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
+const Header2Configs: React.FC<IHeader2Configs> = ({ parentClass }) => {
 
-	const classes = useCreateClassName('lib-header-1-configs', parentClass)
+	const classes = useCreateClassName('lib-header-2-configs', parentClass)
 
-	const blockAlign = useSelect(header1ConfigProps.blockAlign, 'center') //! Берем дефолтные значения из базы данных (массив блоков и настроек в модели страницы)
-	const titleSize = useSelect(header1ConfigProps.titleFontSize, '350%')
+	const blockAlign = useSelect(header2ConfigProps.blockAlign, 'center') //! Берем дефолтные значения из базы данных (массив блоков и настроек в модели страницы)
+	const titleSize = useSelect(header2ConfigProps.titleFontSize, '350%')
 	const deviceSlider = useSlider({
 		defaultValues: [2],
 		domain: [0, 2],
@@ -34,20 +34,20 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
 		<div className={classes}>
 
 			<WideSelect
-				parentClass="lib-header-1-configs"
+				parentClass="lib-header-2-configs"
 				{...blockAlign.bind}
 			>
 				Горизонтальное выравнивание
 			</WideSelect>
 			<WideSelect
-				parentClass="lib-header-1-configs"
+				parentClass="lib-header-2-configs"
 				{...titleSize.bind}
 			>
 				Размер заголовка
 			</WideSelect>
 
 			<ColorPicker 
-				parentClass="lib-header-1-configs"
+				parentClass="lib-header-2-configs"
 				colorPicker={buttonColor}
 			>
 				Цвет кнопки
@@ -59,7 +59,7 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
 			/>
 
 			<SecondaryButton 
-				parentClass="lib-header-1-configs" 
+				parentClass="lib-header-2-configs" 
 				handler={() => {}} 
 			>
 				Применить настройки
@@ -69,4 +69,4 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
 	)
 }
 
-export default Header1Configs
+export default Header2Configs
