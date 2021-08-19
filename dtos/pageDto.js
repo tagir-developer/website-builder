@@ -8,6 +8,7 @@ module.exports = class PageListDto {
 	openInNewWindow
 	project
 	createdAt
+	isNewPage
 
 	constructor(model) {
 		this.id = model._id
@@ -19,6 +20,7 @@ module.exports = class PageListDto {
 		this.openInNewWindow = model.openInNewWindow
 		this.project = model.project
 		this.createdAt = model.createdAt
+		this.isNewPage = model.isNewPage
 		// this.hasPages = !!model.pages.length
 	}
 }

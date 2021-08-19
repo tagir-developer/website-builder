@@ -6,10 +6,7 @@ class pageController {
 
 	async createPage(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			ApiError.ValidationErrorChecking(req)
 
 			const { projectId, name, link, isHomePage, openInNewWindow } = req.body
 
@@ -65,10 +62,7 @@ class pageController {
 
 	async changePage(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			ApiError.ValidationErrorChecking(req)
 
 			const {projectId, pageId, name, link, openInNewWindow} = req.body
 			const updatedProjectPages = await pageService.changePage(projectId, pageId, name, link, openInNewWindow)
@@ -117,6 +111,25 @@ class pageController {
 			next(e)
 		}
 	}
+
+	// async addBlock(req, res, next) { // ! Остановились здесь
+	// 	try {
+	// 		ApiError.ValidationErrorChecking(req)
+
+	// 		const {pageId, blockId} = req.body
+
+	// 		const page = await pageService.addBlock(pageId, blockId)
+
+	// 		return res.json({
+	// 			page: page,
+	// 			messageType: 'success',
+	// 			message: "Блок успешно добавлен",
+	// 			errors: []
+	// 		})
+	// 	} catch (e) {
+	// 		next(e)
+	// 	}
+	// }
 
 
 }

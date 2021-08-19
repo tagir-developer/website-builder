@@ -27,9 +27,9 @@ interface IPageCard extends RouteComponentProps<any> {
 const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published, history, link, isMainPage, handlers, pageId }) => {
 
 	const pageCardClasses = useCreateClassName('page-card', parentClass, modClass)
-	const {activeProject} = useTypedSelector(state => state.projects)
-	const {pages} = useTypedSelector(state => state.page)
-	const {setActivePage} = useActions()
+	const { activeProject } = useTypedSelector(state => state.projects)
+	const { pages } = useTypedSelector(state => state.page)
+	const { setActivePage } = useActions()
 
 	const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать' //! Пока функцию опубликовать и снять с публикации отложим
 
@@ -62,6 +62,18 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 		},
 	]
 
+	const editPageHandler = () => { 
+		setActivePage(pages, pageId)
+
+		const activePage = pages.filter(page => page.id === pageId)[0]
+
+		if (activePage.isNewPage) {
+			history.push(link + '/template')
+		} else {
+			history.push(link)
+		}
+	}
+
 	return (
 		<div className={pageCardClasses}>
 
@@ -82,9 +94,10 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 						}
 					</div>
 					<div className="page-card__col-2">
-						<Button parentClass="page-card" handler={() => { history.push(link + '/template') }} >
+						{/* <Button parentClass="page-card" handler={() => { history.push(link + '/template') }} > */}
+						<Button parentClass="page-card" handler={editPageHandler} >
 							Редактировать страницу
-					</Button>
+						</Button>
 					</div>
 
 				</div>

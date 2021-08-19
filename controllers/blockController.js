@@ -42,6 +42,39 @@ class blockController {
 		}
 	}
 
+	async getPageBlocks(req, res, next) {
+		try {
+
+			const pageId = req.params.pageId
+
+			const blocks = await blockService.getPageBlocks(pageId)
+
+			return res.json(blocks)
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async addBlock(req, res, next) { 
+		try {
+			ApiError.ValidationErrorChecking(req)
+
+			const {pageId, blockId} = req.body
+
+			const pageBlocks = await blockService.addBlock(pageId, blockId)
+
+			return res.json({
+				blocks: pageBlocks,
+				messageType: 'success',
+				message: "Блок успешно добавлен",
+				errors: []
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+
 }
 
 module.exports = new blockController()

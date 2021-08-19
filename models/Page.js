@@ -35,13 +35,26 @@ const Page = new Schema({
 		ref: 'Project',
 		required: true
 	},
+	isNewPage: {
+		type: Boolean,
+		default: true
+	},
 	blocks: [
 		{
 			block: {
 				type: Types.ObjectId,
 				ref: 'Block'
 			},
-			configs: {Object}
+			isNewBlock: {
+				type: Boolean,
+				default: true
+			},
+			blockIsHidden: {
+				type: String,
+				default: false
+			},
+			blockConfigs: {Object},
+			blockContent: {Object}
 		}
 	]
 

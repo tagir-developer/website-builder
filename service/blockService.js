@@ -1,6 +1,8 @@
 const BlockDto = require('../dtos/blockDto')
+const PageBlocksDto = require('../dtos/pageBlocksDto')
 const ApiError = require('../exeptions/apiError')
 const Block = require('../models/Block')
+const Page = require('../models/Page')
 
 class BlockService {
 
@@ -26,6 +28,35 @@ class BlockService {
 
 		const blocksDto = blocks.map(i => new BlockDto(i))
 		return blocksDto
+	}
+
+	async getPageBlocks(pageId) {
+
+		const page = await Page.findById(pageId).populate('blocks').populate('blocks.block')
+		if (!page) throw ApiError.BadRequest('Не удалось найти страницу по заданному ID, повторите попытку позже', 'danger')
+
+		const blocks = page.blocks
+		const blocksDto = blocks.map(i => new PageBlocksDto(i))
+		return blocksDto
+	}
+
+	async addBlock(pageId, blockId) {
+		const page = await Page.findById(pageId)
+		if (!page) throw ApiError.BadRequest('Страница для которой добавляется блок не найдена, попробуйте выполнить операцию позже', 'danger')
+
+		const newBlock = { 
+			block: blockId,
+			isNewBlock: true,
+			blockIsHidden: false,
+			blockConfigs: {},
+			blockContent: {}
+		}
+
+		page.blocks.push(newBlock)
+		await page.save()
+
+		const pageBlocks = this.getPageBlocks(pageId)
+		return pageBlocks
 	}
 
 }

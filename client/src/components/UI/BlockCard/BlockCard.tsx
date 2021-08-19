@@ -3,6 +3,7 @@ import './BlockCard.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import SecondaryButton from '../SecondaryButton/SecondaryButton'
 import { RouteComponentProps, withRouter } from 'react-router'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 
 interface IRouteProps {
 	name: string
@@ -15,23 +16,26 @@ interface IBlockCard extends RouteComponentProps<IRouteProps> {
 	title: string
 	img: string
 	blockId: string
+	closePopups: Function
 }
 
-const BlockCard: React.FC<IBlockCard> = ({ history, match, parentClass, modClass, title, img, blockId }) => {
+const BlockCard: React.FC<IBlockCard> = ({ history, match, parentClass, modClass, title, img, blockId, closePopups }) => {
 
 	const BlockCardClasses = useCreateClassName('block-card', parentClass, modClass)
+	const {activePage} = useTypedSelector(state => state.page)
+	const {addBlockToPage} = useActions()
 
 	const devHandler = () => {
-		console.log(blockId)
-		history.push('/' + match.params.name + '/' + match.params.pageId)
-	} // ! Временная общая функция, которая перенаправляет на страницу редактирования страницы проекта
-
+		// console.log(blockId)
+		// history.push('/' + match.params.name + '/' + match.params.pageId)
+		closePopups()
+		addBlockToPage(activePage.id, blockId)
+	} // ! Нужно добавить блок в список блоков и вернуть обновленный список блоков
 
 	return (
 		<div className={BlockCardClasses}>
 
 			<div className="block-card__image-container">
-				{/* <img className="block-card__image" src={process.env.PUBLIC_URL + '/img/temp-2.jpg'} /> */}
 				<img className="block-card__image" src={img} alt="" />
 			</div>
 
@@ -43,7 +47,7 @@ const BlockCard: React.FC<IBlockCard> = ({ history, match, parentClass, modClass
 					handler={devHandler}
 				>
 					Выбрать
-			</SecondaryButton>
+				</SecondaryButton>
 			</div>
 
 

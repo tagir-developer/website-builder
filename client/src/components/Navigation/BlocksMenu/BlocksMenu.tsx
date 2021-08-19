@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './BlocksMenu.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import TitleWithCloseBtn from '../../UI/TitleWithCloseBtn/TitleWithCloseBtn'
+import { useActions } from '../../../hooks/reduxHooks'
 
 interface IBlocksMenu {
 	parentClass?: string
@@ -29,9 +30,9 @@ const BlocksMenu: React.FC<IBlocksMenu> = ({ parentClass, modClass, popup, heade
 
 	const blocksMenuClasses = useCreateClassName('blocks-menu', parentClass, modClass)
 
+	const {getBlocksWithType} = useActions()
 	const [activeItem, setActiveItem] = useState<number | null>(null)
 
-	// const menuItems: string[] = ['Шапки сайта', 'Кнопка', 'Форма', 'Галерея', 'Услуги', 'Преимущества', 'Меню']
 	const menuItems: IMenuItem[] = [
 		{
 			title: 'Шапки сайта',
@@ -49,7 +50,7 @@ const BlocksMenu: React.FC<IBlocksMenu> = ({ parentClass, modClass, popup, heade
 
 	const itemHandler = (index: number, blockType: blocksTypes) => {
 		setActiveItem(index)
-		// ? Здесь будем запрашивать из базы данных и выводить нужные карточки? либо записывать в редакс тип, по которому в блоке selection запрашивать список нужных блоков
+		getBlocksWithType(blockType)
 		popup && popup.switchPopup()
 	}
 

@@ -13,11 +13,12 @@ import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWra
 import LeftBar from '../../components/HOC/LeftBar/LeftBar'
 import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
 import BlockConfigMenu from '../../components/UI/BlockConfigMenu/BlockConfigMenu'
-import { useTypedSelector } from '../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { IUrlParams } from '../../models/IUrlParams'
 import styled, { ThemeProvider } from 'styled-components'
 import { myTheme } from '../../components/UILIbrary/themes/themes'
 import GlobalStylesWrapper from '../../components/HOC/GlobalStylesWrapper/GlobalStylesWrapper'
+import PageTitle from '../../components/UI/PageTitle/PageTitle'
 
 interface IRouteProps {
 	pageId: string
@@ -29,45 +30,46 @@ interface IEditPage extends RouteComponentProps<IRouteProps> {
 
 const EditPage: React.FC<IEditPage> = ({ match }) => {
 
-	// *Здесь нужна проверка, есть ли такой роут в базе проектов, если нет, то выводим сообщение об ошибке или редиректим на главную
-
 	// const openLeftMenu = useCheck(false)
-	const { pagesNames } = useTypedSelector(state => state.page)
-	const { activeProject } = useTypedSelector(state => state.projects)
+	const { pagesNames, activePage } = useTypedSelector(state => state.page)
+	const { pageBlocks, loading } = useTypedSelector(state => state.block)
+	const { getPageBlocks } = useActions()
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
 	const history = useHistory()
-
 
 	const openLeftMenu = usePopup(false, 'blur')
 	const openBlockConfigs = usePopup(false, 'blur')
 	const openBlockContent = usePopup(false, 'blur')
-
 	const backdropProps = useChooseBackdropProps(openLeftMenu, openBlockConfigs, openBlockContent)
-
 	const blocksListPopup = usePopup(false, 'blur')
 
 	// const isEmpty = false  // Если нет ни одного блока
 
-	const blocksArray: Array<any> = [
-		{
-			blockId: 'asdadasdassdfsdfd',
-			path: 'headers/Header1/Header1',
-			styles: {
-				titleStyles: { fontSize: '26px', color: 'white' },
-				buttonStyles: { fontSize: '18px', color: 'white' }
-			}
-		},
-		{
-			blockId: 'adadadadsasdasd',
-			path: 'headers/Header2/Header2',
-			styles: {
-				titleStyles: { fontSize: '26px', color: 'white' },
-			}
-		}
-	]
+	// const blocksArray: Array<any> = [
+	// 	{
+	// 		blockId: 'asdadasdassdfsdfd',
+	// 		path: 'headers/Header1/Header1',
+	// 		styles: {
+	// 			titleStyles: { fontSize: '26px', color: 'white' },
+	// 			buttonStyles: { fontSize: '18px', color: 'white' }
+	// 		}
+	// 	},
+	// 	{
+	// 		blockId: 'adadadadsasdasd',
+	// 		path: 'headers/Header2/Header2',
+	// 		styles: {
+	// 			titleStyles: { fontSize: '26px', color: 'white' },
+	// 		}
+	// 	}
+	// ]
 
 	useEffect(() => {
 		if (!pagesNames.includes('/' + pageUrl)) history.push('/projects/' + projectUrl)
+		// eslint-disable-next-line
+	}, [])
+
+	useEffect(() => {
+		getPageBlocks(activePage.id)
 		// eslint-disable-next-line
 	}, [])
 
@@ -75,7 +77,12 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 	return (
 		<>
 			<PopUp {...blocksListPopup.popupProps} withTitle="Список блоков" modClass={['block-select-list']}>
-				<BlockSelectionList />
+				<BlockSelectionList 
+					closePopups={() => {
+						openLeftMenu.closePopup()
+						blocksListPopup.closePopup()
+					}} 
+				/>
 			</PopUp>
 
 			<Backdrop {...blocksListPopup.backdropProps}>
@@ -112,9 +119,9 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							withoutPadding={true}
 						>
 
-							<ThemeProvider theme={myTheme}>
-								{blocksArray.map((i, index) => {
-									const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.path))
+							{/* <ThemeProvider theme={myTheme}>
+								{pageBlocks.map((i, index) => {
+									const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.blockPath))
 									return (
 										<Suspense key={index} fallback={<div>Загрузка...</div>}>
 											<EditBlockWrapper
@@ -128,7 +135,32 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 										</Suspense>
 									)
 								})}
-							</ThemeProvider>
+							</ThemeProvider> */}
+
+							{loading
+								? null
+								: !!pageBlocks.length
+									? <ThemeProvider theme={myTheme}>
+										{pageBlocks.map((i, index) => {
+											const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.blockPath))
+											return (
+												<Suspense key={index} fallback={<div>Загрузка...</div>}>
+													<EditBlockWrapper
+														openConfig={openBlockConfigs.openPopup}
+														openContent={openBlockContent.openPopup}
+													>
+														<GlobalStylesWrapper>
+															<BlockComponent />
+														</GlobalStylesWrapper>
+													</EditBlockWrapper>
+												</Suspense>
+											)
+										})}
+									</ThemeProvider>
+									: <PageTitle parentClass="edit-page" title="Пустой шаблон">
+										Вы пока не создали ни одного блока. Добавьте свой первый блок на страницу.
+									</PageTitle>
+							}
 
 
 

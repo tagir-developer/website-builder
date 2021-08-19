@@ -21,3 +21,13 @@ exports.createBlockValidators = [
 		.isString().withMessage('Передаваемое значение preview должно быть строкой')
 ]
 
+exports.addBlockValidators = [
+	check('blockId')
+		.trim()
+		.isString().withMessage('blockId должен быть строкой')
+		.not().isEmpty().withMessage('blockId не должен быть пустым полем'),
+	check('pageId')
+		.trim()
+		.isString().withMessage('pageId должен быть строкой')
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем')
+]

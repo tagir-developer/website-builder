@@ -20,8 +20,9 @@ const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, mo
 	const templateCardClasses = useCreateClassName('template-card', parentClass, modClass)
 
 	const devHandler = () => {
+		// ! Обязательно сделать значение isNewPage = false для активной страницы, так как шаблон уже выбран
 		history.push('/' + match.params.name + '/' + match.params.pageId)
-	} // ! Временная общая функция, которая перенаправляет на страницу редактирования страницы проекта
+	} // ? Временная общая функция, которая перенаправляет на страницу редактирования страницы проекта
 
 
 	return (

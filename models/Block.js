@@ -17,11 +17,8 @@ const Block = new Schema({
 	type: {
 		type: String,
 		required: true
-	},
-	hidden: {
-		type: String,
-		default: false
 	}
+
 })
 
 module.exports = model('Block', Block)

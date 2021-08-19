@@ -6,6 +6,7 @@ import * as userActionCreators from './user'
 import * as popupActionCreators from './popup'
 import * as pageActionCreators from './page'
 import * as templateActionCreators from './template'
+import * as blocksActionCreators from './blocks'
 
 const allActionCreators = {
 	...authActionCreators,
@@ -15,7 +16,8 @@ const allActionCreators = {
 	...userActionCreators,
 	...popupActionCreators,
 	...pageActionCreators,
-	...templateActionCreators
+	...templateActionCreators,
+	...blocksActionCreators
 }
 
 export default allActionCreators
