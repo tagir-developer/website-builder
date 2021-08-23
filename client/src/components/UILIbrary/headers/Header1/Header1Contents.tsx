@@ -1,5 +1,5 @@
 import React from 'react'
-import './Header1Contents.scss'
+import './styles/Header1Contents.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 import Input from '../../../UI/Input/Input'
@@ -8,19 +8,25 @@ import UploadImages from '../../../UI/UploadImages/UploadImages'
 import { useInput } from '../../../../hooks/useInput.hook'
 import img1 from './testImages/img1.jpg'
 import img2 from './testImages/img2.jpg'
+import { IHeader1Content } from './Header1'
+import { useActions } from '../../../../hooks/reduxHooks'
 
-interface IHeader1Contents {
+interface IHeader1ContentsProps {
 	parentClass?: string
 	modClass?: string[]
+	closePopup: Function
+	blockContent: IHeader1Content
 }
 
-const Header1Contents: React.FC<IHeader1Contents> = ({ parentClass }) => {
+const Header1Contents: React.FC<IHeader1ContentsProps> = ({ parentClass, closePopup, blockContent }) => {
 
 	const classes = useCreateClassName('lib-header-1-contents', parentClass)
 
-	const title = useInput('Заголовок блока')
-	const description = useInput('Какой-то текст описывающий свойства продукта или услуги')
-	const button = useInput('Кнопка')
+	const { changeBlockContent } = useActions()
+
+	const title = useInput(blockContent.titleText)
+	const description = useInput(blockContent.descriptionText)
+	const button = useInput(blockContent.buttonText)
 
 	// const images = [
 	// 	{
@@ -34,6 +40,25 @@ const Header1Contents: React.FC<IHeader1Contents> = ({ parentClass }) => {
 	// 		img: img2
 	// 	},
 	// ]
+
+	const newBlockContent: IHeader1Content = {
+		titleText: title.value,
+		descriptionText: description.value,
+		buttonText: button.value
+	}
+
+	const saveNewContent = () => {
+
+		changeBlockContent(newBlockContent)
+
+		// if (activePage.autosavePage) {
+		if (true) { // ! Временно используем значение true для автосейва (потом раскомментить верхнюю строку)
+			// ? Если включен автосейв запускаем функцию сохранения последнего стейта в базе данных в фоновом режиме
+			// saveLastBlockListState(activePage.id)
+			console.log('Автосейв отработал')
+		}
+		closePopup()
+	}
 
 	return (
 		<div className={classes}>
@@ -64,7 +89,7 @@ const Header1Contents: React.FC<IHeader1Contents> = ({ parentClass }) => {
 
 			<SecondaryButton
 				parentClass="lib-header-1-contents"
-				handler={() => { }}
+				handler={saveNewContent}
 			>
 				Применить настройки
 			</SecondaryButton>

@@ -17,6 +17,14 @@ const Block = new Schema({
 	type: {
 		type: String,
 		required: true
+	},
+	blockDefaultConfigs: {
+		type: {Object},
+		required: true
+	},
+	blockDefaultContent: {
+		type: {Object},
+		required: true
 	}
 
 })

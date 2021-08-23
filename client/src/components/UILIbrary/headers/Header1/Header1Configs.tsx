@@ -1,34 +1,89 @@
 import React from 'react'
-import './Header1Configs.scss'
+import './styles/Header1Configs.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import { useSelect } from '../../../../hooks/useSelect.hook'
 import WideSelect from '../../../UI/WideSelect/WideSelect'
 import ColorPicker from '../../../UI/ColorPicker/ColorPicker'
 import DevicesSlider from '../../../UI/DevicesSlider/DevicesSlider'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
-import { header1ConfigProps } from './Configs'
 import { useSlider } from '../../../../hooks/useSlider'
 import { useColorPicker } from '../../../../hooks/useColorPicker.hook'
+import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
+import { IHeader1Content, IHeader1Styles } from './Header1'
 
 interface IHeader1Configs {
 	parentClass?: string
 	modClass?: string[]
+	blockConfigs: IHeader1Styles
+	blockContent: IHeader1Content
+	closePopup: Function
 }
 
-const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
+const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass, blockConfigs, blockContent, closePopup }) => {
 
 	const classes = useCreateClassName('lib-header-1-configs', parentClass)
+	const {activePage} = useTypedSelector(state => state.page)
+	const {changeBlockConfigs} = useActions()
 
-	const blockAlign = useSelect(header1ConfigProps.blockAlign, 'center') //! Берем дефолтные значения из базы данных (массив блоков и настроек в модели страницы)
-	const titleSize = useSelect(header1ConfigProps.titleFontSize, '350%')
-	const deviceSlider = useSlider({
-		defaultValues: [2],
+	const blockAlign = useSelect([
+		{
+			value: 'flex-start',
+			label: 'По левому краю'
+		},
+		{
+			value: 'center',
+			label: 'По центру'
+		},
+		{
+			value: 'flex-end',
+			label: 'По правому краю'
+		},
+	], blockConfigs.blockAlign)
+	const titleSize = useSelect([
+		{
+			value: '300%',
+			label: 'Малый'
+		},
+		{
+			value: '350%',
+			label: 'Средний'
+		},
+		{
+			value: '400%',
+			label: 'Большой'
+		},
+	], blockConfigs.titleFontSize)
+	const deviceSlider = useSlider({ 
+		defaultValues: blockConfigs.hiddenOnDevice, 
 		domain: [0, 2],
-		step: 1
+		step: 1,
+		decriptor: {
+			0: ['tablete', 'pc'],
+			1: ['pc'],
+			2: []
+		}
 	})
-	const buttonColor = useColorPicker('#fc0')
+	const buttonColor = useColorPicker(blockConfigs.buttonBackground)
 
-	console.log('Данные конфигов', blockAlign.value, titleSize.value, deviceSlider.values[0], buttonColor.color)
+	const newBlockConfigs: any = {
+		hiddenOnDevice: deviceSlider.customValues[0],
+		buttonBackground: buttonColor.color,
+		blockAlign: blockAlign.value,
+		titleFontSize: titleSize.value
+	}
+
+	const saveNewConfigs = () => {
+
+		changeBlockConfigs(newBlockConfigs)
+
+		// if (activePage.autosavePage) {
+		if (true) { // ! Временно используем значение true для автосейва (потом раскомментить верхнюю строку)
+			// ? Если включен автосейв запускаем функцию сохранения последнего стейта в базе данных в фоновом режиме
+			// saveLastBlockListState(activePage.id)
+			console.log('Автосейв отработал')
+		}
+		closePopup()
+	}
 
 	return (
 		<div className={classes}>
@@ -60,7 +115,7 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass }) => {
 
 			<SecondaryButton 
 				parentClass="lib-header-1-configs" 
-				handler={() => {}} 
+				handler={saveNewConfigs} 
 			>
 				Применить настройки
 			</SecondaryButton>

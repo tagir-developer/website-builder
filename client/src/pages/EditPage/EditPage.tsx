@@ -32,7 +32,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	// const openLeftMenu = useCheck(false)
 	const { pagesNames, activePage } = useTypedSelector(state => state.page)
-	const { pageBlocks, loading } = useTypedSelector(state => state.block)
+	const { pageBlocks, loading, changeHistory } = useTypedSelector(state => state.block)
 	const { getPageBlocks } = useActions()
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
 	const history = useHistory()
@@ -73,15 +73,16 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 		// eslint-disable-next-line
 	}, [])
 
+		console.log('ИСТОРИЯ ИЗМЕНЕНИЙ', changeHistory)
 
 	return (
 		<>
 			<PopUp {...blocksListPopup.popupProps} withTitle="Список блоков" modClass={['block-select-list']}>
-				<BlockSelectionList 
+				<BlockSelectionList
 					closePopups={() => {
 						openLeftMenu.closePopup()
 						blocksListPopup.closePopup()
-					}} 
+					}}
 				/>
 			</PopUp>
 
@@ -106,11 +107,19 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 						</LeftBar>
 
 						<LeftBar isOpen={openBlockConfigs.isOpen} modClass={['wide']} >
-							<BlockConfigMenu type="Configs" title="Настройки блока" closeHandler={openBlockConfigs.closePopup} />
+							<BlockConfigMenu 
+								type="Configs" 
+								title="Настройки блока" 
+								closeHandler={openBlockConfigs.closePopup} 
+							/>
 						</LeftBar>
 
 						<LeftBar isOpen={openBlockContent.isOpen} modClass={['wide']} >
-							<BlockConfigMenu type="Contents" title="Редактировать контент" closeHandler={openBlockContent.closePopup} />
+							<BlockConfigMenu 
+								type="Contents" 
+								title="Редактировать контент" 
+								closeHandler={openBlockContent.closePopup} 
+							/>
 						</LeftBar>
 
 
@@ -146,11 +155,19 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 											return (
 												<Suspense key={index} fallback={<div>Загрузка...</div>}>
 													<EditBlockWrapper
-														openConfig={openBlockConfigs.openPopup}
-														openContent={openBlockContent.openPopup}
+														blockId={i.blockId}
+														openConfig={
+															openBlockConfigs.openPopup
+														}
+														openContent={
+															openBlockContent.openPopup
+														}
 													>
 														<GlobalStylesWrapper>
-															<BlockComponent />
+															<BlockComponent
+																blockConfigs={i.blockConfigs}
+																blockContent={i.blockContent}
+															/>
 														</GlobalStylesWrapper>
 													</EditBlockWrapper>
 												</Suspense>

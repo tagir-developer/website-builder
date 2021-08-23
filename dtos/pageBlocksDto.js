@@ -7,7 +7,7 @@ module.exports = class PageBlocksDto {
 	blockContent
 
 	constructor(model) {
-		this.blockId = model.block._id
+		this.blockId = model._id
 		this.blockPath = model.block.path
 		this.isNewBlock = model.isNewBlock
 		this.blockIsHidden = model.blockIsHidden

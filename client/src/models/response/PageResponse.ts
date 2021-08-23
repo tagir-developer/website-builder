@@ -7,6 +7,7 @@ export interface IPageResponse {
 	openInNewWindow: boolean
 	updated: boolean
 	isNewPage: boolean
+	autosavePage: boolean
 	name: string
 	link: string
 	project: string

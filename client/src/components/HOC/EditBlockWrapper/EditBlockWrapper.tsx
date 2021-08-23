@@ -4,19 +4,24 @@ import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import BlockActionButtons from '../../UI/BlockActionButtons/BlockActionButtons'
 import BlockMoveBtn from '../../UI/BlockMoveBtn/BlockMoveBtn'
 import { useState } from 'react'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 
 interface IEditBlockWrapper {
 	parentClass?: string
 	modClass?: string[]
 	openConfig: () => void
 	openContent: () => void
+	blockId: string
 }
 
-const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass, openConfig, openContent }) => {
+const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass, openConfig, openContent, blockId }) => {
 
 	const blockWrapperClasses = useCreateClassName("edit-block-wrapper", parentClass, modClass)
 
 	const [hovered, setHovered] = useState<boolean>(false)
+
+	const {pageBlocks} = useTypedSelector(state => state.block)
+	const {setActiveBlock} = useActions()
 
 	const mouseOverHandler = () => {
 		setHovered(true)
@@ -35,12 +40,18 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 		{
 			title: 'Настройки',
 			iconType: 'config',
-			handler: openConfig
+			handler: () => {
+				setActiveBlock(pageBlocks, blockId)
+				openConfig()
+			}
 		},
 		{
 			title: 'Редактировать',
 			iconType: 'edit',
-			handler: openContent
+			handler: () => {
+				setActiveBlock(pageBlocks, blockId)
+				openContent()
+			}
 		},
 		{
 			title: 'Дублировать',

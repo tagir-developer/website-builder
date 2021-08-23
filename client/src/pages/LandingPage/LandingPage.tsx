@@ -12,13 +12,16 @@ import './LandingPage.scss'
 import styled, { ThemeProvider } from 'styled-components'
 import { myTheme } from '../../components/UILIbrary/themes/themes'
 
-// const theme = {
-// 	media: {
-// 		phone: "(max-width: 576px)",
-// 		tablete: "(max-width: 768px) and (min-width: 576px)",
-// 		pc: "(min-width: 768px)"
-// 	}
-// }
+// import myImg from './img/pc-and-phone.svg';
+
+
+// const StyledDiv = styled.div<any>`
+// 	display: block;
+// 	width: 200px;
+// 	height: 100px;
+// 	/* background: red; */
+// 	background: url(${myImg}) center no-repeat;
+// `
 
 const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 

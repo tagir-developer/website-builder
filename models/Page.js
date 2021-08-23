@@ -39,6 +39,10 @@ const Page = new Schema({
 		type: Boolean,
 		default: true
 	},
+	autosavePage: {
+		type: Boolean,
+		default: false
+	},
 	blocks: [
 		{
 			block: {
@@ -53,8 +57,14 @@ const Page = new Schema({
 				type: String,
 				default: false
 			},
-			blockConfigs: {Object},
-			blockContent: {Object}
+			blockConfigs: {
+				type: {Object},
+				required: true
+			},
+			blockContent: {
+				type: {Object},
+				required: true
+			}
 		}
 	]
 

@@ -96,7 +96,7 @@ interface IHeader2Styles {
 }
 
 const styles: IHeader2Styles = {
-	buttonBackground: "red",
+	buttonBackground: "#7dca00",
 	blockAlign: "center",
 	titleFontSize: "300%",
 	textAlign: "center"

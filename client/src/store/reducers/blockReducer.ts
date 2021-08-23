@@ -4,7 +4,9 @@ import { blockActionTypes, IBlockAction, IBlockState } from "../types/block"
 export const initialState: IBlockState = {
 	loading: false,
 	blockCards: [] as IBlockResponse[],
-	pageBlocks: [] as IPageBlocksResponse[]
+	pageBlocks: [] as IPageBlocksResponse[],
+	activeBlock: {} as IPageBlocksResponse,
+	changeHistory: [] as Array<IPageBlocksResponse[]>
 }
 
 export default function blockReducer(state = initialState, action: IBlockAction): IBlockState {
@@ -26,6 +28,22 @@ export default function blockReducer(state = initialState, action: IBlockAction)
 			...state,
 			pageBlocks: action.payload,
 			loading: false,
+		}
+		case blockActionTypes.BLOCK_SET_ACTIVE_BLOCK: return {
+			...state,
+			activeBlock: action.payload
+		}
+		case blockActionTypes.BLOCK_ADD_TO_CHANGE_HISTORY: return {
+			...state,
+			changeHistory: action.payload
+		}
+		case blockActionTypes.BLOCK_UPDATE_CHANGE_HISTORY: return {
+			...state,
+			changeHistory: action.payload
+		}
+		case blockActionTypes.BLOCK_SAVE_BLOCK_CONFIGS: return {
+			...state,
+			pageBlocks: action.payload
 		}
 		default:
 			return state

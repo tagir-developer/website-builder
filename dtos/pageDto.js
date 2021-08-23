@@ -9,6 +9,7 @@ module.exports = class PageListDto {
 	project
 	createdAt
 	isNewPage
+	autosavePage
 
 	constructor(model) {
 		this.id = model._id
@@ -21,6 +22,7 @@ module.exports = class PageListDto {
 		this.project = model.project
 		this.createdAt = model.createdAt
 		this.isNewPage = model.isNewPage
+		this.autosavePage = model.autosavePage
 		// this.hasPages = !!model.pages.length
 	}
 }

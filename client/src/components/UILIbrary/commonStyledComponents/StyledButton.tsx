@@ -34,7 +34,7 @@ export const StyledButton = styled.button<IButtonProps>`
 	font-size: 18px;
 	cursor: pointer;
 	align-self: ${props => props.align || 'center'};
-	&: hover {
+	&:hover {
 			animation: ${rotateAnimation} 1s infinite linear;
 	}
 

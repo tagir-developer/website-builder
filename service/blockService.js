@@ -44,12 +44,15 @@ class BlockService {
 		const page = await Page.findById(pageId)
 		if (!page) throw ApiError.BadRequest('Страница для которой добавляется блок не найдена, попробуйте выполнить операцию позже', 'danger')
 
+		const block = await Block.findById(blockId)
+		if (!block) throw ApiError.BadRequest('Блок не найден, попробуйте выполнить операцию позже', 'danger')
+
 		const newBlock = { 
 			block: blockId,
 			isNewBlock: true,
 			blockIsHidden: false,
-			blockConfigs: {},
-			blockContent: {}
+			blockConfigs: block.blockDefaultConfigs, // ? Ранее использовал здесь пустые объекты
+			blockContent: block.blockDefaultContent
 		}
 
 		page.blocks.push(newBlock)
