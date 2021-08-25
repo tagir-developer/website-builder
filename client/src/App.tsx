@@ -30,7 +30,7 @@ const persistConfig = {
   storage,
   // stateReconciler: autoMergeLevel2
   // stateReconciler: hardSet
-  // blacklist: ['block']
+  // whitelist: ['support']
 }
 
 // const persistedReducer = persistReducer(persistConfig, rootReducer)

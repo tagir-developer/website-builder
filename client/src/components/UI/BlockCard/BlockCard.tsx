@@ -2,15 +2,9 @@ import React from 'react'
 import './BlockCard.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import SecondaryButton from '../SecondaryButton/SecondaryButton'
-import { RouteComponentProps, withRouter } from 'react-router'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 
-interface IRouteProps {
-	name: string
-	pageId: string
-}
-
-interface IBlockCard extends RouteComponentProps<IRouteProps> {
+interface IBlockCard {
 	parentClass?: string
 	modClass?: string[]
 	title: string
@@ -19,18 +13,17 @@ interface IBlockCard extends RouteComponentProps<IRouteProps> {
 	closePopups: Function
 }
 
-const BlockCard: React.FC<IBlockCard> = ({ history, match, parentClass, modClass, title, img, blockId, closePopups }) => {
+const BlockCard: React.FC<IBlockCard> = ({ parentClass, modClass, title, img, blockId, closePopups }) => {
 
 	const BlockCardClasses = useCreateClassName('block-card', parentClass, modClass)
-	const {activePage} = useTypedSelector(state => state.page)
-	const {addBlockToPage} = useActions()
+	const { activePage } = useTypedSelector(state => state.page)
+	const { addBlockToPage, saveBlocksInDB } = useActions()
 
-	const devHandler = () => {
-		// console.log(blockId)
-		// history.push('/' + match.params.name + '/' + match.params.pageId)
+	const devHandler = async () => {
 		closePopups()
-		addBlockToPage(activePage.id, blockId)
-	} // ! Нужно добавить блок в список блоков и вернуть обновленный список блоков
+		await addBlockToPage(blockId)
+		if (activePage.autosavePage) saveBlocksInDB()
+	}
 
 	return (
 		<div className={BlockCardClasses}>
@@ -49,12 +42,8 @@ const BlockCard: React.FC<IBlockCard> = ({ history, match, parentClass, modClass
 					Выбрать
 				</SecondaryButton>
 			</div>
-
-
-
 		</div >
-
 	)
 }
 
-export default withRouter(BlockCard)
+export default BlockCard

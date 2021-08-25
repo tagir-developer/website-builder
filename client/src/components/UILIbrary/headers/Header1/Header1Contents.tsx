@@ -8,8 +8,8 @@ import UploadImages from '../../../UI/UploadImages/UploadImages'
 import { useInput } from '../../../../hooks/useInput.hook'
 import img1 from './testImages/img1.jpg'
 import img2 from './testImages/img2.jpg'
-import { IHeader1Content } from './Header1'
-import { useActions } from '../../../../hooks/reduxHooks'
+import { IHeader1Content } from './types/header1types'
+import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
 
 interface IHeader1ContentsProps {
 	parentClass?: string
@@ -22,7 +22,8 @@ const Header1Contents: React.FC<IHeader1ContentsProps> = ({ parentClass, closePo
 
 	const classes = useCreateClassName('lib-header-1-contents', parentClass)
 
-	const { changeBlockContent } = useActions()
+	const {activePage} = useTypedSelector(state => state.page)
+	const { changeBlockContent, saveBlocksInDB } = useActions()
 
 	const title = useInput(blockContent.titleText)
 	const description = useInput(blockContent.descriptionText)
@@ -51,12 +52,8 @@ const Header1Contents: React.FC<IHeader1ContentsProps> = ({ parentClass, closePo
 
 		changeBlockContent(newBlockContent)
 
-		// if (activePage.autosavePage) {
-		if (true) { // ! Временно используем значение true для автосейва (потом раскомментить верхнюю строку)
-			// ? Если включен автосейв запускаем функцию сохранения последнего стейта в базе данных в фоновом режиме
-			// saveLastBlockListState(activePage.id)
-			console.log('Автосейв отработал')
-		}
+		if (activePage.autosavePage) saveBlocksInDB()
+
 		closePopup()
 	}
 

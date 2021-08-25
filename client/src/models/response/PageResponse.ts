@@ -33,3 +33,7 @@ export interface ICopyPageResponse extends IAlertMessage {
 export interface IMakePageHomeResponse extends IAlertMessage {
 	pages: IPageResponse[]
 }
+
+export interface ISwitchAutosaveResponse extends IAlertMessage {
+	page: IPageResponse
+}

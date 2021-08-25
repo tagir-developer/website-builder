@@ -4,6 +4,8 @@ import {useCreateClassName} from '../../../../hooks/createClassName.hook'
 import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import Toggle from '../../../UI/Toggle/Toggle'
+import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
+import { useCheck } from '../../../../hooks/useCheck.hook'
 
 interface IItems {
 	title: string
@@ -24,6 +26,9 @@ const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items, autos
 
 	const navClasses = useCreateClassName('mobile-nav', parentClass, modClass)
 
+	const {activePage} = useTypedSelector(state => state.page)
+	const {switchPageAutosave} = useActions()
+
 	const toggleClasses = classNames({
 		'mobile-nav__toggle': true,
 		'mobile-nav__toggle_open': isOpen,
@@ -37,7 +42,12 @@ const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items, autos
 
 	const autosaveElement = (
 		<div className="mobile-nav__autosave-switcher-panel autosave-switcher-panel">
-			<Toggle name="mob-menu-toggle" parentClass="autosave-switcher-panel" />
+			<Toggle 
+				name="mob-menu-toggle" 
+				parentClass="autosave-switcher-panel"
+				value={activePage.autosavePage}
+				handler={() => switchPageAutosave(!activePage.autosavePage)}
+			/>
 			<div className="autosave-switcher-panel__name">Включить автосохранение</div>
 		</div>
 	)

@@ -15,8 +15,16 @@ export interface IPageBlocksResponse {
 	blockIsHidden: boolean
 	blockConfigs: Object
 	blockContent: Object
+	_blockModelId: string
 }
 
 export interface IAddBlockToPageResponse extends IAlertMessage {
-	blocks: IPageBlocksResponse[]
+	block: IPageBlocksResponse
+}
+
+export interface ICopyBlockResponse extends IAlertMessage {
+	block: IPageBlocksResponse
+}
+
+export interface ISaveBlocksInDBResponse extends IAlertMessage {
 }

@@ -9,7 +9,7 @@ import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 import { useSlider } from '../../../../hooks/useSlider'
 import { useColorPicker } from '../../../../hooks/useColorPicker.hook'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
-import { IHeader1Content, IHeader1Styles } from './Header1'
+import { IHeader1Content, IHeader1Styles } from './types/header1types'
 
 interface IHeader1Configs {
 	parentClass?: string
@@ -23,7 +23,7 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass, blockConfigs, 
 
 	const classes = useCreateClassName('lib-header-1-configs', parentClass)
 	const {activePage} = useTypedSelector(state => state.page)
-	const {changeBlockConfigs} = useActions()
+	const {changeBlockConfigs, saveBlocksInDB} = useActions()
 
 	const blockAlign = useSelect([
 		{
@@ -73,15 +73,8 @@ const Header1Configs: React.FC<IHeader1Configs> = ({ parentClass, blockConfigs, 
 	}
 
 	const saveNewConfigs = () => {
-
 		changeBlockConfigs(newBlockConfigs)
-
-		// if (activePage.autosavePage) {
-		if (true) { // ! Временно используем значение true для автосейва (потом раскомментить верхнюю строку)
-			// ? Если включен автосейв запускаем функцию сохранения последнего стейта в базе данных в фоновом режиме
-			// saveLastBlockListState(activePage.id)
-			console.log('Автосейв отработал')
-		}
+		if (activePage.autosavePage) saveBlocksInDB()
 		closePopup()
 	}
 

@@ -111,24 +111,17 @@ class PageService {
 		return pagesDto
 	}
 
-	// async addBlock(pageId, blockId) {
-	// 	const page = await Page.findById(pageId)
-	// 	if (!page) throw ApiError.BadRequest('Страница для которой добавляется блок не найдена, попробуйте выполнить операцию позже', 'danger')
+	async switchAutosave(pageId, autosave) {
+		const page = await Page.findById(pageId)
+		if (!page) throw ApiError.BadRequest('Произошла ошибка, страница с таким id не найдена', 'danger')
 
-	// 	const newBlock = {
-	// 		block: blockId,
-	// 		isNewBlock: true,
-	// 		blockConfigs: {},
-	// 		blockContent: {}
-	// 	}
+		page.autosavePage = autosave
+		await page.save()
 
-	// 	page.blocks.push(newBlock)
-	// 	await page.save()
+		const pageDto = new PageListDto(page)
 
-	// 	// const pagesDto = pages.map(i => new PageListDto(i))
-
-	// 	return page
-	// }
+		return { ...pageDto }
+	}
 
 
 }

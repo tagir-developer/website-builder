@@ -31,3 +31,25 @@ exports.addBlockValidators = [
 		.isString().withMessage('pageId должен быть строкой')
 		.not().isEmpty().withMessage('pageId не должен быть пустым полем')
 ]
+
+exports.copyBlockValidators = [
+	check('originalBlock')
+		.trim()
+		.isString().withMessage('originalBlock должен быть строкой')
+		.not().isEmpty().withMessage('originalBlock не должен быть пустым полем'),
+	check('pageId')
+		.trim()
+		.isString().withMessage('pageId должен быть строкой')
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем')
+]
+
+exports.saveBlocksValidators = [
+	check('dtoBlocks')
+		.trim()
+		.isString().withMessage('dtoBlocks должен быть строкой')
+		.not().isEmpty().withMessage('blocks не должен быть пустым полем'),
+	check('pageId')
+		.trim()
+		.isString().withMessage('pageId должен быть строкой')
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем')
+]

@@ -61,13 +61,55 @@ class blockController {
 			ApiError.ValidationErrorChecking(req)
 
 			const {pageId, blockId} = req.body
-
-			const pageBlocks = await blockService.addBlock(pageId, blockId)
+		
+			const block = await blockService.addBlock(pageId, blockId)
 
 			return res.json({
-				blocks: pageBlocks,
+				block,
 				messageType: 'success',
 				message: "Блок успешно добавлен",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async copyBlock(req, res, next) { 
+		try {
+			ApiError.ValidationErrorChecking(req)
+
+			const {pageId, originalBlock} = req.body
+
+			const originalBlockObj = JSON.parse(originalBlock)
+		
+			const block = await blockService.copyBlock(pageId, originalBlockObj)
+
+			return res.json({
+				block,
+				messageType: 'success',
+				message: "Блок успешно скопирован",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async saveBlocks(req, res, next) { 
+		try {
+			ApiError.ValidationErrorChecking(req)
+
+			const {pageId, dtoBlocks} = req.body
+			const blocks = JSON.parse(dtoBlocks)
+
+			await blockService.saveBlocks(pageId, blocks)
+
+			return res.json({
+				messageType: 'success',
+				message: "Изменения успешно сохранены",
 				errors: []
 			})
 		} catch (e) {

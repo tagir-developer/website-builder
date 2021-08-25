@@ -68,7 +68,7 @@ class pageController {
 			const updatedProjectPages = await pageService.changePage(projectId, pageId, name, link, openInNewWindow)
 
 			return res.json({
-				pages: updatedProjectPages,
+				page: updatedProjectPages,
 				messageType: 'success',
 				message: "Страница успешно изменена",
 				errors: []
@@ -112,24 +112,25 @@ class pageController {
 		}
 	}
 
-	// async addBlock(req, res, next) { // ! Остановились здесь
-	// 	try {
-	// 		ApiError.ValidationErrorChecking(req)
+	async switchAutosave(req, res, next) {
+		try {
+			ApiError.ValidationErrorChecking(req)
 
-	// 		const {pageId, blockId} = req.body
+			const {pageId, autosave} = req.body
 
-	// 		const page = await pageService.addBlock(pageId, blockId)
+			const pageDto = await pageService.switchAutosave(pageId, autosave)
 
-	// 		return res.json({
-	// 			page: page,
-	// 			messageType: 'success',
-	// 			message: "Блок успешно добавлен",
-	// 			errors: []
-	// 		})
-	// 	} catch (e) {
-	// 		next(e)
-	// 	}
-	// }
+			return res.json({
+				page: pageDto,
+				messageType: pageDto.autosavePage ? 'success' : 'warning',
+				message: pageDto.autosavePage ? "Теперь каждое ваше действие будет сохраняться автоматически" : "Автосохранение выключено",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
 
 
 }

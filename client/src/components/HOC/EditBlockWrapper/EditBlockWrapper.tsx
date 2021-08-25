@@ -21,18 +21,16 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 	const [hovered, setHovered] = useState<boolean>(false)
 
 	const {pageBlocks} = useTypedSelector(state => state.block)
-	const {setActiveBlock} = useActions()
+	const {activePage} = useTypedSelector(state => state.page)
+	const {setActiveBlock, deleteBlock, saveBlocksInDB, copyBlock} = useActions()
 
 	const mouseOverHandler = () => {
 		setHovered(true)
-		// ! Здесь необходимо в глобальном стейте записать blockId блока, с которым работаем
 	}
 
 	const mouseLeaveHandler = () => {
 		setHovered(false)
-		// ! Здесь необходимо в глобальном стейте снять blockId блока, с которым работаем
 	}
-
 
 	const isHide = false
 
@@ -56,12 +54,18 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 		{
 			title: 'Дублировать',
 			iconType: 'copy',
-			handler: () => { }
+			handler: async () => {
+				await setActiveBlock(pageBlocks, blockId)
+				copyBlock()
+			}
 		},
 		{
 			title: 'Удалить',
 			iconType: 'delete',
-			handler: () => { }
+			handler: async () => {
+				await deleteBlock(blockId)
+				if (activePage.autosavePage) saveBlocksInDB()
+			}
 		},
 		{
 			title: isHide ? 'Показать' : 'Скрыть',

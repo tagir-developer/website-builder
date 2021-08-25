@@ -1,18 +1,26 @@
 import React from 'react'
-import styled from 'styled-components'
-import { StyledFlex } from '../../commonStyledComponents/StyledFlex'
-
-interface IHeader2Props {
-	textAlign?: string
-}
+import styled, { css } from 'styled-components'
+import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
+import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
+import { IButtonProps, IHeader2Content, IHeader2Props, IHeader2Styles, ITitleProps } from './types/header2types'
 
 const StyledHeader2 = styled.div<IHeader2Props>`
 	width: 100%;
+	position: relative;
 	box-sizing: border-box;
 	padding: 80px 25%;
 	background: #fff;
 	font-size: 1em;
-	text-align: ${props => props.textAlign || "center"};
+
+	${props => props.textAlign === 'flex-start' && css<any>`
+		text-align: left;
+	`}
+	${props => props.textAlign === 'center' && css<any>`
+		text-align: center;
+	`}
+	${props => props.textAlign === 'flex-end' && css<any>`
+		text-align: right;
+	`}
 
 	@media ${props => props.theme.media.phone} {
 		padding: 50px 15%;
@@ -24,13 +32,10 @@ const StyledHeader2 = styled.div<IHeader2Props>`
 		font-size: 0.9em;
 	}
 `
-interface ITitleProps {
-	fontSize?: string
-}
 
 const Title = styled.h1<ITitleProps>`
 	margin: 0 0 40px 0;
-	font-size: ${props => props.fontSize || '300%'}!important;
+	font-size: ${props => props.fontSize}!important;
 	font-weight: bold!important;
 	color: #004223;
 
@@ -59,15 +64,11 @@ const Description = styled.div`
 	}
 `
 
-interface IButtonProps {
-	background?: string
-}
-
 const Button = styled.button<IButtonProps>`
 	display: block;
 	max-width: 300px;
 	padding: 25px 80px;
-	background: ${props => props.background || "#7dca00"};
+	background: ${props => props.background};
 	color: #fff;
 	text-align: center;
 	font-size: 140%;
@@ -88,54 +89,36 @@ const Button = styled.button<IButtonProps>`
 		padding: 20px 70px;
 	}
 `
-interface IHeader2Styles {
-	buttonBackground: string
-	blockAlign: "flex-start" | "center" | "flex-end"
-	titleFontSize: "300%" | "350%" | "400%"
-	textAlign: "left" | "center" | "right"
+
+interface IHeader2 {
+	blockConfigs: IHeader2Styles
+	blockContent: IHeader2Content
 }
 
-const styles: IHeader2Styles = {
-	buttonBackground: "#7dca00",
-	blockAlign: "center",
-	titleFontSize: "300%",
-	textAlign: "center"
-}
-
-interface IHeader2Content {
-	titleText: string
-	descriptionText: string
-	buttonText: string
-}
-
-const content: IHeader2Content = {
-	titleText: "Заголовок блока 2",
-	descriptionText: "Какой-то текст описывающий свойства продукта или услуги",
-	buttonText: "Кнопка"
-}
-
-const Header2: React.FC = () => {
-
+const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent }) => {
 	return (
 		<StyledHeader2
-			textAlign={styles.textAlign}
+			textAlign={blockConfigs.blockAlign}
 		>
+			<StyledOverlay
+				devices={blockConfigs.hiddenOnDevice}
+			/>
 			<StyledFlex
 				direction={"column"}
-				align={styles.blockAlign}
+				align={blockConfigs.blockAlign}
 			>
 				<Title
-					fontSize={styles.titleFontSize}
+					fontSize={blockConfigs.titleFontSize}
 				>
-					{content.titleText}
+					{blockContent.titleText}
 				</Title>
 				<Description>
-					{content.descriptionText}
+					{blockContent.descriptionText}
 				</Description>
 				<Button
-					// background={styles.buttonBackground}
+					background={blockConfigs.buttonBackground}
 				>
-					{content.buttonText}
+					{blockContent.buttonText}
 				</Button>
 			</StyledFlex>
 		</StyledHeader2>

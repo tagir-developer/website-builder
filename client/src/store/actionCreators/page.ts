@@ -80,6 +80,29 @@ export const changePage = (pageId: string, name: string, link: string, openInNew
 	}
 }
 
+export const switchPageAutosave = (autosave: boolean) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
+
+		const pageId = getState().page.activePage.id
+
+		try {
+			const response = await PageService.switchPageAutosave(pageId, autosave)
+
+			dispatch(changeActivePage(response.data.page))
+
+			// if (response.data.page.autosavePage) dispatch(alertErrorOrMessageCreator(response.data))
+			dispatch(alertErrorOrMessageCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
 export const makePageHome = (pageId: string, projectId: string) => {
 	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
 
@@ -189,6 +212,13 @@ export const setActivePage = (pages: IPageResponse[], pageId: string): IPageActi
 	return { 
 		type: pageActionTypes.PAGE_SET_ACTIVE_PAGE,
 		payload: activePage
+	}
+}
+
+export const changeActivePage = (payload: IPageResponse): IPageAction => {
+	return { 
+		type: pageActionTypes.PAGE_SET_ACTIVE_PAGE,
+		payload
 	}
 }
 

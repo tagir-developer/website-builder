@@ -1,5 +1,6 @@
 const BlockDto = require('../dtos/blockDto')
 const PageBlocksDto = require('../dtos/pageBlocksDto')
+const PageBlocksRecoveryFromDto = require('../dtos/pageBlocksRecoveryFromDto')
 const ApiError = require('../exeptions/apiError')
 const Block = require('../models/Block')
 const Page = require('../models/Page')
@@ -41,7 +42,7 @@ class BlockService {
 	}
 
 	async addBlock(pageId, blockId) {
-		const page = await Page.findById(pageId)
+		const page = await Page.findById(pageId).populate('blocks').populate('blocks.block')
 		if (!page) throw ApiError.BadRequest('Страница для которой добавляется блок не найдена, попробуйте выполнить операцию позже', 'danger')
 
 		const block = await Block.findById(blockId)
@@ -51,15 +52,60 @@ class BlockService {
 			block: blockId,
 			isNewBlock: true,
 			blockIsHidden: false,
-			blockConfigs: block.blockDefaultConfigs, // ? Ранее использовал здесь пустые объекты
+			blockConfigs: block.blockDefaultConfigs, 
 			blockContent: block.blockDefaultContent
 		}
 
 		page.blocks.push(newBlock)
 		await page.save()
 
-		const pageBlocks = this.getPageBlocks(pageId)
-		return pageBlocks
+		const updatedPage = await Page.findById(pageId).populate('blocks').populate('blocks.block')
+		const targetBlock = updatedPage.blocks.pop()
+
+		await updatedPage.save()
+
+		const blockDto = new PageBlocksDto(targetBlock)
+		return blockDto
+	}
+
+	async copyBlock(pageId, originalBlockObj) {
+		const page = await Page.findById(pageId).populate('blocks').populate('blocks.block')
+		if (!page) throw ApiError.BadRequest('Страница для которой копируется блок не найдена, попробуйте выполнить операцию позже', 'danger')
+
+		// const block = await Block.findById(blockId)
+		// if (!block) throw ApiError.BadRequest('Блок не найден, попробуйте выполнить операцию позже', 'danger')
+
+		// const newBlock = { 
+		// 	block: originalBlockObj._blockModelId,
+		// 	isNewBlock: originalBlockObj.isNewBlock,
+		// 	blockIsHidden: originalBlockObj.blockIsHidden,
+		// 	blockConfigs: originalBlockObj.blockConfigs, 
+		// 	blockContent: originalBlockObj.blockContent
+		// }
+
+		const newBlock = PageBlocksRecoveryFromDto(originalBlockObj, false)
+
+		page.blocks.push(newBlock)
+		await page.save()
+
+		const updatedPage = await Page.findById(pageId).populate('blocks').populate('blocks.block')
+		const targetBlock = updatedPage.blocks.pop()
+
+		await updatedPage.save()
+
+		const blockDto = new PageBlocksDto(targetBlock)
+		return blockDto
+	}
+
+	async saveBlocks(pageId, blocks) {
+		const page = await Page.findById(pageId)
+		if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+
+		const recoveryBlocks = blocks.map(i => new PageBlocksRecoveryFromDto(i))
+
+		page.blocks = recoveryBlocks
+		await page.save()
+
 	}
 
 }

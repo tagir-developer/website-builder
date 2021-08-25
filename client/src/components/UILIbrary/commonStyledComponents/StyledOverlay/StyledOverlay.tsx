@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { devices } from '../../headers/Header1/Header1'
+import { devices } from '../commonTypes'
 import iconHidden from './hidden-block.svg'
 
 interface IStyledOverlayProps {

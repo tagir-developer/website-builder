@@ -5,6 +5,7 @@ module.exports = class PageBlocksDto {
 	blockIsHidden
 	blockConfigs
 	blockContent
+	_blockModelId
 
 	constructor(model) {
 		this.blockId = model._id
@@ -13,5 +14,6 @@ module.exports = class PageBlocksDto {
 		this.blockIsHidden = model.blockIsHidden
 		this.blockConfigs = model.blockConfigs
 		this.blockContent = model.blockContent
+		this._blockModelId = model.block._id
 	}
 }

@@ -19,6 +19,7 @@ import styled, { ThemeProvider } from 'styled-components'
 import { myTheme } from '../../components/UILIbrary/themes/themes'
 import GlobalStylesWrapper from '../../components/HOC/GlobalStylesWrapper/GlobalStylesWrapper'
 import PageTitle from '../../components/UI/PageTitle/PageTitle'
+import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
 
 interface IRouteProps {
 	pageId: string
@@ -43,26 +44,6 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 	const backdropProps = useChooseBackdropProps(openLeftMenu, openBlockConfigs, openBlockContent)
 	const blocksListPopup = usePopup(false, 'blur')
 
-	// const isEmpty = false  // Если нет ни одного блока
-
-	// const blocksArray: Array<any> = [
-	// 	{
-	// 		blockId: 'asdadasdassdfsdfd',
-	// 		path: 'headers/Header1/Header1',
-	// 		styles: {
-	// 			titleStyles: { fontSize: '26px', color: 'white' },
-	// 			buttonStyles: { fontSize: '18px', color: 'white' }
-	// 		}
-	// 	},
-	// 	{
-	// 		blockId: 'adadadadsasdasd',
-	// 		path: 'headers/Header2/Header2',
-	// 		styles: {
-	// 			titleStyles: { fontSize: '26px', color: 'white' },
-	// 		}
-	// 	}
-	// ]
-
 	useEffect(() => {
 		if (!pagesNames.includes('/' + pageUrl)) history.push('/projects/' + projectUrl)
 		// eslint-disable-next-line
@@ -73,10 +54,9 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 		// eslint-disable-next-line
 	}, [])
 
-		console.log('ИСТОРИЯ ИЗМЕНЕНИЙ', changeHistory)
-
 	return (
 		<>
+		<AlertMessage>
 			<PopUp {...blocksListPopup.popupProps} withTitle="Список блоков" modClass={['block-select-list']}>
 				<BlockSelectionList
 					closePopups={() => {
@@ -122,29 +102,10 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 							/>
 						</LeftBar>
 
-
 						<Backdrop
 							{...backdropProps}
 							withoutPadding={true}
 						>
-
-							{/* <ThemeProvider theme={myTheme}>
-								{pageBlocks.map((i, index) => {
-									const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.blockPath))
-									return (
-										<Suspense key={index} fallback={<div>Загрузка...</div>}>
-											<EditBlockWrapper
-												openConfig={openBlockConfigs.openPopup}
-												openContent={openBlockContent.openPopup}
-											>
-												<GlobalStylesWrapper>
-													<BlockComponent />
-												</GlobalStylesWrapper>
-											</EditBlockWrapper>
-										</Suspense>
-									)
-								})}
-							</ThemeProvider> */}
 
 							{loading
 								? null
@@ -179,21 +140,6 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 									</PageTitle>
 							}
 
-
-
-							{/* {blocksArray.map((i, index) => {
-							const MyComponent = i.component
-							return <MyComponent styles={i.styles} />
-						})} */}
-
-							{/* {isEmpty 
-								? <PageTitle parentClass="edit-page" title="Пустой шаблон">
-									Вы пока не создали ни одного блока. Добавьте свой первый блок на страницу.
-								</PageTitle>
-								: 
-							} */}
-
-
 							<AddNewButton
 								parentClass="edit-page"
 								handler={() => openLeftMenu.handler()} title="Добавить новый блок"
@@ -201,13 +147,13 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 							{/* <Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}
 
-
 						</Backdrop>
 
 					</div>
 				</div>
 				<Footer />
 			</Backdrop>
+			</AlertMessage>
 		</>
 	)
 }

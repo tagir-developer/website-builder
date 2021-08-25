@@ -12,7 +12,7 @@ interface IActionButtons {
 const ActionButtons: React.FC<IActionButtons> = ({ parentClass, modClass}) => {
 
 	const actionButtonsClasses = useCreateClassName('action-buttons', parentClass, modClass)
-	const {blockUndoChange} = useActions()
+	const {blockUndoChange, saveBlocksInDB} = useActions()
 
 	return (
 		<div className={actionButtonsClasses}>
@@ -26,7 +26,7 @@ const ActionButtons: React.FC<IActionButtons> = ({ parentClass, modClass}) => {
 				parentClass="action-buttons" 
 				modClass={['icon-save']} 
 				title='Сохранить изменения'
-				handler={() => {}}
+				handler={() => saveBlocksInDB(true)}
 			/>
 			<DarkRoundButton 
 				parentClass="action-buttons" 

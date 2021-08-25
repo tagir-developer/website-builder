@@ -1,24 +1,42 @@
 import React from 'react'
-import './Header2Contents.scss'
+import './styles/Header2Contents.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 import Input from '../../../UI/Input/Input'
 import Textarea from '../../../UI/Textarea/Textarea'
 import { useInput } from '../../../../hooks/useInput.hook'
+import { IHeader2Content } from './types/header2types'
+import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
 
-
-interface IHeader2Contents {
+interface IHeader2ContentsProps {
 	parentClass?: string
 	modClass?: string[]
+	closePopup: Function
+	blockContent: IHeader2Content
 }
 
-const Header2Contents: React.FC<IHeader2Contents> = ({ parentClass }) => {
+const Header2Contents: React.FC<IHeader2ContentsProps> = ({ parentClass, closePopup, blockContent }) => {
 
 	const classes = useCreateClassName('lib-header-2-contents', parentClass)
 
-	const title = useInput('Заголовок блока 2')
-	const description = useInput('Какой-то текст описывающий свойства продукта или услуги')
-	const button = useInput('Кнопка')
+	const {activePage} = useTypedSelector(state => state.page)
+	const { changeBlockContent, saveBlocksInDB } = useActions()
+
+	const title = useInput(blockContent.titleText)
+	const description = useInput(blockContent.descriptionText)
+	const button = useInput(blockContent.buttonText)
+
+	const newBlockContent: IHeader2Content = {
+		titleText: title.value,
+		descriptionText: description.value,
+		buttonText: button.value
+	}
+
+	const saveNewContent = () => {
+		changeBlockContent(newBlockContent)
+		if (activePage.autosavePage) saveBlocksInDB()
+		closePopup()
+	}
 
 	return (
 		<div className={classes}>
@@ -47,7 +65,7 @@ const Header2Contents: React.FC<IHeader2Contents> = ({ parentClass }) => {
 
 			<SecondaryButton
 				parentClass="lib-header-2-contents"
-				handler={() => { }}
+				handler={saveNewContent}
 			>
 				Применить настройки
 			</SecondaryButton>

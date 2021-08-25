@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import $api from "../http"
-import { IAddBlockToPageResponse, IBlockResponse, IPageBlocksResponse } from "../models/response/BlockResponse"
+import { IAddBlockToPageResponse, IBlockResponse, ICopyBlockResponse, IPageBlocksResponse, ISaveBlocksInDBResponse } from "../models/response/BlockResponse"
 
 export default class BlockService {
 
@@ -14,6 +14,14 @@ export default class BlockService {
 
 	static async addBlockToPage(pageId: string, blockId: string): Promise<AxiosResponse<IAddBlockToPageResponse>> {
 		return $api.put<IAddBlockToPageResponse>('blocks/add-block', {pageId, blockId})
+	}
+
+	static async copyBlock(pageId: string, originalBlock: string): Promise<AxiosResponse<ICopyBlockResponse>> {
+		return $api.put<ICopyBlockResponse>('blocks/copy-block', {pageId, originalBlock})
+	}
+
+	static async saveBlocksInDB(pageId: string, dtoBlocks: string): Promise<AxiosResponse<ISaveBlocksInDBResponse>> {
+		return $api.put<ISaveBlocksInDBResponse>('blocks/save-blocks', {pageId, dtoBlocks})
 	}
 
 }

@@ -34,10 +34,14 @@ exports.createPageValidators = [
 ]
 
 exports.updatePageValidators = [
+	check('projectId')
+		.trim()
+		.not().isEmpty().withMessage('projectId не должен быть пустым полем')
+		.isString().withMessage('projectId должен быть строкой'),
 	check('pageId')
 		.trim()
-		.isString().withMessage('pageId должен быть строкой')
-		.not().isEmpty().withMessage('pageId не должен быть пустым полем'),
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем')
+		.isString().withMessage('pageId должен быть строкой'),
 	check('name')
 		.trim()
 		.isLength({min: 3}).withMessage('Название страницы должно содержать не менее трех букв')
@@ -50,14 +54,13 @@ exports.updatePageValidators = [
 		.isBoolean().withMessage('Поле должно иметь значение true или false')
 ]
 
-// exports.addBlockValidators = [
-// 	check('blockId')
-// 		.trim()
-// 		.isString().withMessage('blockId должен быть строкой')
-// 		.not().isEmpty().withMessage('blockId не должен быть пустым полем'),
-// 	check('pageId')
-// 		.trim()
-// 		.isString().withMessage('pageId должен быть строкой')
-// 		.not().isEmpty().withMessage('pageId не должен быть пустым полем')
-// ]
+exports.switchAutosavePageValidators = [
+	check('pageId')
+		.trim()
+		.isString().withMessage('pageId должен быть строкой')
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем'),
+	check('autosave')
+		.not().isEmpty().withMessage('Поле autosave не должно быть пустым')
+		.isBoolean().withMessage('Поле autosave должено иметь булев тип')
+]
 

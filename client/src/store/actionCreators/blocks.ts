@@ -6,6 +6,7 @@ import { blockActionTypes, IBlockAction, IBlockState } from "../types/block"
 import { alertErrorOrMessageCreator } from "./alert"
 import produce from 'immer'
 import { WritableDraft } from "immer/dist/internal"
+import { IPageState } from "../types/page"
 
 
 export const getBlocksWithType = (blockType: string) => {
@@ -51,16 +52,23 @@ export const getPageBlocks = (pageId: string) => {
 	}
 }
 
-export const addBlockToPage = (pageId: string, blockId: string) => {
-	return async (dispatch: Dispatch<IBlockAction>) => {
+export const addBlockToPage = (blockId: string) => {
+	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
 
 		// dispatch(blockStartCreator())
+		const changeHistory: Array<IPageBlocksResponse[]> = getState().block.changeHistory
+		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
+		const pageId: string = getState().page.activePage.id
 
 		try {
 			const response = await BlockService.addBlockToPage(pageId, blockId)
 
-			dispatch(blockGetPageBlocks(response.data.blocks))
-			dispatch(alertErrorOrMessageCreator(response.data))
+			const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
+				draft.push(response.data.block)
+			})
+
+			dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
+			dispatch(blockGetPageBlocks(newBlockList))
 
 		} catch (error) {
 			const e = error as AxiosError
@@ -68,7 +76,6 @@ export const addBlockToPage = (pageId: string, blockId: string) => {
 				// dispatch(blockEndCreator())
 				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
-
 		}
 	}
 }
@@ -95,7 +102,8 @@ export const changeBlockConfigs = (configObject: any) => {
 		})
 
 		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
-		dispatch(saveBlockConfigs(newBlockList))
+		// dispatch(saveBlockConfigs(newBlockList))
+		dispatch(blockGetPageBlocks(newBlockList))
 	}
 }
 
@@ -111,7 +119,77 @@ export const changeBlockContent = (contentObject: any) => {
 		})
 
 		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
-		dispatch(saveBlockConfigs(newBlockList))
+		// dispatch(saveBlockConfigs(newBlockList))
+		dispatch(blockGetPageBlocks(newBlockList))
+	}
+}
+
+export const deleteBlock = (blockId: string) => {
+	return (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState }) => {
+
+		const changeHistory: Array<IPageBlocksResponse[]> = getState().block.changeHistory
+		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
+
+		const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
+			const index = draft.findIndex(i => i.blockId === blockId)
+    		if (index !== -1) draft.splice(index, 1)
+		})
+
+		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
+		dispatch(blockGetPageBlocks(newBlockList))
+	}
+}
+
+export const copyBlock = () => {
+	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
+		// dispatch(blockStartCreator())
+		const changeHistory: Array<IPageBlocksResponse[]> = getState().block.changeHistory
+		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
+		const activeBlock: IPageBlocksResponse = getState().block.activeBlock
+		const pageId: string = getState().page.activePage.id
+
+		const originalBlock: string = JSON.stringify(activeBlock)
+
+		try {
+			const response = await BlockService.copyBlock(pageId, originalBlock)
+
+			const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
+				const index = draft.findIndex(i => i.blockId === activeBlock.blockId)
+				draft.splice(index, 0, response.data.block)
+			})
+
+			dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
+			dispatch(blockGetPageBlocks(newBlockList))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				// dispatch(blockEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+		}
+	}
+}
+
+export const saveBlocksInDB = (showMessage: boolean = false) => {
+	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
+
+		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
+		const pageId: string = getState().page.activePage.id
+		const dtoBlocks: string = JSON.stringify(blocks)
+
+		try {
+			const response = await BlockService.saveBlocksInDB(pageId, dtoBlocks)
+
+			if (showMessage) dispatch(alertErrorOrMessageCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
 	}
 }
 
@@ -142,12 +220,6 @@ export const updateChangeHistory = (payload: Array<IPageBlocksResponse[]>): IBlo
 	}
 }
 
-export const saveBlockConfigs = (payload: IPageBlocksResponse[]): IBlockAction => {
-	return {
-		type: blockActionTypes.BLOCK_SAVE_BLOCK_CONFIGS,
-		payload
-	}
-}
 
 export const setActiveBlock = (blocks: IPageBlocksResponse[], blockId: string): IBlockAction => {
 
@@ -173,6 +245,13 @@ export const blockGetBlocksList = (payload: IBlockResponse[]): IBlockAction => {
 		payload
 	}
 }
+
+// export const saveBlockConfigs = (payload: IPageBlocksResponse[]): IBlockAction => {
+// 	return {
+// 		type: blockActionTypes.BLOCK_SAVE_BLOCK_CONFIGS,
+// 		payload
+// 	}
+// }
 
 export const blockGetPageBlocks = (payload: IPageBlocksResponse[]): IBlockAction => {
 	return {
