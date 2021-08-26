@@ -132,8 +132,57 @@ export const deleteBlock = (blockId: string) => {
 
 		const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
 			const index = draft.findIndex(i => i.blockId === blockId)
-    		if (index !== -1) draft.splice(index, 1)
+			if (index !== -1) draft.splice(index, 1)
 		})
+
+		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
+		dispatch(blockGetPageBlocks(newBlockList))
+	}
+}
+
+export const showHideBlock = () => {
+	return (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState }) => {
+
+		const changeHistory: Array<IPageBlocksResponse[]> = getState().block.changeHistory
+		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
+		const activeBlock: IPageBlocksResponse = getState().block.activeBlock
+
+		const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
+			const index = draft.findIndex(i => i.blockId === activeBlock.blockId)
+			if (index !== -1) draft[index].blockIsHidden = !activeBlock.blockIsHidden
+		})
+
+		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
+		dispatch(blockGetPageBlocks(newBlockList))
+	}
+}
+
+export const moveBlock = (direction: 'up' | 'down') => {
+	return (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState }) => {
+
+		const changeHistory: Array<IPageBlocksResponse[]> = getState().block.changeHistory
+		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
+		const activeBlock: IPageBlocksResponse = getState().block.activeBlock
+
+		const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
+			const index = draft.findIndex(i => i.blockId === activeBlock.blockId)
+			if (index !== -1) {
+				if (index !== 0 && direction === 'up') {
+					const prevBlock = draft[index - 1]
+					const targetBlock = draft[index]
+					draft[index - 1] = targetBlock
+					draft[index] = prevBlock
+				}
+				if (index !== (blocks.length - 1) && direction === 'down') {
+					const nextBlock = draft[index + 1]
+					const targetBlock = draft[index]
+					draft[index + 1] = targetBlock
+					draft[index] = nextBlock
+				}
+			}
+		})
+
+		// console.log('Смещенный список блоков', newBlockList)
 
 		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
 		dispatch(blockGetPageBlocks(newBlockList))

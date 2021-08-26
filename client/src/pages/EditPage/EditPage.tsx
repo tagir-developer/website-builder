@@ -123,11 +123,13 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 														openContent={
 															openBlockContent.openPopup
 														}
+														blockIsHidden={i.blockIsHidden}
 													>
 														<GlobalStylesWrapper>
 															<BlockComponent
 																blockConfigs={i.blockConfigs}
 																blockContent={i.blockContent}
+																blockIsHidden={i.blockIsHidden}
 															/>
 														</GlobalStylesWrapper>
 													</EditBlockWrapper>

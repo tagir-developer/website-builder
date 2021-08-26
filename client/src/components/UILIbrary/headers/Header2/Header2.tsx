@@ -93,15 +93,17 @@ const Button = styled.button<IButtonProps>`
 interface IHeader2 {
 	blockConfigs: IHeader2Styles
 	blockContent: IHeader2Content
+	blockIsHidden: boolean
 }
 
-const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent }) => {
+const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden }) => {
 	return (
 		<StyledHeader2
 			textAlign={blockConfigs.blockAlign}
 		>
 			<StyledOverlay
 				devices={blockConfigs.hiddenOnDevice}
+				blockIsHidden={blockIsHidden}
 			/>
 			<StyledFlex
 				direction={"column"}

@@ -92,16 +92,32 @@ const Button = styled.button<IButtonProps>`
 interface IHeader1 {
 	blockConfigs: IHeader1Styles
 	blockContent: IHeader1Content
+	blockIsHidden: boolean
 }
 
-const Header1: React.FC<IHeader1> = ({ blockConfigs, blockContent }) => {
+
+
+const Header1: React.FC<IHeader1> = ({ blockConfigs, blockContent, blockIsHidden }) => {
+	// console.log('Значения параметра скрытия блока', blockIsHidden)
 	return (
 		<StyledHeader1
 			textAlign={blockConfigs.blockAlign}
 		>
 			<StyledOverlay
 				devices={blockConfigs.hiddenOnDevice}
+				blockIsHidden={blockIsHidden}
 			/>
+			{/* {!blockIsHidden
+				? <StyledOverlay
+					devices={blockConfigs.hiddenOnDevice}
+					blockIsHidden={true}
+				/>
+				: <StyledOverlay
+					devices={blockConfigs.hiddenOnDevice}
+					blockIsHidden={false}
+				/>
+			}
+			<p style={{ color: 'red' }}>{blockIsHidden.toString()}</p> */}
 			<StyledFlex
 				direction={"column"}
 				align={blockConfigs.blockAlign}

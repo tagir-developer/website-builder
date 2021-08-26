@@ -21,6 +21,7 @@
 		bottom: 0;
 		right: 0;
 		box-shadow: inset 3px 3px 18px rgba(0, 255, 41, 0.50), inset -3px -3px 18px rgba(0, 255, 41, 0.50);
+		z-index: 50;
 		// &:hover {
 		// 	box-shadow: inset 3px 3px 18px rgba(0, 255, 41, 0.50), inset -3px -3px 18px rgba(0, 255, 41, 0.50);
 		// }		
@@ -30,7 +31,7 @@
 		position: absolute;
 		top: 20px;
 		left: 15px;
-		z-index: 10;
+		z-index: 100;
 	}
 
 	&__block-move-btn {

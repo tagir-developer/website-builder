@@ -72,18 +72,7 @@ class BlockService {
 		const page = await Page.findById(pageId).populate('blocks').populate('blocks.block')
 		if (!page) throw ApiError.BadRequest('Страница для которой копируется блок не найдена, попробуйте выполнить операцию позже', 'danger')
 
-		// const block = await Block.findById(blockId)
-		// if (!block) throw ApiError.BadRequest('Блок не найден, попробуйте выполнить операцию позже', 'danger')
-
-		// const newBlock = { 
-		// 	block: originalBlockObj._blockModelId,
-		// 	isNewBlock: originalBlockObj.isNewBlock,
-		// 	blockIsHidden: originalBlockObj.blockIsHidden,
-		// 	blockConfigs: originalBlockObj.blockConfigs, 
-		// 	blockContent: originalBlockObj.blockContent
-		// }
-
-		const newBlock = PageBlocksRecoveryFromDto(originalBlockObj, false)
+		const newBlock = new PageBlocksRecoveryFromDto(originalBlockObj, false)
 
 		page.blocks.push(newBlock)
 		await page.save()

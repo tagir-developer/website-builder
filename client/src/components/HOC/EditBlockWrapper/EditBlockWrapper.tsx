@@ -12,17 +12,18 @@ interface IEditBlockWrapper {
 	openConfig: () => void
 	openContent: () => void
 	blockId: string
+	blockIsHidden: boolean
 }
 
-const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass, openConfig, openContent, blockId }) => {
+const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, modClass, openConfig, openContent, blockId, blockIsHidden }) => {
 
 	const blockWrapperClasses = useCreateClassName("edit-block-wrapper", parentClass, modClass)
 
 	const [hovered, setHovered] = useState<boolean>(false)
 
-	const {pageBlocks} = useTypedSelector(state => state.block)
-	const {activePage} = useTypedSelector(state => state.page)
-	const {setActiveBlock, deleteBlock, saveBlocksInDB, copyBlock} = useActions()
+	const { pageBlocks } = useTypedSelector(state => state.block)
+	const { activePage } = useTypedSelector(state => state.page)
+	const { setActiveBlock, deleteBlock, saveBlocksInDB, copyBlock, showHideBlock, moveBlock } = useActions()
 
 	const mouseOverHandler = () => {
 		setHovered(true)
@@ -31,8 +32,6 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 	const mouseLeaveHandler = () => {
 		setHovered(false)
 	}
-
-	const isHide = false
 
 	const items = [
 		{
@@ -56,7 +55,8 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 			iconType: 'copy',
 			handler: async () => {
 				await setActiveBlock(pageBlocks, blockId)
-				copyBlock()
+				await copyBlock()
+				if (activePage.autosavePage) saveBlocksInDB()
 			}
 		},
 		{
@@ -68,9 +68,13 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 			}
 		},
 		{
-			title: isHide ? 'Показать' : 'Скрыть',
-			iconType: isHide ? 'show' : 'hide',
-			handler: () => { }
+			title: blockIsHidden ? 'Показать' : 'Скрыть',
+			iconType: blockIsHidden ? 'show' : 'hide',
+			handler: async () => {
+				await setActiveBlock(pageBlocks, blockId)
+				await showHideBlock()
+				if (activePage.autosavePage) saveBlocksInDB()
+			}
 		},
 	]
 
@@ -82,11 +86,17 @@ const EditBlockWrapper: React.FC<IEditBlockWrapper> = ({ children, parentClass, 
 		>
 			{hovered && <>
 				<div className="edit-block-wrapper__green-light"></div>
-				<BlockActionButtons 
-					parentClass="edit-block-wrapper" 
+				<BlockActionButtons
+					parentClass="edit-block-wrapper"
 					items={items}
 				/>
-				<BlockMoveBtn parentClass="edit-block-wrapper" handler={() => { }} />
+				<BlockMoveBtn
+					parentClass="edit-block-wrapper"
+					handler={async (direction) => {
+						await setActiveBlock(pageBlocks, blockId)
+						moveBlock(direction)
+					}}
+				/>
 			</>}
 
 			{children}

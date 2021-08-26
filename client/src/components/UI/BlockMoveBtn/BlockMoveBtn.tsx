@@ -5,7 +5,7 @@ import './BlockMoveBtn.scss'
 interface IBlockMoveBtn {
 	parentClass?: string
 	modClass?: string[]
-	handler: (param?: any) => void
+	handler: (param: 'up' | 'down') => void
 	tooltipTextUp?: string
 	tooltipTextDown?: string
 }
@@ -18,14 +18,14 @@ const BlockMoveBtn: React.FC<IBlockMoveBtn> = ({ parentClass, modClass, handler,
 		<div className={blockMoveBtnClasses}>
 			<div 
 				className="block-move-btn__move-btn block-move-btn__move-btn_up-icon"
-				onClick={handler}
+				onClick={() => handler('up')}
 			>
 				<span className="block-move-btn__tooltip">{tooltipTextUp ? tooltipTextUp : 'Сдвинуть блок вверх'}</span>
 			</div>
 			<div className="block-move-btn__devider"></div>
 			<div 
 				className="block-move-btn__move-btn block-move-btn__move-btn_down-icon"
-				onClick={handler}
+				onClick={() => handler('down')}
 			>
 				<span className="block-move-btn__tooltip">{tooltipTextDown ? tooltipTextDown : 'Сдвинуть блок вниз'}</span>
 			</div>	

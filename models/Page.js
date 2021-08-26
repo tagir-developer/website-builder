@@ -54,7 +54,7 @@ const Page = new Schema({
 				default: true
 			},
 			blockIsHidden: {
-				type: String,
+				type: Boolean,
 				default: false
 			},
 			blockConfigs: {
