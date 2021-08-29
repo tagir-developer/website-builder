@@ -25,3 +25,38 @@
 /client/npm-debug.log*
 /client/yarn-debug.log*
 /client/yarn-error.log*
+
+# on CLIENT_SSR
+
+# dependencies
+/client-ssr/node_modules
+/client-ssr/.pnp
+/client-ssr/.pnp.js
+
+# testing
+/client-ssr/coverage
+
+# next.js
+/client-ssr/.next/
+/client-ssr/out/
+
+# production
+/client-ssr/build
+
+# misc
+/client-ssr/.DS_Store
+/client-ssr/*.pem
+
+# debug
+/client-ssr/npm-debug.log*
+/client-ssr/yarn-debug.log*
+/client-ssr/yarn-error.log*
+
+# local env files
+/client-ssr/.env.local
+/client-ssr/.env.development.local
+/client-ssr/.env.test.local
+/client-ssr/.env.production.local
+
+# vercel
+/client-ssr/.vercel

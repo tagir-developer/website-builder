@@ -7,7 +7,9 @@
     "start": "node start app.js",
     "server": "nodemon start app.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "ssr": "npm run dev --prefix client-ssr",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev3": "concurrently \"npm run server\" \"npm run client\" \"npm run ssr\""
   },
   "keywords": [
     "mern",
