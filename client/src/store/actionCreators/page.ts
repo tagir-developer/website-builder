@@ -2,7 +2,7 @@ import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { IPageResponse } from "../../models/response/PageResponse"
 import PageService from "../../services/PageService"
-import { IPageAction, IPageState, pageActionTypes } from "../types/page"
+import { IDeviceTypes, IPageAction, IPageState, pageActionTypes } from "../types/page"
 import { IProjectsState } from "../types/projects"
 import { alertErrorOrMessageCreator } from "./alert"
 
@@ -228,6 +228,13 @@ export const pageStartCreator = (): IPageAction => {
 
 export const pageEndCreator = (): IPageAction => {
 	return { type: pageActionTypes.PAGE_END }
+}
+
+export const showDevicePreview = (payload: IDeviceTypes): IPageAction => {
+	return { 
+		type: pageActionTypes.PAGE_SHOW_DEVICE_PREVIEW,
+		payload
+	}
 }
 
 

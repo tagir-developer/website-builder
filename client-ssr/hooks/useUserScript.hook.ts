@@ -1,21 +1,18 @@
-import {useCallback, useState} from 'react'
 
-interface IUseUserScript {
-	loading: boolean
-
-
+export interface IUseUserScript {
+	inlineScripts: string | null
+	simpleSourceScripts: RegExpMatchArray | null
+	asyncSourceScripts: RegExpMatchArray | null
 }
 
 export const useUserScripts = (scripts: string): IUseUserScript => {
 
-	// const [loading, setLoading] = useState<boolean>(false)
+	let findedInlineScripts: RegExpMatchArray | null = scripts.match(/(?<=<script[^>]*>)([\s\S]*?)(?=<\/script>)/g)
+	const inlineScripts: string | null = findedInlineScripts ? findedInlineScripts.map(i => i.trim()).filter(i => i !== "").join("\n") : null
 
-	let inlineScripts: RegExpMatchArray | null = scripts.match(/(?<=<script[^>]*>)([\s\S]*?)(?=<\/script>)/g)
-	if (inlineScripts) inlineScripts.join("\n")
+	const simpleSourceScripts: RegExpMatchArray | null = scripts.match(/(?<=<script\s+.*src=")(?<!<script.*async.*).+(?=")(?=.*>\s*<\/script>)(?!".*async.*>)/g)
 
-	const simpleSourceScripts: RegExpMatchArray | null = scripts.match(/(?<=<script\s+[^a]*src=").+(?=")/g)
+	const asyncSourceScripts: RegExpMatchArray | null = scripts.match(/((?<=<script.*async.*src=").+(?=")(?=.*>\s*<\/script>)|(?<=<script.*src=").+(?=")(?=.*async.*>\s*<\/script>))/g)
 
-	const asyncSourceScripts: RegExpMatchArray | null = scripts.match(/((?<=<script\s+.*async\s+.*src=").+(?=")|(?<=<script\s+.*src=").+(?="\s+.*async))/g)
-
-	return { loading }
+	return { inlineScripts, simpleSourceScripts, asyncSourceScripts }
 }

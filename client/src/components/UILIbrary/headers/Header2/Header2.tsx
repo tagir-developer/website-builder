@@ -1,10 +1,11 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
 import { IButtonProps, IHeader2Content, IHeader2Props, IHeader2Styles, ITitleProps } from './types/header2types'
 
-const StyledHeader2 = styled.div<IHeader2Props>`
+const StyledHeader2 = styled(BasicComponent)<IHeader2Props>`
 	width: 100%;
 	position: relative;
 	box-sizing: border-box;
@@ -100,6 +101,8 @@ const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden
 	return (
 		<StyledHeader2
 			textAlign={blockConfigs.blockAlign}
+			blockIsHidden={blockIsHidden}
+			devices={blockConfigs.hiddenOnDevice}
 		>
 			<StyledOverlay
 				devices={blockConfigs.hiddenOnDevice}

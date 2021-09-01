@@ -5,6 +5,7 @@ import { myTheme } from "../../components/UILibrary/themes/themes"
 import MainLayout from "../../components/HOC/MainLayout/MainLayout"
 import Script from 'next/script'
 import UserScripts from "../../components/Another/UserScripts/UserScripts"
+import { useUserScripts } from "../../hooks/useUserScript.hook"
 
 const page = {
 	pageName: "Название страницы",
@@ -79,62 +80,8 @@ const page = {
 
 }
 
-const testStr: string = `
-<!-- Yandex.Metrika counter 1111111111111 -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-   ym(50173081, "init", {
-		clickmap:true,
-		trackLinks:true,
-		accurateTrackBounce:true
-		
-   });
-</script>
-
-<script async src="aSAsASasAS">
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/50173081" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-<script>Проверка регулярки</script>
-asd
-<script ыва выа  src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
-<image async src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
-<image src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
-	sdfsdf
-	<script>поп
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	
-	gtag('config', 'UA-86345135-1');
-</script>
-asdasd
-
-asdasdasd
-   <script src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
-asdasdasd
-
-`
-
-// const testStr: string = `
-
-// <script>Проверка регулярки</script>
-// `
-
 const blocks: any = page.pageBlocks.map((i, index) => {
 	const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
-
-	// const arr: RegExpMatchArray | null = testStr.match(/(?<=<script.*>).+(?=<\/script>)/gm)
-	// const arr: RegExpMatchArray | null = testStr.match(/Про/g)
-
-	// console.log(arr)
-
 	return (
 		<BlockComponent
 			key={index}
@@ -145,26 +92,27 @@ const blocks: any = page.pageBlocks.map((i, index) => {
 	)
 })
 
+
 const UserPage = () => {
+
 	return (
 		<>
 			<MainLayout title={page.pageName}>
 
-				{/* <UserScripts scripts={page.additionalScripts} /> */}
-				<UserScripts scripts={testStr} />
+				<UserScripts scripts={page.additionalScripts} />
+				{/* <Script
+					id="show-banner"
+					dangerouslySetInnerHTML={{
+						__html: `console.log('Проверка')`
+					}}
+				/> */}
 
 				<div className="wrapper-test">
 					<ThemeProvider theme={myTheme}>
 						{blocks}
 					</ThemeProvider>
 				</div>
-				{/* <Script
-					dangerouslySetInnerHTML={{
-						__html: `
-						console.log('Test 777');
-						`
-					}}
-				/> */}
+
 			</MainLayout>
 
 			<style jsx>{`

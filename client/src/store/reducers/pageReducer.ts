@@ -6,7 +6,8 @@ export const initialState: IPageState = {
 	pages: [] as IPageResponse[],
 	pagesNames: [],
 	homePageId: '',
-	activePage: {} as IPageResponse
+	activePage: {} as IPageResponse,
+	devicePreview: 'pc'
 }
 
 export default function pageReducer(state = initialState, action: IPageAction): IPageState {
@@ -35,6 +36,10 @@ export default function pageReducer(state = initialState, action: IPageAction): 
 		case pageActionTypes.PAGE_SET_ACTIVE_PAGE: return {
 			...state,
 			activePage: action.payload
+		}
+		case pageActionTypes.PAGE_SHOW_DEVICE_PREVIEW: return {
+			...state,
+			devicePreview: action.payload
 		}
 		default:
 			return state
