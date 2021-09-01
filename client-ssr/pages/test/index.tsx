@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components"
 import { myTheme } from "../../components/UILibrary/themes/themes"
 import MainLayout from "../../components/HOC/MainLayout/MainLayout"
 import Script from 'next/script'
+import UserScripts from "../../components/Another/UserScripts/UserScripts"
 
 const page = {
 	pageName: "Название страницы",
@@ -89,21 +90,36 @@ const testStr: string = `
 		clickmap:true,
 		trackLinks:true,
 		accurateTrackBounce:true
+		
    });
+</script>
+
+<script async src="aSAsASasAS">
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/50173081" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script>Проверка регулярки</script>
+asd
+<script ыва выа  src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
+<image async src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
+<image src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
-	<script>
+	sdfsdf
+	<script>поп
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
-
+	
 	gtag('config', 'UA-86345135-1');
 </script>
-<script>Проверка регулярки</script>
+asdasd
+
+asdasdasd
+   <script src="https://www.googletagmanager.com/gtag/js?id=UA-86345135-1"></script>
+asdasdasd
+
 `
 
 // const testStr: string = `
@@ -114,10 +130,10 @@ const testStr: string = `
 const blocks: any = page.pageBlocks.map((i, index) => {
 	const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
 
-	const arr: RegExpMatchArray | null = testStr.match(/(?<=<script.*>).+(?=<\/script>)/gm)
+	// const arr: RegExpMatchArray | null = testStr.match(/(?<=<script.*>).+(?=<\/script>)/gm)
 	// const arr: RegExpMatchArray | null = testStr.match(/Про/g)
 
-	console.log(arr)
+	// console.log(arr)
 
 	return (
 		<BlockComponent
@@ -134,21 +150,21 @@ const UserPage = () => {
 		<>
 			<MainLayout title={page.pageName}>
 
-				{/* <Script strategy="lazyOnload">
-					{page.additionalScripts}
-				</Script> */}
-				{/* {page.additionalScripts} */}
-				{/* <Script
-					dangerouslySetInnerHTML={{
-						__html: page.additionalScripts
-					}}
-				/> */}
+				{/* <UserScripts scripts={page.additionalScripts} /> */}
+				<UserScripts scripts={testStr} />
 
 				<div className="wrapper-test">
 					<ThemeProvider theme={myTheme}>
 						{blocks}
 					</ThemeProvider>
 				</div>
+				{/* <Script
+					dangerouslySetInnerHTML={{
+						__html: `
+						console.log('Test 777');
+						`
+					}}
+				/> */}
 			</MainLayout>
 
 			<style jsx>{`
