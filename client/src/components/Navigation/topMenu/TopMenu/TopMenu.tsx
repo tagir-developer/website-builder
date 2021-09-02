@@ -264,8 +264,22 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 							{ title: 'Назад', link: '/', goBack: true },
 						]}
 					/>
-					<ViewOnDevices parentClass="top-menu" />
-					<ViewOnDevicesMobile parentClass="top-menu" />
+					<ViewOnDevices 
+						parentClass="top-menu"
+						deviceItems={[
+							{title: 'Смартфон', value: 'mobile' },
+							{title: 'Планшет', value: 'tablete' },
+							{title: 'Компьютер', value: 'pc' }
+						]} 
+					/>
+					<ViewOnDevicesMobile 
+						parentClass="top-menu"
+						deviceItems={[
+							{title: 'Смартфон', value: 'mobile', iconClass: 'icon-mobile' },
+							{title: 'Планшет', value: 'tablete', iconClass: 'icon-tablet' },
+							{title: 'Компьютер', value: 'pc', iconClass: 'icon-pc' }
+						]}
+					/>
 				</>
 			)
 		}

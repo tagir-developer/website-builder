@@ -6,6 +6,7 @@ declare module 'styled-components' {
       phone: string
       tablete: string
       pc: string
+      phoneAndTablete: string
     }
   }
 }
