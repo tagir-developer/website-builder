@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import $api from "../http"
-import { IChangePageResponse, ICopyPageResponse, ICreatePageResponse, IDeletePageResponse, IMakePageHomeResponse, IPageResponse, ISwitchAutosaveResponse } from "../models/response/PageResponse"
+import { IChangePagePublicationStatusResponse, IChangePageResponse, ICopyPageResponse, ICreatePageResponse, IDeletePageResponse, IMakePageHomeResponse, IPageResponse, ISwitchAutosaveResponse } from "../models/response/PageResponse"
 
 export default class PageService {
 
@@ -18,6 +18,10 @@ export default class PageService {
 
 	static async switchPageAutosave(pageId: string, autosave: boolean): Promise<AxiosResponse<ISwitchAutosaveResponse>> {
 		return $api.put<ISwitchAutosaveResponse>('pages/switch-autosave', {pageId, autosave})
+	}
+
+	static async changePagePublicationStatus(pageId: string, value: boolean): Promise<AxiosResponse<IChangePagePublicationStatusResponse>> {
+		return $api.put<IChangePagePublicationStatusResponse>('pages/change-publication-status', {pageId, value})
 	}
 
 	static async deletePage(pageId: string, projectId: string): Promise<AxiosResponse<IDeletePageResponse>> {

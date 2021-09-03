@@ -31,10 +31,9 @@ interface IEditPage extends RouteComponentProps<IRouteProps> {
 
 const EditPage: React.FC<IEditPage> = ({ match }) => {
 
-	// const openLeftMenu = useCheck(false)
-	const { pagesNames, activePage } = useTypedSelector(state => state.page)
+	const { pagesNames, activePage, previousPath } = useTypedSelector(state => state.page)
 	const { pageBlocks, loading, changeHistory } = useTypedSelector(state => state.block)
-	const { getPageBlocks } = useActions()
+	const { getPageBlocks, setPreviousPath } = useActions()
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
 	const history = useHistory()
 
@@ -50,7 +49,10 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 	}, [])
 
 	useEffect(() => {
-		getPageBlocks(activePage.id)
+		if (previousPath !== 'preview') {
+			getPageBlocks(activePage.id)
+		}
+		setPreviousPath('')
 		// eslint-disable-next-line
 	}, [])
 

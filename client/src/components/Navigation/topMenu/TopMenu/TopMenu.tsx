@@ -8,12 +8,18 @@ import ActionButtons from '../ActionButtons/ActionButtons'
 import ViewOnDevices from '../ViewOnDevices/ViewOnDevices'
 import ViewOnDevicesMobile from '../ViewOnDevicesMobile/ViewOnDevicesMobile'
 import MobileMenu from '../MobileMenu/MobileMenu'
+import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
+import { useHistory, useLocation } from 'react-router-dom'
 
 interface ITopMenu {
 	menuType?: 'main' | 'back-to-main' | 'go-back' | 'auth' | 'auth-project' | 'select-template' | 'edit' | 'preview'
 }
 
 const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
+
+	const {activeProject} = useTypedSelector(state => state.projects)
+	const {changePagePublicationStatus, blockUndoChange, saveBlocksInDB} = useActions()
+	const history = useHistory()
 
 	const topMenuClasses = (typeMenu: string): string => {
 		if (typeMenu === 'main') return 'top-menu'
@@ -211,14 +217,14 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 						modClass={['dark-theme']}
 						items={[
 							{ title: 'Мои сайты', link: '/' },
-							{ title: 'Список страниц', link: '/', goBack: true },
+							{ title: 'Список страниц', link: '/projects/' + activeProject.link },
 						]}
 					/>
 					<BreadCrumbs
 						parentClass="top-menu"
 						modClass={['dark-theme', 'mobile-version']}
 						items={[
-							{ title: 'Сайт', link: '/', goBack: true },
+							{ title: 'Сайт', link: '/' },
 						]}
 					/>
 					<div className="top-menu__devider"></div>
@@ -228,15 +234,27 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 						parentClass="top-menu"
 						modClass={['dark-theme']}
 						items={[
-							{ title: 'Опубликовать', link: '/', bold: true },
+							{ title: 'Опубликовать', link: '/', bold: true, handler: () => {
+								changePagePublicationStatus(true)
+								history.push('/projects/' + activeProject.link)
+							} },
 						]}
 					/>
 					<MobileMenu
 						items={[
-							{ title: 'Сохранить', link: '/', bold: false },
-							{ title: 'Отменить действие', link: '/', bold: false },
-							{ title: 'Предпросмотр', link: '/', bold: false },
-							{ title: 'Опубликовать', link: '/', bold: false },
+							{ title: 'Сохранить', link: '/', bold: false, handler: () => {
+								saveBlocksInDB(true)
+							} },
+							{ title: 'Отменить действие', link: '/', bold: false, handler: () => {
+								blockUndoChange()
+							}},
+							{ title: 'Предпросмотр', link: '/', bold: false, handler: () => {
+								history.push(history.location.pathname + '/preview')
+							}},
+							{ title: 'Опубликовать', link: '/', bold: false, handler: () => {
+								changePagePublicationStatus(true)
+								history.push('/projects/' + activeProject.link)
+							}},
 						]}
 						parentClass="top-menu"
 						modClass={['dark-theme']}

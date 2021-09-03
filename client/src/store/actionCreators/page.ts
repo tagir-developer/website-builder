@@ -89,8 +89,27 @@ export const switchPageAutosave = (autosave: boolean) => {
 			const response = await PageService.switchPageAutosave(pageId, autosave)
 
 			dispatch(changeActivePage(response.data.page))
+			dispatch(alertErrorOrMessageCreator(response.data))
 
-			// if (response.data.page.autosavePage) dispatch(alertErrorOrMessageCreator(response.data))
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
+export const changePagePublicationStatus = (pageId: string, value: boolean) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
+
+		// const pageId = getState().page.activePage.id
+
+		try {
+			const response = await PageService.changePagePublicationStatus(pageId, value)
+
+			dispatch(changeActivePage(response.data.page))
 			dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {
@@ -233,6 +252,13 @@ export const pageEndCreator = (): IPageAction => {
 export const showDevicePreview = (payload: IDeviceTypes): IPageAction => {
 	return { 
 		type: pageActionTypes.PAGE_SHOW_DEVICE_PREVIEW,
+		payload
+	}
+}
+
+export const setPreviousPath = (payload: string): IPageAction => {
+	return { 
+		type: pageActionTypes.PAGE_SET_PATH,
 		payload
 	}
 }

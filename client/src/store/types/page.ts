@@ -10,6 +10,7 @@ export interface IPageState {
 	homePageId: string
 	activePage: IPageResponse
 	devicePreview: IDeviceTypes
+	previousPath: string
 }
 
 export enum pageActionTypes {
@@ -19,7 +20,8 @@ export enum pageActionTypes {
 	PAGE_SAVE_NAMES = 'PAGE_SAVE_NAMES',
 	PAGE_SET_HOME_PAGE = 'PAGE_SET_HOME_PAGE',
 	PAGE_SET_ACTIVE_PAGE = 'PAGE_SET_ACTIVE_PAGE',
-	PAGE_SHOW_DEVICE_PREVIEW = 'PAGE_SHOW_DEVICE_PREVIEW'
+	PAGE_SHOW_DEVICE_PREVIEW = 'PAGE_SHOW_DEVICE_PREVIEW',
+	PAGE_SET_PATH = 'PAGE_SET_PATH'
 }
 
 interface pageStartAction {
@@ -55,4 +57,9 @@ interface pageShowDevicePreview {
 	payload: IDeviceTypes
 }
 
-export type IPageAction = IAlertAction | pageShowDevicePreview | pageStartAction | pageEndAction | pageGetPages | pageSaveNames | pageSetHomePage | pageSetActivePage
+interface pageSetPath {
+	type: pageActionTypes.PAGE_SET_PATH
+	payload: string
+}
+
+export type IPageAction = IAlertAction | pageSetPath | pageShowDevicePreview | pageStartAction | pageEndAction | pageGetPages | pageSaveNames | pageSetHomePage | pageSetActivePage

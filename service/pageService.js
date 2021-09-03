@@ -123,6 +123,18 @@ class PageService {
 		return { ...pageDto }
 	}
 
+	async changePublicationStatus(pageId, value) {
+		const page = await Page.findById(pageId)
+		if (!page) throw ApiError.BadRequest('Произошла ошибка, страница с таким id не найдена', 'danger')
+
+		page.published = value
+		await page.save()
+
+		const pageDto = new PageListDto(page)
+
+		return { ...pageDto }
+	}
+
 
 }
 

@@ -37,3 +37,7 @@ export interface IMakePageHomeResponse extends IAlertMessage {
 export interface ISwitchAutosaveResponse extends IAlertMessage {
 	page: IPageResponse
 }
+
+export interface IChangePagePublicationStatusResponse extends IAlertMessage {
+	page: IPageResponse
+}

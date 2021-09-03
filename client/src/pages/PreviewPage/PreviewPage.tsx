@@ -7,19 +7,17 @@ import { ChangeWindowSizeWrapper } from '../../components/UILIbrary/commonStyled
 import { DeviceMobileWrapper } from '../../components/UILIbrary/commonStyledComponents/DeviceMobileWrapper/DeviceMobileWrapper'
 import { myTheme } from '../../components/UILIbrary/themes/themes'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
-// import Meta from 'react-meta-tags'
-// import Iframe from 'react-iframe'
 import { Helmet } from "react-helmet";
 
 
 const PreviewPage: React.FC = () => {
 
-	const { activePage, devicePreview } = useTypedSelector(state => state.page)
+	const { devicePreview } = useTypedSelector(state => state.page)
 	const { pageBlocks, loading } = useTypedSelector(state => state.block)
-	const { getPageBlocks } = useActions()
+	const {setPreviousPath} = useActions()
 
 	useEffect(() => {
-		getPageBlocks(activePage.id)
+		setPreviousPath('preview')
 		// eslint-disable-next-line
 	}, [])
 

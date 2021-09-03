@@ -64,3 +64,13 @@ exports.switchAutosavePageValidators = [
 		.isBoolean().withMessage('Поле autosave должено иметь булев тип')
 ]
 
+exports.changePublicationStatusValidators = [
+	check('pageId')
+		.trim()
+		.isString().withMessage('pageId должен быть строкой')
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем'),
+	check('value')
+		.not().isEmpty().withMessage('Поле value не должно быть пустым')
+		.isBoolean().withMessage('Поле value должено иметь булев тип')
+]
+

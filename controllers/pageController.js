@@ -132,6 +132,26 @@ class pageController {
 		}
 	}
 
+	async changePublicationStatus(req, res, next) {
+		try {
+			ApiError.ValidationErrorChecking(req)
+
+			const {pageId, value} = req.body
+
+			const pageDto = await pageService.changePublicationStatus(pageId, value)
+
+			return res.json({
+				page: pageDto,
+				messageType: 'success',
+				message: "Страница успешно опубликована. Обновите проект, чтобы изменения вступили в силу.",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
 
 }
 

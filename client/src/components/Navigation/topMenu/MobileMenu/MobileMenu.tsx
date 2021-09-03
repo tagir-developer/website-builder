@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { MouseEventHandler, useState } from 'react'
 import './MobileMenu.scss'
-import {useCreateClassName} from '../../../../hooks/createClassName.hook'
+import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import Toggle from '../../../UI/Toggle/Toggle'
@@ -11,6 +11,7 @@ interface IItems {
 	title: string
 	link: string
 	bold: boolean
+	handler?: MouseEventHandler<HTMLLIElement>
 }
 
 interface IMobileMenu {
@@ -20,14 +21,14 @@ interface IMobileMenu {
 	autosaveCheker?: boolean
 }
 
-const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items, autosaveCheker=false }) => {
+const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items, autosaveCheker = false }) => {
 
 	const [isOpen, isOpenHandler] = useState<boolean>(false)
 
 	const navClasses = useCreateClassName('mobile-nav', parentClass, modClass)
 
-	const {activePage} = useTypedSelector(state => state.page)
-	const {switchPageAutosave} = useActions()
+	const { activePage } = useTypedSelector(state => state.page)
+	const { switchPageAutosave } = useActions()
 
 	const toggleClasses = classNames({
 		'mobile-nav__toggle': true,
@@ -42,8 +43,8 @@ const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items, autos
 
 	const autosaveElement = (
 		<div className="mobile-nav__autosave-switcher-panel autosave-switcher-panel">
-			<Toggle 
-				name="mob-menu-toggle" 
+			<Toggle
+				name="mob-menu-toggle"
 				parentClass="autosave-switcher-panel"
 				value={activePage.autosavePage}
 				handler={() => switchPageAutosave(!activePage.autosavePage)}
@@ -59,22 +60,33 @@ const MobileMenu: React.FC<IMobileMenu> = ({ parentClass, modClass, items, autos
 
 			<div className={barClasses}>
 
-			{autosaveCheker ? autosaveElement : null}
-			
-			<ul className="mobile-nav__list">
-			{items.map((item, i) => {
-					return (
-						<li key={i} className="mobile-nav__item">
-							<NavLink 
-								to={item.link} 
-								className="mobile-nav__link"
+				{autosaveCheker ? autosaveElement : null}
+
+				<ul className="mobile-nav__list">
+					{items.map((item, i) => {
+						return (
+							<li
+								key={i}
+								className="mobile-nav__item"
+								onClick={item.handler ? item.handler : () => { }}
 							>
-								{item.title}
-							</NavLink>
-						</li>
-					)
-				})}
-			</ul>
+								{item.handler
+									? <div
+										className="mobile-nav__link"
+									>
+										{item.title}
+									</div>
+									: <NavLink
+										to={item.link}
+										className="mobile-nav__link"
+									>
+										{item.title}
+									</NavLink>
+								}
+							</li>
+						)
+					})}
+				</ul>
 			</div>
 		</div>
 	)

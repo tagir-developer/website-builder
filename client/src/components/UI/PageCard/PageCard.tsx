@@ -28,15 +28,18 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 
 	const pageCardClasses = useCreateClassName('page-card', parentClass, modClass)
 	const { activeProject } = useTypedSelector(state => state.projects)
-	const { pages } = useTypedSelector(state => state.page)
-	const { setActivePage } = useActions()
+	const { pages, activePage } = useTypedSelector(state => state.page)
+	const { setActivePage, changePagePublicationStatus } = useActions()
 
-	const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать' //! Пока функцию опубликовать и снять с публикации отложим
+	// const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать' //! Пока функцию опубликовать и снять с публикации отложим
 
 	const menuItems = [
 		{
-			title: needToPublish,
-			handler: () => { }
+			title: published ? 'Снять с публикации' : 'Опубликовать',
+			handler: () => {
+				// await setActivePage(pages, pageId)
+				published ? changePagePublicationStatus(pageId, false) : changePagePublicationStatus(pageId, true)
+			}
 		},
 		{
 			title: 'Изменить страницу',

@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 import './HorizontalNav.scss'
-import {useCreateClassName} from '../../../../hooks/createClassName.hook'
+import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import { NavLink } from 'react-router-dom'
 
 interface IItems {
 	title: string
 	link: string
 	bold: boolean
+	handler?: MouseEventHandler<HTMLLIElement>
 }
 
 interface IHorizontalNav {
@@ -24,16 +25,32 @@ const HorizontalNav: React.FC<IHorizontalNav> = ({ parentClass, modClass, items 
 		<div className={classes}>
 
 			<ul className="horizontal-nav__list">
-			{items.map((item, i) => {
+				{items.map((item, i) => {
 					return (
-						<li key={i} className={itemClasses}>
-							<NavLink 
-								to={item.link} 
+						<li
+							key={i}
+							className={itemClasses}
+							onClick={item.handler ? item.handler : () => { }}
+						>
+							{item.handler
+								? <div
 								className={item.bold 
 									? "horizontal-nav__link horizontal-nav__link_bold"
 									: "horizontal-nav__link"
 								}
-							>{item.title}</NavLink>
+								>
+									{item.title}
+								</div>
+								: <NavLink
+									to={item.link}
+									className={item.bold 
+										? "horizontal-nav__link horizontal-nav__link_bold"
+										: "horizontal-nav__link"
+									}
+								>
+									{item.title}
+								</NavLink>
+							}
 						</li>
 					)
 				})}

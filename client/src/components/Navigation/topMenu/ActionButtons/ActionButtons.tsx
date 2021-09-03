@@ -3,6 +3,7 @@ import './ActionButtons.scss'
 import {useCreateClassName} from '../../../../hooks/createClassName.hook'
 import DarkRoundButton from './DarkRoundButton/DarkRoundButton'
 import { useActions } from '../../../../hooks/reduxHooks'
+import { useHistory, useLocation } from 'react-router-dom'
 
 interface IActionButtons {
 	parentClass?: string
@@ -13,6 +14,12 @@ const ActionButtons: React.FC<IActionButtons> = ({ parentClass, modClass}) => {
 
 	const actionButtonsClasses = useCreateClassName('action-buttons', parentClass, modClass)
 	const {blockUndoChange, saveBlocksInDB} = useActions()
+	const history = useHistory()
+	const location = useLocation()
+
+	const openPagePreview = () => {
+		history.push(location.pathname + '/preview')
+	}
 
 	return (
 		<div className={actionButtonsClasses}>
@@ -32,7 +39,7 @@ const ActionButtons: React.FC<IActionButtons> = ({ parentClass, modClass}) => {
 				parentClass="action-buttons" 
 				modClass={['icon-show']} 
 				title='Предпросмотр' 
-				handler={() => {}}
+				handler={openPagePreview}
 			/>
 		</div>
 	)
