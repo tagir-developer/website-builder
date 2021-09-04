@@ -6,6 +6,7 @@ export interface IProjectsResponse {
 	link: string
 	isPublished: boolean
 	hasPages: boolean
+	generatedProject: string
 	updated: boolean
 	scripts: string
 	fontConfigs: {
@@ -48,5 +49,9 @@ export interface ISetFontConfigsResponse extends IAlertMessage {
 }
 
 export interface IFormProcessingResponse extends IAlertMessage {
+	project: IProjectsResponse
+}
+
+export interface IChangeProjectStatusResponse extends IAlertMessage {
 	project: IProjectsResponse
 }

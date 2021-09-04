@@ -18,7 +18,8 @@ interface ITopMenu {
 const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 
 	const {activeProject} = useTypedSelector(state => state.projects)
-	const {changePagePublicationStatus, blockUndoChange, saveBlocksInDB} = useActions()
+	const {activePage} = useTypedSelector(state => state.page)
+	const {changePagePublicationStatus, blockUndoChange, saveBlocksInDB, changeProjectStatus} = useActions()
 	const history = useHistory()
 
 	const topMenuClasses = (typeMenu: string): string => {
@@ -235,7 +236,10 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 						modClass={['dark-theme']}
 						items={[
 							{ title: 'Опубликовать', link: '/', bold: true, handler: () => {
-								changePagePublicationStatus(true)
+								changePagePublicationStatus(activePage.id, true)
+								changeProjectStatus(activeProject.id, [
+									{prop: 'updated', value: false}
+								])
 								history.push('/projects/' + activeProject.link)
 							} },
 						]}
@@ -252,7 +256,10 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 								history.push(history.location.pathname + '/preview')
 							}},
 							{ title: 'Опубликовать', link: '/', bold: false, handler: () => {
-								changePagePublicationStatus(true)
+								changePagePublicationStatus(activePage.id, true)
+								changeProjectStatus(activeProject.id, [
+									{prop: 'updated', value: false}
+								])
 								history.push('/projects/' + activeProject.link)
 							}},
 						]}

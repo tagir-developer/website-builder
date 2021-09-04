@@ -1,5 +1,7 @@
 import { IProjectsResponse } from "../../models/response/ProjectsResponse"
-import { IAlertAction } from "./alert";
+import { IAlertAction } from "./alert"
+
+export type projectBooleanTypeProps = 'updated' | 'published' | 'hasPages'
 
 export interface IProjectsState {
 	loading: boolean

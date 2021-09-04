@@ -136,12 +136,12 @@ class pageController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {pageId, value} = req.body
+			const {projectId, pageId, value} = req.body
 
-			const pageDto = await pageService.changePublicationStatus(pageId, value)
+			const updatedProjectPages = await pageService.changePublicationStatus(projectId, pageId, value)
 
 			return res.json({
-				page: pageDto,
+				pages: updatedProjectPages,
 				messageType: 'success',
 				message: "Страница успешно опубликована. Обновите проект, чтобы изменения вступили в силу.",
 				errors: []

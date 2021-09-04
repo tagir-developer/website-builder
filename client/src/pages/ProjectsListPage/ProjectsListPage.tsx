@@ -21,7 +21,6 @@ const ProjectsListPage: React.FC = () => {
 	const { getAllProjects } = useActions()
 
 	useEffect(() => {
-		console.log('Получаем проекты')
 		getAllProjects()
 		// eslint-disable-next-line
 	}, [])

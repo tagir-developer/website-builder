@@ -1,10 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
+import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
 import { IButtonProps, IHeader1Content, IHeader1Props, IHeader1Styles, ITitleProps } from './types/header1types'
 
-const StyledHeader1 = styled.div<IHeader1Props>`
+const StyledHeader1 = styled(BasicComponent)<IHeader1Props>`
 	width: 100%;
 	position: relative;
 	box-sizing: border-box;
@@ -31,6 +33,7 @@ const StyledHeader1 = styled.div<IHeader1Props>`
 		padding: 50px 20%;
 		font-size: 0.9em;
 	}
+
 `
 
 const Title = styled.h1<ITitleProps>`
@@ -89,35 +92,24 @@ const Button = styled.button<IButtonProps>`
 	}
 `
 
-interface IHeader1 {
+interface IHeader1 extends ICommonBlockProps {
 	blockConfigs: IHeader1Styles
 	blockContent: IHeader1Content
-	blockIsHidden: boolean
 }
 
+const Header1: React.FC<IHeader1> = ({ blockConfigs, blockContent, blockIsHidden, hideBlock = false }) => {
 
-
-const Header1: React.FC<IHeader1> = ({ blockConfigs, blockContent, blockIsHidden }) => {
-	// console.log('Значения параметра скрытия блока', blockIsHidden)
 	return (
 		<StyledHeader1
 			textAlign={blockConfigs.blockAlign}
+			blockIsHidden={blockIsHidden}
+			devices={blockConfigs.hiddenOnDevice}
+			hideBlock={hideBlock}
 		>
 			<StyledOverlay
 				devices={blockConfigs.hiddenOnDevice}
 				blockIsHidden={blockIsHidden}
 			/>
-			{/* {!blockIsHidden
-				? <StyledOverlay
-					devices={blockConfigs.hiddenOnDevice}
-					blockIsHidden={true}
-				/>
-				: <StyledOverlay
-					devices={blockConfigs.hiddenOnDevice}
-					blockIsHidden={false}
-				/>
-			}
-			<p style={{ color: 'red' }}>{blockIsHidden.toString()}</p> */}
 			<StyledFlex
 				direction={"column"}
 				align={blockConfigs.blockAlign}

@@ -6,10 +6,7 @@ class projectsController {
 
 	async createProject(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			ApiError.ValidationErrorChecking(req)
 
 			const updatedProjects = await projectService.createNewProject(req.user.id, req.body.name, req.body.link)
 
@@ -27,10 +24,7 @@ class projectsController {
 
 	async changeProject(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			ApiError.ValidationErrorChecking(req)
 
 			const {projectId, name, link} = req.body
 			
@@ -65,10 +59,7 @@ class projectsController {
 
 	async addProjectScripts(req, res, next) {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
-				return next(ApiError.BadRequest(errors.array().map(i => i.msg).join('; '), 'danger', errors.array().map(i => i.param)))
-			}
+			ApiError.ValidationErrorChecking(req)
 
 			const {projectId, scripts} = req.body
 			
@@ -78,6 +69,27 @@ class projectsController {
 				project: updatedProject,
 				messageType: 'success',
 				message: "Скрипты успешно добавлены на ваш сайт",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async changeStatus(req, res, next) {
+		try {
+			ApiError.ValidationErrorChecking(req)
+
+			const {projectId, propsArr} = req.body
+			const props = JSON.parse(propsArr)
+			
+			const updatedProject = await projectService.changeStatus(projectId, props)
+
+			return res.json({
+				project: updatedProject,
+				messageType: 'success',
+				message: "Стстус проекта обновлен",
 				errors: []
 			})
 
@@ -136,6 +148,26 @@ class projectsController {
 			if (!projects) return next(ApiError.BadRequest('Не найден ни один проект', 'danger'))
 
 			return res.json(projects)
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+	async generateWebsite(req, res, next) {
+		try {
+
+			ApiError.ValidationErrorChecking(req)
+
+			const {projectId} = req.body
+
+			await projectService.generateWebsite(projectId)
+
+			return res.json({
+				messageType: 'success',
+				message: `Ваш сайт успешно создан и опубликован!`,
+				errors: []
+			})
 
 		} catch (e) {
 			next(e)

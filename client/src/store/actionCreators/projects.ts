@@ -2,7 +2,7 @@ import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { IProjectsResponse } from "../../models/response/ProjectsResponse"
 import ProjectsService from "../../services/ProjectsService"
-import { IProjectsAction, projectsActionTypes } from "../types/projects"
+import { IProjectsAction, projectBooleanTypeProps, projectsActionTypes } from "../types/projects"
 import { alertErrorOrMessageCreator } from "./alert"
 
 export const getAllProjects = () => {
@@ -67,6 +67,31 @@ export const changeProject = (projectId: string, name: string, link: string) => 
 			const e = error as AxiosError
 			if (e.response) {
 				dispatch(projectsEndCreator())
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
+export const changeProjectStatus = (projectId: string, propSetArray: {prop: projectBooleanTypeProps, value: boolean}[]) => {
+	return async (dispatch: Dispatch<IProjectsAction>) => {
+
+		dispatch(projectsStartCreator())
+
+		const propsArr: string = JSON.stringify(propSetArray)
+
+		try {
+			const response = await ProjectsService.changeProjectStatus(projectId, propsArr)
+
+			dispatch(updateActiveProject(response.data.project))
+			dispatch(alertErrorOrMessageCreator(response.data))
+			// dispatch(projectsEndCreator())
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				// dispatch(projectsEndCreator())
 				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 

@@ -1,4 +1,4 @@
-import { IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
+import { devices, IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
 
 export interface IHeader1Styles extends IHiddenOnDevices {
 	buttonBackground: string

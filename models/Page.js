@@ -7,8 +7,7 @@ const Page = new Schema({
 	},
 	link: {
 		type: String,
-		required: true,
-		unique: true
+		required: true
 	},
 	published: {
 		type: Boolean,

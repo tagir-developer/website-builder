@@ -2,6 +2,8 @@ const ProjectsListDto = require('../dtos/projectsDto')
 const ApiError = require('../exeptions/apiError')
 const Project = require('../models/Project')
 const Page = require('../models/Page')
+const path = require('path')
+const fs = require('fs')
 
 class ProjectService {
 
@@ -51,6 +53,20 @@ class ProjectService {
 		return updatedProject
 	}
 
+	async changeStatus(projectId, props) {
+		const project = await Project.findById(projectId)
+		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
+
+		props.forEach(i => {
+			project[i.prop] = i.value
+		})
+
+		await project.save()
+
+		const updatedProject = new ProjectsListDto(project)
+		return updatedProject
+	}
+
 	async setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize) {
 		const project = await Project.findById(projectId)
 		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
@@ -83,10 +99,30 @@ class ProjectService {
 		const projects = await Project.find({
 			createdBy: userId
 		})
+
 		const projectsList = projects.map(i => new ProjectsListDto(i))
 		return projectsList
 	}
 
+	async generateWebsite(projectId) {
+		const project = await Project.findById(projectId)
+		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
+
+		const projectPages = await Page.find({project: projectId}).populate('blocks')
+		if (!projectPages) throw ApiError.BadRequest('Произошла ошибка, у проекта нет страниц. Создайте хотя бы одну страницу.', 'danger')
+
+		const fsCallback = (err) => {
+			if (err) throw ApiError.BadRequest('Произошла ошибка во время создания каталогов, повторите попытку позже', 'danger')
+			console.log(err)
+		}
+
+		const newFolderPath = path.join(__dirname, '../client-ssr/pages/', project.link)
+
+		fs.mkdir(newFolderPath, {recursive: true}, fsCallback)
+
+
+		// return data
+	}
 
 }
 

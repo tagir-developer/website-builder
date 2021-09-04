@@ -162,7 +162,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 								name={activeProject.name}
 								handlers={projectHeaderHandlers}
 								published={activeProject.isPublished}
-								hasPages={activeProject.hasPages}
+								hasPages={!!projectPages.length}
 								updated={activeProject.updated}
 								addPageHandler={createPagePopup.handler}
 							// ? type='published-updated'

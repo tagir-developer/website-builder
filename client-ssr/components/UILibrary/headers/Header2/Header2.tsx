@@ -1,10 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
+import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
 import { IButtonProps, IHeader2Content, IHeader2Props, IHeader2Styles, ITitleProps } from './types/header2types'
 
-const StyledHeader2 = styled.div<IHeader2Props>`
+const StyledHeader2 = styled(BasicComponent)<IHeader2Props>`
 	width: 100%;
 	position: relative;
 	box-sizing: border-box;
@@ -90,16 +92,18 @@ const Button = styled.button<IButtonProps>`
 	}
 `
 
-interface IHeader2 {
+interface IHeader2 extends ICommonBlockProps {
 	blockConfigs: IHeader2Styles
 	blockContent: IHeader2Content
-	blockIsHidden: boolean
 }
 
-const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden }) => {
+const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden, hideBlock = false }) => {
 	return (
 		<StyledHeader2
 			textAlign={blockConfigs.blockAlign}
+			blockIsHidden={blockIsHidden}
+			devices={blockConfigs.hiddenOnDevice}
+			hideBlock={hideBlock}
 		>
 			<StyledOverlay
 				devices={blockConfigs.hiddenOnDevice}

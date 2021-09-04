@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
+import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
 import { IButtonProps, IHeader1Content, IHeader1Props, IHeader1Styles, ITitleProps } from './types/header1types'
@@ -91,11 +92,9 @@ const Button = styled.button<IButtonProps>`
 	}
 `
 
-interface IHeader1 {
+interface IHeader1 extends ICommonBlockProps {
 	blockConfigs: IHeader1Styles
 	blockContent: IHeader1Content
-	blockIsHidden: boolean
-	hideBlock: boolean
 }
 
 const Header1: React.FC<IHeader1> = ({ blockConfigs, blockContent, blockIsHidden, hideBlock = false }) => {

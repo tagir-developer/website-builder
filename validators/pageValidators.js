@@ -65,6 +65,10 @@ exports.switchAutosavePageValidators = [
 ]
 
 exports.changePublicationStatusValidators = [
+	check('projectId')
+		.trim()
+		.isString().withMessage('projectId должен быть строкой')
+		.not().isEmpty().withMessage('projectId не должен быть пустым полем'),
 	check('pageId')
 		.trim()
 		.isString().withMessage('pageId должен быть строкой')

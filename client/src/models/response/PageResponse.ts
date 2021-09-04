@@ -39,5 +39,5 @@ export interface ISwitchAutosaveResponse extends IAlertMessage {
 }
 
 export interface IChangePagePublicationStatusResponse extends IAlertMessage {
-	page: IPageResponse
+	pages: IPageResponse[]
 }

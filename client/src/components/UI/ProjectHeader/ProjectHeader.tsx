@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './ProjectHeader.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
 import Button from '../Button/Button'
 import CopyLink from '../CopyLink/CopyLink'
 import ShowMenuBtn from '../ShowMenuBtn/ShowMenuBtn'
-import { useTypedSelector } from '../../../hooks/reduxHooks'
+import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 
 interface IProjectHeader {
 	parentClass?: string
@@ -25,6 +25,11 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 
 	const projectHeaderClasses = useCreateClassName('project-header', parentClass, modClass)
 
+	// const {pages} = useTypedSelector(state => state.page)
+	const {changeProjectStatus} = useActions()
+
+	// const [hasPages, setHasPages] = useState<boolean>()
+
 	// const {activeProject, loading} = useTypedSelector(state => state.projects)
 
 	// useEffect(() => {
@@ -37,12 +42,14 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 	// let hasPages: boolean = false
 	// let updated: boolean = false
 
+	// ? Новый проект без страниц
 	// if (type === 'no-pages') {
 	// 	published = false
 	// 	hasPages = false
 	// 	updated = false
 	// }
 
+	// ? Когда добавили первую страницу
 	// if (type === 'has-pages-unpublished') {
 	// 	published = false
 	// 	hasPages = true

@@ -33,6 +33,15 @@ exports.addScriptsValidators = [
 		.matches(/(^<script(.*\n)*.+script>$)|(^\s*$)/gm).withMessage('Поле с подключаемыми скриптами должно содержать теги <script... и </script> или быть пустым')
 ]
 
+exports.changeStatusValidators = [
+	check('projectId')
+		.trim()
+		.isString().withMessage('Поле projectId должно быть строкой'),
+	check('propsArr')
+		.trim()
+		.isString().withMessage('Поле propsArr должно быть строкой')
+]
+
 exports.setFontConfigsValidators = [
 	check('projectId')
 		.isString().withMessage('Передаваемое значение projectId должно быть строкой'),
@@ -73,4 +82,10 @@ exports.formProcessingValidators = [
 			return normalizedPhone
 		})
 		.isMobilePhone('ru-RU').withMessage('Введите корректный номер телефона, либо оставьте это поле пустым')
+]
+
+exports.generateWebsiteValidators = [
+	check('projectId')
+		.trim()
+		.isString().withMessage('Поле projectId должно быть строкой')
 ]

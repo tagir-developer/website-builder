@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import $api from "../http"
-import { IAddProjectScriptsResponse, ICreateProjectsResponse, IDeleteProjectResponse, IFormProcessingResponse, IProjectsResponse, ISetFontConfigsResponse, IUpdateProjectsResponse } from "../models/response/ProjectsResponse"
+import { IAddProjectScriptsResponse, IChangeProjectStatusResponse, ICreateProjectsResponse, IDeleteProjectResponse, IFormProcessingResponse, IProjectsResponse, ISetFontConfigsResponse, IUpdateProjectsResponse } from "../models/response/ProjectsResponse"
 
 
 export default class ProjectsService {
@@ -19,6 +19,10 @@ export default class ProjectsService {
 
 	static async addScripts(projectId: string, scripts: string): Promise<AxiosResponse<IAddProjectScriptsResponse>> {
 		return $api.put<IAddProjectScriptsResponse>('projects/add-scripts', {projectId, scripts})
+	}
+
+	static async changeProjectStatus(projectId: string, propsArr: string): Promise<AxiosResponse<IChangeProjectStatusResponse>> {
+		return $api.put<IChangeProjectStatusResponse>('projects/change-status', {projectId, propsArr})
 	}
 
 	static async setFontConfigs(projectId: string, fontFamily: string, titleSize: string, titleWeight: string, textSize: string): Promise<AxiosResponse<ISetFontConfigsResponse>> {

@@ -1,5 +1,4 @@
 const {Schema, model, Types} = require('mongoose')
-// const {fontConfigProps} = require('../client/src/components/UI/FontConfig/fontConfigProps')
 
 const Project = new Schema({
 	name: {
@@ -19,9 +18,17 @@ const Project = new Schema({
 		type: Boolean,
 		default: false	
 	},
+	hasPages: {
+		type: Boolean,
+		default: false	
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now
+	},
+	generatedProjectLink: {
+		type: String,
+		default: ''
 	},
 	createdBy: {
 		type: Types.ObjectId,
@@ -71,13 +78,13 @@ const Project = new Schema({
 			type: String,
 			default: ''
 		}
-	},
-	pages: [ // ? Возможно список страниц не нужен и его можно будет удалить
-		{
-			type: Types.ObjectId,
-			ref: 'Page'
-		}
-	]
+	}
+	// pages: [ // ? Возможно список страниц не нужен и его можно будет удалить
+	// 	{
+	// 		type: Types.ObjectId,
+	// 		ref: 'Page'
+	// 	}
+	// ]
 })
 
 module.exports = model('Project', Project)

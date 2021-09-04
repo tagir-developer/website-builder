@@ -20,8 +20,8 @@ export default class PageService {
 		return $api.put<ISwitchAutosaveResponse>('pages/switch-autosave', {pageId, autosave})
 	}
 
-	static async changePagePublicationStatus(pageId: string, value: boolean): Promise<AxiosResponse<IChangePagePublicationStatusResponse>> {
-		return $api.put<IChangePagePublicationStatusResponse>('pages/change-publication-status', {pageId, value})
+	static async changePagePublicationStatus(projectId: string, pageId: string, value: boolean): Promise<AxiosResponse<IChangePagePublicationStatusResponse>> {
+		return $api.put<IChangePagePublicationStatusResponse>('pages/change-publication-status', {projectId, pageId, value})
 	}
 
 	static async deletePage(pageId: string, projectId: string): Promise<AxiosResponse<IDeletePageResponse>> {

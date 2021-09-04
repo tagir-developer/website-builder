@@ -102,14 +102,19 @@ export const switchPageAutosave = (autosave: boolean) => {
 }
 
 export const changePagePublicationStatus = (pageId: string, value: boolean) => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => {projects: IProjectsState}) => {
 
-		// const pageId = getState().page.activePage.id
+		const projectId = getState().projects.activeProject.id
 
 		try {
-			const response = await PageService.changePagePublicationStatus(pageId, value)
+			const response = await PageService.changePagePublicationStatus(projectId, pageId, value)
 
-			dispatch(changeActivePage(response.data.page))
+			console.log('Возврат данных', response.data)
+
+			// dispatch(changeActivePage(response.data.page))
+
+			dispatch(pagesGetAll(response.data.pages))
+			dispatch(savePagesNames(response.data.pages))
 			dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {

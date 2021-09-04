@@ -7,7 +7,7 @@ import { ChangeWindowSizeWrapper } from '../../components/UILIbrary/commonStyled
 import { DeviceMobileWrapper } from '../../components/UILIbrary/commonStyledComponents/DeviceMobileWrapper/DeviceMobileWrapper'
 import { myTheme } from '../../components/UILIbrary/themes/themes'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet"
 
 
 const PreviewPage: React.FC = () => {
