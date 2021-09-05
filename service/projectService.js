@@ -4,6 +4,8 @@ const Project = require('../models/Project')
 const Page = require('../models/Page')
 const path = require('path')
 const fs = require('fs')
+const mergedPageDataDto = require('../dtos/mergedPageDataDto')
+const pageDataBlocksDto = require('../dtos/pageDataBlocksDto')
 
 class ProjectService {
 
@@ -108,20 +110,41 @@ class ProjectService {
 		const project = await Project.findById(projectId)
 		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
 
-		const projectPages = await Page.find({project: projectId}).populate('blocks')
+		const projectPages = await Page.find({project: projectId}).populate('blocks').populate('blocks.block')
 		if (!projectPages) throw ApiError.BadRequest('Произошла ошибка, у проекта нет страниц. Создайте хотя бы одну страницу.', 'danger')
+
+		const testBlocks = new pageDataBlocksDto(projectPages[0])
+		const blocksInJSON = JSON.stringify(testBlocks) // ! Этот объект вместе с projectId и pageId записываем в файл
 
 		const fsCallback = (err) => {
 			if (err) throw ApiError.BadRequest('Произошла ошибка во время создания каталогов, повторите попытку позже', 'danger')
-			console.log(err)
+			console.log('ОШИБКА модуля FS', err)
 		}
 
-		const newFolderPath = path.join(__dirname, '../client-ssr/pages/', project.link)
+		const userWebsitePath = path.join(__dirname, '../client-ssr/pages/', project.link)
+		// fs.rmdirSync(userWebsitePath, {recursive: true}, fsCallback)
+		// fs.mkdirSync(userWebsitePath, {recursive: true}, fsCallback)
+		// fs.copyFileSync(path.join(__dirname, '../client-ssr/components/basicTemplate/basicTemplate.tsx'), path.join(__dirname, '../client-ssr/pages/', project.link, '/index.tsx'))
 
-		fs.mkdir(newFolderPath, {recursive: true}, fsCallback)
+		let file = fs.readFileSync(path.join(__dirname, '../client-ssr/pages/', project.link, '/index.tsx'), 'utf-8')
+		file = file.replace(/customPageBlocks/g, '111111111111111')
+		fs.writeFileSync(path.join(__dirname, '../client-ssr/pages/', project.link, '/index.tsx'), file)
 
 
-		// return data
+
+		return testBlocks
+	}
+
+	async getPageData(projectId, pageId) {
+		const project = await Project.findById(projectId)
+		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
+
+		const page = await Page.findById(pageId).populate('blocks').populate('blocks.block')
+		if (!page) throw ApiError.BadRequest('Произошла ошибка, страница с таким id не найдена.', 'danger')
+
+		const pageDataDto = new mergedPageDataDto(project, page)
+
+		return pageDataDto
 	}
 
 }

@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const projectsController = require('../controllers/projectsController')
 const authMiddleware = require('../middlewares/authMiddleware')
-const { createProjectValidators, addScriptsValidators, setFontConfigsValidators, formProcessingValidators, changeStatusValidators, generateWebsiteValidators } = require('../validators/projectValidators')
+const { createProjectValidators, addScriptsValidators, setFontConfigsValidators, formProcessingValidators, changeStatusValidators, generateWebsiteValidators, getPageDataValidators } = require('../validators/projectValidators')
 
 const router = Router()
 
@@ -14,6 +14,8 @@ router.put('/form-processing', authMiddleware, formProcessingValidators, project
 router.delete('/delete-project/:projectId', authMiddleware, projectsController.deleteProject)
 router.get('/projects', authMiddleware, projectsController.getAllProjects)
 router.post('/publish-user-website', generateWebsiteValidators, projectsController.generateWebsite) // ! Добавить authMiddleware
+// router.post('/get-page-data', getPageDataValidators, projectsController.getPageData)
+router.get('/get-page-data/:projectId/:pageId', projectsController.getPageData)
 
 
 module.exports = router

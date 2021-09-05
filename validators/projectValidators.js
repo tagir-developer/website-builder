@@ -89,3 +89,14 @@ exports.generateWebsiteValidators = [
 		.trim()
 		.isString().withMessage('Поле projectId должно быть строкой')
 ]
+
+exports.getPageDataValidators = [
+	check('projectId')
+		.trim()
+		.isString().withMessage('Поле projectId должно быть строкой')
+		.not().isEmpty().withMessage('projectId не должен быть пустым полем'),
+	check('pageId')
+		.trim()
+		.isString().withMessage('Поле projectId должно быть строкой')
+		.not().isEmpty().withMessage('projectId не должен быть пустым полем')
+]

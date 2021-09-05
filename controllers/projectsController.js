@@ -161,13 +161,29 @@ class projectsController {
 
 			const {projectId} = req.body
 
-			await projectService.generateWebsite(projectId)
+			const testBlocks = await projectService.generateWebsite(projectId)
 
 			return res.json({
+				testBlocks,
 				messageType: 'success',
 				message: `Ваш сайт успешно создан и опубликован!`,
 				errors: []
 			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
+
+	async getPageData(req, res, next) {
+		try {
+
+			const {projectId, pageId} = req.params
+
+			const pageData = await projectService.getPageData(projectId, pageId)
+
+			return res.json({...pageData})
 
 		} catch (e) {
 			next(e)

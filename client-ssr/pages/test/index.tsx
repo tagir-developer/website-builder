@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react"
+import React, { ComponentType, useEffect, useState } from "react"
 import dynamic from 'next/dynamic'
 import { ThemeProvider } from "styled-components"
 import { myTheme } from "../../components/UILibrary/themes/themes"
@@ -6,6 +6,8 @@ import MainLayout from "../../components/HOC/MainLayout/MainLayout"
 import Script from 'next/script'
 import UserScripts from "../../components/Another/UserScripts/UserScripts"
 import { useUserScripts } from "../../hooks/useUserScript.hook"
+import { GetServerSideProps } from "next"
+import ReactDOMServer from 'react-dom/server'
 
 const page = {
 	pageName: "Название страницы",
@@ -80,7 +82,101 @@ const page = {
 
 }
 
-const blocks: any = page.pageBlocks.map((i, index) => {
+// const blocks: any = page.pageBlocks.map((i, index) => {
+// 	const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
+// 	return (
+// 		<BlockComponent
+// 			key={index}
+// 			blockConfigs={i.blockConfigs}
+// 			blockContent={i.blockContent}
+// 			blockIsHidden={i.blockIsHidden}
+// 		/>
+// 	)
+// })
+
+// const blocks = () => {
+// 	const res = page.pageBlocks.map((i, index) => {
+// 		const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
+// 		return (
+// 			<BlockComponent
+// 				key={index}
+// 				blockConfigs={i.blockConfigs}
+// 				blockContent={i.blockContent}
+// 				blockIsHidden={i.blockIsHidden}
+// 			/>
+// 		)
+// 	})
+
+// 	return res
+// } 
+
+// const createBlockList = (blocks: any[]) => {
+// 	return blocks.map((i, index) => {
+// 		const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
+// 		return (
+// 			<BlockComponent
+// 				key={index}
+// 				blockConfigs={i.blockConfigs}
+// 				blockContent={i.blockContent}
+// 				blockIsHidden={i.blockIsHidden}
+// 			/>
+// 		)
+// 	})
+// } 
+
+// const paths = [
+// 	"headers/Header2/Header2",
+// 	"headers/Header1/Header1",
+// 	"headers/Header2/Header2"
+// ]
+
+// const blocks: any = paths.map((path, index) => {
+// 	const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + path))
+// 	return (
+// 		<BlockComponent
+// 			key={index}
+// 		/>
+// 	)
+// })
+
+const test = [
+	{
+		blockPath: "headers/Header2/Header2",
+		blockIsHidden: false,
+		blockConfigs: {
+			hiddenOnDevice: [],
+			buttonBackground: "#7dca00",
+			blockAlign: "center",
+			titleFontSize: "300%"
+		},
+		blockContent: {
+			titleText: "Первый",
+			descriptionText: "Какой-то текст описывающий свойства продукта или услуги",
+			buttonText: "Кнопка"
+		}
+	},
+	{
+		blockPath: "headers/Header1/Header1",
+		blockIsHidden: false,
+		blockConfigs: {
+			hiddenOnDevice: [],
+			buttonBackground: "#ca4a00",
+			blockAlign: "center",
+			titleFontSize: "300%"
+		},
+		blockContent: {
+			titleText: "Второй",
+			descriptionText: "Какой-то текст описывающий свойства продукта или услуги",
+			buttonText: "Кнопка"
+		}
+	}
+]
+
+const test2 = JSON.stringify(test)
+
+const blocks: any[] = JSON.parse(test2)
+
+const blockList: any = blocks.map((i, index) => {
 	const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
 	return (
 		<BlockComponent
@@ -92,24 +188,60 @@ const blocks: any = page.pageBlocks.map((i, index) => {
 	)
 })
 
+interface IUserPage {
+	pageData: IPageData
+	blockList: any
+}
 
-const UserPage = () => {
+interface IPageData {
+	pageName: string
+	additionalScripts: string
+	projectFontConfigs: {
+		fontFamily: string
+		title: {
+			fontSize: string
+			fontWeight: string
+		},
+		text: {
+			fontSize: string
+		}
+	}
+	pageBlocks: IPageBlock[]
+}
+
+interface IPageBlock {
+	blockPath: string
+	blockIsHidden: boolean
+	blockConfigs: any
+	blockContent: any
+}
+
+
+const UserPage: React.FC<IUserPage> = ({ pageData }) => {
+
+	// const blockList: any = blocks.map((i, index) => {
+	// 	const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
+	// 	return (
+	// 		<BlockComponent
+	// 			key={index}
+	// 			blockConfigs={i.blockConfigs}
+	// 			blockContent={i.blockContent}
+	// 			blockIsHidden={i.blockIsHidden}
+	// 		/>
+	// 	)
+	// })
+
 
 	return (
 		<>
-			<MainLayout title={page.pageName}>
+			<MainLayout title={pageData.pageName}>
 
-				<UserScripts scripts={page.additionalScripts} />
-				{/* <Script
-					id="show-banner"
-					dangerouslySetInnerHTML={{
-						__html: `console.log('Проверка')`
-					}}
-				/> */}
+				<UserScripts scripts={pageData.additionalScripts} />
 
 				<div className="wrapper-test">
 					<ThemeProvider theme={myTheme}>
-						{blocks}
+						{/* {createBlockList(pageData.pageBlocks)} */}
+						{blockList}
 					</ThemeProvider>
 				</div>
 
@@ -117,31 +249,57 @@ const UserPage = () => {
 
 			<style jsx>{`
 				.wrapper-test {
-					font-family: ${page.projectFontConfigs.fontFamily};
-					font-size: ${page.projectFontConfigs.text.fontSize};
+					font-family: ${pageData.projectFontConfigs.fontFamily};
+					font-size: ${pageData.projectFontConfigs.text.fontSize};
 				}
 				h1, h2, h3, h4, h5 {
-					font-weight: ${page.projectFontConfigs.title.fontWeight};
+					font-weight: ${pageData.projectFontConfigs.title.fontWeight};
 				}
 				h1 {
-					font-size: ${page.projectFontConfigs.title.fontSize};
+					font-size: ${pageData.projectFontConfigs.title.fontSize};
 					color: red;
 				}
 				h2 {
-					font-size: ${(parseInt(page.projectFontConfigs.title.fontSize) * 0.8) + 'px'};
+					font-size: ${(parseInt(pageData.projectFontConfigs.title.fontSize) * 0.8) + 'px'};
 				}
 				h3 {
-					font-size: ${(parseInt(page.projectFontConfigs.title.fontSize) * 0.6) + 'px'};
+					font-size: ${(parseInt(pageData.projectFontConfigs.title.fontSize) * 0.6) + 'px'};
 				}
 				h4 {
-					font-size: ${(parseInt(page.projectFontConfigs.title.fontSize) * 0.4) + 'px'};
+					font-size: ${(parseInt(pageData.projectFontConfigs.title.fontSize) * 0.4) + 'px'};
 				}
 				h5 {
-					font-size: ${(parseInt(page.projectFontConfigs.title.fontSize) * 0.3) + 'px'};
+					font-size: ${(parseInt(pageData.projectFontConfigs.title.fontSize) * 0.3) + 'px'};
 				}
 			`}</style>
 		</>
 	)
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+
+	// const projectId = 'customUserProjectId'
+	// const pageId = 'customUserPageId'
+
+	const projectId = '6133aa7fb2ccd13e3c8c5a0e'
+	const pageId = '61349d9a9fefec0bc8f0fbd1'
+
+	const res = await fetch(`http://localhost:5000/api/projects/get-page-data/${projectId}/${pageId}`)
+	const pageData: IPageData = await res.json()
+
+	return { props: { pageData } }
+}
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+
+// 	const res = await fetch('http://localhost:5000/api/projects/get-page-data', {
+// 		method: 'POST',
+// 		headers: {'Content-Type': 'application/json;charset=utf-8'},
+// 		body: JSON.stringify({user: 'Макс'})
+// 	})
+// 	const pageData = await res.json()
+
+// 	return { props: { pageData } }
+// }
 
 export default UserPage
