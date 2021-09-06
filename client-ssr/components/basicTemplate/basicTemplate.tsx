@@ -17,6 +17,7 @@ const blockList: any = pageBlocks.map((i, index) => {
 			blockConfigs={i.blockConfigs}
 			blockContent={i.blockContent}
 			blockIsHidden={i.blockIsHidden}
+			hideBlock={true}
 		/>
 	)
 })

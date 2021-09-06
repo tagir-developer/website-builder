@@ -89,7 +89,7 @@ class projectsController {
 			return res.json({
 				project: updatedProject,
 				messageType: 'success',
-				message: "Стстус проекта обновлен",
+				message: "Статус проекта обновлен",
 				errors: []
 			})
 
@@ -161,10 +161,10 @@ class projectsController {
 
 			const {projectId} = req.body
 
-			const testBlocks = await projectService.generateWebsite(projectId)
+			const updatedProject = await projectService.generateWebsite(projectId)
 
 			return res.json({
-				testBlocks,
+				project: updatedProject,
 				messageType: 'success',
 				message: `Ваш сайт успешно создан и опубликован!`,
 				errors: []

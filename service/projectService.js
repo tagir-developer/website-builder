@@ -6,6 +6,7 @@ const path = require('path')
 const fs = require('fs')
 const mergedPageDataDto = require('../dtos/mergedPageDataDto')
 const pageDataBlocksDto = require('../dtos/pageDataBlocksDto')
+const fileSystemService = require('./fileSystemService')
 
 class ProjectService {
 
@@ -113,26 +114,26 @@ class ProjectService {
 		const projectPages = await Page.find({project: projectId}).populate('blocks').populate('blocks.block')
 		if (!projectPages) throw ApiError.BadRequest('Произошла ошибка, у проекта нет страниц. Создайте хотя бы одну страницу.', 'danger')
 
-		const testBlocks = new pageDataBlocksDto(projectPages[0])
-		const blocksInJSON = JSON.stringify(testBlocks) // ! Этот объект вместе с projectId и pageId записываем в файл
+		fileSystemService.createUserWebsiteFolder(project)
 
-		const fsCallback = (err) => {
-			if (err) throw ApiError.BadRequest('Произошла ошибка во время создания каталогов, повторите попытку позже', 'danger')
-			console.log('ОШИБКА модуля FS', err)
-		}
+		projectPages.forEach(page => {
 
-		const userWebsitePath = path.join(__dirname, '../client-ssr/pages/', project.link)
-		// fs.rmdirSync(userWebsitePath, {recursive: true}, fsCallback)
-		// fs.mkdirSync(userWebsitePath, {recursive: true}, fsCallback)
-		// fs.copyFileSync(path.join(__dirname, '../client-ssr/components/basicTemplate/basicTemplate.tsx'), path.join(__dirname, '../client-ssr/pages/', project.link, '/index.tsx'))
+			if (!page.published) return
 
-		let file = fs.readFileSync(path.join(__dirname, '../client-ssr/pages/', project.link, '/index.tsx'), 'utf-8')
-		file = file.replace(/customPageBlocks/g, '111111111111111')
-		fs.writeFileSync(path.join(__dirname, '../client-ssr/pages/', project.link, '/index.tsx'), file)
+			const pageFilePath = fileSystemService.createCopyOfTemplate(page, project)
 
+			const blocks = fileSystemService.getPageBlocksInStringFormat(page)
 
+			fileSystemService.openFileAndReplaceTemplateStrings(projectId, page._id, blocks, pageFilePath)
+		})
 
-		return testBlocks
+		project.generatedProjectLink = process.env.CLIENT_SSR_URL + '/' + project.link
+		project.published = true
+		project.updated = true
+		await project.save()
+
+		const updatedProject = new ProjectsListDto(project)
+		return updatedProject
 	}
 
 	async getPageData(projectId, pageId) {
@@ -146,6 +147,8 @@ class ProjectService {
 
 		return pageDataDto
 	}
+
+
 
 }
 
