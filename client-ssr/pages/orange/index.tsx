@@ -6,11 +6,11 @@ import MainLayout from "../../components/HOC/MainLayout/MainLayout"
 import UserScripts from "../../components/Another/UserScripts/UserScripts"
 import { GetServerSideProps } from "next"
 
-const stringData: string = '[{"blockPath":"headers/Header1/Header1","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":[],"buttonBackground":"#ca4a00","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Первый","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"}},{"blockPath":"headers/Header2/Header2","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":["pc"],"buttonBackground":"#7dca00","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Второй","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"}}]'
+const stringData: string = '[{"blockPath":"headers/Header1/Header1","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":[],"buttonBackground":"#ca4a00","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Первый","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"}},{"blockPath":"headers/Header2/Header2","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":["pc"],"buttonBackground":"#7dca00","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Второй","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"}},{"blockPath":"headers/Header2/Header2","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":[],"buttonBackground":"#7dca00","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Заголовок блока 2","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"}}]'
 const pageBlocks: IPageBlock[] = JSON.parse(stringData)
 
 const blockList: any = pageBlocks.map((i, index) => {
-	const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
+	const BlockComponent: ComponentType<any> = dynamic(() => import(/* webpackChunkName: "notfound" */'../../components/UILibrary/' + i.blockPath))
 	return (
 		<BlockComponent
 			key={index}

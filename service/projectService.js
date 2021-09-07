@@ -2,10 +2,7 @@ const ProjectsListDto = require('../dtos/projectsDto')
 const ApiError = require('../exeptions/apiError')
 const Project = require('../models/Project')
 const Page = require('../models/Page')
-const path = require('path')
-const fs = require('fs')
 const mergedPageDataDto = require('../dtos/mergedPageDataDto')
-const pageDataBlocksDto = require('../dtos/pageDataBlocksDto')
 const fileSystemService = require('./fileSystemService')
 
 class ProjectService {
@@ -29,6 +26,7 @@ class ProjectService {
 
 		project.name = name
 		project.link = link
+		project.updated = false
 		await project.save()
 
 		const projects = this.getAllProjects(userId)
@@ -36,6 +34,9 @@ class ProjectService {
 	}
 
 	async deleteProject(userId, projectId) {
+		const project = await Project.findById(projectId)
+		fs.rm
+
 		const deletedProject = await Project.findByIdAndDelete(projectId)
 		await Page.deleteMany({project: projectId})
 
@@ -50,6 +51,7 @@ class ProjectService {
 		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
 
 		project.additionalScripts = scripts
+		project.updated = false
 		await project.save()
 
 		const updatedProject = new ProjectsListDto(project)
@@ -78,6 +80,7 @@ class ProjectService {
 		project.projectFontConfigs.title.fontSize = titleSize
 		project.projectFontConfigs.title.fontWeight = titleWeight
 		project.projectFontConfigs.text.fontSize = textSize
+		project.updated = false
 		await project.save()
 
 		const updatedProject = new ProjectsListDto(project)
@@ -92,6 +95,7 @@ class ProjectService {
 		project.formProcessing.secondaryEmail = secondaryEmail
 		project.formProcessing.letterSubject = letterSubject
 		project.formProcessing.phoneNumber = phoneNumber
+		project.updated = false
 		await project.save()
 
 		const updatedProject = new ProjectsListDto(project)

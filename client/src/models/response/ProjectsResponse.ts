@@ -55,3 +55,7 @@ export interface IFormProcessingResponse extends IAlertMessage {
 export interface IChangeProjectStatusResponse extends IAlertMessage {
 	project: IProjectsResponse
 }
+
+export interface IGenerateWebsiteResponse extends IAlertMessage {
+	project: IProjectsResponse
+}

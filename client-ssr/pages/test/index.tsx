@@ -7,7 +7,6 @@ import Script from 'next/script'
 import UserScripts from "../../components/Another/UserScripts/UserScripts"
 import { useUserScripts } from "../../hooks/useUserScript.hook"
 import { GetServerSideProps } from "next"
-import ReactDOMServer from 'react-dom/server'
 
 const page = {
 	pageName: "Название страницы",

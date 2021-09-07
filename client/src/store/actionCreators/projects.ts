@@ -2,7 +2,7 @@ import { AxiosError } from "axios"
 import { Dispatch } from "redux"
 import { IProjectsResponse } from "../../models/response/ProjectsResponse"
 import ProjectsService from "../../services/ProjectsService"
-import { IProjectsAction, projectBooleanTypeProps, projectsActionTypes } from "../types/projects"
+import { IProjectsAction, IProjectsState, projectBooleanTypeProps, projectsActionTypes } from "../types/projects"
 import { alertErrorOrMessageCreator } from "./alert"
 
 export const getAllProjects = () => {
@@ -85,7 +85,7 @@ export const changeProjectStatus = (projectId: string, propSetArray: {prop: proj
 			const response = await ProjectsService.changeProjectStatus(projectId, propsArr)
 
 			dispatch(updateActiveProject(response.data.project))
-			dispatch(alertErrorOrMessageCreator(response.data))
+			// dispatch(alertErrorOrMessageCreator(response.data))
 			// dispatch(projectsEndCreator())
 
 		} catch (error) {
@@ -177,6 +177,31 @@ export const customizeFormProcessing = (projectId: string, email: string, letter
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
+export const generateWebsite = () => {
+	return async (dispatch: Dispatch<IProjectsAction>, getState: () => { projects: IProjectsState }) => {
+
+		dispatch(projectsStartCreator())
+
+		const projectId: string = getState().projects.activeProject.id
+
+		try {
+			const response = await ProjectsService.generateWebsite(projectId)
+
+			dispatch(updateActiveProject(response.data.project))
+			dispatch(alertErrorOrMessageCreator(response.data))
+			// dispatch(projectsEndCreator())
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(projectsEndCreator())
 				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './ProjectHeader.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import SmallIconButton from '../SmallIconButton/SmallIconButton'
@@ -18,56 +18,15 @@ interface IProjectHeader {
 	hasPages: boolean
 	updated: boolean
 	addPageHandler: (param?: any) => any
-	// ? type: 'no-pages' | 'has-pages-unpublished' | 'published-updated' | 'published-not-updated'
+	projectLink: string
 }
 
-const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, handlers, published, hasPages, updated, addPageHandler }) => {
+const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, handlers, published, hasPages, updated, addPageHandler, projectLink }) => {
 
 	const projectHeaderClasses = useCreateClassName('project-header', parentClass, modClass)
 
-	// const {pages} = useTypedSelector(state => state.page)
-	const {changeProjectStatus} = useActions()
-
-	// const [hasPages, setHasPages] = useState<boolean>()
-
-	// const {activeProject, loading} = useTypedSelector(state => state.projects)
-
-	// useEffect(() => {
-	// 	// getProjectPages(projectId)
-	// 	setActiveProject(activeProject.id)
-	// 	// eslint-disable-next-line
-	// }, [loading])
-
-	// let published: boolean = false
-	// let hasPages: boolean = false
-	// let updated: boolean = false
-
-	// ? Новый проект без страниц
-	// if (type === 'no-pages') {
-	// 	published = false
-	// 	hasPages = false
-	// 	updated = false
-	// }
-
-	// ? Когда добавили первую страницу
-	// if (type === 'has-pages-unpublished') {
-	// 	published = false
-	// 	hasPages = true
-	// 	updated = false
-	// }
-
-	// if (type === 'published-updated') {
-	// 	published = true
-	// 	hasPages = true
-	// 	updated = true
-	// }
-
-	// if (type === 'published-not-updated') {
-	// 	published = true
-	// 	hasPages = true
-	// 	updated = false
-	// }
-
+	const {activeProject} = useTypedSelector(state => state.projects)
+	const {generateWebsite} = useActions()
 
 	const projectMenuItems = [
 		{
@@ -124,7 +83,7 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 						{!published && hasPages  // ? На сайте есть страницы, но он еще не опубликован
 							? <Button
 								parentClass="project-header"
-								handler={() => { }}
+								handler={generateWebsite}
 							>
 								Опубликовать сайт
 							</Button>
@@ -133,7 +92,7 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 						{published && updated  // ? Сайт опубликован и обновлен (кнопка заблокирована)
 							? <Button
 								parentClass="project-header"
-								handler={() => { }}
+								handler={generateWebsite}
 								disabled={true}
 							>
 								Обновить сайт
@@ -143,7 +102,7 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 						{published && !updated  // ? Сайт опубликован, но не обновлен
 							? <Button
 								parentClass="project-header"
-								handler={() => { }}
+								handler={generateWebsite}
 							>
 								Обновить сайт
 							</Button>
@@ -167,8 +126,8 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 						{published  // ? Сайт опубликован и на него создана ссылка
 							? <CopyLink
 								parentClass="project-header"
-								value="http://insta-site.com/sveta"
 								useLabel="Ссылка на опубликованный сайт"
+								value={activeProject.generatedProject}
 							/>
 							: null
 						}

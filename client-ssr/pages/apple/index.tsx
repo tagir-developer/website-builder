@@ -6,7 +6,7 @@ import MainLayout from "../../components/HOC/MainLayout/MainLayout"
 import UserScripts from "../../components/Another/UserScripts/UserScripts"
 import { GetServerSideProps } from "next"
 
-const stringData: string = 'customPageBlocks'
+const stringData: string = '[{"blockPath":"headers/Header1/Header1","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":[],"buttonBackground":"#ca4a00","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Заголовок блока","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"}}]'
 const pageBlocks: IPageBlock[] = JSON.parse(stringData)
 
 const blockList: any = pageBlocks.map((i, index) => {
@@ -112,8 +112,8 @@ const UserPage: React.FC<IUserPage> = ({ pageData }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-	const projectId = 'customUserProjectId'
-	const pageId = 'customUserPageId'
+	const projectId = '61349dee9fefec0bc8f0fc23'
+	const pageId = '613757375a96194ed0e5847c'
 
 	const res = await fetch(`http://localhost:5000/api/projects/get-page-data/${projectId}/${pageId}`)
 	const pageData = await res.json()

@@ -9,7 +9,7 @@
     "client": "npm run start --prefix client",
     "ssr": "npm run dev --prefix client-ssr",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "dev3": "concurrently \"npm run server\" \"npm run client\" \"npm run ssr\""
+    "fullDev": "concurrently \"npm run server\" \"npm run client\" \"npm run ssr\""
   },
   "keywords": [
     "mern",
@@ -32,6 +32,7 @@
     "mongoose": "^5.13.1",
     "multer": "^1.4.2",
     "nodemailer": "^6.6.2",
+    "rimraf": "^3.0.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

@@ -17,13 +17,18 @@ const ProjectsListPage: React.FC = () => {
 
 	const popup = usePopup(false, "solid")
 
-	const { projectsList, loading } = useTypedSelector(state => state.projects)
+	const { projectsList, loading, activeProject } = useTypedSelector(state => state.projects)
 	const { getAllProjects } = useActions()
 
 	useEffect(() => {
 		getAllProjects()
 		// eslint-disable-next-line
 	}, [])
+
+	// useEffect(() => {
+	// 	getAllProjects()
+	// 	// eslint-disable-next-line
+	// }, [activeProject])
 
 	// const successfulProjectCreation = () => {
 	// 	popup.closePopup()
@@ -63,6 +68,7 @@ const ProjectsListPage: React.FC = () => {
 												published={i.isPublished}
 												link={i.link}
 												hasPages={i.hasPages}
+												generatedProjectLink={i.generatedProject}
 											/>
 										)
 									})

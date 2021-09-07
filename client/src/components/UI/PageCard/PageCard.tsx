@@ -29,7 +29,7 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 	const pageCardClasses = useCreateClassName('page-card', parentClass, modClass)
 	const { activeProject } = useTypedSelector(state => state.projects)
 	const { pages, activePage } = useTypedSelector(state => state.page)
-	const { setActivePage, changePagePublicationStatus } = useActions()
+	const { setActivePage, changePagePublicationStatus, changeProjectStatus } = useActions()
 
 	// const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать' //! Пока функцию опубликовать и снять с публикации отложим
 
@@ -37,8 +37,8 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 		{
 			title: published ? 'Снять с публикации' : 'Опубликовать',
 			handler: () => {
-				// await setActivePage(pages, pageId)
 				published ? changePagePublicationStatus(pageId, false) : changePagePublicationStatus(pageId, true)
+				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
 			}
 		},
 		{
@@ -50,18 +50,25 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 		},
 		{
 			title: 'Создать дубликат',
-			handler: () => handlers.copyPage(pageId)
+			handler: () => {
+				handlers.copyPage(pageId)
+				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
+			}
 		},
 		{
 			title: 'Удалить страницу',
 			handler: () => {
 				setActivePage(pages, pageId)
 				handlers.deletePageOpenPopup()
+				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
 			}
 		},
 		{
 			title: 'Сделать главной',
-			handler: () => handlers.makePageHome(pageId, activeProject.id)
+			handler: () => {
+				handlers.makePageHome(pageId, activeProject.id)
+				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
+			}
 		},
 	]
 

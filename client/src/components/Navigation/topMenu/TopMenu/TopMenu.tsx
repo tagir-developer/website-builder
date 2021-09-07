@@ -225,7 +225,7 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 						parentClass="top-menu"
 						modClass={['dark-theme', 'mobile-version']}
 						items={[
-							{ title: 'Сайт', link: '/' },
+							{ title: 'Сайт', link: '/projects/' + activeProject.link },
 						]}
 					/>
 					<div className="top-menu__devider"></div>
@@ -235,7 +235,8 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 						parentClass="top-menu"
 						modClass={['dark-theme']}
 						items={[
-							{ title: 'Опубликовать', link: '/', bold: true, handler: () => {
+							{ title: 'Опубликовать', link: '/', bold: true, handler: async () => {
+								await saveBlocksInDB(true)
 								changePagePublicationStatus(activePage.id, true)
 								changeProjectStatus(activeProject.id, [
 									{prop: 'updated', value: false}
@@ -255,7 +256,8 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 							{ title: 'Предпросмотр', link: '/', bold: false, handler: () => {
 								history.push(history.location.pathname + '/preview')
 							}},
-							{ title: 'Опубликовать', link: '/', bold: false, handler: () => {
+							{ title: 'Опубликовать', link: '/', bold: false, handler: async () => {
+								await saveBlocksInDB(true)
 								changePagePublicationStatus(activePage.id, true)
 								changeProjectStatus(activeProject.id, [
 									{prop: 'updated', value: false}

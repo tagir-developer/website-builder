@@ -15,14 +15,15 @@ interface IProjectCard extends RouteComponentProps<any> {
 	published: boolean
 	link: string
 	hasPages: boolean
+	generatedProjectLink: string
 }
 
-const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, published, history, link, hasPages }) => {
+const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, published, history, link, hasPages, generatedProjectLink }) => {
 
 	const projectCardClasses = useCreateClassName('project-card', parentClass, modClass)
 
 	const { projectsList } = useTypedSelector(state => state.projects)
-	const { setActiveProject, createPageAfterOpenProject } = useActions()
+	const { setActiveProject, createPageAfterOpenProject, generateWebsite, getAllProjects } = useActions()
 	
 
 	const openProject = () => {
@@ -57,11 +58,14 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 						: null
 					}
 					{hasPages && published
-						? <CopyLink parentClass="project-card" value="http://insta-site.com/sveta" />
+						? <CopyLink parentClass="project-card" value={generatedProjectLink} />
 						: null
 					}
 					{hasPages && !published
-						? <SecondaryButton parentClass="project-card" handler={() => { }} >
+						? <SecondaryButton parentClass="project-card" handler={async () => {
+							await generateWebsite()
+							getAllProjects()
+							}} >
 							Опубликовать сайт
 							</SecondaryButton>
 						: null

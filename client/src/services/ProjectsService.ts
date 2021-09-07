@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import $api from "../http"
-import { IAddProjectScriptsResponse, IChangeProjectStatusResponse, ICreateProjectsResponse, IDeleteProjectResponse, IFormProcessingResponse, IProjectsResponse, ISetFontConfigsResponse, IUpdateProjectsResponse } from "../models/response/ProjectsResponse"
+import { IAddProjectScriptsResponse, IChangeProjectStatusResponse, ICreateProjectsResponse, IDeleteProjectResponse, IFormProcessingResponse, IGenerateWebsiteResponse, IProjectsResponse, ISetFontConfigsResponse, IUpdateProjectsResponse } from "../models/response/ProjectsResponse"
 
 
 export default class ProjectsService {
@@ -37,5 +37,8 @@ export default class ProjectsService {
 		return $api.delete<IDeleteProjectResponse>(`projects/delete-project/${projectId}`)
 	}
 
+	static async generateWebsite(projectId: string): Promise<AxiosResponse<IGenerateWebsiteResponse>> {
+		return $api.post<IGenerateWebsiteResponse>('projects/publish-user-website', {projectId})
+	}
 
 }
