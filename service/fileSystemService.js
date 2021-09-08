@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const rimraf = require('rimraf')
 
 class fileSystemService {
 
@@ -35,6 +36,11 @@ class fileSystemService {
 		file = file.replace(/customUserProjectId/g, projectId)
 		file = file.replace(/customUserPageId/g, pageId)
 		fs.writeFileSync(pageFilePath, file)
+	}
+
+	deleteProjectFolder(projectLink) {
+		const userWebsitePath = path.join(__dirname, '../client-ssr/pages/', projectLink)
+		rimraf.sync(userWebsitePath)
 	}
 
 }

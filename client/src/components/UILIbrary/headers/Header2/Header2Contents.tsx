@@ -7,6 +7,8 @@ import Textarea from '../../../UI/Textarea/Textarea'
 import { useInput } from '../../../../hooks/useInput.hook'
 import { IHeader2Content } from './types/header2types'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
+import ImageUploader from '../../../UI/ImageUploader/ImageUploader'
+import { useUploadFiles } from '../../../../hooks/useUploadFiles.hook'
 
 interface IHeader2ContentsProps {
 	parentClass?: string
@@ -19,12 +21,13 @@ const Header2Contents: React.FC<IHeader2ContentsProps> = ({ parentClass, closePo
 
 	const classes = useCreateClassName('lib-header-2-contents', parentClass)
 
-	const {activePage} = useTypedSelector(state => state.page)
+	const { activePage } = useTypedSelector(state => state.page)
 	const { changeBlockContent, saveBlocksInDB } = useActions()
 
 	const title = useInput(blockContent.titleText)
 	const description = useInput(blockContent.descriptionText)
 	const button = useInput(blockContent.buttonText)
+	const upload = useUploadFiles('header-2-content')
 
 	const newBlockContent: IHeader2Content = {
 		titleText: title.value,
@@ -62,6 +65,15 @@ const Header2Contents: React.FC<IHeader2ContentsProps> = ({ parentClass, closePo
 			>
 				Текст кнопки
 			</Input>
+
+			<ImageUploader
+				parentClass="lib-header-2-contents"
+				buttonText="Загрузить фото"
+				// multiple={true}
+				{...upload.bind}
+			>
+				Изображения галереи
+			</ImageUploader>
 
 			<SecondaryButton
 				parentClass="lib-header-2-contents"

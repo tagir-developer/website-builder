@@ -41,18 +41,32 @@ const Header2Configs: React.FC<IHeader2Configs> = ({ parentClass, blockConfigs, 
 	], blockConfigs.blockAlign)
 	const titleSize = useSelect([
 		{
-			value: '300%',
+			value: '350%',
 			label: 'Малый'
 		},
 		{
-			value: '350%',
+			value: '400%',
 			label: 'Средний'
 		},
 		{
-			value: '400%',
+			value: '450%',
 			label: 'Большой'
 		},
 	], blockConfigs.titleFontSize)
+	const buttonAnimation = useSelect([
+		{
+			value: 'scale',
+			label: 'Увеличение'
+		},
+		{
+			value: 'rotate',
+			label: 'Вращение'
+		},
+		{
+			value: 'shake',
+			label: 'Потряхивание'
+		},
+	], blockConfigs.buttonAnimation)
 	const deviceSlider = useSlider({ 
 		defaultValues: blockConfigs.hiddenOnDevice, 
 		domain: [0, 2],
@@ -64,12 +78,15 @@ const Header2Configs: React.FC<IHeader2Configs> = ({ parentClass, blockConfigs, 
 		}
 	})
 	const buttonColor = useColorPicker(blockConfigs.buttonBackground)
+	const titleColor = useColorPicker(blockConfigs.titleColor)
 
 	const newBlockConfigs: any = {
 		hiddenOnDevice: deviceSlider.customValues[0],
-		buttonBackground: buttonColor.color,
 		blockAlign: blockAlign.value,
-		titleFontSize: titleSize.value
+		buttonBackground: buttonColor.color,
+		buttonAnimation: buttonAnimation.value,
+		titleFontSize: titleSize.value,
+		titleColor: titleColor.color
 	}
 
 	const saveNewConfigs = () => {
@@ -96,10 +113,24 @@ const Header2Configs: React.FC<IHeader2Configs> = ({ parentClass, blockConfigs, 
 
 			<ColorPicker 
 				parentClass="lib-header-2-configs"
+				colorPicker={titleColor}
+			>
+				Цвет заголовка
+			</ColorPicker>
+
+			<ColorPicker 
+				parentClass="lib-header-2-configs"
 				colorPicker={buttonColor}
 			>
 				Цвет кнопки
 			</ColorPicker>
+
+			<WideSelect
+				parentClass="lib-header-2-configs"
+				{...buttonAnimation.bind}
+			>
+				Анимация кнопки
+			</WideSelect>
 
 			<DevicesSlider 
 				title="Видимость на устройствах"

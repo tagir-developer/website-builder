@@ -5,6 +5,7 @@ const Page = require('../models/Page')
 const mergedPageDataDto = require('../dtos/mergedPageDataDto')
 const fileSystemService = require('./fileSystemService')
 
+
 class ProjectService {
 
 	async createNewProject(userId, name, link) {
@@ -35,7 +36,7 @@ class ProjectService {
 
 	async deleteProject(userId, projectId) {
 		const project = await Project.findById(projectId)
-		fs.rm
+		if (project.generatedProjectLink) fileSystemService.deleteProjectFolder(project.link)
 
 		const deletedProject = await Project.findByIdAndDelete(projectId)
 		await Page.deleteMany({project: projectId})

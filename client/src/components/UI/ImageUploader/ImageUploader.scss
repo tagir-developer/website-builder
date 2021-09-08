@@ -1,0 +1,61 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/mixins.scss";
+@import "../../../styles/mixins/breakpoints.scss";
+@import "../../../styles/mixins/grid.scss";
+
+.img-upload {
+	max-width: 600px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__label {
+		display: block;
+		font-size: 20px;
+		margin-bottom: 20px;
+		align-self: flex-start;
+		color: $text-secondary;
+	}
+
+	&__img-preview {
+		width: 200px;
+		height: 200px;
+	}
+
+	&__show-downloaded-files {
+		margin-top: 30px;
+		font-size: 16px;
+		align-self: flex-start;
+	}
+
+	&__show-downloaded-files-item {
+		list-style: none;
+		margin-top: 10px;
+		padding-left: 30px;
+		line-height: 20px;
+
+		&:before {
+			content: '';
+			display: block;
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			margin-left: -30px;
+			background: url('./img/file-icon.svg') center no-repeat;
+		}
+	}
+
+	// &__small-icon-button {
+	// 	margin-bottom: 30px;	
+	// }
+
+	&__hidden-input {
+		opacity: 0;
+  		visibility: hidden;
+  		position: absolute;
+	}
+
+	&__small-icon-button {
+		margin-top: 25px;
+	}
+}
