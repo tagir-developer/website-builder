@@ -4,6 +4,7 @@ const PageBlocksRecoveryFromDto = require('../dtos/pageBlocksRecoveryFromDto')
 const ApiError = require('../exeptions/apiError')
 const Block = require('../models/Block')
 const Page = require('../models/Page')
+const fileSystemService = require('./fileSystemService')
 
 class BlockService {
 
@@ -86,14 +87,30 @@ class BlockService {
 		return blockDto
 	}
 
-	async saveBlocks(pageId, blocks) {
-		const page = await Page.findById(pageId)
-		if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+	// async saveBlocks(pageId, blocks) {
+	// 	const page = await Page.findById(pageId)
+	// 	if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
 
-		const recoveryBlocks = blocks.map(i => new PageBlocksRecoveryFromDto(i))
+	// 	const recoveryBlocks = blocks.map(i => new PageBlocksRecoveryFromDto(i))
 
-		page.blocks = recoveryBlocks
-		await page.save()
+	// 	page.blocks = recoveryBlocks
+	// 	await page.save()
+
+	// }
+
+	async saveBlocks(pageId, blocks, files) {
+
+		const blocksWithFileLinks = fileSystemService.includeFileLinksInBlocks(blocks, files)
+
+		// return blocksWithFileLinks
+
+		// const page = await Page.findById(pageId)
+		// if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+
+		// const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
+
+		// page.blocks = recoveryBlocks
+		// await page.save()
 
 	}
 

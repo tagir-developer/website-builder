@@ -4,15 +4,19 @@ import { BasicComponent } from '../../commonStyledComponents/BasicComponent/Basi
 import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
-import { IButtonProps, IHeader2Content, IHeader2Props, IHeader2Styles, ITitleProps } from './types/header2types'
+import { IButtonProps, IHeader2Content, IHeader2Props, IHeader2Configs, ITitleProps } from './types/header2types'
 
 const StyledHeader2 = styled(BasicComponent)<IHeader2Props>`
 	width: 100%;
 	position: relative;
 	box-sizing: border-box;
 	padding: 80px 25%;
-	/* background: #fff; */
-	background: url(${props => props.backgroundImage}) center no-repeat;
+	${props => typeof props.backgroundImage === 'string' && css<any>`
+		background: url(${props => props.backgroundImage}) center no-repeat;
+	`}
+	${props => typeof props.backgroundImage !== 'string' && css<any>`
+		background: url(${props => URL.createObjectURL(props.backgroundImage[0])}) center no-repeat;
+	`}
 	background-size: cover;
 	font-size: 1em;
 
@@ -141,7 +145,7 @@ const BackgroundLightening = styled.div<any>`
 `
 
 interface IHeader2 extends ICommonBlockProps {
-	blockConfigs: IHeader2Styles
+	blockConfigs: IHeader2Configs
 	blockContent: IHeader2Content
 }
 
@@ -152,7 +156,8 @@ const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden
 			blockIsHidden={blockIsHidden}
 			devices={blockConfigs.hiddenOnDevice}
 			hideBlock={hideBlock}
-			backgroundImage="https://cdn.pixabay.com/photo/2019/07/18/00/14/falcon-4345234_1280.jpg"
+			// backgroundImage="https://cdn.pixabay.com/photo/2019/07/18/00/14/falcon-4345234_1280.jpg"
+			backgroundImage={blockContent.backgroundImage}
 		>
 			<StyledOverlay
 				devices={blockConfigs.hiddenOnDevice}

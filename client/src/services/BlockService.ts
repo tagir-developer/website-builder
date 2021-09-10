@@ -20,8 +20,23 @@ export default class BlockService {
 		return $api.put<ICopyBlockResponse>('blocks/copy-block', {pageId, originalBlock})
 	}
 
-	static async saveBlocksInDB(pageId: string, dtoBlocks: string): Promise<AxiosResponse<ISaveBlocksInDBResponse>> {
-		return $api.put<ISaveBlocksInDBResponse>('blocks/save-blocks', {pageId, dtoBlocks})
+	// static async saveBlocksInDB(pageId: string, dtoBlocks: string): Promise<AxiosResponse<ISaveBlocksInDBResponse>> {
+	// 	return $api.put<ISaveBlocksInDBResponse>('blocks/save-blocks', {pageId, dtoBlocks})
+	// }
+
+
+	static async saveBlocksInDB(data: FormData): Promise<AxiosResponse<ISaveBlocksInDBResponse>> {
+		return $api.post<ISaveBlocksInDBResponse>('blocks/save-all-blocks', data, {headers: {
+			'Content-Type': 'multipart/form-data'
+		}})
+	}
+
+	// ! Тестовая часть ниже
+
+	static async blockTestImagesDownload(data: FormData): Promise<AxiosResponse> {
+		return $api.post('blocks/test-download', data, {headers: {
+			'Content-Type': 'multipart/form-data'
+		}})
 	}
 
 }

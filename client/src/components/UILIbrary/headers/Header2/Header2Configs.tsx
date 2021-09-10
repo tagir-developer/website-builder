@@ -9,17 +9,17 @@ import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 import { useSlider } from '../../../../hooks/useSlider'
 import { useColorPicker } from '../../../../hooks/useColorPicker.hook'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
-import { IHeader2Content, IHeader2Styles } from './types/header2types'
+import { IHeader2Content, IHeader2Configs } from './types/header2types'
 
-interface IHeader2Configs {
+interface IHeader2ConfigsMenu {
 	parentClass?: string
 	modClass?: string[]
-	blockConfigs: IHeader2Styles
+	blockConfigs: IHeader2Configs
 	blockContent: IHeader2Content
 	closePopup: Function
 }
 
-const Header2Configs: React.FC<IHeader2Configs> = ({ parentClass, blockConfigs, blockContent, closePopup }) => {
+const Header2Configs: React.FC<IHeader2ConfigsMenu> = ({ parentClass, blockConfigs, blockContent, closePopup }) => {
 
 	const classes = useCreateClassName('lib-header-2-configs', parentClass)
 	const {activePage} = useTypedSelector(state => state.page)

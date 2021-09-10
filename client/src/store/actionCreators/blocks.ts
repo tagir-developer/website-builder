@@ -182,8 +182,6 @@ export const moveBlock = (direction: 'up' | 'down') => {
 			}
 		})
 
-		// console.log('Смещенный список блоков', newBlockList)
-
 		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
 		dispatch(blockGetPageBlocks(newBlockList))
 	}
@@ -220,15 +218,87 @@ export const copyBlock = () => {
 	}
 }
 
+// ! Тестовая функция ниже 
+export const blockTestImagesDownload = (apple: File[], orange: File[]) => {
+	return async (dispatch: Dispatch<IBlockAction>) => {
+
+		const formData = new FormData()
+
+		apple.forEach(file => {
+			formData.append('apple', file)
+		})
+		orange.forEach(file => {
+			formData.append('orange', file)
+		})
+
+		// const fieldNames = JSON.stringify(['apple', 'orange'])
+
+		formData.set('name', 'Василий')
+		// formData.set('fieldNames', fieldNames)
+
+		try {
+
+
+			const response = await BlockService.blockTestImagesDownload(formData)
+
+			console.log(response.data)
+
+			// dispatch(userGetUserCreator(response.data.user))
+
+			// dispatch(userUpdatedCreator())
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+
+		}
+	}
+}
+
 export const saveBlocksInDB = (showMessage: boolean = false) => {
 	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
 
 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
 		const pageId: string = getState().page.activePage.id
-		const dtoBlocks: string = JSON.stringify(blocks)
+		// const dtoBlocks: string = JSON.stringify(blocks)
+
+		const formData = new FormData()
+
+		const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
+
+			draft.map(block => {
+				let key: string
+				const obj: Record<string, any> = block.blockContent
+				const blockId = block.blockId
+
+				for (key in obj) {
+					if (obj[key] instanceof Array) {
+						let fileArr = obj[key]
+						const fieldName: string = blockId + '_' + key
+
+						if (fileArr[0] instanceof File) {
+							fileArr.forEach((file: File) => {
+								formData.append(fieldName, file)
+							})
+							obj[key] = fieldName
+						}
+
+					}
+				}
+
+				return block
+			})
+
+		})
+
+		formData.set('pageId', pageId)
+		formData.set('blocks', JSON.stringify(newBlockList, null, 2))
 
 		try {
-			const response = await BlockService.saveBlocksInDB(pageId, dtoBlocks)
+			// const response = await BlockService.saveBlocksInDB(pageId, dtoBlocks)
+			const response = await BlockService.saveBlocksInDB(formData)
 
 			if (showMessage) dispatch(alertErrorOrMessageCreator(response.data))
 
@@ -241,6 +311,28 @@ export const saveBlocksInDB = (showMessage: boolean = false) => {
 		}
 	}
 }
+
+// export const saveBlocksInDB = (showMessage: boolean = false) => {
+// 	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
+
+// 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
+// 		const pageId: string = getState().page.activePage.id
+// 		const dtoBlocks: string = JSON.stringify(blocks)
+
+// 		try {
+// 			const response = await BlockService.saveBlocksInDB(pageId, dtoBlocks)
+
+// 			if (showMessage) dispatch(alertErrorOrMessageCreator(response.data))
+
+// 		} catch (error) {
+// 			const e = error as AxiosError
+// 			if (e.response) {
+// 				dispatch(alertErrorOrMessageCreator(e.response.data))
+// 			}
+
+// 		}
+// 	}
+// }
 
 export const blockUndoChange = () => {
 	return (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState }) => {

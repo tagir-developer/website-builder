@@ -11,6 +11,10 @@ import { usePopup } from '../../hooks/usePopup.hook'
 import './LandingPage.scss'
 import styled, { ThemeProvider } from 'styled-components'
 import { myTheme } from '../../components/UILIbrary/themes/themes'
+import { useActions } from '../../hooks/reduxHooks'
+import { useUploadFiles } from '../../hooks/useUploadFiles.hook'
+import FileUpload from '../../components/UI/FileUpload/FileUpload'
+import produce from 'immer'
 
 // import myImg from './img/pc-and-phone.svg';
 
@@ -26,6 +30,66 @@ import { myTheme } from '../../components/UILIbrary/themes/themes'
 const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	const testPopup = usePopup(false, 'blur')
+
+	const { blockTestImagesDownload } = useActions()
+
+	const appleUpload = useUploadFiles('apple')
+	const orangeUpload = useUploadFiles('orange')
+
+
+
+
+
+	const testFunction = () => {
+
+		let arr = [
+			{ fieldName: "apple", path: "somevalue1" },
+			{ fieldName: "orange", path: "somevalue2" },
+			{ fieldName: "apple", path: "somevalue3" },
+			{ fieldName: "apple", path: "somevalue4" },
+			{ fieldName: "apple", path: "somevalue5" },
+			{ fieldName: "pear", path: "somevalue6" },
+			{ fieldName: "orange", path: "somevalue7" }
+		]
+
+		type newArrType = {fieldName: string, path: string[] | string}
+
+		let newArr: newArrType[] = []
+		let newArrFieldNames: string[] = []
+
+		arr.forEach((i, index) => {
+
+			if (index === 0) {
+				newArr = [i]
+				newArrFieldNames.push(i.fieldName)
+				return
+			}
+
+			if (newArrFieldNames.includes(i.fieldName)) {
+				const targetObj: newArrType = newArr.filter(item => item.fieldName === i.fieldName)[0]
+				if (typeof targetObj.path === 'string') {
+					targetObj.path = [targetObj.path, i.path]
+				} else {
+					targetObj.path = [...targetObj.path, i.path]
+				}
+				return
+			}
+
+			newArrFieldNames.push(i.fieldName)
+			newArr = [...newArr, i]
+
+
+		})
+
+
+
+
+
+		console.log('newArr', newArr)
+
+	}
+
+
 
 	return (
 		<>
@@ -50,18 +114,40 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 									{/* <Button parentClass="landing-header" handler={() => history.push('/registration')} >
 										Создать сайт
 									</Button> */}
-									<Button parentClass="landing-header" handler={testPopup.handler} >
-										Открыть попап
+									<Button
+										parentClass="landing-header"
+										// handler={testPopup.handler}
+										// handler={() => blockTestImagesDownload(appleUpload.files, orangeUpload.files)}
+										handler={testFunction}
+									>
+										Тестовая функция
 									</Button>
-									<ThemeProvider theme={myTheme}>
+									{/* <ThemeProvider theme={myTheme}>
 										<StyledButton
 											outlined
 											color="red"
 											animation="scale"
+											onClick={blockTestImagesDownload}
 										>
 											Кнопка
 										</StyledButton>
-									</ThemeProvider>
+									</ThemeProvider> */}
+
+									<FileUpload
+										parentClass="send-question"
+										multiple={true}
+										{...appleUpload.bind}
+									>
+										Яблоки
+									</FileUpload>
+
+									<FileUpload
+										parentClass="send-question"
+										multiple={true}
+										{...orangeUpload.bind}
+									>
+										Апельсины
+									</FileUpload>
 
 								</div>
 								<div className="landing-header__image-container">

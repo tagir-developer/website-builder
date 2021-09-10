@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './styles/Header2Contents.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
@@ -27,12 +27,22 @@ const Header2Contents: React.FC<IHeader2ContentsProps> = ({ parentClass, closePo
 	const title = useInput(blockContent.titleText)
 	const description = useInput(blockContent.descriptionText)
 	const button = useInput(blockContent.buttonText)
-	const upload = useUploadFiles('header-2-content')
+	const upload = useUploadFiles('header-2-content', true)
+
+	// useEffect(() => {
+	// 	if (typeof blockContent.backgroundImage === 'string') {
+	// 		upload.setImgPreview
+	// 	} else {
+	// 		upload.setFiles(blockContent.backgroundImage)
+	// 	}
+	// 	// eslint-disable-next-line
+	// }, [])
 
 	const newBlockContent: IHeader2Content = {
 		titleText: title.value,
 		descriptionText: description.value,
-		buttonText: button.value
+		buttonText: button.value,
+		backgroundImage: upload.files
 	}
 
 	const saveNewContent = () => {

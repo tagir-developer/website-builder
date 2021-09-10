@@ -1,7 +1,7 @@
 import React from 'react'
 import './ImgPreviewCard.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { ImgPreviewType } from '../../../hooks/useUploadFiles.hook'
+import { clearFilesParamType, ImgPreviewType } from '../../../hooks/useUploadFiles.hook'
 import ImgMoveBtn from '../ImgMoveBtn/ImgMoveBtn'
 
 interface IImgPreviewCard {
@@ -9,10 +9,12 @@ interface IImgPreviewCard {
 	modClass?: string[]
 	imgData: ImgPreviewType
 	singleCard: boolean
-	clearFiles: () => void
+	clearFiles: (param: clearFilesParamType) => void
+	id: number
+	moveFile: (index: number, moveArrow: 'up' | 'down') => void
 }
 
-const ImgPreviewCard: React.FC<IImgPreviewCard> = ({ parentClass, modClass, imgData, singleCard, clearFiles }) => {
+const ImgPreviewCard: React.FC<IImgPreviewCard> = ({ parentClass, modClass, imgData, singleCard, clearFiles, id, moveFile }) => {
 
 	const imgPreviewCardClasses = useCreateClassName('img-preview-card', parentClass, modClass)
 
@@ -30,7 +32,8 @@ const ImgPreviewCard: React.FC<IImgPreviewCard> = ({ parentClass, modClass, imgD
 				? null
 				: <ImgMoveBtn
 					parentClass="img-preview-card"
-					handler={() => { }}
+					handler={moveFile}
+					cardId={id}
 				/>
 			}
 
@@ -38,7 +41,7 @@ const ImgPreviewCard: React.FC<IImgPreviewCard> = ({ parentClass, modClass, imgD
 
 			<div
 				className="img-preview-card__delete-btn"
-				onClick={clearFiles}
+				onClick={() => clearFiles(id)}
 			></div>
 
 		</div>

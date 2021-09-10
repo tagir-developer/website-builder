@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { devices } from '../commonTypes'
 
-interface IBasicComponent {
+export interface IBasicComponent {
 	blockIsHidden: boolean
 	hideBlock?: boolean
 	devices: devices[]
