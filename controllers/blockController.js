@@ -124,74 +124,12 @@ class blockController {
 
 			const {pageId, blocks} = req.body
 			const files = req.files
-			// const blocks = JSON.parse(req.body.blocks)
-
-
-			// let sliders = []
-
-			// if (files) {
-			// 	sliders = files.map(file => {
-			// 		return {
-			// 			field_name: file.fieldname, 
-			// 			path: file.path 
-			// 		}
-			// 	})
-			// }
-
-			// console.log('FILES!!!!!!!!!!', sliders)
-			// console.log('PAGE ID!!!!!', pageId)
-			// console.log('BLOCKS!!!!!', blocks)
 
 			await blockService.saveBlocks(pageId, blocks, files)
 
 			return res.json({
 				messageType: 'success',
 				message: "Изменения успешно сохранены",
-				errors: []
-			})
-		} catch (e) {
-			next(e)
-		}
-	}
-
-	async testDownload(req, res, next) { 
-		try {
-
-			const {name} = req.body
-			const files = req.files
-
-			// let filesObj = {}
-
-			// for (let key in files) {
-
-			// 	const arr = files[key].map(file => {
-			// 		const fileName = new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname
-			// 		const filePath = path.join(__dirname, '..', 'images/avatars/thumb_150', fileName)
-			// 		return {fileName, filePath}
-			// 	})
-
-			// 	filesObj[key] = arr
-			// }
-			let sliders = []
-
-			if (files) {
-				sliders = files.map(file => {
-					return {
-						field_name: file.fieldname, 
-						path: file.path 
-					}
-				})
-			}
-			// console.log(sliders) 
-
-			console.log('FILES!!!!!!!!!!', sliders)
-			console.log('ANOTHER DATA!!!!!!!', name)
-
-			
-
-			return res.json({
-				messageType: 'success',
-				message: "Успешное выполнение тестовой загрузки файлов",
 				errors: []
 			})
 		} catch (e) {

@@ -17,6 +17,8 @@ class ProjectService {
 		})
 		if (!newProject) throw ApiError.BadRequest('Не удалось создать проект, повторите попытку позже', 'danger')
 
+		fileSystemService.createProjectFilesFolder(link)
+
 		const projects = this.getAllProjects(userId)
 		return projects
 	}
@@ -36,7 +38,9 @@ class ProjectService {
 
 	async deleteProject(userId, projectId) {
 		const project = await Project.findById(projectId)
+
 		if (project.generatedProjectLink) fileSystemService.deleteProjectFolder(project.link)
+		fileSystemService.deleteProjectFilesFolder(project.link)
 
 		const deletedProject = await Project.findByIdAndDelete(projectId)
 		await Page.deleteMany({project: projectId})

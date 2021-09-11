@@ -18,29 +18,13 @@ import { useTypedSelector } from './hooks/reduxHooks'
 import Logout from './components/Auth/Logout/Logout'
 import PassResetPage from './pages/PassResetPage/PassResetPage'
 import { useEffect } from 'react'
+import SandboxPage from './pages/SandboxPage/SandboxPage'
 
 export const Routes: React.FC = (): JSX.Element => {
 
 	const { isAuth } = useTypedSelector(state => state.auth)
 
-	// const history = useHistory()
-	// const location = useLocation()
-
-	// useEffect(() => {
-	// 	if (isAuth) {
-	// 		const path = localStorage.getItem('path')
-	// 		history.push(path ? path : '/')
-	// 	}
-	// 	// eslint-disable-next-line
-	// }, [isAuth])
-
-	// useEffect(() => {
-	// 	console.log('Произошло размонтирование роутинга')
-	// 	return () => {
-	// 		localStorage.setItem('path', location.pathname)
-	// 	}
-	// 	// eslint-disable-next-line
-	// }, [])
+	// ! Не забыть удалить sandboxPage
 
 	if (isAuth) {
 		return (
@@ -51,6 +35,7 @@ export const Routes: React.FC = (): JSX.Element => {
 				<Route path="/complaint" component={ComplaintPage} exact />
 				<Route path="/user-profile" component={UserProfilePage} exact />
 				<Route path="/logout" component={Logout} exact />
+				<Route path="/sandbox" component={SandboxPage} exact />
 
 				<Route path="/help/two" exact >
 					<HelpPage><PageStart title="Как создать сайт" /></HelpPage>
@@ -94,6 +79,7 @@ export const Routes: React.FC = (): JSX.Element => {
 			<Route path="/learning" component={LearningPage} exact />
 			<Route path="/question" component={QuestionPage} exact />
 			<Route path="/complaint" component={ComplaintPage} exact />
+			<Route path="/sandbox" component={SandboxPage} exact />
 
 			<Route path="/help/two" exact >
 				<HelpPage><PageStart title="Как создать сайт" /></HelpPage>

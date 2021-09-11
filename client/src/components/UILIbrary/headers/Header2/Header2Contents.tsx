@@ -29,23 +29,17 @@ const Header2Contents: React.FC<IHeader2ContentsProps> = ({ parentClass, closePo
 	const button = useInput(blockContent.buttonText)
 	const upload = useUploadFiles('header-2-content', true)
 
-	// useEffect(() => {
-	// 	if (typeof blockContent.backgroundImage === 'string') {
-	// 		upload.setImgPreview
-	// 	} else {
-	// 		upload.setFiles(blockContent.backgroundImage)
-	// 	}
-	// 	// eslint-disable-next-line
-	// }, [])
-
-	const newBlockContent: IHeader2Content = {
-		titleText: title.value,
-		descriptionText: description.value,
-		buttonText: button.value,
-		backgroundImage: upload.files
+	const createBlockContentObject = (filesArray: File[]): IHeader2Content => {
+		return {
+			titleText: title.value,
+			descriptionText: description.value,
+			buttonText: button.value,
+			backgroundImage: !!filesArray.length ? filesArray : blockContent.backgroundImage
+		}
 	}
 
 	const saveNewContent = () => {
+		const newBlockContent = createBlockContentObject(upload.files)
 		changeBlockContent(newBlockContent)
 		if (activePage.autosavePage) saveBlocksInDB()
 		closePopup()
@@ -82,7 +76,7 @@ const Header2Contents: React.FC<IHeader2ContentsProps> = ({ parentClass, closePo
 				// multiple={true}
 				{...upload.bind}
 			>
-				Изображения галереи
+				Фоновое изображение
 			</ImageUploader>
 
 			<SecondaryButton

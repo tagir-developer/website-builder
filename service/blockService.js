@@ -10,8 +10,6 @@ class BlockService {
 
 	async createNewBlock(type, title, path, preview) {
 
-		// const imagePath = path.join(__dirname, '..', 'images/avatars/thumb_150', fileName)
-
 		const newBlock = await Block.create({
 			type,
 			title,
@@ -102,15 +100,13 @@ class BlockService {
 
 		const blocksWithFileLinks = fileSystemService.includeFileLinksInBlocks(blocks, files)
 
-		// return blocksWithFileLinks
+		const page = await Page.findById(pageId)
+		if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
 
-		// const page = await Page.findById(pageId)
-		// if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+		const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
 
-		// const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
-
-		// page.blocks = recoveryBlocks
-		// await page.save()
+		page.blocks = recoveryBlocks
+		await page.save()
 
 	}
 

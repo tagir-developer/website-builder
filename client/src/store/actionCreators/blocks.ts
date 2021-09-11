@@ -7,6 +7,7 @@ import { alertErrorOrMessageCreator } from "./alert"
 import produce from 'immer'
 import { WritableDraft } from "immer/dist/internal"
 import { IPageState } from "../types/page"
+import { IProjectsState } from "../types/projects"
 
 
 export const getBlocksWithType = (blockType: string) => {
@@ -218,53 +219,18 @@ export const copyBlock = () => {
 	}
 }
 
-// ! Тестовая функция ниже 
-export const blockTestImagesDownload = (apple: File[], orange: File[]) => {
-	return async (dispatch: Dispatch<IBlockAction>) => {
-
-		const formData = new FormData()
-
-		apple.forEach(file => {
-			formData.append('apple', file)
-		})
-		orange.forEach(file => {
-			formData.append('orange', file)
-		})
-
-		// const fieldNames = JSON.stringify(['apple', 'orange'])
-
-		formData.set('name', 'Василий')
-		// formData.set('fieldNames', fieldNames)
-
-		try {
-
-
-			const response = await BlockService.blockTestImagesDownload(formData)
-
-			console.log(response.data)
-
-			// dispatch(userGetUserCreator(response.data.user))
-
-			// dispatch(userUpdatedCreator())
-
-		} catch (error) {
-			const e = error as AxiosError
-			if (e.response) {
-				dispatch(alertErrorOrMessageCreator(e.response.data))
-			}
-
-		}
-	}
-}
-
 export const saveBlocksInDB = (showMessage: boolean = false) => {
-	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
+	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState, projects: IProjectsState }) => {
 
 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
 		const pageId: string = getState().page.activePage.id
+		const projectName: string = getState().projects.activeProject.link
 		// const dtoBlocks: string = JSON.stringify(blocks)
 
 		const formData = new FormData()
+
+		formData.append('pageId', pageId)
+		formData.append('projectName', projectName)
 
 		const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
 
@@ -293,7 +259,7 @@ export const saveBlocksInDB = (showMessage: boolean = false) => {
 
 		})
 
-		formData.set('pageId', pageId)
+
 		formData.set('blocks', JSON.stringify(newBlockList, null, 2))
 
 		try {

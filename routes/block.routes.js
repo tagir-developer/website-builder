@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const blockController = require('../controllers/blockController')
 const authMiddleware = require('../middlewares/authMiddleware')
-const { createBlockValidators, addBlockValidators, saveBlocksValidators, copyBlockValidators } = require('../validators/blockValidators')
+const { createBlockValidators, addBlockValidators, copyBlockValidators } = require('../validators/blockValidators')
 const uploadImages = require('../middlewares/fileMiddlewares/uploadBlocksImages')
 
 const router = Router()
@@ -19,9 +19,5 @@ router.put('/copy-block', copyBlockValidators, blockController.copyBlock)
 // router.put('/save-blocks', saveBlocksValidators, blockController.saveBlocks)
 router.post('/save-all-blocks', uploadImages.any(), blockController.saveBlocks)
 
-// ! Тестовый роут
-// router.post('/test-download', uploadImages.fields([{ name: 'apple', maxCount: 10 }, { name: 'orange', maxCount: 10 }]), blockController.testDownload)
-// router.post('/test-download', uploadImages.fields(randomFields), blockController.testDownload)
-router.post('/test-download', uploadImages.any(), blockController.testDownload)
 
 module.exports = router
