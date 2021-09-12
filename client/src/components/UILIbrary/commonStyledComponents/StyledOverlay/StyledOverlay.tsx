@@ -13,6 +13,7 @@ export const StyledOverlay = styled.div<IStyledOverlayProps>`
 	flex-direction:column;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 	top: 0;
 	left: 0;
 	width: 100%;

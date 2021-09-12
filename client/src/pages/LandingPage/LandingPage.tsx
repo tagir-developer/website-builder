@@ -31,64 +31,8 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	const testPopup = usePopup(false, 'blur')
 
-	const { blockTestImagesDownload } = useActions()
-
 	const appleUpload = useUploadFiles('apple')
 	const orangeUpload = useUploadFiles('orange')
-
-
-
-
-
-	const testFunction = () => {
-
-		let arr = [
-			{ fieldName: "apple", path: "somevalue1" },
-			{ fieldName: "orange", path: "somevalue2" },
-			{ fieldName: "apple", path: "somevalue3" },
-			{ fieldName: "apple", path: "somevalue4" },
-			{ fieldName: "apple", path: "somevalue5" },
-			{ fieldName: "pear", path: "somevalue6" },
-			{ fieldName: "orange", path: "somevalue7" }
-		]
-
-		type newArrType = {fieldName: string, path: string[] | string}
-
-		let newArr: newArrType[] = []
-		let newArrFieldNames: string[] = []
-
-		arr.forEach((i, index) => {
-
-			if (index === 0) {
-				newArr = [i]
-				newArrFieldNames.push(i.fieldName)
-				return
-			}
-
-			if (newArrFieldNames.includes(i.fieldName)) {
-				const targetObj: newArrType = newArr.filter(item => item.fieldName === i.fieldName)[0]
-				if (typeof targetObj.path === 'string') {
-					targetObj.path = [targetObj.path, i.path]
-				} else {
-					targetObj.path = [...targetObj.path, i.path]
-				}
-				return
-			}
-
-			newArrFieldNames.push(i.fieldName)
-			newArr = [...newArr, i]
-
-
-		})
-
-
-
-
-
-		console.log('newArr', newArr)
-
-	}
-
 
 
 	return (
@@ -116,9 +60,7 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 									</Button> */}
 									<Button
 										parentClass="landing-header"
-										// handler={testPopup.handler}
-										// handler={() => blockTestImagesDownload(appleUpload.files, orangeUpload.files)}
-										handler={testFunction}
+										handler={testPopup.handler}
 									>
 										Тестовая функция
 									</Button>
