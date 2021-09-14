@@ -156,7 +156,6 @@ const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden
 			blockIsHidden={blockIsHidden}
 			devices={blockConfigs.hiddenOnDevice}
 			hideBlock={hideBlock}
-			// backgroundImage="https://cdn.pixabay.com/photo/2019/07/18/00/14/falcon-4345234_1280.jpg"
 			backgroundImage={blockContent.backgroundImage}
 		>
 			<StyledOverlay

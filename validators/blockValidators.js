@@ -10,7 +10,7 @@ exports.createBlockValidators = [
 		.trim()
 		.not().isEmpty().withMessage('Поле type не должно быть пустым')
 		.isString().withMessage('Передаваемое значение type должно быть строкой')
-		.isIn(['header', 'form', 'gallery']).withMessage(`Такого типа блока нет в списке допустимых значений`),
+		.isIn(['header', 'form', 'gallery', 'menu']).withMessage(`Такого типа блока нет в списке допустимых значений`),
 	check('path')
 		.trim()
 		.not().isEmpty().withMessage('Поле path не должно быть пустым')
@@ -18,7 +18,11 @@ exports.createBlockValidators = [
 	check('preview')
 		.trim()
 		.not().isEmpty().withMessage('Поле preview не должно быть пустым')
-		.isString().withMessage('Передаваемое значение preview должно быть строкой')
+		.isString().withMessage('Передаваемое значение preview должно быть строкой'),
+	check('blockDefaultConfigs')
+		.not().isEmpty().withMessage('Поле blockDefaultConfigs не должно быть пустым'),
+	check('blockDefaultContent')
+		.not().isEmpty().withMessage('Поле blockDefaultContent не должно быть пустым')
 ]
 
 exports.addBlockValidators = [

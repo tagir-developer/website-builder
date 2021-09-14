@@ -4,13 +4,12 @@ import { BasicComponent } from '../../commonStyledComponents/BasicComponent/Basi
 import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
-import { IMenu1Configs, IMenu1Content, IMenu1Props } from './types/menu1types'
+import { IMenu1Configs, IMenu1Content, IMenuBar, IMenuBarItem, IMenuItem, IShowHideMenuBtn } from './types/menu1types'
 
 
-// const StyledMenu1 = styled(BasicComponent)<IMenu1Props>`
-const StyledMenu1 = styled.div<any>`
+const StyledMenu1 = styled(BasicComponent)<any>`
 	width: 100%;
-	${props => props.hideBlock && css<any>`
+	${props => !props.hideBlock && css<any>`
  		height: 250px;
 		display: flex;
 		align-items: center;
@@ -34,11 +33,12 @@ const StyledMenu1 = styled.div<any>`
 
 `
 
-const MenuBar = styled.div<any>`
+const MenuBar = styled.div<IMenuBar>`
 	position: relative;
 	width: 100%;
 	height: 60px;	
-	background: #202020;
+	background: ${props => props.menuColor};
+	color: ${props => props.textColor};
 
 	@media ${props => props.theme.media.phone} {
 		font-size: 0.8em;
@@ -68,20 +68,21 @@ const ItemsMobileWrapper = styled.div<any>`
 
 `
 
-const ShowHideMenuBtn = styled.div<any>`
+const ShowHideMenuBtn = styled.div<IShowHideMenuBtn>`
 	position: absolute;
 	box-sizing: border-box;
 	top: 0;
 	right: 5px;
 	width: 60px;
 	height: 60px;
-	color: white;
+	color: ${props => props.textColor};
 	font-size: 35px;
 	text-align: center;
-	padding-top: 14px;
+	/* line-height: 60px; */
+	padding-top: 12px;
 `
 
-const MenuItem = styled.a<any>`
+const MenuItem = styled.a<IMenuBarItem>`
 	display: block;
 	text-decoration: none;
 	box-sizing: border-box;
@@ -89,14 +90,13 @@ const MenuItem = styled.a<any>`
 	min-width: 200px;
 	max-width: 300px;
 	height: 60px;
-	color: white;
-	/* font-weight: bold; */
 	text-align: center;
 	line-height: 60px;
 	padding: 0 15px;
+	color: ${props => props.textColor};
 	&:hover {
-		color: #ff0000;
-		background: #4d4d4d;
+		color: ${props => props.activeItemTextColor};
+		background: ${props => props.activeItemColor};
 	}
 `
 
@@ -129,34 +129,34 @@ const DropDownMenuItem = styled.a<any>`
 `
 
 
-interface IMenu1 {
-}
-
-// interface IMenu1 extends ICommonBlockProps {
-// 	blockConfigs: IMenu1Configs
-// 	blockContent: IMenu1Content
+// interface IMenu1 {
 // }
 
-// const Menu1: React.FC<IMenu1> = ({ blockConfigs, blockContent, blockIsHidden, hideBlock = false }) => {
-const Menu1: React.FC<IMenu1> = () => {
+interface IMenu1 extends ICommonBlockProps {
+	blockConfigs: IMenu1Configs
+	blockContent: IMenu1Content
+}
+
+const Menu1: React.FC<IMenu1> = ({ blockConfigs, blockContent, blockIsHidden, hideBlock = false }) => {
 
 	const [isOpen, setIsOpem] = useState(false)
 
 	return (
 		<StyledMenu1
-			// textAlign={blockConfigs.blockAlign}
-			// blockIsHidden={blockIsHidden}
-			// devices={blockConfigs.hiddenOnDevice}
-			// hideBlock={hideBlock}
-			hideBlock={true}
+			blockIsHidden={blockIsHidden}
+			devices={blockConfigs.hiddenOnDevice}
+			hideBlock={hideBlock}
+		// hideBlock={true}
 		>
 			<StyledOverlay
-				devices={[]}
-				// blockIsHidden={blockIsHidden}
-				blockIsHidden={false}
+				devices={blockConfigs.hiddenOnDevice}
+				blockIsHidden={blockIsHidden}
 			/>
 
-			<MenuBar>
+			<MenuBar
+				menuColor={blockConfigs.menuColor}
+				textColor={blockConfigs.textColor}
+			>
 
 				<ItemsPCWrapper>
 					<StyledFlex
@@ -164,22 +164,53 @@ const Menu1: React.FC<IMenu1> = () => {
 						align={"center"}
 						justify={"space-around"}
 					>
-						<MenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</MenuItem>
+						{!!blockContent.menuItems.length
+							? blockContent.menuItems.map((i, index) => {
+								return (
+									<MenuItem
+										key={index}
+										href={i.link}
+										textColor={blockConfigs.textColor}
+										activeItemColor={blockConfigs.activeItemColor}
+										activeItemTextColor={blockConfigs.activeItemTextColor}
+									>
+										{i.title}
+									</MenuItem>
+								)
+							})
+							: null
+						}
+						{/* <MenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</MenuItem>
 						<MenuItem href="https://yandex.ru/">Пункт 2 оооооооочень длиииинный пункт</MenuItem>
 						<MenuItem href="https://yandex.ru/">Пункт 3 оооооооочень длиииинный пункт</MenuItem>
-						<MenuItem href="https://yandex.ru/">Пункт 4 оооооооочень длиииинный пункт</MenuItem>
+						<MenuItem href="https://yandex.ru/">Пункт 4 оооооооочень длиииинный пункт</MenuItem> */}
 					</StyledFlex>
 				</ItemsPCWrapper>
 
 				<ItemsMobileWrapper>
-					<ShowHideMenuBtn onClick={() => setIsOpem(prev => !prev)}>
+					<ShowHideMenuBtn 
+						onClick={() => setIsOpem(prev => !prev)}
+						textColor={blockConfigs.textColor}
+					>
 						{isOpen ? <span className="icon-close-menu" /> : <span className="icon-show-menu" />}
 					</ShowHideMenuBtn>
 					<DropDownList showList={isOpen}>
-						<DropDownMenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</DropDownMenuItem>
-						<DropDownMenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</DropDownMenuItem>
-						<DropDownMenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</DropDownMenuItem>
-						<DropDownMenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</DropDownMenuItem>
+						{/* <DropDownMenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</DropDownMenuItem> */}
+						{!!blockContent.menuItems.length
+							? blockContent.menuItems.map((i, index) => {
+								return (
+									<DropDownMenuItem
+										key={index}
+										href={i.link}
+										activeItemColor={blockConfigs.activeItemColor}
+										activeItemTextColor={blockConfigs.activeItemTextColor}
+									>
+										{i.title}
+									</DropDownMenuItem>
+								)
+							})
+							: null
+						}
 					</DropDownList>
 				</ItemsMobileWrapper>
 

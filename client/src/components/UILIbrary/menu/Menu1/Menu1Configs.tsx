@@ -1,103 +1,86 @@
 import React from 'react'
 import './styles/Menu1Configs.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
-import { useSelect } from '../../../../hooks/useSelect.hook'
-import WideSelect from '../../../UI/WideSelect/WideSelect'
 import ColorPicker from '../../../UI/ColorPicker/ColorPicker'
 import DevicesSlider from '../../../UI/DevicesSlider/DevicesSlider'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 import { useSlider } from '../../../../hooks/useSlider'
 import { useColorPicker } from '../../../../hooks/useColorPicker.hook'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
-import {  } from './types/menu1types'
+import { IMenu1Configs } from './types/menu1types'
 
-interface IMenu1Configs {
+interface IMenu1ConfigsPanel {
 	parentClass?: string
 	modClass?: string[]
 	blockConfigs: IMenu1Configs
 	closePopup: Function
 }
 
-const Menu1Configs: React.FC<IMenu1Configs> = ({ parentClass, blockConfigs, closePopup }) => {
+const Menu1Configs: React.FC<IMenu1ConfigsPanel> = ({ parentClass, blockConfigs, closePopup }) => {
 
 	const classes = useCreateClassName('lib-menu-1-configs', parentClass)
-	const {activePage} = useTypedSelector(state => state.page)
-	const {changeBlockConfigs, saveBlocksInDB} = useActions()
+	const { activePage } = useTypedSelector(state => state.page)
+	const { changeBlockConfigs, saveBlocksInDB } = useActions()
 
-	// const blockAlign = useSelect([
-	// 	{
-	// 		value: 'flex-start',
-	// 		label: 'По левому краю'
-	// 	},
-	// 	{
-	// 		value: 'center',
-	// 		label: 'По центру'
-	// 	},
-	// 	{
-	// 		value: 'flex-end',
-	// 		label: 'По правому краю'
-	// 	},
-	// ], blockConfigs.blockAlign)
-	// const titleSize = useSelect([
-	// 	{
-	// 		value: '300%',
-	// 		label: 'Малый'
-	// 	},
-	// 	{
-	// 		value: '350%',
-	// 		label: 'Средний'
-	// 	},
-	// 	{
-	// 		value: '400%',
-	// 		label: 'Большой'
-	// 	},
-	// ], blockConfigs.titleFontSize)
-	// const deviceSlider = useSlider({ 
-	// 	defaultValues: blockConfigs.hiddenOnDevice, 
-	// 	domain: [0, 2],
-	// 	step: 1,
-	// 	decriptor: {
-	// 		0: ['tablete', 'pc'],
-	// 		1: ['pc'],
-	// 		2: []
-	// 	}
-	// })
-	// const buttonColor = useColorPicker(blockConfigs.buttonBackground)
 
-	// const newBlockConfigs: any = {
-	// 	hiddenOnDevice: deviceSlider.customValues[0],
-	// 	buttonBackground: buttonColor.color,
-	// 	blockAlign: blockAlign.value,
-	// 	titleFontSize: titleSize.value
-	// }
+	const menuColor = useColorPicker(blockConfigs.menuColor)
+	const textColor = useColorPicker(blockConfigs.textColor)
+	const activeItemColor = useColorPicker(blockConfigs.activeItemColor)
+	const activeItemTextColor = useColorPicker(blockConfigs.activeItemTextColor)
+	const deviceSlider = useSlider({ 
+		defaultValues: blockConfigs.hiddenOnDevice, 
+		domain: [0, 2],
+		step: 1,
+		decriptor: {
+			0: ['tablete', 'pc'],
+			1: ['pc'],
+			2: []
+		}
+	})
 
-	// const saveNewConfigs = () => {
-	// 	changeBlockConfigs(newBlockConfigs)
-	// 	if (activePage.autosavePage) saveBlocksInDB()
-	// 	closePopup()
-	// }
+	const newBlockConfigs: IMenu1Configs = {
+		hiddenOnDevice: deviceSlider.customValues[0],
+		menuColor: menuColor.color,
+		textColor: textColor.color,
+		activeItemColor: activeItemColor.color,
+		activeItemTextColor: activeItemTextColor.color
+	}
+
+	const saveNewConfigs = () => {
+		changeBlockConfigs(newBlockConfigs)
+		if (activePage.autosavePage) saveBlocksInDB()
+		closePopup()
+	}
 
 	return (
 		<div className={classes}>
 
-			{/* <WideSelect
+			<ColorPicker
 				parentClass="lib-menu-1-configs"
-				{...blockAlign.bind}
+				colorPicker={menuColor}
 			>
-				Горизонтальное выравнивание
-			</WideSelect>
-			<WideSelect
-				parentClass="lib-menu-1-configs"
-				{...titleSize.bind}
-			>
-				Размер заголовка
-			</WideSelect>
+				Цвет меню
+			</ColorPicker>
 
-			<ColorPicker 
+			<ColorPicker
 				parentClass="lib-menu-1-configs"
-				colorPicker={buttonColor}
+				colorPicker={textColor}
 			>
-				Цвет кнопки
+				Цвет текста
+			</ColorPicker>
+
+			<ColorPicker
+				parentClass="lib-menu-1-configs"
+				colorPicker={activeItemColor}
+			>
+				Цвет пункта меню при наведении
+			</ColorPicker>
+
+			<ColorPicker
+				parentClass="lib-menu-1-configs"
+				colorPicker={activeItemTextColor}
+			>
+				Цвет текста пункта меню при наведении
 			</ColorPicker>
 
 			<DevicesSlider 
@@ -110,8 +93,8 @@ const Menu1Configs: React.FC<IMenu1Configs> = ({ parentClass, blockConfigs, clos
 				handler={saveNewConfigs} 
 			>
 				Применить настройки
-			</SecondaryButton> */}
-			
+			</SecondaryButton>
+
 		</div>
 	)
 }

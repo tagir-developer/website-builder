@@ -19,7 +19,7 @@ interface IBlocksMenu {
 	}
 }
 
-type blocksTypes = 'header' | 'form' | 'gallery'
+type blocksTypes = 'header' | 'form' | 'gallery' | 'menu'
 
 interface IMenuItem {
 	title: string
@@ -37,6 +37,10 @@ const BlocksMenu: React.FC<IBlocksMenu> = ({ parentClass, modClass, popup, heade
 		{
 			title: 'Шапки сайта',
 			type: 'header'
+		},
+		{
+			title: 'Меню',
+			type: 'menu'
 		},
 		{
 			title: 'Формы',

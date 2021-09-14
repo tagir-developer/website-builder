@@ -8,13 +8,15 @@ const fileSystemService = require('./fileSystemService')
 
 class BlockService {
 
-	async createNewBlock(type, title, path, preview) {
+	async createNewBlock(type, title, path, preview, blockDefaultConfigs, blockDefaultContent) {
 
 		const newBlock = await Block.create({
 			type,
 			title,
 			path,
-			preview
+			preview,
+			blockDefaultConfigs,
+			blockDefaultContent
 		})
 		if (!newBlock) throw ApiError.BadRequest('Не удалось создать блок, повторите попытку позже', 'danger')
 

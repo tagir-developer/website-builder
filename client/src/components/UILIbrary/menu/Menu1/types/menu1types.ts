@@ -1,17 +1,38 @@
+import { AnchorHTMLAttributes, HTMLAttributeReferrerPolicy } from "react";
+import { Key } from "readline";
+import { Url } from "url";
 import { IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
 
 export interface IMenu1Configs extends IHiddenOnDevices {
-	buttonBackground: string
-	blockAlign: "flex-start" | "center" | "flex-end"
-	titleFontSize: "300%" | "350%" | "400%"
+	menuColor: string
+	textColor: string
+	activeItemColor: string
+	activeItemTextColor: string
+
+}
+
+export interface IMenuItem {
+	title: string
+	link: string
 }
 
 export interface IMenu1Content {
-	titleText: string
-	descriptionText: string
-	buttonText: string
+	menuItems: IMenuItem[]
 }
 
-export interface IMenu1Props {
-	textAlign: "flex-start" | "center" | "flex-end"
+
+export interface IMenuBar {
+	menuColor: string
+	textColor: string
+}
+
+export interface IShowHideMenuBtn {
+	textColor: string
+}
+
+export interface IMenuBarItem {
+	textColor: string
+	activeItemColor: string
+	activeItemTextColor: string
+
 }

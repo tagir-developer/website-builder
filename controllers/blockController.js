@@ -8,9 +8,9 @@ class blockController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {type, title, path, preview} = req.body
+			const {type, title, path, preview, blockDefaultConfigs, blockDefaultContent} = req.body
 
-			const block = await blockService.createNewBlock(type, title, path, preview)
+			const block = await blockService.createNewBlock(type, title, path, preview, blockDefaultConfigs, blockDefaultContent)
 
 			return res.json({
 				block,
@@ -28,7 +28,7 @@ class blockController {
 		try {
 
 			const blockType = req.params.type
-			const allowedTypes = ['header', 'form', 'gallery'] // ! Эти же типы мы проверяем в валидаторе, лучше хранить их в одном месте
+			const allowedTypes = ['header', 'form', 'gallery', 'menu'] // ! Эти же типы мы проверяем в валидаторе, лучше хранить их в одном месте
 
 			if (!allowedTypes.includes(blockType)) {
 				next(ApiError.BadRequest('Передаваемое значение type не входит в список допустимых значений'))

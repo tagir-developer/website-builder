@@ -6,6 +6,7 @@ import { myTheme } from '../../components/UILIbrary/themes/themes'
 import { Helmet } from "react-helmet"
 import Menu1 from '../../components/UILIbrary/menu/Menu1/Menu1'
 import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWrapper'
+import AddMenuItemCard from '../../components/UI/AddMenuItemCard/AddMenuItemCard'
 
 const SandboxPage: React.FC = () => {
 
@@ -27,14 +28,20 @@ const SandboxPage: React.FC = () => {
 							blockIsHidden={false}
 						>
 							<GlobalStylesWrapper>
-								<Menu1 />
+								{/* <Menu1 /> */}
 							</GlobalStylesWrapper>
 						</EditBlockWrapper>
 
 						<GlobalStylesWrapper>
-							<Menu1 />
+							{/* <Menu1 /> */}
 						</GlobalStylesWrapper>
 					</ThemeProvider>
+
+					{/* <AddMenuItemCard
+						title="Укажите название пункта"
+						link="Укажите ссылку"
+						openInNewWindow={false}
+					/> */}
 				</div>
 			</div>
 		</>

@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './styles/Menu1Contents.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 import Input from '../../../UI/Input/Input'
 import Textarea from '../../../UI/Textarea/Textarea'
 import { useInput } from '../../../../hooks/useInput.hook'
-import { IMenu1Content } from './types/menu1types'
+import { IMenu1Content, IMenuItem } from './types/menu1types'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
+import SmallIconButton from '../../../UI/SmallIconButton/SmallIconButton'
+import AddMenuItemCard from '../../../UI/AddMenuItemCard/AddMenuItemCard'
+import { IOptions } from '../../../../hooks/useSelect.hook'
 
 interface IMenu1ContentsProps {
 	parentClass?: string
@@ -19,56 +22,109 @@ const Menu1Contents: React.FC<IMenu1ContentsProps> = ({ parentClass, closePopup,
 
 	const classes = useCreateClassName('lib-menu-1-contents', parentClass)
 
-	const {activePage} = useTypedSelector(state => state.page)
+	const { activePage } = useTypedSelector(state => state.page)
 	const { changeBlockContent, saveBlocksInDB } = useActions()
 
-	// const title = useInput(blockContent.titleText)
-	// const description = useInput(blockContent.descriptionText)
-	// const button = useInput(blockContent.buttonText)
+	const [projectPages, setProjectPages] = useState<IOptions[]>([
+		{
+			value: 'page-1',
+			label: 'Апельсин - стр 1'
+		},
+		{
+			value: 'page-2',
+			label: 'О нас'
+		}
+	])
 
-	// const newBlockContent: IMenu1Content = {
-	// 	titleText: title.value,
-	// 	descriptionText: description.value,
-	// 	buttonText: button.value
-	// }
 
-	// const saveNewContent = () => {
-	// 	changeBlockContent(newBlockContent)
-	// 	if (activePage.autosavePage) saveBlocksInDB()
-	// 	closePopup()
-	// }
+	const [menuItems, setMenuItems] = useState<IMenuItem[]>([
+		{
+			title: 'Пункт 1',
+			link: '/',
+		},
+		{
+			title: 'Пункт 2',
+			link: '/',
+		}
+	])
+
+	const addMenuItemHandler = () => {
+
+		if (menuItems.length === 4) return
+
+		setMenuItems(prev => [...prev, {
+			title: 'Пункт ' + (menuItems.length + 1),
+			link: '/',
+		}])
+	}
+
+	const deleteMenuItemHandler = (id: number): void => {
+		setMenuItems(prev => {
+			const prevClone = prev.filter((i, index) => index !== id)
+			return prevClone
+		})
+	}
+
+	const saveMenuItemChanges = (id: number, inputValue: string, selectValue: string): void => {
+		setMenuItems(prev => {
+			const prevClone = prev.map(i => {
+				return { ...i }
+			})
+			prevClone[id].title = inputValue
+			prevClone[id].link = selectValue
+			return prevClone
+		})
+	}
+
+	const newContentObject: IMenu1Content = {
+		menuItems: menuItems
+	}
+
+	const saveNewContent = () => {
+		changeBlockContent(newContentObject)
+		if (activePage.autosavePage) saveBlocksInDB()
+		closePopup()
+	}
+
+	console.log('Изменение стейта', menuItems)
 
 	return (
 		<div className={classes}>
-			{/* <Input
+			<SmallIconButton
 				parentClass="lib-menu-1-contents"
-				modClass={['align-left']}
-				type="text"
-				{...title.bind}
+				modClass={['add-icon']}
+				handler={addMenuItemHandler}
 			>
-				Текст заголовка
-			</Input>
-			<Textarea
-				parentClass="lib-menu-1-contents"
-				{...description.bind}
-			>
-				Текст описания
-			</Textarea>
-			<Input
-				parentClass="lib-menu-1-contents"
-				modClass={['align-left']}
-				type="text"
-				{...button.bind}
-			>
-				Текст кнопки
-			</Input>
+				Добавить пункт меню
+			</SmallIconButton>
+
+			{
+				menuItems.map((i, index) => {
+					return (
+						<AddMenuItemCard
+							key={index}
+							id={index}
+							parentClass="lib-menu-1-contents"
+							title={i.title}
+							link={i.link}
+							select={projectPages}
+							changeHandler={saveMenuItemChanges}
+							deleteHandler={deleteMenuItemHandler}
+						/>
+					)
+				})
+			}
+
 
 			<SecondaryButton
 				parentClass="lib-menu-1-contents"
 				handler={saveNewContent}
 			>
 				Применить настройки
-			</SecondaryButton> */}
+			</SecondaryButton>
+
+
+			
 		</div>
 	)
 }

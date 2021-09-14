@@ -1,0 +1,42 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/mixins.scss";
+
+.add-menu-item-card {
+	position: relative;
+	max-width: 500px;
+	@include card-styles(20px);
+	padding: 35px 20px 30px 20px;
+	margin-bottom: 20px;
+
+	&__input-basic {
+		margin-bottom: 15px;
+	}
+
+	&__delete-btn {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
+		box-shadow: -4px -4px 19px rgba(255, 255, 255, 0.7), 4px 4px 30px #B3BFC9;
+		overflow: hidden;
+		cursor: pointer;
+		&:after {
+			content: '';
+			display: block;
+			width: 40px;
+			height: 40px;
+			background: url('./img/close-dark.svg') center no-repeat;
+			box-shadow: -10px -10px 30px rgba(255, 255, 255, 0.4), 10px 10px 30px #D0DAE3;
+		}
+		&:hover {
+			&:after {
+				background: url('./img/close-btn.svg') center no-repeat;
+				transition: background 50ms linear;
+			}
+		}
+	}
+}
+  
