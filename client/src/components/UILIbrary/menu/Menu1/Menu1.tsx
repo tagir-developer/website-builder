@@ -4,10 +4,9 @@ import { BasicComponent } from '../../commonStyledComponents/BasicComponent/Basi
 import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
-import { IMenu1Configs, IMenu1Content, IMenuBar, IMenuBarItem, IMenuItem, IShowHideMenuBtn } from './types/menu1types'
+import { IMenu1Configs, IMenu1Content, IMenuBar, IMenuBarItem, IShowHideMenuBtn } from './types/menu1types'
 
-
-const StyledMenu1 = styled(BasicComponent)<any>`
+const StyledMenu1 = styled(BasicComponent) <any>`
 	width: 100%;
 	${props => !props.hideBlock && css<any>`
  		height: 250px;
@@ -61,7 +60,6 @@ const ItemsPCWrapper = styled.div<any>`
 `
 
 const ItemsMobileWrapper = styled.div<any>`
-	/* display: none; */
 	@media ${props => props.theme.media.pc} {
 		display: none;
 	}
@@ -78,7 +76,6 @@ const ShowHideMenuBtn = styled.div<IShowHideMenuBtn>`
 	color: ${props => props.textColor};
 	font-size: 35px;
 	text-align: center;
-	/* line-height: 60px; */
 	padding-top: 12px;
 `
 
@@ -128,10 +125,6 @@ const DropDownMenuItem = styled.a<any>`
 	border-bottom: 2px solid #e4e4e4;
 `
 
-
-// interface IMenu1 {
-// }
-
 interface IMenu1 extends ICommonBlockProps {
 	blockConfigs: IMenu1Configs
 	blockContent: IMenu1Content
@@ -146,18 +139,15 @@ const Menu1: React.FC<IMenu1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 			blockIsHidden={blockIsHidden}
 			devices={blockConfigs.hiddenOnDevice}
 			hideBlock={hideBlock}
-		// hideBlock={true}
 		>
 			<StyledOverlay
 				devices={blockConfigs.hiddenOnDevice}
 				blockIsHidden={blockIsHidden}
 			/>
-
 			<MenuBar
 				menuColor={blockConfigs.menuColor}
 				textColor={blockConfigs.textColor}
 			>
-
 				<ItemsPCWrapper>
 					<StyledFlex
 						direction={"row"}
@@ -180,22 +170,16 @@ const Menu1: React.FC<IMenu1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 							})
 							: null
 						}
-						{/* <MenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</MenuItem>
-						<MenuItem href="https://yandex.ru/">Пункт 2 оооооооочень длиииинный пункт</MenuItem>
-						<MenuItem href="https://yandex.ru/">Пункт 3 оооооооочень длиииинный пункт</MenuItem>
-						<MenuItem href="https://yandex.ru/">Пункт 4 оооооооочень длиииинный пункт</MenuItem> */}
 					</StyledFlex>
 				</ItemsPCWrapper>
-
 				<ItemsMobileWrapper>
-					<ShowHideMenuBtn 
+					<ShowHideMenuBtn
 						onClick={() => setIsOpem(prev => !prev)}
 						textColor={blockConfigs.textColor}
 					>
 						{isOpen ? <span className="icon-close-menu" /> : <span className="icon-show-menu" />}
 					</ShowHideMenuBtn>
 					<DropDownList showList={isOpen}>
-						{/* <DropDownMenuItem href="https://yandex.ru/">Пункт 1 оооооооочень длиииинный пункт</DropDownMenuItem> */}
 						{!!blockContent.menuItems.length
 							? blockContent.menuItems.map((i, index) => {
 								return (
@@ -213,10 +197,7 @@ const Menu1: React.FC<IMenu1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 						}
 					</DropDownList>
 				</ItemsMobileWrapper>
-
 			</MenuBar>
-
-
 		</StyledMenu1>
 	)
 }
