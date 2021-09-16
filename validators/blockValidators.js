@@ -57,3 +57,23 @@ exports.saveBlocksValidators = [
 		.isString().withMessage('pageId должен быть строкой')
 		.not().isEmpty().withMessage('pageId не должен быть пустым полем')
 ]
+
+exports.sendNamePhoneValidators = [
+	check('projectId')
+		.trim()
+		.not().isEmpty().withMessage('projectId не должен быть пустым полем')
+		.isString().withMessage('projectId должен быть строкой'),
+	check('formName')
+		.trim()
+		.not().isEmpty().withMessage('formName не должен быть пустым полем')
+		.isString().withMessage('formName должен быть строкой'),
+	check('name')
+		.trim()
+		.not().isEmpty().withMessage('name не должен быть пустым полем')
+		.isString().withMessage('name должен быть строкой'),
+	check('phone')
+		.trim()
+		.not().isEmpty().withMessage('phone не должен быть пустым полем')
+		.isString().withMessage('phone должен быть строкой')
+
+]

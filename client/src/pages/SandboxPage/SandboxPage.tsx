@@ -35,12 +35,12 @@ const SandboxPage: React.FC = () => {
 
 						<GlobalStylesWrapper>
 							{/* <Menu1 /> */}
-							<Form1 
+							{/* <Form1 
 								blockConfigs={{}}
 								blockContent={{}} 
 								blockIsHidden={false} 
 								hideBlock={false}
-							/>
+							/> */}
 						</GlobalStylesWrapper>
 					</ThemeProvider>
 

@@ -1,36 +1,41 @@
+import axios, { AxiosError } from 'axios'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
 import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
-import {  } from './types/form1types'
+import { useInputHook } from '../../hooks/useInputHook'
+import { useRequestHook } from '../../hooks/useRequestHook'
+import { IForm1ButtonProps, IForm1Configs, IForm1ContainerProps, IForm1Content, IForm1Props, IForm1TitleProps } from './types/form1types'
 
-const StyledForm1 = styled(BasicComponent) <any>`
+const StyledForm1 = styled(BasicComponent) <IForm1Props>`
 	width: 100%;
 	position: relative;
 	box-sizing: border-box;
-	padding: 60px 25%;
-	background: #000;
+	padding: 60px;
+	text-align: center;
+	background: ${props => props.backgroundColor};
 	font-size: 1em;
 
 	@media ${props => props.theme.media.phone} {
-		padding: 40px 15%;
+		padding: 40px;
 		font-size: 0.8em;
 	}
 
 	@media ${props => props.theme.media.tablete} {
-		padding: 50px 20%;
+		padding: 50px;
 		font-size: 0.9em;
 	}
 
 `
 
-const Title = styled.h1<any>`
+const Title = styled.h1<IForm1TitleProps>`
 	margin: 0 0 40px 0;
-	font-size: 200%!important;
+	font-size: ${props => props.titleSize}!important;
 	font-weight: bold!important;
-	color: white;
+	color: ${props => props.titleColor};
+
 
 	@media ${props => props.theme.media.phone} {
 		margin-bottom: 20px;
@@ -40,14 +45,18 @@ const Title = styled.h1<any>`
 		margin-bottom: 30px;
 	}
 
+	@media ${props => props.theme.media.pc} {
+		max-width: 500px;
+	}
+
 
 `
 
-const FormContainer = styled.div`
+const FormContainer = styled.div<IForm1ContainerProps>`
 	width: 300px;
 	box-sizing: border-box;
 	padding: 45px 30px 30px 30px;
-	background: #fff;
+	background: ${props => props.formColor};
 	border-radius: 10px;
 `
 
@@ -64,22 +73,50 @@ const Input = styled.input<any>`
 	margin-bottom: 30px;
 `
 
-const Button = styled.button<any>`
+const shakeButtonAnim = keyframes`
+	0% {
+		transform: rotate(0deg);
+	} 
+	
+	33% {
+		transform: rotate(-14deg);
+	}
+
+	66% {
+		transform: rotate(7deg);
+	}
+
+	100% {
+		transform: rotate(0deg);
+	}
+`
+
+const Button = styled.button<IForm1ButtonProps>`
 	display: block;
 	width: 100%;
 	padding: 15px 30px;
-	/* background: ${props => props.background}; */
-	background: #fd6a08;
+	background: ${props => props.buttonBackground};
+	color: ${props => props.buttonTextColor};
 	border-radius: 5px;
-	color: #fff;
 	text-align: center;
 	font-size: 120%;
 	font-weight: bold;
 	transition: background 150ms ease-in;
 	cursor: pointer;
-	opacity: 0.99;
+	transition: transform 0.4s ease-in;
 	&:hover {
-		opacity: 0.8;
+		${props => props.buttonAnimation === 'rotate' && css<any>`
+			transform: rotate(360deg);
+		`}
+
+		${props => props.buttonAnimation === 'scale' && css<any>`
+			transform: scale(1.2, 1.2);
+		`}
+
+		${props => props.buttonAnimation === 'shake' && css<any>`
+			animation: ${shakeButtonAnim} 0.6s ease-in-out;
+		`}
+		
 	}
 
 	@media ${props => props.theme.media.phone} {
@@ -92,48 +129,66 @@ const Button = styled.button<any>`
 `
 
 interface IForm1 extends ICommonBlockProps {
-	// blockConfigs: IHeader1Styles
-	// blockContent: IHeader1Content
-	blockConfigs: any
-	blockContent: any
+	blockConfigs: IForm1Configs
+	blockContent: IForm1Content
+	projectId: string
 }
 
-const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hideBlock = false }) => {
+const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hideBlock = false, projectId }) => {
+
+	const nameInput = useInputHook('')
+	const phoneInput = useInputHook('')
+
+	const request = useRequestHook()
+
+	const formHandler = () => {
+		request.sendNameAndPhone(projectId, blockContent.formName, nameInput.value, phoneInput.value)
+	}
 
 	return (
 		<StyledForm1
-			blockIsHidden={false}
-			// devices={blockConfigs.hiddenOnDevice}
-			devices={[]}
-			hideBlock={true}
+			blockIsHidden={blockIsHidden}
+			devices={blockConfigs.hiddenOnDevice}
+			hideBlock={hideBlock}
+			backgroundColor={blockConfigs.backgroundColor}
 		>
 			<StyledOverlay
-				devices={[]}
-				blockIsHidden={false}
+				devices={blockConfigs.hiddenOnDevice}
+				blockIsHidden={blockIsHidden}
 			/>
 			<StyledFlex
 				direction={"column"}
 			>
 				<Title
-					// fontSize={blockConfigs.titleFontSize}
+					titleColor={blockConfigs.titleColor}
+					titleSize={blockConfigs.titleSize}
 				>
-					Заголовок формы
+					{blockContent.titleText}
 				</Title>
 
-				<FormContainer>
+				<FormContainer
+					formColor={blockConfigs.formColor}
+				>
 					<Input
 						type="text"
-						placeholder="Введите имя"
+						placeholder={blockContent.firstInputText}
+						{...nameInput}
 					/>
 
 					<Input
 						type="text"
-						placeholder="Введите телефон"
+						placeholder={blockContent.secondInputText}
+						{...phoneInput}
 					/>
 
 					<Button
+						buttonBackground={blockConfigs.buttonBackground}
+						buttonTextColor={blockConfigs.buttonTextColor}
+						buttonAnimation={blockConfigs.buttonAnimation}
+						onClick={formHandler}
+						disabled={request.loading}
 					>
-						Текст кнопки
+						{blockContent.buttonText}
 					</Button>
 				</FormContainer>
 

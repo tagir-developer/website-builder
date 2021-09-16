@@ -9,49 +9,54 @@ import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'
 import { useSlider } from '../../../../hooks/useSlider'
 import { useColorPicker } from '../../../../hooks/useColorPicker.hook'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
-import { IForm1Content, IForm1Styles } from './types/form1types'
+import { IForm1Configs } from './types/form1types'
 
-interface IForm1Configs {
+interface IForm1ConfigProps {
 	parentClass?: string
 	modClass?: string[]
-	blockConfigs: IForm1Styles
+	blockConfigs: IForm1Configs
 	closePopup: Function
 }
 
-const Form1Configs: React.FC<IForm1Configs> = ({ parentClass, blockConfigs, closePopup }) => {
+const Form1Configs: React.FC<IForm1ConfigProps> = ({ parentClass, blockConfigs, closePopup }) => {
 
 	const classes = useCreateClassName('lib-form-1-configs', parentClass)
 	const {activePage} = useTypedSelector(state => state.page)
 	const {changeBlockConfigs, saveBlocksInDB} = useActions()
 
-	const blockAlign = useSelect([
-		{
-			value: 'flex-start',
-			label: 'По левому краю'
-		},
-		{
-			value: 'center',
-			label: 'По центру'
-		},
-		{
-			value: 'flex-end',
-			label: 'По правому краю'
-		},
-	], blockConfigs.blockAlign)
+	const backgroundColor = useColorPicker(blockConfigs.backgroundColor)
+	const formColor = useColorPicker(blockConfigs.formColor)
+	const titleColor = useColorPicker(blockConfigs.titleColor)
+	const buttonBackground = useColorPicker(blockConfigs.buttonBackground)
+	const buttonTextColor = useColorPicker(blockConfigs.buttonTextColor)
 	const titleSize = useSelect([
 		{
-			value: '300%',
+			value: '200%',
 			label: 'Малый'
 		},
 		{
-			value: '350%',
+			value: '250%',
 			label: 'Средний'
 		},
 		{
-			value: '400%',
+			value: '300%',
 			label: 'Большой'
 		},
-	], blockConfigs.titleFontSize)
+	], blockConfigs.titleSize)
+	const buttonAnimation = useSelect([
+		{
+			value: 'scale',
+			label: 'Увеличение'
+		},
+		{
+			value: 'rotate',
+			label: 'Вращение'
+		},
+		{
+			value: 'shake',
+			label: 'Потряхивание'
+		},
+	], blockConfigs.buttonAnimation)
 	const deviceSlider = useSlider({ 
 		defaultValues: blockConfigs.hiddenOnDevice, 
 		domain: [0, 2],
@@ -62,13 +67,16 @@ const Form1Configs: React.FC<IForm1Configs> = ({ parentClass, blockConfigs, clos
 			2: []
 		}
 	})
-	const buttonColor = useColorPicker(blockConfigs.buttonBackground)
 
 	const newBlockConfigs: any = {
 		hiddenOnDevice: deviceSlider.customValues[0],
-		buttonBackground: buttonColor.color,
-		blockAlign: blockAlign.value,
-		titleFontSize: titleSize.value
+		backgroundColor: backgroundColor.color,
+		formColor: formColor.color,
+		titleColor: titleColor.color,
+		titleSize: titleSize.value,
+		buttonBackground: buttonBackground.color,
+		buttonAnimation: buttonAnimation.value,
+		buttonTextColor: buttonTextColor.color
 	}
 
 	const saveNewConfigs = () => {
@@ -81,24 +89,53 @@ const Form1Configs: React.FC<IForm1Configs> = ({ parentClass, blockConfigs, clos
 		<div className={classes}>
 
 			<WideSelect
-				parentClass="lib-header-1-configs"
-				{...blockAlign.bind}
-			>
-				Горизонтальное выравнивание
-			</WideSelect>
-			<WideSelect
-				parentClass="lib-header-1-configs"
+				parentClass="lib-form-1-configs"
 				{...titleSize.bind}
 			>
 				Размер заголовка
 			</WideSelect>
 
 			<ColorPicker 
-				parentClass="lib-header-1-configs"
-				colorPicker={buttonColor}
+				parentClass="lib-form-1-configs"
+				colorPicker={backgroundColor}
+			>
+				Цвет фона
+			</ColorPicker>
+
+			<ColorPicker 
+				parentClass="lib-form-1-configs"
+				colorPicker={formColor}
+			>
+				Цвет формы
+			</ColorPicker>
+
+			<ColorPicker 
+				parentClass="lib-form-1-configs"
+				colorPicker={titleColor}
+			>
+				Цвет заголовка
+			</ColorPicker>
+
+			<ColorPicker 
+				parentClass="lib-form-1-configs"
+				colorPicker={buttonBackground}
 			>
 				Цвет кнопки
 			</ColorPicker>
+
+			<ColorPicker 
+				parentClass="lib-form-1-configs"
+				colorPicker={buttonTextColor}
+			>
+				Цвет текста кнопки
+			</ColorPicker>
+
+			<WideSelect
+				parentClass="lib-form-1-configs"
+				{...buttonAnimation.bind}
+			>
+				Анимация кнопки
+			</WideSelect>
 
 			<DevicesSlider 
 				title="Видимость на устройствах"
@@ -106,7 +143,7 @@ const Form1Configs: React.FC<IForm1Configs> = ({ parentClass, blockConfigs, clos
 			/>
 
 			<SecondaryButton 
-				parentClass="lib-header-1-configs" 
+				parentClass="lib-form-1-configs" 
 				handler={saveNewConfigs} 
 			>
 				Применить настройки

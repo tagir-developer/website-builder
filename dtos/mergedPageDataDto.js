@@ -13,7 +13,8 @@ module.exports = class mergedPageDataDto {
 				blockPath: block.block.path,
 				blockIsHidden: block.blockIsHidden,
 				blockConfigs: block.blockConfigs,
-				blockContent: block.blockContent
+				blockContent: block.blockContent,
+				projectId: projectModel._id
 			}
 		})
 

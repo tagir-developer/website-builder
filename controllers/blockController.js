@@ -137,6 +137,23 @@ class blockController {
 		}
 	}
 
+	async sendNamePhone(req, res, next) { 
+		try {
+			ApiError.ValidationErrorChecking(req)
+
+			const {projectId, formName, name, phone} = req.body
+
+			await blockService.sendNamePhone(projectId, formName, name, phone)
+
+			return res.json({
+				message: "Запрос успешно отправлен"
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
 }
 
 module.exports = new blockController()

@@ -32,6 +32,7 @@ interface IEditPage extends RouteComponentProps<IRouteProps> {
 const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	const { pagesNames, activePage, previousPath } = useTypedSelector(state => state.page)
+	const { activeProject } = useTypedSelector(state => state.projects)
 	const { pageBlocks, loading, changeHistory } = useTypedSelector(state => state.block)
 	const { getPageBlocks, setPreviousPath } = useActions()
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
@@ -132,6 +133,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 																blockConfigs={i.blockConfigs}
 																blockContent={i.blockContent}
 																blockIsHidden={i.blockIsHidden}
+																projectId={activeProject.id}
 															/>
 														</GlobalStylesWrapper>
 													</EditBlockWrapper>

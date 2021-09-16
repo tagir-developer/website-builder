@@ -18,6 +18,7 @@ const blockList: any = pageBlocks.map((i, index) => {
 			blockContent={i.blockContent}
 			blockIsHidden={i.blockIsHidden}
 			hideBlock={true}
+			projectId={i.projectId}
 		/>
 	)
 })
@@ -61,6 +62,7 @@ interface IPageBlock {
 	blockIsHidden: boolean
 	blockConfigs: any
 	blockContent: any
+	projectId: string
 }
 
 

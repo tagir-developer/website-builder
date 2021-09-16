@@ -1,26 +1,39 @@
 import { devices, IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
 
-export interface IForm1Styles extends IHiddenOnDevices {
+export interface IForm1Configs extends IHiddenOnDevices {
+	backgroundColor: string
+	formColor: string
+	titleColor: string
+	titleSize: "200%" | "250%" | "300%"
 	buttonBackground: string
-	blockAlign: "flex-start" | "center" | "flex-end"
-	titleFontSize: "300%" | "350%" | "400%"
+	buttonAnimation: "scale" | "rotate" | "shake"
+	buttonTextColor: string
 }
 
 export interface IForm1Content {
 	titleText: string
-	descriptionText: string
+	firstInputText: string
+	secondInputText: string
 	buttonText: string
+	formName: string
 }
 
 
 export interface IForm1Props {
-	textAlign: "flex-start" | "center" | "flex-end"
+	backgroundColor: string
+}
+
+export interface IForm1ContainerProps {
+	formColor: string
 }
 
 export interface IForm1TitleProps {
-	fontSize: "300%" | "350%" | "400%"
+	titleColor: string
+	titleSize: "200%" | "250%" | "300%"
 }
 
 export interface IForm1ButtonProps {
-	background: string
+	buttonBackground: string
+	buttonTextColor: string
+	buttonAnimation: "scale" | "rotate" | "shake"
 }

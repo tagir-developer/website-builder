@@ -19,17 +19,22 @@ const Form1Contents: React.FC<IForm1ContentsProps> = ({ parentClass, closePopup,
 
 	const classes = useCreateClassName('lib-form-1-contents', parentClass)
 
-	const {activePage} = useTypedSelector(state => state.page)
+	const { activePage } = useTypedSelector(state => state.page)
+	const { activeBlock } = useTypedSelector(state => state.block)
 	const { changeBlockContent, saveBlocksInDB } = useActions()
 
-	const title = useInput(blockContent.titleText)
-	const description = useInput(blockContent.descriptionText)
-	const button = useInput(blockContent.buttonText)
+	const titleText = useInput(blockContent.titleText)
+	const firstInput = useInput(blockContent.firstInputText)
+	const secondInput = useInput(blockContent.secondInputText)
+	const buttonText = useInput(blockContent.buttonText)
+	const formName = useInput(blockContent.formName ? blockContent.formName : "Форма блока с id:" + activeBlock.blockId )
 
 	const newBlockContent: IForm1Content = {
-		titleText: title.value,
-		descriptionText: description.value,
-		buttonText: button.value
+		titleText: titleText.value,
+		firstInputText: firstInput.value,
+		secondInputText: secondInput.value,
+		buttonText: buttonText.value,
+		formName: formName.value
 	}
 
 	const saveNewContent = () => {
@@ -41,32 +46,48 @@ const Form1Contents: React.FC<IForm1ContentsProps> = ({ parentClass, closePopup,
 	return (
 		<div className={classes}>
 			<Input
-				parentClass="lib-header-1-contents"
+				parentClass="lib-form-1-contents"
 				modClass={['align-left']}
 				type="text"
-				{...title.bind}
+				{...titleText.bind}
 			>
 				Текст заголовка
 			</Input>
-			<Textarea
-				parentClass="lib-header-1-contents"
-				{...description.bind}
-			>
-				Текст описания
-			</Textarea>
 			<Input
-				parentClass="lib-header-1-contents"
+				parentClass="lib-form-1-contents"
 				modClass={['align-left']}
 				type="text"
-				{...button.bind}
+				{...firstInput.bind}
+			>
+				Текст поля №1
+			</Input>			
+			<Input
+				parentClass="lib-form-1-contents"
+				modClass={['align-left']}
+				type="text"
+				{...secondInput.bind}
+			>
+				Текст поля №2
+			</Input>
+			<Input
+				parentClass="lib-form-1-contents"
+				modClass={['align-left']}
+				type="text"
+				{...buttonText.bind}
 			>
 				Текст кнопки
 			</Input>
-
-			{/* <UploadImages parentClass="lib-header-1-contents" images={images} >Изображения галереи</UploadImages> */}
+			<Input
+				parentClass="lib-form-1-contents"
+				modClass={['align-left']}
+				type="text"
+				{...formName.bind}
+			>
+				Название формы
+			</Input>
 
 			<SecondaryButton
-				parentClass="lib-header-1-contents"
+				parentClass="lib-form-1-contents"
 				handler={saveNewContent}
 			>
 				Применить настройки

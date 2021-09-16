@@ -109,7 +109,19 @@ class BlockService {
 
 		page.blocks = recoveryBlocks
 		await page.save()
+	}
 
+	async sendNamePhone(projectId, formName, name, phone) {
+
+		// const blocksWithFileLinks = fileSystemService.includeFileLinksInBlocks(blocks, files)
+
+		// const page = await Page.findById(pageId)
+		// if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+
+		// const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
+
+		// page.blocks = recoveryBlocks
+		// await page.save()
 	}
 
 }
