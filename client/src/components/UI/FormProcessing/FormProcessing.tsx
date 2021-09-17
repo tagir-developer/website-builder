@@ -28,8 +28,8 @@ const FormProcessing: React.FC<IFormProcessing> = ({ parentClass, closePopup }) 
 	const letterSubject = useInput(activeProject.formProcessing.letterSubject, alertRemoveError, 'letterSubject', errors)
 	const phoneNumber = useInput(activeProject.formProcessing.phoneNumber, alertRemoveError, 'phoneNumber', errors)
 
-	const [showsecondaryEmail, setShowsecondaryEmail] = useState<boolean>(false)
-	const phoneNumberToggle = useCheck(false)
+	const [showsecondaryEmail, setShowsecondaryEmail] = useState<boolean>(activeProject.formProcessing.secondaryEmail ? true : false)
+	const phoneNumberToggle = useCheck(activeProject.formProcessing.phoneNumber ? true : false)
 
 	const formHandler = () => {
 		customizeFormProcessing(activeProject.id, email.value, letterSubject.value, phoneNumber.value, secondaryEmail.value)

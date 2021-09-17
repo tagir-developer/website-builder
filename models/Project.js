@@ -79,12 +79,6 @@ const Project = new Schema({
 			default: ''
 		}
 	}
-	// pages: [ // ? Возможно список страниц не нужен и его можно будет удалить
-	// 	{
-	// 		type: Types.ObjectId,
-	// 		ref: 'Page'
-	// 	}
-	// ]
 })
 
 module.exports = model('Project', Project)

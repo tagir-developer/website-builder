@@ -146,7 +146,9 @@ class blockController {
 			await blockService.sendNamePhone(projectId, formName, name, phone)
 
 			return res.json({
-				message: "Запрос успешно отправлен"
+				messageType: 'success',
+				message: "Ваши данные успешно отправлены. Скоро с вами свяжутся наши менеджеры.",
+				errors: []
 			})
 
 		} catch (e) {

@@ -1,4 +1,6 @@
+const { default: axios } = require('axios')
 const nodemailer = require('nodemailer')
+const ApiError = require('../exeptions/apiError')
 
 const styles = {
 	main: `
@@ -28,7 +30,7 @@ const styles = {
 	style="
 		font-weight: bold;
 		"
-		`,
+		`
 }
 
 class MailService {
@@ -120,6 +122,45 @@ class MailService {
 		}, (error) => {
 			console.log('Ошибка при отправки письма', error)
 		})
+	}
+
+
+	async sendNamePhoneForm(formProcessing, formName, name, phone) {
+
+		let mailList = [
+			formProcessing.email
+		]
+
+		if (formProcessing.secondaryEmail) {
+			let additionalEmails = formProcessing.secondaryEmail.split(',')
+			additionalEmails = additionalEmails.map(i => i.trim());
+			mailList = [...mailList, ...additionalEmails]
+		}
+
+		await this.transporter.sendMail({
+			from: process.env.SMTP_USER,
+			to: mailList,
+			subject: formProcessing.letterSubject,
+			text: '',
+			html: 
+			`
+			<div ${styles.main}>
+				<h1>Кто-то оставил заявку в форме "${formName}"</h1>
+				<span ${styles.bold}>Имя пользователя: </span><p style="color: #22304a">${name}</p>
+				<span ${styles.bold}>Телефон: </span><p>${phone}</p>
+			</div>
+			`
+		}, (error) => {
+			console.log('Ошибка при отправки письма', error)
+			throw ApiError.BadRequest('Произошла ошибка при отправке письма', 'danger')
+		})
+
+		const textMessage = `Новая заявка. Форма: ${formName}. Имя: ${name}. Телефон: ${phone}`
+		const url = `${process.env.SMS_SERVER_URL}/sms/send?number=${formProcessing.phoneNumber}&text=${textMessage}&sign=SMS Aero`
+		const encodedUrl = encodeURI(url)
+
+		const messageData = await axios.get(encodedUrl)
+		if (!messageData.data.success) throw ApiError.BadRequest('Произошла ошибка при отправке СМС сообщения', 'danger')
 	}
 
 }

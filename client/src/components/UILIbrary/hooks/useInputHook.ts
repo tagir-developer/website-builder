@@ -2,8 +2,13 @@ import React from 'react'
 import { useState } from "react"
 
 export interface IUseInputHook {
-	onChange: (event: React.FormEvent & { target: HTMLInputElement }) => void
+	bind: {
+		value: string
+		onChange: (event: React.FormEvent & { target: HTMLInputElement }) => void
+	}
 	value: string
+	onChange: (event: React.FormEvent & { target: HTMLInputElement }) => void
+	clear: () => void
 }
 
 export const useInputHook = (initialValue: string): IUseInputHook => {
@@ -13,10 +18,15 @@ export const useInputHook = (initialValue: string): IUseInputHook => {
 	const onChange = (event: React.FormEvent & { target: HTMLInputElement }): void => {	
 		setValue(event.target.value)
 	}
+	const clear = (): void => {	
+		setValue('')
+	}
 
 	return {
+		bind: {value, onChange},
 		value,
-		onChange
+		onChange,
+		clear
 	}
 
 }

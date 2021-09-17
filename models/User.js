@@ -12,7 +12,7 @@ const User = new Schema({
 	},
 	password: {
 		type: String,
-		required: true,		
+		required: true		
 	},
 	avatar: {
 		type: String,

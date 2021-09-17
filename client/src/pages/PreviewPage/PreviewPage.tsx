@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet"
 
 const PreviewPage: React.FC = () => {
 
+	const { activeProject } = useTypedSelector(state => state.projects)
 	const { devicePreview } = useTypedSelector(state => state.page)
 	const { pageBlocks, loading } = useTypedSelector(state => state.block)
 	const {setPreviousPath} = useActions()
@@ -52,6 +53,7 @@ const PreviewPage: React.FC = () => {
 																blockContent={i.blockContent}
 																blockIsHidden={i.blockIsHidden}
 																hideBlock={true}
+																projectId={activeProject.id}
 															/>
 														</GlobalStylesWrapper>
 													</ChangeWindowSizeWrapper>

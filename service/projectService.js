@@ -2,6 +2,7 @@ const ProjectsListDto = require('../dtos/projectsDto')
 const ApiError = require('../exeptions/apiError')
 const Project = require('../models/Project')
 const Page = require('../models/Page')
+const User = require('../models/User')
 const mergedPageDataDto = require('../dtos/mergedPageDataDto')
 const fileSystemService = require('./fileSystemService')
 
@@ -10,10 +11,16 @@ class ProjectService {
 
 	async createNewProject(userId, name, link) {
 
+		const user = await User.findById(userId)
+		if (!user)  throw ApiError.BadRequest('Пользователь с таким userId не найден', 'danger')
+
 		const newProject = await Project.create({
 			name, 
 			link,
-			createdBy: userId
+			createdBy: userId,
+			formProcessing: {
+				email: user.email
+			}
 		})
 		if (!newProject) throw ApiError.BadRequest('Не удалось создать проект, повторите попытку позже', 'danger')
 

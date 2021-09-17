@@ -4,7 +4,9 @@ const PageBlocksRecoveryFromDto = require('../dtos/pageBlocksRecoveryFromDto')
 const ApiError = require('../exeptions/apiError')
 const Block = require('../models/Block')
 const Page = require('../models/Page')
+const Project = require('../models/Project')
 const fileSystemService = require('./fileSystemService')
+const mailService = require('./mailService')
 
 class BlockService {
 
@@ -113,15 +115,10 @@ class BlockService {
 
 	async sendNamePhone(projectId, formName, name, phone) {
 
-		// const blocksWithFileLinks = fileSystemService.includeFileLinksInBlocks(blocks, files)
+		const project = await Project.findById(projectId)
+		if (!project) throw ApiError.BadRequest('Страница с таким projectId не найдена, попробуйте выполнить операцию позже', 'danger')
 
-		// const page = await Page.findById(pageId)
-		// if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
-
-		// const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
-
-		// page.blocks = recoveryBlocks
-		// await page.save()
+		await mailService.sendNamePhoneForm(project.formProcessing, formName, name, phone)
 	}
 
 }

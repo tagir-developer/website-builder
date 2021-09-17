@@ -1,10 +1,11 @@
 import axios, { AxiosError } from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
 import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'
 import { StyledFlex } from '../../commonStyledComponents/StyledFlex/StyledFlex'
 import { StyledOverlay } from '../../commonStyledComponents/StyledOverlay/StyledOverlay'
+import { StyledPopupMessage } from '../../commonStyledComponents/StyledPopupMessage/StyledPopupMessage'
 import { useInputHook } from '../../hooks/useInputHook'
 import { useRequestHook } from '../../hooks/useRequestHook'
 import { IForm1ButtonProps, IForm1Configs, IForm1ContainerProps, IForm1Content, IForm1Props, IForm1TitleProps } from './types/form1types'
@@ -138,12 +139,29 @@ const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 
 	const nameInput = useInputHook('')
 	const phoneInput = useInputHook('')
-
+	const [popup, setPopup] = useState(false)
+	const [message, setMessage] = useState('')
 	const request = useRequestHook()
 
-	const formHandler = () => {
-		request.sendNameAndPhone(projectId, blockContent.formName, nameInput.value, phoneInput.value)
+	const formHandler = async () => {
+		const response = await request.sendNameAndPhone(projectId, blockContent.formName, nameInput.value, phoneInput.value)
+		setMessage(response.message)
+		setPopup(true)
+		setTimeout(() => {
+			setPopup(false)
+		}, 2000)
+		nameInput.clear()
+		phoneInput.clear()
 	}
+
+	// const switchHandler = () => {
+	// 	setPopup(true)
+	// 	setTimeout(() => {
+	// 		setPopup(false)
+	// 	}, 2000)
+	// 	nameInput.clear()
+	// 	phoneInput.clear()
+	// }
 
 	return (
 		<StyledForm1
@@ -156,6 +174,14 @@ const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 				devices={blockConfigs.hiddenOnDevice}
 				blockIsHidden={blockIsHidden}
 			/>
+
+			{popup
+				? <StyledPopupMessage
+					message={message}
+					isActive={hideBlock}
+				/>
+				: null}
+
 			<StyledFlex
 				direction={"column"}
 			>
@@ -172,13 +198,13 @@ const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 					<Input
 						type="text"
 						placeholder={blockContent.firstInputText}
-						{...nameInput}
+						{...nameInput.bind}
 					/>
 
 					<Input
 						type="text"
 						placeholder={blockContent.secondInputText}
-						{...phoneInput}
+						{...phoneInput.bind}
 					/>
 
 					<Button
@@ -186,6 +212,7 @@ const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 						buttonTextColor={blockConfigs.buttonTextColor}
 						buttonAnimation={blockConfigs.buttonAnimation}
 						onClick={formHandler}
+						// onClick={switchHandler}
 						disabled={request.loading}
 					>
 						{blockContent.buttonText}
