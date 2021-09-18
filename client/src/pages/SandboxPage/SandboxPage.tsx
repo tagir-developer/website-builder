@@ -8,6 +8,7 @@ import Menu1 from '../../components/UILIbrary/menu/Menu1/Menu1'
 import EditBlockWrapper from '../../components/HOC/EditBlockWrapper/EditBlockWrapper'
 import AddMenuItemCard from '../../components/UI/AddMenuItemCard/AddMenuItemCard'
 import Form1 from '../../components/UILIbrary/form/Form1/Form1'
+import Content1 from '../../components/UILIbrary/content/Content1/Content1'
 
 const SandboxPage: React.FC = () => {
 
@@ -34,13 +35,7 @@ const SandboxPage: React.FC = () => {
 						</EditBlockWrapper>
 
 						<GlobalStylesWrapper>
-							{/* <Menu1 /> */}
-							{/* <Form1 
-								blockConfigs={{}}
-								blockContent={{}} 
-								blockIsHidden={false} 
-								hideBlock={false}
-							/> */}
+							
 						</GlobalStylesWrapper>
 					</ThemeProvider>
 

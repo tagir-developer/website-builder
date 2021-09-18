@@ -22,3 +22,12 @@ exports.createTemplateValidators = [
 		.isString().withMessage('Передаваемое значение preview должно быть строкой')
 ]
 
+exports.addBlockListValidators = [
+	check('templateId')
+	.not().isEmpty().withMessage('Поле templateId не должно быть пустым')
+		.isString().withMessage('Передаваемое значение templateId должно быть строкой'),
+	check('blocks')
+		.not().isEmpty().withMessage('Поле blocks не должно быть пустым')
+		.isString().withMessage('Передаваемое значение blocks должно быть строкой')
+]
+

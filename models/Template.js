@@ -25,8 +25,26 @@ const Template = new Schema({
 	},
 	blocks: [
 		{
-			type: Types.ObjectId,
-			ref: 'Block'
+			block: {
+				type: Types.ObjectId,
+				ref: 'Block'
+			},
+			isNewBlock: {
+				type: Boolean,
+				default: true
+			},
+			blockIsHidden: {
+				type: Boolean,
+				default: false
+			},
+			blockConfigs: {
+				type: {Object},
+				required: true
+			},
+			blockContent: {
+				type: {Object},
+				required: true
+			}
 		}
 	]
 

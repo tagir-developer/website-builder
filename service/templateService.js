@@ -1,3 +1,4 @@
+const PageBlocksRecoveryFromDto = require('../dtos/pageBlocksRecoveryFromDto')
 const TemplateDto = require('../dtos/templateDto')
 const ApiError = require('../exeptions/apiError')
 const Template = require('../models/Template')
@@ -20,6 +21,18 @@ class TemplateService {
 		if (!newTemplate) throw ApiError.BadRequest('Не удалось создать шаблон, повторите попытку позже', 'danger')
 
 		return newTemplate
+	}
+
+	async addBlocks(templateId, blocks) {
+
+		const template = await Template.findById(templateId)
+		if (!template) throw ApiError.BadRequest('Не удалось найти шаблон с таким ID', 'danger')
+
+		const recoveryBlocks = blocks.map(i => new PageBlocksRecoveryFromDto(i, false))
+
+		template.blocks = recoveryBlocks
+		await template.save()
+
 	}
 
 	async getAll() {

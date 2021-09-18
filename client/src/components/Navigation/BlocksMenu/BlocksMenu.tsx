@@ -19,7 +19,7 @@ interface IBlocksMenu {
 	}
 }
 
-type blocksTypes = 'header' | 'form' | 'gallery' | 'menu'
+type blocksTypes = 'header' | 'form' | 'gallery' | 'menu' | 'content'
 
 interface IMenuItem {
 	title: string
@@ -43,13 +43,14 @@ const BlocksMenu: React.FC<IBlocksMenu> = ({ parentClass, modClass, popup, heade
 			type: 'menu'
 		},
 		{
-			title: 'Формы',
-			type: 'form'
+			title: 'Блоки с текстом',
+			type: 'content'
 		},
 		{
-			title: 'Галереи',
-			type: 'gallery'
+			title: 'Формы',
+			type: 'form'
 		}
+
 	]
 
 	const itemHandler = (index: number, blockType: blocksTypes) => {

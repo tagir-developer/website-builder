@@ -28,7 +28,7 @@ class blockController {
 		try {
 
 			const blockType = req.params.type
-			const allowedTypes = ['header', 'form', 'gallery', 'menu'] // ! Эти же типы мы проверяем в валидаторе, лучше хранить их в одном месте
+			const allowedTypes = ['header', 'form', 'gallery', 'menu', 'content'] // ! Эти же типы мы проверяем в валидаторе, лучше хранить их в одном месте
 
 			if (!allowedTypes.includes(blockType)) {
 				next(ApiError.BadRequest('Передаваемое значение type не входит в список допустимых значений'))
