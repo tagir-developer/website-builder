@@ -8,11 +8,11 @@
 	width: 100%;
 	min-height: 100vh;
 
-	&__secondary-button {
-		display: block;
-		width: 500px;
-		margin: 50px auto;
-	}
+	// &__secondary-button {
+	// 	display: block;
+	// 	width: 500px;
+	// 	margin: 50px auto;
+	// }
 
 	&__page-title {
 		margin: 100px auto 0px auto;
@@ -23,5 +23,11 @@
 
 	&__add-new-button {
 		margin: 50px auto 100px auto;
+	}
+
+	&__secondary-button {
+		display: block;
+		max-width: 500px;
+		margin: 0 auto 100px auto;
 	}
 }

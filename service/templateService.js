@@ -23,17 +23,17 @@ class TemplateService {
 		return newTemplate
 	}
 
-	async addBlocks(templateId, blocks) {
+	// async addBlocks(templateId, blocks) {
 
-		const template = await Template.findById(templateId)
-		if (!template) throw ApiError.BadRequest('Не удалось найти шаблон с таким ID', 'danger')
+	// 	const template = await Template.findById(templateId)
+	// 	if (!template) throw ApiError.BadRequest('Не удалось найти шаблон с таким ID', 'danger')
 
-		const recoveryBlocks = blocks.map(i => new PageBlocksRecoveryFromDto(i, false))
+	// 	const recoveryBlocks = blocks.map(i => new PageBlocksRecoveryFromDto(i, false))
 
-		template.blocks = recoveryBlocks
-		await template.save()
+	// 	template.blocks = recoveryBlocks
+	// 	await template.save()
 
-	}
+	// }
 
 	async getAll() {
 

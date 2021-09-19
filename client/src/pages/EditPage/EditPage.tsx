@@ -20,6 +20,7 @@ import { myTheme } from '../../components/UILIbrary/themes/themes'
 import GlobalStylesWrapper from '../../components/HOC/GlobalStylesWrapper/GlobalStylesWrapper'
 import PageTitle from '../../components/UI/PageTitle/PageTitle'
 import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
+import SecondaryButton from '../../components/UI/SecondaryButton/SecondaryButton'
 
 interface IRouteProps {
 	pageId: string
@@ -34,7 +35,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 	const { pagesNames, activePage, previousPath } = useTypedSelector(state => state.page)
 	const { activeProject } = useTypedSelector(state => state.projects)
 	const { pageBlocks, loading, changeHistory } = useTypedSelector(state => state.block)
-	const { getPageBlocks, setPreviousPath } = useActions()
+	const { getPageBlocks, setPreviousPath, saveBlocksInDB } = useActions()
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
 	const history = useHistory()
 
@@ -56,6 +57,11 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 		setPreviousPath('')
 		// eslint-disable-next-line
 	}, [])
+
+	const saveBlocksInTemplate = () => {
+		const templateId = '6147643a64b75e21b450a39f'
+		saveBlocksInDB(true, templateId)
+	}
 
 	return (
 		<>
@@ -151,7 +157,12 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 								handler={() => openLeftMenu.handler()} title="Добавить новый блок"
 							/>
 
-							{/* <Link to={'/' + match.params.name + '/' + match.params.pageId + '/preview'} >Предпросмотр</Link> */}
+							<SecondaryButton
+								parentClass="edit-page"
+								handler={saveBlocksInTemplate}
+							>
+								Сохранить изменения в шаблоне
+							</SecondaryButton>
 
 						</Backdrop>
 

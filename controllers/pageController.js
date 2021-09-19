@@ -152,6 +152,27 @@ class pageController {
 		}
 	}
 
+	async choosePageTemplate(req, res, next) {
+		try {
+			ApiError.ValidationErrorChecking(req)
+
+			const {pageId, templateId, isEmptyTemplate} = req.body
+
+			console.log('Получили на сервере', pageId, templateId, isEmptyTemplate)
+
+			await pageService.choosePageTemplate(pageId, templateId, isEmptyTemplate)
+
+			return res.json({
+				messageType: 'success',
+				message: "Вы выбрали шаблон страницы",
+				errors: []
+			})
+
+		} catch (e) {
+			next(e)
+		}
+	}
+
 
 }
 

@@ -15,7 +15,7 @@ import { useMultiPopup } from '../../hooks/useMultiPopup.hook'
 const SelectTemplatePage: React.FC = () => {
 
 	const { templates, loading } = useTypedSelector(state => state.template)
-	const { getAllTemplates } = useActions()
+	const { getAllTemplates, choosePageTemplate } = useActions()
 
 	const previewPopup = useMultiPopup(templates.map((i, index) => {
 		return {
@@ -65,16 +65,19 @@ const SelectTemplatePage: React.FC = () => {
 												description="Создайте страницу из готовых блоков самостоятельно"
 												img={empty}
 												emptyTemplate={true}
+												handler={choosePageTemplate}
 											/>
 											{templates.map((i, index) => {
 												return (
 													<TemplateCard
 														key={index}
 														parentClass="select-template"
+														templateId={i.id}
 														title={i.title}
 														description={i.description}
 														img={i.image}
 														openPreview={() => previewPopup.openPopup(i.id)}
+														handler={choosePageTemplate}
 													/>
 												)
 											})}

@@ -219,7 +219,7 @@ export const copyBlock = () => {
 	}
 }
 
-export const saveBlocksInDB = (showMessage: boolean = false) => {
+export const saveBlocksInDB = (showMessage: boolean = false, templateId: string = '') => {
 	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState, projects: IProjectsState }) => {
 
 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
@@ -231,6 +231,7 @@ export const saveBlocksInDB = (showMessage: boolean = false) => {
 
 		formData.append('pageId', pageId)
 		formData.append('projectName', projectName)
+		formData.append('templateId', templateId)
 
 		const newBlockList: IPageBlocksResponse[] = produce(blocks, (draft: IPageBlocksResponse[]) => {
 
@@ -263,7 +264,6 @@ export const saveBlocksInDB = (showMessage: boolean = false) => {
 		formData.set('blocks', JSON.stringify(newBlockList, null, 2))
 
 		try {
-			// const response = await BlockService.saveBlocksInDB(pageId, dtoBlocks)
 			const response = await BlockService.saveBlocksInDB(formData)
 
 			if (showMessage) dispatch(alertErrorOrMessageCreator(response.data))

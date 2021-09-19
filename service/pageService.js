@@ -3,6 +3,7 @@ const ProjectsListDto = require('../dtos/projectsDto')
 const ApiError = require('../exeptions/apiError')
 const Page = require('../models/Page')
 const Project = require('../models/Project')
+const Template = require('../models/Template')
 
 class PageService {
 
@@ -146,6 +147,32 @@ class PageService {
 
 		const pagesDto = this.getAllPages(projectId)
 		return pagesDto
+	}
+
+	async choosePageTemplate(pageId, templateId, isEmptyTemplate) {
+		const page = await Page.findById(pageId)
+		if (!page) throw ApiError.BadRequest('Страница с таким ID не найдена, попробуйте выполнить операцию позже', 'danger')
+
+		if (isEmptyTemplate === 'isEmpty') {
+			page.isNewPage = false
+			await page.save
+			console.log('Изменили значение isNewPage', page)
+		} else {
+			const template = await Template.findById(templateId)
+			if (!template) throw ApiError.BadRequest('Шаблон с таким ID не найден, попробуйте выполнить операцию позже', 'danger')
+
+			const blocksWithoutId = template.blocks.map(block => {
+				delete block._id
+				return block
+			})
+
+			console.log('Блоки без айдишников!!!', blocksWithoutId)
+
+			page.blocks = blocksWithoutId
+			page.isNewPage = false
+			await page.save
+		}
+
 	}
 
 	// async changePublicationStatus(projectId, pageId, value) {

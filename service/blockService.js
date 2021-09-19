@@ -5,6 +5,7 @@ const ApiError = require('../exeptions/apiError')
 const Block = require('../models/Block')
 const Page = require('../models/Page')
 const Project = require('../models/Project')
+const Template = require('../models/Template')
 const fileSystemService = require('./fileSystemService')
 const mailService = require('./mailService')
 
@@ -100,17 +101,38 @@ class BlockService {
 
 	// }
 
-	async saveBlocks(pageId, blocks, files) {
+	async saveBlocks(pageId, blocks, files, templateId) {
 
 		const blocksWithFileLinks = fileSystemService.includeFileLinksInBlocks(blocks, files)
 
-		const page = await Page.findById(pageId)
-		if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+		if (templateId) {
+			const template = await Template.findById(templateId)
+			if (!template) throw ApiError.BadRequest('Шаблон с таким templateId не найден, попробуйте выполнить операцию позже', 'danger')
 
-		const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
+			const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i, false))
 
-		page.blocks = recoveryBlocks
-		await page.save()
+			template.blocks = recoveryBlocks
+			await template.save()
+
+			return "Список блоков сохранен в шаблоне"
+
+		} else {
+			const page = await Page.findById(pageId)
+			if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+
+			const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
+	
+			page.blocks = recoveryBlocks
+			await page.save()
+
+			return "Изменения успешно сохранены"
+		}
+
+		// const page = await Page.findById(pageId)
+		// if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+
+		// page.blocks = recoveryBlocks
+		// await page.save()
 	}
 
 	async sendNamePhone(projectId, formName, name, phone) {

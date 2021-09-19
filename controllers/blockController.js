@@ -122,14 +122,15 @@ class blockController {
 		try {
 			// ApiError.ValidationErrorChecking(req)
 
-			const {pageId, blocks} = req.body
+			const {pageId, blocks, templateId} = req.body
 			const files = req.files
 
-			await blockService.saveBlocks(pageId, blocks, files)
+			const responseMessage = await blockService.saveBlocks(pageId, blocks, files, templateId)
 
 			return res.json({
 				messageType: 'success',
-				message: "Изменения успешно сохранены",
+				// message: "Изменения успешно сохранены",
+				message: responseMessage,
 				errors: []
 			})
 		} catch (e) {

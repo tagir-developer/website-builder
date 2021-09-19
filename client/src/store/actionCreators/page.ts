@@ -101,6 +101,26 @@ export const switchPageAutosave = (autosave: boolean) => {
 	}
 }
 
+export const choosePageTemplate = (isEmptyTemplate: 'isEmpty' | 'template', templateId: string = '') => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
+
+		const pageId = getState().page.activePage.id
+
+		try {
+			const response = await PageService.choosePageTemplate(pageId, templateId, isEmptyTemplate)
+
+			// dispatch(changeActivePage(response.data.page))
+			// dispatch(alertErrorOrMessageCreator(response.data))
+
+		} catch (error) {
+			const e = error as AxiosError
+			if (e.response) {
+				dispatch(alertErrorOrMessageCreator(e.response.data))
+			}
+		}
+	}
+}
+
 export const changePagePublicationStatus = (pageId: string, value: boolean) => {
 	return async (dispatch: Dispatch<IPageAction>, getState: () => {projects: IProjectsState}) => {
 

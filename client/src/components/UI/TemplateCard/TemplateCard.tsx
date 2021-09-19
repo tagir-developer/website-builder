@@ -1,11 +1,13 @@
 import React from 'react'
 import './TemplateCard.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router'
 import Button from '../Button/Button'
 import SecondaryButton from '../SecondaryButton/SecondaryButton'
+import { useActions } from '../../../hooks/reduxHooks'
+import { IUrlParams } from '../../../models/IUrlParams'
 
-interface ITemplateCard extends RouteComponentProps<any> {
+interface ITemplateCard {
 	parentClass?: string
 	modClass?: string[]
 	title: string
@@ -13,16 +15,21 @@ interface ITemplateCard extends RouteComponentProps<any> {
 	img?: string
 	emptyTemplate?: boolean
 	openPreview?: Function
+	templateId?: string
+	handler: (isEmptyTemplate: 'isEmpty' | 'template', templateId?: string) => void
 }
 
-const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, modClass, title, description, img, emptyTemplate, openPreview = () => {} }) => {
+const TemplateCard: React.FC<ITemplateCard> = ({ parentClass, modClass, title, description, img, emptyTemplate, openPreview = () => {}, templateId, handler }) => {
 
 	const templateCardClasses = useCreateClassName('template-card', parentClass, modClass)
+	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
+	const history = useHistory()
+	// const {choosePageTemplate} = useActions()
 
-	const devHandler = () => {
-		// ! Обязательно сделать значение isNewPage = false для активной страницы, так как шаблон уже выбран
-		history.push('/' + match.params.name + '/' + match.params.pageId)
-	} // ? Временная общая функция, которая перенаправляет на страницу редактирования страницы проекта
+	// const devHandler = () => {
+	// 	// ! Обязательно сделать значение isNewPage = false для активной страницы, так как шаблон уже выбран
+	// 	history.push('/' + match.params.name + '/' + match.params.pageId)
+	// } // ? Временная общая функция, которая перенаправляет на страницу редактирования страницы проекта
 
 
 	return (
@@ -46,7 +53,10 @@ const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, mo
 				{emptyTemplate
 					? <Button
 						parentClass="template-card"
-						handler={devHandler}
+						handler={async () => {
+							await handler('isEmpty')
+							history.push('/projects/' + projectUrl + '/' + pageUrl)
+						}}
 					>
 						Начать с нуля
 					</Button>
@@ -60,7 +70,10 @@ const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, mo
 						</SecondaryButton>
 						<Button
 							parentClass="template-card"
-							handler={devHandler}
+							handler={async () => {
+								await handler('template', templateId)
+								history.push('/projects/' + projectUrl + '/' + pageUrl)
+							}}
 						>
 							Выбрать
 						</Button>
@@ -69,10 +82,8 @@ const TemplateCard: React.FC<ITemplateCard> = ({ history, match, parentClass, mo
 
 			</div>
 
-
-
 		</div>
 	)
 }
 
-export default withRouter(TemplateCard)
+export default TemplateCard

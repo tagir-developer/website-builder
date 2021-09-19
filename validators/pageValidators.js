@@ -64,6 +64,21 @@ exports.switchAutosavePageValidators = [
 		.isBoolean().withMessage('Поле autosave должено иметь булев тип')
 ]
 
+exports.choosePageTemplateValidators = [
+	check('pageId')
+		.trim()
+		.isString().withMessage('pageId должен быть строкой')
+		.not().isEmpty().withMessage('pageId не должен быть пустым полем'),
+	check('templateId')
+		.trim()
+		.isString().withMessage('templateId должен быть строкой'),
+	check('isEmptyTemplate')
+		.trim()
+		.isString().withMessage('isEmptyTemplate должен быть строкой')
+		.not().isEmpty().withMessage('isEmptyTemplate не должен быть пустым полем')
+		.isIn(['isEmpty', 'template']).withMessage(`Передаваемое значение isEmptyTemplate не входит в список допустимых значений`)
+]
+
 exports.changePublicationStatusValidators = [
 	check('projectId')
 		.trim()

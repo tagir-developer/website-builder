@@ -23,25 +23,25 @@ class templateController {
 		}
 	}
 
-	async addBlocks(req, res, next) {
-		try {
-			ApiError.ValidationErrorChecking(req)
+	// async addBlocks(req, res, next) {
+	// 	try {
+	// 		ApiError.ValidationErrorChecking(req)
 
-			const {templateId, blocks} = req.body
+	// 		const {templateId, blocks} = req.body
 
-			await templateService.addBlocks(templateId, blocks)
+	// 		await templateService.addBlocks(templateId, blocks)
 
-			return res.json({
-				// template,
-				messageType: 'success',
-				message: "Блоки добавлены к шаблону",
-				errors: []
-			})
+	// 		return res.json({
+	// 			// template,
+	// 			messageType: 'success',
+	// 			message: "Блоки добавлены к шаблону",
+	// 			errors: []
+	// 		})
 
-		} catch (e) {
-			next(e)
-		}
-	}
+	// 	} catch (e) {
+	// 		next(e)
+	// 	}
+	// }
 
 	async getAllTemplates(req, res, next) {
 		try {
