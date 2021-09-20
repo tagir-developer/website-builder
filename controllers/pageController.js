@@ -158,8 +158,6 @@ class pageController {
 
 			const {pageId, templateId, isEmptyTemplate} = req.body
 
-			console.log('Получили на сервере', pageId, templateId, isEmptyTemplate)
-
 			await pageService.choosePageTemplate(pageId, templateId, isEmptyTemplate)
 
 			return res.json({

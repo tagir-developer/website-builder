@@ -30,13 +30,14 @@ class fileSystemService {
 		return pageFilePath
 	}
 
-	getPageBlocksInStringFormat(page) {
+	getPageBlocksInStringFormat(page, projectId) {
 		const pageBlocks = page.blocks.map(block => {
 			return {
 				blockPath: block.block.path,
 				blockIsHidden: block.blockIsHidden,
 				blockConfigs: block.blockConfigs,
-				blockContent: block.blockContent
+				blockContent: block.blockContent,
+				projectId
 			}
 		})
 		const blocksInJSON = JSON.stringify(pageBlocks)

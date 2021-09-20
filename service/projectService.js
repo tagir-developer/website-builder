@@ -138,7 +138,7 @@ class ProjectService {
 
 			const pageFilePath = fileSystemService.createCopyOfTemplate(page, project)
 
-			const blocks = fileSystemService.getPageBlocksInStringFormat(page)
+			const blocks = fileSystemService.getPageBlocksInStringFormat(page, projectId)
 
 			fileSystemService.openFileAndReplaceTemplateStrings(projectId, page._id, blocks, pageFilePath)
 		})

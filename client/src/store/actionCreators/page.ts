@@ -109,13 +109,13 @@ export const choosePageTemplate = (isEmptyTemplate: 'isEmpty' | 'template', temp
 		try {
 			const response = await PageService.choosePageTemplate(pageId, templateId, isEmptyTemplate)
 
-			// dispatch(changeActivePage(response.data.page))
-			// dispatch(alertErrorOrMessageCreator(response.data))
+			return response.data.messageType
 
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
 				dispatch(alertErrorOrMessageCreator(e.response.data))
+				return e.response.data.messageType
 			}
 		}
 	}

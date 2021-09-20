@@ -1,7 +1,7 @@
 import React from 'react'
 import './TemplateCard.scss'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
-import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import Button from '../Button/Button'
 import SecondaryButton from '../SecondaryButton/SecondaryButton'
 import { useActions } from '../../../hooks/reduxHooks'
@@ -16,21 +16,15 @@ interface ITemplateCard {
 	emptyTemplate?: boolean
 	openPreview?: Function
 	templateId?: string
-	handler: (isEmptyTemplate: 'isEmpty' | 'template', templateId?: string) => void
+	// handler: (isEmptyTemplate: 'isEmpty' | 'template', templateId?: string) => void
 }
 
-const TemplateCard: React.FC<ITemplateCard> = ({ parentClass, modClass, title, description, img, emptyTemplate, openPreview = () => {}, templateId, handler }) => {
+const TemplateCard: React.FC<ITemplateCard> = ({ parentClass, modClass, title, description, img, emptyTemplate, openPreview = () => {}, templateId }) => {
 
 	const templateCardClasses = useCreateClassName('template-card', parentClass, modClass)
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
 	const history = useHistory()
-	// const {choosePageTemplate} = useActions()
-
-	// const devHandler = () => {
-	// 	// ! Обязательно сделать значение isNewPage = false для активной страницы, так как шаблон уже выбран
-	// 	history.push('/' + match.params.name + '/' + match.params.pageId)
-	// } // ? Временная общая функция, которая перенаправляет на страницу редактирования страницы проекта
-
+	const {choosePageTemplate} = useActions()
 
 	return (
 		<div className={templateCardClasses}>
@@ -54,7 +48,7 @@ const TemplateCard: React.FC<ITemplateCard> = ({ parentClass, modClass, title, d
 					? <Button
 						parentClass="template-card"
 						handler={async () => {
-							await handler('isEmpty')
+							await choosePageTemplate('isEmpty')
 							history.push('/projects/' + projectUrl + '/' + pageUrl)
 						}}
 					>
@@ -71,7 +65,7 @@ const TemplateCard: React.FC<ITemplateCard> = ({ parentClass, modClass, title, d
 						<Button
 							parentClass="template-card"
 							handler={async () => {
-								await handler('template', templateId)
+								await choosePageTemplate('template', templateId)
 								history.push('/projects/' + projectUrl + '/' + pageUrl)
 							}}
 						>

@@ -1,5 +1,6 @@
 const PageListDto = require('../dtos/pageDto')
 const ProjectsListDto = require('../dtos/projectsDto')
+const RemoveBlockIdDto = require('../dtos/removeBlockIdDto')
 const ApiError = require('../exeptions/apiError')
 const Page = require('../models/Page')
 const Project = require('../models/Project')
@@ -155,22 +156,16 @@ class PageService {
 
 		if (isEmptyTemplate === 'isEmpty') {
 			page.isNewPage = false
-			await page.save
-			console.log('Изменили значение isNewPage', page)
+			await page.save()
 		} else {
 			const template = await Template.findById(templateId)
 			if (!template) throw ApiError.BadRequest('Шаблон с таким ID не найден, попробуйте выполнить операцию позже', 'danger')
 
-			const blocksWithoutId = template.blocks.map(block => {
-				delete block._id
-				return block
-			})
-
-			console.log('Блоки без айдишников!!!', blocksWithoutId)
+			const blocksWithoutId = template.blocks.map(i => new RemoveBlockIdDto(i))
 
 			page.blocks = blocksWithoutId
 			page.isNewPage = false
-			await page.save
+			await page.save()
 		}
 
 	}
