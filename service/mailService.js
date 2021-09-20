@@ -155,12 +155,16 @@ class MailService {
 			throw ApiError.BadRequest('Произошла ошибка при отправке письма', 'danger')
 		})
 
-		const textMessage = `Новая заявка. Форма: ${formName}. Имя: ${name}. Телефон: ${phone}`
-		const url = `${process.env.SMS_SERVER_URL}/sms/send?number=${formProcessing.phoneNumber}&text=${textMessage}&sign=SMS Aero`
-		const encodedUrl = encodeURI(url)
+		if (formProcessing.phoneNumber) {
+			const textMessage = `Новая заявка. Форма: ${formName}. Имя: ${name}. Телефон: ${phone}`
+			const url = `${process.env.SMS_SERVER_URL}/sms/send?number=${formProcessing.phoneNumber}&text=${textMessage}&sign=SMS Aero`
+			const encodedUrl = encodeURI(url)
+	
+			const messageData = await axios.get(encodedUrl)
+			if (!messageData.data.success) throw ApiError.BadRequest('Произошла ошибка при отправке СМС сообщения', 'danger')
+		}
 
-		const messageData = await axios.get(encodedUrl)
-		if (!messageData.data.success) throw ApiError.BadRequest('Произошла ошибка при отправке СМС сообщения', 'danger')
+
 	}
 
 }

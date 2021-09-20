@@ -66,7 +66,7 @@ class fileSystemService {
 			filesMiddleware = files.map(file => {
 				return {
 					fieldName: file.fieldname,
-					path: '/' + file.destination + '/' + file.filename
+					path: process.env.API_URL + '/' + file.destination + '/' + file.filename
 				}
 			})
 

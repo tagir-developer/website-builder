@@ -8,6 +8,7 @@ import produce from 'immer'
 import { WritableDraft } from "immer/dist/internal"
 import { IPageState } from "../types/page"
 import { IProjectsState } from "../types/projects"
+import { updateActiveProject } from "./projects"
 
 
 export const getBlocksWithType = (blockType: string) => {
@@ -260,13 +261,14 @@ export const saveBlocksInDB = (showMessage: boolean = false, templateId: string 
 
 		})
 
-
 		formData.set('blocks', JSON.stringify(newBlockList, null, 2))
 
 		try {
 			const response = await BlockService.saveBlocksInDB(formData)
 
 			if (showMessage) dispatch(alertErrorOrMessageCreator(response.data))
+
+			if (response.data.project) dispatch(updateActiveProject(response.data.project))
 
 		} catch (error) {
 			const e = error as AxiosError

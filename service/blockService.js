@@ -1,6 +1,7 @@
 const BlockDto = require('../dtos/blockDto')
 const PageBlocksDto = require('../dtos/pageBlocksDto')
 const PageBlocksRecoveryFromDto = require('../dtos/pageBlocksRecoveryFromDto')
+const ProjectsListDto = require('../dtos/projectsDto')
 const ApiError = require('../exeptions/apiError')
 const Block = require('../models/Block')
 const Page = require('../models/Page')
@@ -114,18 +115,30 @@ class BlockService {
 			template.blocks = recoveryBlocks
 			await template.save()
 
-			return "Список блоков сохранен в шаблоне"
+			return {
+				updatedProject: null,
+				message: "Список блоков сохранен в шаблоне"
+			}
 
 		} else {
 			const page = await Page.findById(pageId)
 			if (!page) throw ApiError.BadRequest('Страница с таким pageId не найдена, попробуйте выполнить операцию позже', 'danger')
+
+			const project = await Project.findById(page.project)
+			if (!project) throw ApiError.BadRequest('Проект не найден, попробуйте выполнить операцию позже', 'danger')
+			project.updated = false
+			await project.save()
+			const projectDto = new ProjectsListDto(project)
 
 			const recoveryBlocks = blocksWithFileLinks.map(i => new PageBlocksRecoveryFromDto(i))
 	
 			page.blocks = recoveryBlocks
 			await page.save()
 
-			return "Изменения успешно сохранены"
+			return {
+				updatedProject: projectDto,
+				message: "Изменения успешно сохранены"
+			}
 		}
 
 		// const page = await Page.findById(pageId)

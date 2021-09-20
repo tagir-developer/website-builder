@@ -22,5 +22,7 @@ router.post('/save-all-blocks', uploadImages.any(), blockController.saveBlocks)
 
 router.post('/send-name-phone', sendNamePhoneValidators, blockController.sendNamePhone)
 
+// router.get('/test', blockController.test)
+
 
 module.exports = router

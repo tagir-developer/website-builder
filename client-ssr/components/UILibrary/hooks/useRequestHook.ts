@@ -13,6 +13,7 @@ export const useRequestHook = (): IUseRequestHook => {
 	const sendNameAndPhone = async (projectId: string, formName: string, name: string, phone: string) => {
 		setLoading(true)
 		try {
+
 			const response = await axios.post('http://localhost:5000/api/blocks/send-name-phone', {projectId, formName, name, phone})
 			console.log('ПОЛУЧЕННЫЕ ДАННЫЕ В ХУКЕ', response.data)
 			setLoading(false)

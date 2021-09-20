@@ -125,12 +125,12 @@ class blockController {
 			const {pageId, blocks, templateId} = req.body
 			const files = req.files
 
-			const responseMessage = await blockService.saveBlocks(pageId, blocks, files, templateId)
+			const updatedProjectAndMessage = await blockService.saveBlocks(pageId, blocks, files, templateId)
 
 			return res.json({
+				project: updatedProjectAndMessage.updatedProject,
 				messageType: 'success',
-				// message: "Изменения успешно сохранены",
-				message: responseMessage,
+				message: updatedProjectAndMessage.message,
 				errors: []
 			})
 		} catch (e) {
@@ -156,6 +156,27 @@ class blockController {
 			next(e)
 		}
 	}
+
+	// async test(req, res, next) { 
+	// 	try {
+	// 		// ApiError.ValidationErrorChecking(req)
+
+	// 		// const {projectId, formName, name, phone} = req.body
+
+	// 		// await blockService.sendNamePhone(projectId, formName, name, phone)
+
+	// 		console.log('ДОШЛИ ДО СЕРВЕРА!')
+
+	// 		return res.json({
+	// 			messageType: 'success',
+	// 			message: "Тест для SSR пройден",
+	// 			errors: []
+	// 		})
+
+	// 	} catch (e) {
+	// 		next(e)
+	// 	}
+	// }
 
 }
 

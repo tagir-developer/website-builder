@@ -13,10 +13,11 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
-app.use(cors({
-	credentials: true,
-	origin: process.env.CLIENT_URL
-}))
+// app.use(cors({
+// 	credentials: true,
+// 	origin: process.env.CLIENT_URL
+// }))
+app.use(cors())
 app.use('/images', express.static(path.join(__dirname, 'images'))) 
 
 app.use('/api/auth/', require('./routes/auth.routes'))

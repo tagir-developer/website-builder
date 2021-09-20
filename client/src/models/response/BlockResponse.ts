@@ -1,4 +1,5 @@
 import { IAlertMessage } from "../IAlertMessage"
+import { IProjectsResponse } from "./ProjectsResponse";
 
 export interface IBlockResponse {
 	id: string
@@ -27,4 +28,5 @@ export interface ICopyBlockResponse extends IAlertMessage {
 }
 
 export interface ISaveBlocksInDBResponse extends IAlertMessage {
+	project: IProjectsResponse | null
 }

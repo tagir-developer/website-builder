@@ -1,5 +1,6 @@
 import { IBlockResponse, IPageBlocksResponse } from "../../models/response/BlockResponse"
 import { IAlertAction } from "./alert"
+import { IProjectsAction } from "./projects"
 
 export interface IBlockState {
 	loading: boolean
@@ -59,4 +60,4 @@ interface blockChangeBlockConfigsType {
 	payload: IPageBlocksResponse[]
 }
 
-export type IBlockAction = IAlertAction | blockUpdateChangeHistoryType | blockChangeBlockConfigsType | blockAddToChangeHistoryType | blockStartAction | blockEndAction | blockGetWithType | blockGetPageBlocksType | blockSetActiveBlockType
+export type IBlockAction = IAlertAction | IProjectsAction | blockUpdateChangeHistoryType | blockChangeBlockConfigsType | blockAddToChangeHistoryType | blockStartAction | blockEndAction | blockGetWithType | blockGetPageBlocksType | blockSetActiveBlockType
