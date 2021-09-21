@@ -143,16 +143,6 @@ const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 	const [message, setMessage] = useState('')
 	const request = useRequestHook()
 
-	// useEffect(() => {
-	// 	const load = async () => {
-	// 		const response = await fetch('http://localhost:5000/api/blocks/test')
-	// 		const data = await response.json()
-	// 		console.log('Данные получены', data)
-	// 	}
-
-	// 	load()
-	// }, [])
-
 	const formHandler = async () => {
 		// console.log('Данные, передаваемые в хук', projectId, blockContent.formName, nameInput.value, phoneInput.value)
 		const response = await request.sendNameAndPhone(projectId, blockContent.formName, nameInput.value, phoneInput.value)

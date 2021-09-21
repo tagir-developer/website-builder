@@ -59,7 +59,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 	}, [])
 
 	const saveBlocksInTemplate = () => {
-		const templateId = '6147643a64b75e21b450a39f'
+		const templateId = '6149d4b2cc05f506c8ac0248'
 		saveBlocksInDB(true, templateId)
 	}
 

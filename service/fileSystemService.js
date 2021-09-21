@@ -19,7 +19,7 @@ class fileSystemService {
 
 	createUserWebsiteFolder(project) {
 		const userWebsitePath = path.join(__dirname, '../client-ssr/pages/', project.link)
-		fs.rmdirSync(userWebsitePath, { recursive: true })
+		rimraf.sync(userWebsitePath)
 		fs.mkdirSync(userWebsitePath, { recursive: true })
 	}
 
