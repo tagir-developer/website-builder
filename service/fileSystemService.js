@@ -46,7 +46,8 @@ class fileSystemService {
 
 	openFileAndReplaceTemplateStrings(projectId, pageId, blocksInJSON, pageFilePath) {
 		let file = fs.readFileSync(pageFilePath, 'utf-8')
-		file = file.replace(/customPageBlocks/g, blocksInJSON)
+		const blocksWithDoubleSlash = blocksInJSON.replace(/\\/ig, '\\\\')
+		file = file.replace(/customPageBlocks/g, blocksWithDoubleSlash)
 		file = file.replace(/customUserProjectId/g, projectId)
 		file = file.replace(/customUserPageId/g, pageId)
 		fs.writeFileSync(pageFilePath, file)

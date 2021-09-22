@@ -20,7 +20,6 @@ import { myTheme } from '../../components/UILIbrary/themes/themes'
 import GlobalStylesWrapper from '../../components/HOC/GlobalStylesWrapper/GlobalStylesWrapper'
 import PageTitle from '../../components/UI/PageTitle/PageTitle'
 import AlertMessage from '../../components/HOC/AlertMessage/AlertMessage'
-import SecondaryButton from '../../components/UI/SecondaryButton/SecondaryButton'
 
 interface IRouteProps {
 	pageId: string
@@ -58,10 +57,11 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 		// eslint-disable-next-line
 	}, [])
 
-	const saveBlocksInTemplate = () => {
-		const templateId = '6149d4b2cc05f506c8ac0248'
-		saveBlocksInDB(true, templateId)
-	}
+	// ? Вспомогательная временная функция для сохранения в базе шаблонов (в будущем этот функционал будет доступен либо в админке, либо как дополнительный UI в зависимости от роли пользователя)
+	// const saveBlocksInTemplate = () => {
+	// 	const templateId = '6149d4b2cc05f506c8ac0248'
+	// 	saveBlocksInDB(true, templateId)
+	// }
 
 	return (
 		<>
@@ -157,12 +157,12 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 									handler={() => openLeftMenu.handler()} title="Добавить новый блок"
 								/>
 
-								<SecondaryButton
+								{/* <SecondaryButton
 									parentClass="edit-page"
 									handler={saveBlocksInTemplate}
 								>
 									Сохранить изменения в шаблоне
-								</SecondaryButton>
+								</SecondaryButton> */}
 
 							</Backdrop>
 
