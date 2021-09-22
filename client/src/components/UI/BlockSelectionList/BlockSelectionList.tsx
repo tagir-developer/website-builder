@@ -18,9 +18,8 @@ const BlockSelectionList: React.FC<IBlockSelectionList> = ({ parentClass, handle
 
 	return (
 		<div className={blockSelectionListClasses}>
-
 			{loading
-				? <Loader parentClass="block-selection-list"/>
+				? <Loader parentClass="block-selection-list" />
 				: blockCards.map(i => (
 					<BlockCard
 						key={i.id}
@@ -32,17 +31,6 @@ const BlockSelectionList: React.FC<IBlockSelectionList> = ({ parentClass, handle
 					/>
 				))
 			}
-			{/* {blockCards.map(i => (
-				<BlockCard
-					key={i.id}
-					parentClass="block-selection-list"
-					blockId={i.id}
-					title={i.title}
-					img={i.preview}
-					closePopups={closePopups}
-				/>
-			))} */}
-
 		</div>
 	)
 }

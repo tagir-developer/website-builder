@@ -13,7 +13,7 @@ export const getAllProjects = () => {
 		try {
 			const response = await ProjectsService.getProjects()
 
-			
+
 			dispatch(projectsGetAll(response.data))
 			dispatch(saveProjectsNames(response.data))
 
@@ -74,7 +74,7 @@ export const changeProject = (projectId: string, name: string, link: string) => 
 	}
 }
 
-export const changeProjectStatus = (projectId: string, propSetArray: {prop: projectBooleanTypeProps, value: boolean}[]) => {
+export const changeProjectStatus = (projectId: string, propSetArray: { prop: projectBooleanTypeProps, value: boolean }[]) => {
 	return async (dispatch: Dispatch<IProjectsAction>) => {
 
 		dispatch(projectsStartCreator())
@@ -85,13 +85,10 @@ export const changeProjectStatus = (projectId: string, propSetArray: {prop: proj
 			const response = await ProjectsService.changeProjectStatus(projectId, propsArr)
 
 			dispatch(updateActiveProject(response.data.project))
-			// dispatch(alertErrorOrMessageCreator(response.data))
-			// dispatch(projectsEndCreator())
 
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				// dispatch(projectsEndCreator())
 				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 
@@ -110,7 +107,6 @@ export const deleteProject = (projectId: string) => {
 			dispatch(projectsGetAll(response.data.projects))
 			dispatch(saveProjectsNames(response.data.projects))
 			dispatch(alertErrorOrMessageCreator(response.data))
-			// dispatch(projectsEndCreator())
 
 		} catch (error) {
 			const e = error as AxiosError
@@ -126,19 +122,15 @@ export const deleteProject = (projectId: string) => {
 export const addProjectScripts = (projectId: string, scripts: string) => {
 	return async (dispatch: Dispatch<IProjectsAction>) => {
 
-		// dispatch(projectsStartCreator())
-
 		try {
 			const response = await ProjectsService.addScripts(projectId, scripts)
 
 			dispatch(updateActiveProject(response.data.project))
 			dispatch(alertErrorOrMessageCreator(response.data))
-			// dispatch(projectsEndCreator())
 
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				// dispatch(projectsEndCreator())
 				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 
@@ -196,7 +188,6 @@ export const generateWebsite = () => {
 
 			dispatch(updateActiveProject(response.data.project))
 			dispatch(alertErrorOrMessageCreator(response.data))
-			// dispatch(projectsEndCreator())
 
 		} catch (error) {
 			const e = error as AxiosError
@@ -210,7 +201,7 @@ export const generateWebsite = () => {
 }
 
 export const projectsGetAll = (payload: any): IProjectsAction => {
-	return { 
+	return {
 		type: projectsActionTypes.PROJECTS_GET_ALL,
 		payload
 	}
@@ -220,14 +211,14 @@ export const saveProjectsNames = (projects: IProjectsResponse[]): IProjectsActio
 
 	const projectsNames: string[] = projects.map(i => '/' + i.link)
 
-	return { 
+	return {
 		type: projectsActionTypes.PROJECTS_SAVE_NAMES,
 		payload: projectsNames
 	}
 }
 
 export const updateActiveProject = (payload: IProjectsResponse): IProjectsAction => {
-	return { 
+	return {
 		type: projectsActionTypes.PROJECTS_UPDATE_ACTIVE_PROJECT,
 		payload: payload
 	}
@@ -237,7 +228,7 @@ export const setActiveProject = (projects: IProjectsResponse[], projectUrl: stri
 
 	const activeProject: IProjectsResponse = projects.filter(i => i.link === projectUrl)[0]
 
-	return { 
+	return {
 		type: projectsActionTypes.PROJECTS_SET_ACTIVE_PROJECT,
 		payload: activeProject
 	}
@@ -256,7 +247,7 @@ export const projectsEndCreator = (): IProjectsAction => {
 }
 
 export const createPageAfterOpenProject = (payload: boolean): IProjectsAction => {
-	return { 
+	return {
 		type: projectsActionTypes.PROJECTS_CREATE_PAGE_AFTER_OPEN_PROJECT,
 		payload
 	}

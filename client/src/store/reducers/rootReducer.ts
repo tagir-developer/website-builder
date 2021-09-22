@@ -20,5 +20,3 @@ export const rootReducer = combineReducers({
 	template: templateReducer,
 	block: blockReducer
 })
-
-// export type RootState = ReturnType<typeof rootReducer>

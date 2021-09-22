@@ -14,7 +14,6 @@
 		@include make-row();
 		justify-content: center;
 		align-items: center;
-		// padding: 50px 0px 50px 0px;
 		@include media-breakpoint-down(lg) {
 			height: calc(100vh - 60px);
 		}	
@@ -24,7 +23,6 @@
 	}
 
 	&__form-container {
-		// @include make-col(5);
 		width: 480px;
 		background: $main;
 		box-shadow: -20px -20px 54px rgba(255, 255, 255, 0.5), 20px 20px 56px rgba(169, 190, 210, 0.4);

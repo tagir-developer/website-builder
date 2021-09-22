@@ -4,7 +4,6 @@ import { IProjectsAction } from "./projects"
 
 export interface IBlockState {
 	loading: boolean
-	// activeBlockType: string
 	blockCards: IBlockResponse[]
 	pageBlocks: IPageBlocksResponse[]
 	activeBlock: IPageBlocksResponse

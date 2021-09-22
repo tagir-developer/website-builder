@@ -16,19 +16,19 @@ const BlockMoveBtn: React.FC<IBlockMoveBtn> = ({ parentClass, modClass, handler,
 
 	return (
 		<div className={blockMoveBtnClasses}>
-			<div 
+			<div
 				className="block-move-btn__move-btn block-move-btn__move-btn_up-icon"
 				onClick={() => handler('up')}
 			>
 				<span className="block-move-btn__tooltip">{tooltipTextUp ? tooltipTextUp : 'Сдвинуть блок вверх'}</span>
 			</div>
 			<div className="block-move-btn__devider"></div>
-			<div 
+			<div
 				className="block-move-btn__move-btn block-move-btn__move-btn_down-icon"
 				onClick={() => handler('down')}
 			>
 				<span className="block-move-btn__tooltip">{tooltipTextDown ? tooltipTextDown : 'Сдвинуть блок вниз'}</span>
-			</div>	
+			</div>
 		</div>
 	)
 }

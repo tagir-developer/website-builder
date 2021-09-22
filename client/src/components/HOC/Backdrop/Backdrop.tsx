@@ -21,7 +21,7 @@ const Backdrop: React.FC<IBackdrop> = ({ children, isOpen, type, handler, withou
 		})
 		backdropClasses = classNames({
 			'popup-backdrop': true,
-			'popup-backdrop_without-padding': withoutPadding, // Добавили, чтобы убрать отступ, если не предполагается скрытие прокрутки
+			'popup-backdrop_without-padding': withoutPadding,
 			'popup-backdrop_show': isOpen,
 		})
 	}

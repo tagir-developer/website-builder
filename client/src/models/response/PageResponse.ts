@@ -43,5 +43,4 @@ export interface IChangePagePublicationStatusResponse extends IAlertMessage {
 }
 
 export interface IChoosePageTemplateResponse extends IAlertMessage {
-	// pages: IPageResponse[]
 }

@@ -8,7 +8,6 @@ import './CreateProject.scss'
 
 interface ICreateProject {
 	parentClass?: string
-	// closePopup: (param?: any) => any
 	closePopup: Function
 }
 

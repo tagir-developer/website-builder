@@ -17,7 +17,7 @@ const ProjectsListPage: React.FC = () => {
 
 	const popup = usePopup(false, "solid")
 
-	const { projectsList, loading, activeProject } = useTypedSelector(state => state.projects)
+	const { projectsList, loading } = useTypedSelector(state => state.projects)
 	const { getAllProjects } = useActions()
 
 	useEffect(() => {
@@ -25,63 +25,48 @@ const ProjectsListPage: React.FC = () => {
 		// eslint-disable-next-line
 	}, [])
 
-	// useEffect(() => {
-	// 	getAllProjects()
-	// 	// eslint-disable-next-line
-	// }, [activeProject])
-
-	// const successfulProjectCreation = () => {
-	// 	popup.closePopup()
-	// 	getAllProjects()
-	// }
-
 	return (
-		<>
-			{/* <AlertMessage successFunc={successfulProjectCreation}> */}
-			<AlertMessage>
+		<AlertMessage>
+			<PopUp {...popup.popupProps} withTitle="Cоздание сайта">
+				<CreateProject closePopup={popup.closePopup} />
+			</PopUp>
 
-				<PopUp {...popup.popupProps} withTitle="Cоздание сайта">
-					<CreateProject closePopup={popup.closePopup} />
-				</PopUp>
+			<Backdrop {...popup.backdropProps}>
+				<TopMenu menuType="auth" />
+				<div className="content-area">
+					<div className="projects-list-page">
 
-				<Backdrop {...popup.backdropProps}>
-					<TopMenu menuType="auth" />
-					<div className="content-area">
-						<div className="projects-list-page">
+						<AddNewButton
+							parentClass="projects-list-page"
+							handler={popup.handler}
+							title="Создать новый сайт"
+						/>
 
-							<AddNewButton
-								parentClass="projects-list-page"
-								handler={popup.handler}
-								title="Создать новый сайт"
-							/>
+						{loading
+							? <Loader />
+							: !!projectsList.length
+								?
+								projectsList.map((i, index) => {
+									return (
+										<ProjectCard
+											key={i.id}
+											parentClass="projects-list-page"
+											title={i.name}
+											published={i.isPublished}
+											link={i.link}
+											hasPages={i.hasPages}
+											generatedProjectLink={i.generatedProject}
+										/>
+									)
+								})
+								: <h3>У вас еще нет ни одного сайта, создайте свой первый сайт.</h3>
+						}
 
-							{loading
-								? <Loader />
-								: !!projectsList.length
-									?
-									projectsList.map((i, index) => {
-										return (
-											<ProjectCard
-												key={i.id}
-												parentClass="projects-list-page"
-												title={i.name}
-												published={i.isPublished}
-												link={i.link}
-												hasPages={i.hasPages}
-												generatedProjectLink={i.generatedProject}
-											/>
-										)
-									})
-									: <h3>У вас еще нет ни одного сайта, создайте свой первый сайт.</h3>
-							}
-
-						</div>
 					</div>
-					<Footer />
-				</Backdrop>
-
-			</AlertMessage>
-		</>
+				</div>
+				<Footer />
+			</Backdrop>
+		</AlertMessage>
 	)
 }
 

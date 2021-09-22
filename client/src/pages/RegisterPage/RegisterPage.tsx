@@ -14,7 +14,7 @@ const RegisterPage: React.FC = () => {
 	const messagePopup = usePopup(false, 'blur')
 
 	const { message, messageType, errors } = useTypedSelector(state => state.auth)
-	const {clearRegisterMessage, authClearErrors} = useActions()
+	const { clearRegisterMessage, authClearErrors } = useActions()
 
 	useEffect(() => {
 

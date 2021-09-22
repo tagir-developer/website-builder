@@ -1,4 +1,4 @@
-const {check, param, query} = require('express-validator')
+const {check} = require('express-validator')
 
 exports.createTemplateValidators = [
 	check('type')

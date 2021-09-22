@@ -6,7 +6,7 @@ import MainLayout from "../../components/HOC/MainLayout/MainLayout"
 import UserScripts from "../../components/Another/UserScripts/UserScripts"
 import { GetServerSideProps } from "next"
 
-const stringData: string = '[{"blockPath":"menu/Menu1/Menu1","blockIsHidden":false,"blockConfigs":{"menuColor":"#000","textColor":"#fff","activeItemColor":"#383838","activeItemTextColor":"#ffa32b","hiddenOnDevice":[]},"blockContent":{"menuItems":[{"title":"Главная","link":"/orange"},{"title":"Страница 2","link":"/orange/page-2"}]},"projectId":"6147668d64b75e21b450a3bb"},{"blockPath":"headers/Header1/Header1","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":[],"buttonBackground":"#fb0023","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Заголовок блока","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"},"projectId":"6147668d64b75e21b450a3bb"}]'
+const stringData: string = '[{"blockPath":"headers/Header1/Header1","blockIsHidden":false,"blockConfigs":{"hiddenOnDevice":[],"buttonBackground":"#ca4a00","blockAlign":"center","titleFontSize":"300%"},"blockContent":{"titleText":"Тестовая","descriptionText":"Какой-то текст описывающий свойства продукта или услуги","buttonText":"Кнопка"},"projectId":"614b08028aa1d7286cbda0ec"}]'
 const pageBlocks: IPageBlock[] = JSON.parse(stringData)
 
 const blockList: any = pageBlocks.map((i, index) => {
@@ -22,20 +22,6 @@ const blockList: any = pageBlocks.map((i, index) => {
 		/>
 	)
 })
-
-// const createBlockList = (blocks: any[]) => {
-// 	return blocks.map((i, index) => {
-// 		const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
-// 		return (
-// 			<BlockComponent
-// 				key={index}
-// 				blockConfigs={i.blockConfigs}
-// 				blockContent={i.blockContent}
-// 				blockIsHidden={i.blockIsHidden}
-// 			/>
-// 		)
-// 	})
-// } 
 
 interface IUserPage {
 	pageData: IPageData
@@ -76,7 +62,6 @@ const UserPage: React.FC<IUserPage> = ({ pageData }) => {
 
 				<div className="wrapper-test">
 					<ThemeProvider theme={myTheme}>
-						{/* {createBlockList(pageData.pageBlocks)} */}
 						{blockList}
 					</ThemeProvider>
 				</div>
@@ -114,8 +99,8 @@ const UserPage: React.FC<IUserPage> = ({ pageData }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-	const projectId = '6147668d64b75e21b450a3bb'
-	const pageId = '61483720e165681e7421745b'
+	const projectId = '614b08028aa1d7286cbda0ec'
+	const pageId = '614b098c8aa1d7286cbda11f'
 
 	const res = await fetch(`http://localhost:5000/api/projects/get-page-data/${projectId}/${pageId}`)
 	const pageData = await res.json()

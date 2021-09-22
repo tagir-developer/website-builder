@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios'
 import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
@@ -154,15 +153,6 @@ const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 		phoneInput.clear()
 	}
 
-	// const switchHandler = () => {
-	// 	setPopup(true)
-	// 	setTimeout(() => {
-	// 		setPopup(false)
-	// 	}, 2000)
-	// 	nameInput.clear()
-	// 	phoneInput.clear()
-	// }
-
 	return (
 		<StyledForm1
 			blockIsHidden={blockIsHidden}
@@ -212,7 +202,6 @@ const Form1: React.FC<IForm1> = ({ blockConfigs, blockContent, blockIsHidden, hi
 						buttonTextColor={blockConfigs.buttonTextColor}
 						buttonAnimation={blockConfigs.buttonAnimation}
 						onClick={formHandler}
-						// onClick={switchHandler}
 						disabled={request.loading}
 					>
 						{blockContent.buttonText}

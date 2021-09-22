@@ -17,8 +17,6 @@ interface IConfirm {
 
 const Confirm: React.FC<IConfirm> = ({ parentClass, modClass, children, handler, successFunc }) => {
 
-	// const modClasses: string[] = modClass ? modClass.concat([type]) : [type]
-
 	const confirmClasses = useCreateClassName('confirm', parentClass, modClass)
 
 	const confirmHandler = (value: boolean): void => {
@@ -38,7 +36,6 @@ const Confirm: React.FC<IConfirm> = ({ parentClass, modClass, children, handler,
 			</div>
 		</div>
 	)
-
 }
 
 export default Confirm

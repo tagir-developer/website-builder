@@ -4,7 +4,7 @@ interface IStyledComponentsGlobal {
 	projectTextFontSize?: string
 }
 
-export const StyledComponentsGlobal = createGlobalStyle<IStyledComponentsGlobal>` //! Здесь надо вставить настройки из конфига проекта
+export const StyledComponentsGlobal = createGlobalStyle<IStyledComponentsGlobal>`
 * {
 	margin: 0;
 	padding: 0;

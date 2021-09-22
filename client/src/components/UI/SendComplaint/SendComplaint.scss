@@ -13,10 +13,7 @@
 	&__row {
 		@include make-row();
 		justify-content: center;
-		align-items: center;
-		// @include media-breakpoint-down(sm) {
-		// 	padding: 0px 15px 0px 15px;
-		// }	
+		align-items: center;	
 	}
 
 	&__form-container {

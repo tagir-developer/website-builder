@@ -184,9 +184,6 @@ class UserService {
 		user.avatar = '/images/avatars/thumb_150/' + fileName
 		await user.save()
 
-		// const userDto = new UserDto(user)
-		// return { ...userDto}
-
 	}
 
 	async deleteAvatar(userId) {
@@ -200,7 +197,6 @@ class UserService {
 		await user.save()
 	}
 
-	// ! Тестовая функция получения пользователей
 	async getAllUsers() {
 		const users = await User.find()
 		return users

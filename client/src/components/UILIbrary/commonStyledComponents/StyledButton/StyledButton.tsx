@@ -1,15 +1,5 @@
 import styled, { css, keyframes } from 'styled-components'
 
-// interface IButtonProps {
-// 	direction?: string
-// 	align?: string
-// 	justify?: string
-// 	margin?: string
-// 	primary?: boolean
-// 	outlined?: boolean
-// 	animation?: string
-// }
-
 const rotateAnimation = keyframes`
 	0% {
 		transform: rotateZ(0deg);

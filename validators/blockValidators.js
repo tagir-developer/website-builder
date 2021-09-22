@@ -1,11 +1,11 @@
-const {check} = require('express-validator')
+const { check } = require('express-validator')
 
 exports.createBlockValidators = [
 	check('title')
 		.trim()
 		.not().isEmpty().withMessage('Поле title не должно быть пустым')
 		.isString().withMessage('Название блока должно быть строкой')
-		.isLength({min: 10, max: 100}).withMessage('Название блока должно содержать от 10 до 100 символов'),
+		.isLength({ min: 10, max: 100 }).withMessage('Название блока должно содержать от 10 до 100 символов'),
 	check('type')
 		.trim()
 		.not().isEmpty().withMessage('Поле type не должно быть пустым')

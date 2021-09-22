@@ -14,7 +14,7 @@ interface IDevicesSlider {
 const DevicesSlider: React.FC<IDevicesSlider> = ({ parentClass, modClass, title, slider }) => {
 
 	const devicesSliderClasses = useCreateClassName('devices-slider', parentClass)
-	  
+
 	return (
 		<div className={devicesSliderClasses}>
 
@@ -26,8 +26,8 @@ const DevicesSlider: React.FC<IDevicesSlider> = ({ parentClass, modClass, title,
 				<div className="devices-slider__icon devices-slider__icon_pc"></div>
 			</div>
 
-			<RangeSlider 
-				parentClass="devices-slider" 
+			<RangeSlider
+				parentClass="devices-slider"
 				{...slider.bind}
 			/>
 

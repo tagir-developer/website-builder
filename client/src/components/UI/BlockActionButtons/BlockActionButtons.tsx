@@ -64,7 +64,7 @@ const BlockActionButtons: React.FC<IBlockActionButtons> = ({ parentClass, modCla
 			<div
 				className="block-action-buttons__visible-only-on-mobile"
 				onClick={() => isOpenHandler(prev => !prev)}
-				
+
 			>
 				<div className="block-action-buttons__menu">
 					<CSSTransition
@@ -76,17 +76,17 @@ const BlockActionButtons: React.FC<IBlockActionButtons> = ({ parentClass, modCla
 					>
 						<ul className="block-action-buttons__menu-list" >
 
-						{items && items.map((i, index) => {
-							return (
-								<li 
-									key={'menu-list-item' + index}
-									className={'block-action-buttons__menu-list-item block-action-buttons__menu-list-item_' + i.iconType }
-									onClick={e => openSettingInPopup(e, i.handler)}
-								>
-									{i.title}
-								</li>
-							)
-						})}
+							{items && items.map((i, index) => {
+								return (
+									<li
+										key={'menu-list-item' + index}
+										className={'block-action-buttons__menu-list-item block-action-buttons__menu-list-item_' + i.iconType}
+										onClick={e => openSettingInPopup(e, i.handler)}
+									>
+										{i.title}
+									</li>
+								)
+							})}
 
 						</ul>
 					</CSSTransition>

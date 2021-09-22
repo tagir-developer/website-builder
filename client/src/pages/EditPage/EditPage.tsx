@@ -15,7 +15,7 @@ import { useChooseBackdropProps } from '../../hooks/useChooseBackdropProps.hook'
 import BlockConfigMenu from '../../components/UI/BlockConfigMenu/BlockConfigMenu'
 import { useActions, useTypedSelector } from '../../hooks/reduxHooks'
 import { IUrlParams } from '../../models/IUrlParams'
-import styled, { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 import { myTheme } from '../../components/UILIbrary/themes/themes'
 import GlobalStylesWrapper from '../../components/HOC/GlobalStylesWrapper/GlobalStylesWrapper'
 import PageTitle from '../../components/UI/PageTitle/PageTitle'
@@ -34,7 +34,7 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	const { pagesNames, activePage, previousPath } = useTypedSelector(state => state.page)
 	const { activeProject } = useTypedSelector(state => state.projects)
-	const { pageBlocks, loading, changeHistory } = useTypedSelector(state => state.block)
+	const { pageBlocks, loading } = useTypedSelector(state => state.block)
 	const { getPageBlocks, setPreviousPath, saveBlocksInDB } = useActions()
 	const { name: projectUrl, pageId: pageUrl } = useParams<IUrlParams>()
 	const history = useHistory()
@@ -65,111 +65,111 @@ const EditPage: React.FC<IEditPage> = ({ match }) => {
 
 	return (
 		<>
-		<AlertMessage>
-			<PopUp {...blocksListPopup.popupProps} withTitle="Список блоков" modClass={['block-select-list']}>
-				<BlockSelectionList
-					closePopups={() => {
-						openLeftMenu.closePopup()
-						blocksListPopup.closePopup()
-					}}
-				/>
-			</PopUp>
+			<AlertMessage>
+				<PopUp {...blocksListPopup.popupProps} withTitle="Список блоков" modClass={['block-select-list']}>
+					<BlockSelectionList
+						closePopups={() => {
+							openLeftMenu.closePopup()
+							blocksListPopup.closePopup()
+						}}
+					/>
+				</PopUp>
 
-			<Backdrop {...blocksListPopup.backdropProps}>
+				<Backdrop {...blocksListPopup.backdropProps}>
 
-				<TopMenu menuType="edit" />
+					<TopMenu menuType="edit" />
 
-				<div className="content-area">
-					<div className="edit-page">
+					<div className="content-area">
+						<div className="edit-page">
 
-						<LeftBar isOpen={openLeftMenu.isOpen}>
-							<BlocksMenu
-								header={{
-									title: 'Библиотека блоков',
-									closeHandler: () => openLeftMenu.closePopup()
-								}}
-								popup={{
-									popupClosed: !blocksListPopup.isOpen,
-									switchPopup: blocksListPopup.handler
-								}}
-							/>
-						</LeftBar>
+							<LeftBar isOpen={openLeftMenu.isOpen}>
+								<BlocksMenu
+									header={{
+										title: 'Библиотека блоков',
+										closeHandler: () => openLeftMenu.closePopup()
+									}}
+									popup={{
+										popupClosed: !blocksListPopup.isOpen,
+										switchPopup: blocksListPopup.handler
+									}}
+								/>
+							</LeftBar>
 
-						<LeftBar isOpen={openBlockConfigs.isOpen} modClass={['wide']} >
-							<BlockConfigMenu 
-								type="Configs" 
-								title="Настройки блока" 
-								closeHandler={openBlockConfigs.closePopup} 
-							/>
-						</LeftBar>
+							<LeftBar isOpen={openBlockConfigs.isOpen} modClass={['wide']} >
+								<BlockConfigMenu
+									type="Configs"
+									title="Настройки блока"
+									closeHandler={openBlockConfigs.closePopup}
+								/>
+							</LeftBar>
 
-						<LeftBar isOpen={openBlockContent.isOpen} modClass={['wide']} >
-							<BlockConfigMenu 
-								type="Contents" 
-								title="Редактировать контент" 
-								closeHandler={openBlockContent.closePopup} 
-							/>
-						</LeftBar>
+							<LeftBar isOpen={openBlockContent.isOpen} modClass={['wide']} >
+								<BlockConfigMenu
+									type="Contents"
+									title="Редактировать контент"
+									closeHandler={openBlockContent.closePopup}
+								/>
+							</LeftBar>
 
-						<Backdrop
-							{...backdropProps}
-							withoutPadding={true}
-						>
-
-							{loading
-								? null
-								: !!pageBlocks.length
-									? <ThemeProvider theme={myTheme}>
-										{pageBlocks.map((i, index) => {
-											const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.blockPath))
-											return (
-												<Suspense key={index} fallback={<div>Загрузка...</div>}>
-													<EditBlockWrapper
-														blockId={i.blockId}
-														openConfig={
-															openBlockConfigs.openPopup
-														}
-														openContent={
-															openBlockContent.openPopup
-														}
-														blockIsHidden={i.blockIsHidden}
-													>
-														<GlobalStylesWrapper>
-															<BlockComponent
-																blockConfigs={i.blockConfigs}
-																blockContent={i.blockContent}
-																blockIsHidden={i.blockIsHidden}
-																projectId={activeProject.id}
-															/>
-														</GlobalStylesWrapper>
-													</EditBlockWrapper>
-												</Suspense>
-											)
-										})}
-									</ThemeProvider>
-									: <PageTitle parentClass="edit-page" title="Пустой шаблон">
-										Вы пока не создали ни одного блока. Добавьте свой первый блок на страницу.
-									</PageTitle>
-							}
-
-							<AddNewButton
-								parentClass="edit-page"
-								handler={() => openLeftMenu.handler()} title="Добавить новый блок"
-							/>
-
-							<SecondaryButton
-								parentClass="edit-page"
-								handler={saveBlocksInTemplate}
+							<Backdrop
+								{...backdropProps}
+								withoutPadding={true}
 							>
-								Сохранить изменения в шаблоне
-							</SecondaryButton>
 
-						</Backdrop>
+								{loading
+									? null
+									: !!pageBlocks.length
+										? <ThemeProvider theme={myTheme}>
+											{pageBlocks.map((i, index) => {
+												const BlockComponent = React.lazy(() => import('../../components/UILIbrary/' + i.blockPath))
+												return (
+													<Suspense key={index} fallback={<div>Загрузка...</div>}>
+														<EditBlockWrapper
+															blockId={i.blockId}
+															openConfig={
+																openBlockConfigs.openPopup
+															}
+															openContent={
+																openBlockContent.openPopup
+															}
+															blockIsHidden={i.blockIsHidden}
+														>
+															<GlobalStylesWrapper>
+																<BlockComponent
+																	blockConfigs={i.blockConfigs}
+																	blockContent={i.blockContent}
+																	blockIsHidden={i.blockIsHidden}
+																	projectId={activeProject.id}
+																/>
+															</GlobalStylesWrapper>
+														</EditBlockWrapper>
+													</Suspense>
+												)
+											})}
+										</ThemeProvider>
+										: <PageTitle parentClass="edit-page" title="Пустой шаблон">
+											Вы пока не создали ни одного блока. Добавьте свой первый блок на страницу.
+										</PageTitle>
+								}
 
+								<AddNewButton
+									parentClass="edit-page"
+									handler={() => openLeftMenu.handler()} title="Добавить новый блок"
+								/>
+
+								<SecondaryButton
+									parentClass="edit-page"
+									handler={saveBlocksInTemplate}
+								>
+									Сохранить изменения в шаблоне
+								</SecondaryButton>
+
+							</Backdrop>
+
+						</div>
 					</div>
-				</div>
-				<Footer />
-			</Backdrop>
+					<Footer />
+				</Backdrop>
 			</AlertMessage>
 		</>
 	)

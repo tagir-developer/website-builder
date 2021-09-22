@@ -1,4 +1,4 @@
-import { devices, IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
+import { IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
 
 export interface IForm1Configs extends IHiddenOnDevices {
 	backgroundColor: string

@@ -26,7 +26,7 @@ export const useAddMenuItem = (initialItems: IMenuItem[]): IUseAddMenuItem => {
 		})
 	}, [pages, activeProject])
 
-	const [projectPages, setProjectPages] = useState<IOptions[]>(projectPagesInitial)
+	const [projectPages] = useState<IOptions[]>(projectPagesInitial)
 
 
 	const firstBlockUsingFilter = (initialMenuItems: IMenuItem[]): IMenuItem[] => {

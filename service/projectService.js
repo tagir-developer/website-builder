@@ -12,10 +12,10 @@ class ProjectService {
 	async createNewProject(userId, name, link) {
 
 		const user = await User.findById(userId)
-		if (!user)  throw ApiError.BadRequest('Пользователь с таким userId не найден', 'danger')
+		if (!user) throw ApiError.BadRequest('Пользователь с таким userId не найден', 'danger')
 
 		const newProject = await Project.create({
-			name, 
+			name,
 			link,
 			createdBy: userId,
 			formProcessing: {
@@ -50,7 +50,7 @@ class ProjectService {
 		fileSystemService.deleteProjectFilesFolder(project.link)
 
 		const deletedProject = await Project.findByIdAndDelete(projectId)
-		await Page.deleteMany({project: projectId})
+		await Page.deleteMany({ project: projectId })
 
 		if (!deletedProject) throw ApiError.BadRequest('Не удалось удалить проект, попробуйте позже', 'danger')
 
@@ -127,7 +127,7 @@ class ProjectService {
 		const project = await Project.findById(projectId)
 		if (!project) throw ApiError.BadRequest('Произошла ошибка, проект с таким id не найден', 'danger')
 
-		const projectPages = await Page.find({project: projectId}).populate('blocks').populate('blocks.block')
+		const projectPages = await Page.find({ project: projectId }).populate('blocks').populate('blocks.block')
 		if (!projectPages) throw ApiError.BadRequest('Произошла ошибка, у проекта нет страниц. Создайте хотя бы одну страницу.', 'danger')
 
 		fileSystemService.createUserWebsiteFolder(project)

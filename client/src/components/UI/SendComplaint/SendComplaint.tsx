@@ -43,7 +43,6 @@ const SendComplaint: React.FC<ISendComplaint> = ({ parentClass }) => {
 							>
 								Наберите сообщение*:
 							</Textarea>
-
 							<Button
 								parentClass="send-complaint"
 								handler={sendForm}
@@ -52,8 +51,6 @@ const SendComplaint: React.FC<ISendComplaint> = ({ parentClass }) => {
 							>
 								Отправить жалобу
 							</Button>
-
-
 						</div>
 					</div>
 				</div>

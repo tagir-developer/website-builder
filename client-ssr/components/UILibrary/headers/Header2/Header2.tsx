@@ -46,7 +46,6 @@ const Title = styled.h1<ITitleProps>`
 	font-family: Roboto;
 	font-size: ${props => props.fontSize}!important;
 	font-weight: bold!important;
-	/* color: #004223; */
 	color: ${props => props.titleColor};
 	z-index: 1;
 
@@ -170,8 +169,6 @@ const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden
 				<Title
 					fontSize={blockConfigs.titleFontSize}
 					titleColor={blockConfigs.titleColor}
-					// titleColor="#004223"
-					// fontSize="450%"
 				>
 					{blockContent.titleText}
 				</Title>
@@ -181,7 +178,6 @@ const Header2: React.FC<IHeader2> = ({ blockConfigs, blockContent, blockIsHidden
 				<Button
 					background={blockConfigs.buttonBackground}
 					buttonAnimation={blockConfigs.buttonAnimation}
-					// buttonAnimation="shake"
 				>
 					{blockContent.buttonText}
 				</Button>

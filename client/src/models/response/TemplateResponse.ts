@@ -1,5 +1,3 @@
-import { IAlertMessage } from "../IAlertMessage"
-
 export interface ITemplateResponse {
 	id: string
 	title: string
@@ -8,6 +6,3 @@ export interface ITemplateResponse {
 	preview: string
 }
 
-// export interface ICreateProjectsResponse extends IAlertMessage {
-// 	projects: IProjectsResponse[]
-// }

@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import AuthPage from './pages/AuthPage/AuthPage'
 import ComplaintPage from './pages/ComplaintPage/ComplaintPage'
 import EditPage from './pages/EditPage/EditPage'
@@ -17,14 +17,11 @@ import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
 import { useTypedSelector } from './hooks/reduxHooks'
 import Logout from './components/Auth/Logout/Logout'
 import PassResetPage from './pages/PassResetPage/PassResetPage'
-import { useEffect } from 'react'
 import SandboxPage from './pages/SandboxPage/SandboxPage'
 
 export const Routes: React.FC = (): JSX.Element => {
 
 	const { isAuth } = useTypedSelector(state => state.auth)
-
-	// ! Не забыть удалить sandboxPage
 
 	if (isAuth) {
 		return (
@@ -67,7 +64,6 @@ export const Routes: React.FC = (): JSX.Element => {
 			</Switch>
 		)
 	}
-
 
 	return (
 		<Switch>

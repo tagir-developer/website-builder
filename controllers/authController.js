@@ -1,7 +1,4 @@
-const User = require("../models/User")
-const { validationResult } = require("express-validator")
 const userService = require("../service/userService")
-const { json } = require("body-parser")
 const ApiError = require("../exeptions/apiError")
 const crypto = require('crypto')
 
@@ -105,7 +102,7 @@ class authController {
 	async password(req, res, next) {
 		try {
 			const resetData = await userService.password(req.params.token)
-			res.json({...resetData})
+			res.json({ ...resetData })
 		} catch (e) {
 			next(e)
 		}
@@ -113,16 +110,12 @@ class authController {
 
 	async newPassword(req, res, next) {
 		try {
-			// const errors = validationResult(req)
-			// if (!errors.isEmpty()) {
-			// 	return next(ApiError.BadRequest(errors.array()[0].msg, 'danger', errors.array()))
-			// }
 			ApiError.ValidationErrorChecking(req)
 
-			const {password, userId, token} = req.body
+			const { password, userId, token } = req.body
 
 			await userService.newPassword(password, userId, token)
-			
+
 			return res.json({
 				messageType: 'success',
 				message: "Ваш пароль успешно изменен!",
@@ -141,20 +134,6 @@ class authController {
 			next(e)
 		}
 	}
-
-	async test(req, res, next) {
-		try {
-			ApiError.ValidationErrorChecking(req)
-			// res.cookie('refreshToken', 'Установленный куки', { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
-			// console.log('Cookies: ', res.cookies)
-			return res.json('Сервер работает')
-
-
-		} catch (e) {
-			next(e)
-		}
-	}
-
 
 }
 

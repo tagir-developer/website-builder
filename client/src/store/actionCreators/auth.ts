@@ -63,7 +63,6 @@ export const checkAuth = () => {
 			const e = error as AxiosError
 			if (e.response) {
 				dispatch(authLogoutCreator())
-				// dispatch(authErrorOrMessageCreator(e.response.data))
 			}
 
 		}

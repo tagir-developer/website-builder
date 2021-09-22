@@ -39,7 +39,6 @@ const StyledContent1 = styled(BasicComponent) <IStyledContent1Props>`
 const Title = styled.h1<ITitleProps>`
 	margin: 0 0 20px 0;
 	font-weight: bold!important;
-	/* color: #ff7300; */
 	color: ${props => props.titleColor};
 
 	@media ${props => props.theme.media.phone} {

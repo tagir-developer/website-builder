@@ -1,6 +1,5 @@
 const ApiError = require("../exeptions/apiError")
 const blockService = require("../service/blockService")
-const path = require('path')
 
 class blockController {
 
@@ -8,7 +7,7 @@ class blockController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {type, title, path, preview, blockDefaultConfigs, blockDefaultContent} = req.body
+			const { type, title, path, preview, blockDefaultConfigs, blockDefaultContent } = req.body
 
 			const block = await blockService.createNewBlock(type, title, path, preview, blockDefaultConfigs, blockDefaultContent)
 
@@ -57,12 +56,12 @@ class blockController {
 		}
 	}
 
-	async addBlock(req, res, next) { 
+	async addBlock(req, res, next) {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {pageId, blockId} = req.body
-		
+			const { pageId, blockId } = req.body
+
 			const block = await blockService.addBlock(pageId, blockId)
 
 			return res.json({
@@ -77,14 +76,14 @@ class blockController {
 		}
 	}
 
-	async copyBlock(req, res, next) { 
+	async copyBlock(req, res, next) {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {pageId, originalBlock} = req.body
+			const { pageId, originalBlock } = req.body
 
 			const originalBlockObj = JSON.parse(originalBlock)
-		
+
 			const block = await blockService.copyBlock(pageId, originalBlockObj)
 
 			return res.json({
@@ -99,30 +98,10 @@ class blockController {
 		}
 	}
 
-	// async saveBlocks(req, res, next) { 
-	// 	try {
-	// 		ApiError.ValidationErrorChecking(req)
-
-	// 		const {pageId, dtoBlocks} = req.body
-	// 		const blocks = JSON.parse(dtoBlocks)
-
-	// 		await blockService.saveBlocks(pageId, blocks)
-
-	// 		return res.json({
-	// 			messageType: 'success',
-	// 			message: "Изменения успешно сохранены",
-	// 			errors: []
-	// 		})
-	// 	} catch (e) {
-	// 		next(e)
-	// 	}
-	// }
-
-	async saveBlocks(req, res, next) { 
+	async saveBlocks(req, res, next) {
 		try {
-			// ApiError.ValidationErrorChecking(req)
 
-			const {pageId, blocks, templateId} = req.body
+			const { pageId, blocks, templateId } = req.body
 			const files = req.files
 
 			const updatedProjectAndMessage = await blockService.saveBlocks(pageId, blocks, files, templateId)
@@ -138,11 +117,11 @@ class blockController {
 		}
 	}
 
-	async sendNamePhone(req, res, next) { 
+	async sendNamePhone(req, res, next) {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, formName, name, phone} = req.body
+			const { projectId, formName, name, phone } = req.body
 
 			await blockService.sendNamePhone(projectId, formName, name, phone)
 
@@ -156,27 +135,6 @@ class blockController {
 			next(e)
 		}
 	}
-
-	// async test(req, res, next) { 
-	// 	try {
-	// 		// ApiError.ValidationErrorChecking(req)
-
-	// 		// const {projectId, formName, name, phone} = req.body
-
-	// 		// await blockService.sendNamePhone(projectId, formName, name, phone)
-
-	// 		console.log('ДОШЛИ ДО СЕРВЕРА!')
-
-	// 		return res.json({
-	// 			messageType: 'success',
-	// 			message: "Тест для SSR пройден",
-	// 			errors: []
-	// 		})
-
-	// 	} catch (e) {
-	// 		next(e)
-	// 	}
-	// }
 
 }
 

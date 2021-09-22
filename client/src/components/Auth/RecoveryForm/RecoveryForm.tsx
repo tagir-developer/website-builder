@@ -25,7 +25,6 @@ const RecoveryForm: React.FC<IRecoveryForm> = ({ parentClass }) => {
 		changePassword(password.value, passwordConfirm.value, resetData.userId, resetData.token)
 	}, [resetData, changePassword, password.value, passwordConfirm.value])
 
-
 	return (
 		<div className={RecoveryFormClasses}>
 			<div className="recovery-form__container">

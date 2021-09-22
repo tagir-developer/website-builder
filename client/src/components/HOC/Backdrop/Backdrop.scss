@@ -24,14 +24,10 @@ $delay: 500ms; // Задержка анимации
 	}
 
 	&_show {
-		// position: fixed;
-		// left: 0;
-		// right: 0;
 		@include create-blur(4px, 4);
 		overflow-y: hidden;
 		transition: filter $delay;
-		// padding-right: 15px;
-		padding-right: 5px; // Так как я уменьшил скроллбар до 5 пикселей, то и отступ в 5 пикселей
+		padding-right: 5px;
 
 		@include media-breakpoint-down(md) {
 			padding-right: 0px;
@@ -54,7 +50,6 @@ $delay: 500ms; // Задержка анимации
 		opacity: 0;
 		transition: all $delay;
 		z-index: 800;
-		// z-index: 200;
 		overflow-y: hidden;
 
 		&_blur {

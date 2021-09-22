@@ -1,24 +1,18 @@
 require('dotenv').config()
 const express = require('express')
-const config = require('config')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const errorMiddleware = require('./middlewares/errorMiddleware')
-// const fileMiddleware = require('./middlewares/fileMiddlewares/uploadImages')
 const path = require('path')
 
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-// app.use(cors({
-// 	credentials: true,
-// 	origin: process.env.CLIENT_URL
-// }))
 app.use(cors())
-app.use('/images', express.static(path.join(__dirname, 'images'))) 
+app.use('/images', express.static(path.join(__dirname, 'images')))
 
 app.use('/api/auth/', require('./routes/auth.routes'))
 app.use('/api/support/', require('./routes/support.routes'))
@@ -29,8 +23,7 @@ app.use('/api/template/', require('./routes/pageTemplate.routes'))
 app.use('/api/blocks/', require('./routes/block.routes'))
 app.use(errorMiddleware)
 
-// const PORT = config.get('port') || 5000
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000
 
 async function start() {
 	try {

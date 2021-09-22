@@ -10,7 +10,6 @@ export interface IProjectsResponse {
 	updated: boolean
 	scripts: string
 	fontConfigs: {
-		// switchedOn: boolean
 		fontFamily: string
 		text: {
 			fontSize: string

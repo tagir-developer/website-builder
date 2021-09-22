@@ -1,6 +1,3 @@
-import { AnchorHTMLAttributes, HTMLAttributeReferrerPolicy } from "react";
-import { Key } from "readline";
-import { Url } from "url";
 import { IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
 
 export interface IMenu1Configs extends IHiddenOnDevices {
@@ -8,7 +5,6 @@ export interface IMenu1Configs extends IHiddenOnDevices {
 	textColor: string
 	activeItemColor: string
 	activeItemTextColor: string
-
 }
 
 export interface IMenuItem {

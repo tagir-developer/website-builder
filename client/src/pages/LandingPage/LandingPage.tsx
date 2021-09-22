@@ -3,37 +3,14 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import Backdrop from '../../components/HOC/Backdrop/Backdrop'
 import PopUp from '../../components/HOC/PopUp/PopUp'
 import TopMenu from '../../components/Navigation/topMenu/TopMenu/TopMenu'
-import BasicSettings from '../../components/UI/BasicSettings/BasicSettings'
 import Button from '../../components/UI/Button/Button'
 import Footer from '../../components/UI/Footer/Footer'
-import { StyledButton } from '../../components/UILIbrary/commonStyledComponents/StyledButton/StyledButton'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './LandingPage.scss'
-import styled, { ThemeProvider } from 'styled-components'
-import { myTheme } from '../../components/UILIbrary/themes/themes'
-import { useActions } from '../../hooks/reduxHooks'
-import { useUploadFiles } from '../../hooks/useUploadFiles.hook'
-import FileUpload from '../../components/UI/FileUpload/FileUpload'
-import produce from 'immer'
-
-// import myImg from './img/pc-and-phone.svg';
-
-
-// const StyledDiv = styled.div<any>`
-// 	display: block;
-// 	width: 200px;
-// 	height: 100px;
-// 	/* background: red; */
-// 	background: url(${myImg}) center no-repeat;
-// `
 
 const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 
 	const testPopup = usePopup(false, 'blur')
-
-	const appleUpload = useUploadFiles('apple')
-	const orangeUpload = useUploadFiles('orange')
-
 
 	return (
 		<>
@@ -48,56 +25,20 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 				<TopMenu menuType="main" />
 				{/* <div className="content-area" style={testPopup.isOpen ? {marginTop: `-${testPopup.scroll - 60}px`} : undefined} > */}
 				<div className="content-area">
-
 					<div className="landing-wrapper">
-
 						<div className="landing-header">
 							<div className="landing-header__container">
 								<div className="landing-header__text-container">
 									<h1 className="landing-header__heading">Хотите создать сайт-визитку для Instagram?</h1>
-									{/* <Button parentClass="landing-header" handler={() => history.push('/registration')} >
+									<Button parentClass="landing-header" handler={() => history.push('/registration')} >
 										Создать сайт
-									</Button> */}
-									<Button
-										parentClass="landing-header"
-										handler={testPopup.handler}
-									>
-										Тестовая функция
 									</Button>
-									{/* <ThemeProvider theme={myTheme}>
-										<StyledButton
-											outlined
-											color="red"
-											animation="scale"
-											onClick={blockTestImagesDownload}
-										>
-											Кнопка
-										</StyledButton>
-									</ThemeProvider> */}
-
-									<FileUpload
-										parentClass="send-question"
-										multiple={true}
-										{...appleUpload.bind}
-									>
-										Яблоки
-									</FileUpload>
-
-									<FileUpload
-										parentClass="send-question"
-										multiple={true}
-										{...orangeUpload.bind}
-									>
-										Апельсины
-									</FileUpload>
-
 								</div>
 								<div className="landing-header__image-container">
 									<div className="landing-header__image"></div>
 								</div>
 							</div>
 						</div>
-
 						<div className="landing-blocks">
 							<div className="landing-blocks__container">
 								<div className="landing-blocks__blocks-wrapper">
@@ -107,15 +48,12 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
 								</div>
 							</div>
 						</div>
-
 						<div className="landing-final">
 							<Button parentClass="landing-final" handler={() => history.push('/registration')} >
 								Создать сайт
 							</Button>
 						</div>
-
 					</div>
-
 				</div>
 				<Footer />
 

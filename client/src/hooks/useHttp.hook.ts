@@ -6,13 +6,12 @@ interface IUseHttp {
 	request: any
 	error: any
 	clearError: () => void
-
 }
 
 export const useHttp = (): IUseHttp => {
 
 	const [loading, setLoading] = useState<boolean>(false)
-	const [error, setError] = useState(null)
+	const [error, setError] = useState<any>(null)
 
 	const request = useCallback(async (url: string, method: any = 'GET', data: any = null, headers: any = {}) => {
 

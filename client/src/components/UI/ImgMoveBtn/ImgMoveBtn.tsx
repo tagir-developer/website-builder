@@ -17,19 +17,19 @@ const ImgMoveBtn: React.FC<IImgMoveBtn> = ({ parentClass, modClass, handler, too
 
 	return (
 		<div className={ImgMoveBtnClasses}>
-			<div 
+			<div
 				className="img-move-btn__move-btn img-move-btn__move-btn_up-icon"
 				onClick={() => handler(cardId, 'up')}
 			>
 				<span className="img-move-btn__tooltip">{tooltipTextUp ? tooltipTextUp : 'Сдвинуть вверх'}</span>
 			</div>
 			<div className="img-move-btn__devider"></div>
-			<div 
+			<div
 				className="img-move-btn__move-btn img-move-btn__move-btn_down-icon"
 				onClick={() => handler(cardId, 'down')}
 			>
 				<span className="img-move-btn__tooltip">{tooltipTextDown ? tooltipTextDown : 'Сдвинуть вниз'}</span>
-			</div>	
+			</div>
 		</div>
 	)
 }

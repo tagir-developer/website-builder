@@ -1,4 +1,3 @@
-const { validationResult } = require("express-validator")
 const ApiError = require("../exeptions/apiError")
 const projectService = require("../service/projectService")
 
@@ -26,8 +25,8 @@ class projectsController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, name, link} = req.body
-			
+			const { projectId, name, link } = req.body
+
 			const updatedProjects = await projectService.changeProject(req.user.id, projectId, name, link)
 
 			return res.json({
@@ -61,8 +60,8 @@ class projectsController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, scripts} = req.body
-			
+			const { projectId, scripts } = req.body
+
 			const updatedProject = await projectService.addScripts(projectId, scripts)
 
 			return res.json({
@@ -81,9 +80,9 @@ class projectsController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, propsArr} = req.body
+			const { projectId, propsArr } = req.body
 			const props = JSON.parse(propsArr)
-			
+
 			const updatedProject = await projectService.changeStatus(projectId, props)
 
 			return res.json({
@@ -102,8 +101,8 @@ class projectsController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, fontFamily, titleSize, titleWeight, textSize} = req.body
-			
+			const { projectId, fontFamily, titleSize, titleWeight, textSize } = req.body
+
 			const updatedProject = await projectService.setFontConfigs(projectId, fontFamily, titleSize, titleWeight, textSize)
 
 			return res.json({
@@ -123,8 +122,8 @@ class projectsController {
 
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, email, secondaryEmail, letterSubject, phoneNumber} = req.body
-			
+			const { projectId, email, secondaryEmail, letterSubject, phoneNumber } = req.body
+
 			const updatedProject = await projectService.formProcessing(projectId, email, secondaryEmail, letterSubject, phoneNumber)
 
 			return res.json({
@@ -159,7 +158,7 @@ class projectsController {
 
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId} = req.body
+			const { projectId } = req.body
 
 			const updatedProject = await projectService.generateWebsite(projectId)
 
@@ -179,11 +178,11 @@ class projectsController {
 	async getPageData(req, res, next) {
 		try {
 
-			const {projectId, pageId} = req.params
+			const { projectId, pageId } = req.params
 
 			const pageData = await projectService.getPageData(projectId, pageId)
 
-			return res.json({...pageData})
+			return res.json({ ...pageData })
 
 		} catch (e) {
 			next(e)

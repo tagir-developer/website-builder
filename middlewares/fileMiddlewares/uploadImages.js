@@ -22,5 +22,3 @@ const fileFilter = (req, file, cb) => {
 module.exports = multer({
 	storage, fileFilter
 })
-
-// ! Этот шаблон пока нигде не используется, возможно, надо удалить

@@ -1,5 +1,4 @@
 const PageListDto = require('../dtos/pageDto')
-const ProjectsListDto = require('../dtos/projectsDto')
 const RemoveBlockIdDto = require('../dtos/removeBlockIdDto')
 const ApiError = require('../exeptions/apiError')
 const Page = require('../models/Page')
@@ -34,25 +33,24 @@ class PageService {
 		const project = await Project.findById(projectId)
 		project.hasPages = true
 		await project.save()
-		
+
 		const pagesDto = this.getAllPages(projectId)
 		return pagesDto
 	}
 
 	async deletePage(pageId, projectId) {
 		const deletedPage = await Page.findByIdAndDelete(pageId)
-		// ! Если к странице будут привязаны еще какие-то коллекции, то не забываем удалять их тоже
 		if (!deletedPage) throw ApiError.BadRequest('Не удалось удалить страницу, попробуйте позже', 'danger')
 
-		const projectHasPages = await Page.findOne({project: projectId})
-		
+		const projectHasPages = await Page.findOne({ project: projectId })
+
 		if (!projectHasPages) {
 			const project = await Project.findById(projectId)
 			project.hasPages = false
 			await project.save()
 		}
 
-		const candidateHomePage = await Page.findOne({project: projectId, isHomePage: false})
+		const candidateHomePage = await Page.findOne({ project: projectId, isHomePage: false })
 
 		if (deletedPage.isHomePage && candidateHomePage) {
 			candidateHomePage.isHomePage = true
@@ -92,16 +90,13 @@ class PageService {
 		page.openInNewWindow = openInNewWindow
 		await page.save()
 
-		// const pageDto = new PageListDto(page)
-
-		// return { ...pageDto }
 		const pagesDto = this.getAllPages(projectId)
 		return pagesDto
 	}
 
 	async makePageHome(pageId, projectId) {
 
-		const oldHomePage = await Page.findOne({isHomePage: true, project: projectId})
+		const oldHomePage = await Page.findOne({ isHomePage: true, project: projectId })
 		const newHomePage = await Page.findById(pageId)
 
 		if (!oldHomePage || !newHomePage) throw ApiError.BadRequest('Произошла ошибка, попробуйте выполнить операцию позже', 'danger')
@@ -169,26 +164,6 @@ class PageService {
 		}
 
 	}
-
-	// async changePublicationStatus(projectId, pageId, value) {
-	// 	const page = await Page.findById(pageId)
-	// 	const project = await Project.findById(projectId)
-	// 	if (!page || !project) throw ApiError.BadRequest('Произошла ошибка, попробуйте выполнить операцию позже', 'danger')
-
-	// 	project.published = false
-	// 	project.updated = false
-	// 	await project.save()
-
-	// 	page.published = value
-	// 	await page.save()
-
-	// 	// console.log('ПРОВЕРИМ', project)
-	// 	const projectDto = new ProjectsListDto(project)
-
-	// 	const pagesDto = this.getAllPages(projectId)
-	// 	return {pagesDto, projectDto}
-	// }
-
 
 }
 

@@ -95,11 +95,7 @@ export const uploadUserAvatar = (userId: string, formData: FormData) => {
 
 			formData.set('id', userId)
 
-			const response = await UserService.uploadAvatar(formData)
-
-			console.log(response.data.message)
-
-			// dispatch(userGetUserCreator(response.data.user))
+			await UserService.uploadAvatar(formData)
 
 			dispatch(userUpdatedCreator())
 

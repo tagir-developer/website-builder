@@ -13,19 +13,19 @@ const ComplaintPage: React.FC<RouteComponentProps> = ({ history }) => {
 	setTimeout(() => contentPopup.openPopup(), 300)
 
 	return (
-			<AlertMessage successFunc={history.goBack}>
-				<PopUp
-					{...contentPopup.popupProps}
-					handler={() => contentPopup.closeAndGoBack(history)}
-					withTitle="Отправить жалобу"
-				>
-					<div className="complaint-page">
-						<SendComplaint parentClass="complaint-page" />
-					</div>
-				</PopUp>
-				<div className="content-area">
+		<AlertMessage successFunc={history.goBack}>
+			<PopUp
+				{...contentPopup.popupProps}
+				handler={() => contentPopup.closeAndGoBack(history)}
+				withTitle="Отправить жалобу"
+			>
+				<div className="complaint-page">
+					<SendComplaint parentClass="complaint-page" />
 				</div>
-			</AlertMessage>
+			</PopUp>
+			<div className="content-area">
+			</div>
+		</AlertMessage>
 	)
 }
 

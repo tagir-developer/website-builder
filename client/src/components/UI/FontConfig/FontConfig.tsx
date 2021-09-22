@@ -65,84 +65,83 @@ const FontConfig: React.FC<IFontConfig> = ({ parentClass, closePopup }) => {
 
 	return (
 		<AlertMessage successFunc={closePopup} runWithoutDelay>
-		<div className={fontConfigClasses}>
-			<div className="font-config__container">
-				<div className="font-config__row">
-					<div className="font-config__form-container">
-						<div className="font-config__form">
+			<div className={fontConfigClasses}>
+				<div className="font-config__container">
+					<div className="font-config__row">
+						<div className="font-config__form-container">
+							<div className="font-config__form">
 
-							<div className="font-config__annotation">
-								Выберите наименование и размер шрифта, который будет использоваться на сайте
-							</div>
+								<div className="font-config__annotation">
+									Выберите наименование и размер шрифта, который будет использоваться на сайте
+								</div>
 
-							<Select
-								parentClass="font-config"
-								{...fontTypeSelect.bind}
-							>
-								Шрифт
-							</Select>
-
-							<Select
-								parentClass="font-config"
-								{...textSizeSelect.bind}
-							>
-								Размер текста
-							</Select>
-
-							<Select
-								parentClass="font-config"
-								{...titleSizeSelect.bind}
-							>
-								Размер заголовка
-							</Select>
-
-							<Select
-								parentClass="font-config"
-								{...titleWeightSelect.bind}
-							>
-								Толщина заголовка
-							</Select>
-
-							<div className="font-config__use-default-btn-container">
-								<SmallButton
+								<Select
 									parentClass="font-config"
-									handler={setDefaultConfigs}
+									{...fontTypeSelect.bind}
 								>
-									По умолчанию
-								</SmallButton>
+									Шрифт
+								</Select>
+
+								<Select
+									parentClass="font-config"
+									{...textSizeSelect.bind}
+								>
+									Размер текста
+								</Select>
+
+								<Select
+									parentClass="font-config"
+									{...titleSizeSelect.bind}
+								>
+									Размер заголовка
+								</Select>
+
+								<Select
+									parentClass="font-config"
+									{...titleWeightSelect.bind}
+								>
+									Толщина заголовка
+								</Select>
+
+								<div className="font-config__use-default-btn-container">
+									<SmallButton
+										parentClass="font-config"
+										handler={setDefaultConfigs}
+									>
+										По умолчанию
+									</SmallButton>
+								</div>
+
+
+								<div className="font-config__font-preview">
+									<div className="font-config__font-preview-label">Предпросмотр</div>
+									<h1
+										className="font-config__font-preview-h1"
+										style={getCSSProperties('title', titleWeightSelect.value, titleSizeSelect.value, fontTypeSelect.value)}
+									>
+										Roboto
+									</h1>
+									<p
+										className="font-config__font-preview-p"
+										style={getCSSProperties('text', null, textSizeSelect.value, fontTypeSelect.value)}
+									>
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+									</p>
+								</div>
+
+								<Button
+									parentClass="font-config"
+									handler={saveFontChanges}
+									modClass={['big']}
+								>
+									Сохранить
+								</Button>
+
 							</div>
-
-
-							<div className="font-config__font-preview">
-								<div className="font-config__font-preview-label">Предпросмотр</div>
-								<h1
-									className="font-config__font-preview-h1"
-									style={getCSSProperties('title', titleWeightSelect.value, titleSizeSelect.value, fontTypeSelect.value)}
-								>
-									Roboto
-								</h1>
-								<p
-									className="font-config__font-preview-p"
-									style={getCSSProperties('text', null, textSizeSelect.value, fontTypeSelect.value)}
-								>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-								</p>
-							</div>
-
-
-							<Button
-								parentClass="font-config"
-								handler={saveFontChanges}
-								modClass={['big']}
-							>
-								Сохранить
-							</Button>
-
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 		</AlertMessage>
 	)
 }

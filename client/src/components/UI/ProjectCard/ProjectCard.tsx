@@ -24,7 +24,7 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 
 	const { projectsList } = useTypedSelector(state => state.projects)
 	const { setActiveProject, createPageAfterOpenProject, generateWebsite, getAllProjects } = useActions()
-	
+
 
 	const openProject = () => {
 		setActiveProject(projectsList, link)
@@ -54,7 +54,7 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 					{!hasPages
 						? <SecondaryButton parentClass="project-card" handler={createNewPage} >
 							Создать страницу
-								</SecondaryButton>
+						</SecondaryButton>
 						: null
 					}
 					{hasPages && published
@@ -65,9 +65,9 @@ const ProjectCard: React.FC<IProjectCard> = ({ parentClass, modClass, title, pub
 						? <SecondaryButton parentClass="project-card" handler={async () => {
 							await generateWebsite()
 							getAllProjects()
-							}} >
+						}} >
 							Опубликовать сайт
-							</SecondaryButton>
+						</SecondaryButton>
 						: null
 					}
 				</div>

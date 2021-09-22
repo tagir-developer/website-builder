@@ -23,20 +23,6 @@ const blockList: any = pageBlocks.map((i, index) => {
 	)
 })
 
-// const createBlockList = (blocks: any[]) => {
-// 	return blocks.map((i, index) => {
-// 		const BlockComponent: ComponentType<any> = dynamic(() => import('../../components/UILibrary/' + i.blockPath))
-// 		return (
-// 			<BlockComponent
-// 				key={index}
-// 				blockConfigs={i.blockConfigs}
-// 				blockContent={i.blockContent}
-// 				blockIsHidden={i.blockIsHidden}
-// 			/>
-// 		)
-// 	})
-// } 
-
 interface IUserPage {
 	pageData: IPageData
 }
@@ -76,7 +62,6 @@ const UserPage: React.FC<IUserPage> = ({ pageData }) => {
 
 				<div className="wrapper-test">
 					<ThemeProvider theme={myTheme}>
-						{/* {createBlockList(pageData.pageBlocks)} */}
 						{blockList}
 					</ThemeProvider>
 				</div>

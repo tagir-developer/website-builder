@@ -9,11 +9,8 @@
 	margin-top: 15px;
 	border-radius: 50%;
 	background: linear-gradient(128.65deg, #E7F0F9 2.72%, #EAF2FC 95.48%);
-	// box-shadow: -4px -4px 19px rgba(255, 255, 255, 0.7), 4px 4px 30px #B3BFC9;
 	box-shadow: 0 4px 35px 0 #2736477a;
 	z-index: 100;
-
-
 
 	&__icon {
 		width: 100%;
@@ -21,10 +18,5 @@
 		background: url('./img/lines-close.svg') center no-repeat;
 		transition: opacity 0.1s ease-in;
 		opacity: 1;
-
-		// &_open {
-		// 	background: url('./img/open.svg') center no-repeat;
-		// 	transition: opacity 0.1s ease-in;
-		// }
 	}
 }

@@ -1,15 +1,10 @@
-const PageBlocksRecoveryFromDto = require('../dtos/pageBlocksRecoveryFromDto')
 const TemplateDto = require('../dtos/templateDto')
 const ApiError = require('../exeptions/apiError')
 const Template = require('../models/Template')
-// const path = require('path')
 
 class TemplateService {
 
 	async createNewTemplate(type, title, description, image, preview) {
-
-		// const imagePath = path.join(__dirname, '..', 'images/avatars/thumb_150', fileName)
-		// const previewPath = path.join(__dirname, '..', 'images/avatars/thumb_150', fileName)
 
 		const newTemplate = await Template.create({
 			type,
@@ -22,18 +17,6 @@ class TemplateService {
 
 		return newTemplate
 	}
-
-	// async addBlocks(templateId, blocks) {
-
-	// 	const template = await Template.findById(templateId)
-	// 	if (!template) throw ApiError.BadRequest('Не удалось найти шаблон с таким ID', 'danger')
-
-	// 	const recoveryBlocks = blocks.map(i => new PageBlocksRecoveryFromDto(i, false))
-
-	// 	template.blocks = recoveryBlocks
-	// 	await template.save()
-
-	// }
 
 	async getAll() {
 

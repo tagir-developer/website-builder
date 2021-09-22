@@ -18,7 +18,7 @@ const ChooseTemplateMenu: React.FC<IChooseTemplateMenu> = ({ parentClass, modCla
 	const chooseTemplateMenuClasses = useCreateClassName('choose-template-menu', parentClass, modClass)
 
 	const [activeItem, setActiveItem] = useState<number>(0)
-	const {getTemplatesWithType, getAllTemplates} = useActions()
+	const { getTemplatesWithType, getAllTemplates } = useActions()
 
 	const menuItems: IMenuItems[] = [
 		{
@@ -48,8 +48,6 @@ const ChooseTemplateMenu: React.FC<IChooseTemplateMenu> = ({ parentClass, modCla
 		} else {
 			getTemplatesWithType(templateType)
 		}
-		// templateType ? getTemplatesWithType(templateType) : getAllTemplates()
-		// ? Здесь будем запрашивать из базы данных и выводить нужные карточки
 	}
 
 	return (

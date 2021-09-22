@@ -1,4 +1,3 @@
-const { validationResult } = require("express-validator")
 const ApiError = require("../exeptions/apiError")
 const pageService = require("../service/pageService")
 
@@ -27,9 +26,8 @@ class pageController {
 	async deletePage(req, res, next) {
 		try {
 
-			const {pageId, projectId} = req.params
+			const { pageId, projectId } = req.params
 
-			// const pagesDto = pageService.deletePage(req.params.pageId)
 			const pagesDto = await pageService.deletePage(pageId, projectId)
 
 			return res.json({
@@ -45,8 +43,8 @@ class pageController {
 
 	async copyPage(req, res, next) {
 		try {
-			const {projectId, pageId} = req.body
-			
+			const { projectId, pageId } = req.body
+
 			const updatedProjectPages = await pageService.copyPage(projectId, pageId)
 
 			return res.json({
@@ -64,7 +62,7 @@ class pageController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, pageId, name, link, openInNewWindow} = req.body
+			const { projectId, pageId, name, link, openInNewWindow } = req.body
 			const updatedProjectPages = await pageService.changePage(projectId, pageId, name, link, openInNewWindow)
 
 			return res.json({
@@ -82,7 +80,7 @@ class pageController {
 	async makePageHome(req, res, next) {
 		try {
 
-			const {pageId, projectId} = req.body
+			const { pageId, projectId } = req.body
 
 			const updatedProjectPages = await pageService.makePageHome(pageId, projectId)
 
@@ -103,8 +101,6 @@ class pageController {
 
 			const projectPages = await pageService.getAllPages(req.params.projectId)
 
-			// if (!projectPages) return next(ApiError.BadRequest('У вас еще нет страниц', 'danger'))
-
 			return res.json(projectPages)
 
 		} catch (e) {
@@ -116,7 +112,7 @@ class pageController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {pageId, autosave} = req.body
+			const { pageId, autosave } = req.body
 
 			const pageDto = await pageService.switchAutosave(pageId, autosave)
 
@@ -136,7 +132,7 @@ class pageController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {projectId, pageId, value} = req.body
+			const { projectId, pageId, value } = req.body
 
 			const updatedProjectPages = await pageService.changePublicationStatus(projectId, pageId, value)
 
@@ -156,7 +152,7 @@ class pageController {
 		try {
 			ApiError.ValidationErrorChecking(req)
 
-			const {pageId, templateId, isEmptyTemplate} = req.body
+			const { pageId, templateId, isEmptyTemplate } = req.body
 
 			await pageService.choosePageTemplate(pageId, templateId, isEmptyTemplate)
 

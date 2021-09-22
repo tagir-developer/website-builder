@@ -8,8 +8,6 @@ import MenuToggle from '../../components/UI/MenuToggle/MenuToggle'
 import { usePopup } from '../../hooks/usePopup.hook'
 import './HelpPage.scss'
 
-//! Здесь в зависимости от авторизованности выводить разный тип меню
-
 const HelpPage: React.FC = ({ children }) => {
 
 	const popup = usePopup(false, 'solid')

@@ -1,4 +1,3 @@
-import { IBasicComponent } from "../../../commonStyledComponents/BasicComponent/BasicComponent";
 import { IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
 
 export interface IHeader2Configs extends IHiddenOnDevices {
@@ -6,7 +5,6 @@ export interface IHeader2Configs extends IHiddenOnDevices {
 	blockAlign: "flex-start" | "center" | "flex-end"
 	titleFontSize: "350%" | "400%" | "450%"
 	buttonAnimation: "scale" | "rotate" | "shake"
-	// backgroundImage: string | File[]
 	titleColor: string
 }
 

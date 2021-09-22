@@ -8,12 +8,6 @@
 	width: 100%;
 	min-height: 100vh;
 
-	// &__secondary-button {
-	// 	display: block;
-	// 	width: 500px;
-	// 	margin: 50px auto;
-	// }
-
 	&__page-title {
 		margin: 100px auto 0px auto;
 		@include media-breakpoint-down(sm) {

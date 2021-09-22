@@ -44,7 +44,7 @@ class MailService {
 				user: process.env.SMTP_USER,
 				pass: process.env.SMTP_PASSWORD
 			},
-			tls : { rejectUnauthorized: false }
+			tls: { rejectUnauthorized: false }
 		})
 	}
 
@@ -54,8 +54,8 @@ class MailService {
 			to,
 			subject: 'Активация аккаунта на ' + process.env.API_URL,
 			text: '',
-			html: 
-			`
+			html:
+				`
 			<div ${styles.main}>
 				<h1>Для активации аккаунта перейдите по ссылке</h1>
 				<a ${styles.a} href="${link}">${link}</a>
@@ -72,8 +72,8 @@ class MailService {
 			to,
 			subject: 'Восстановление пароля на ' + process.env.API_URL,
 			text: '',
-			html: 
-			`
+			html:
+				`
 			<div ${styles.main}>
 				<h1>От вас поступила заявка на восстановление пароля.</h1>
 				<p>Если вы не запрашивали восстановление пароля, проигнорируйте это письмо. Если запрос делали вы, то для сброса пароля перейдите по ссылке</p>
@@ -91,8 +91,8 @@ class MailService {
 			to: 'orlov.marsel@yandex.ru',
 			subject: 'Вопрос от пользователя с сайта ' + process.env.CLIENT_URL,
 			text: '',
-			html: 
-			`
+			html:
+				`
 			<div ${styles.main}>
 				<h1>Пользователь сервиса задал вопрос</h1>
 				<span ${styles.bold}>Email пользователя: </span><p style="color: #22304a">${email}</p>
@@ -111,8 +111,8 @@ class MailService {
 			to: 'orlov.marsel@yandex.ru',
 			subject: 'Жалоба от пользователя с сайта ' + process.env.CLIENT_URL,
 			text: '',
-			html: 
-			`
+			html:
+				`
 			<div ${styles.main}>
 				<h1>Пользователь сервиса подал жалобу</h1>
 				<span ${styles.bold}>Email пользователя: </span><p style="color: #22304a">${email}</p>
@@ -142,8 +142,8 @@ class MailService {
 			to: mailList,
 			subject: formProcessing.letterSubject,
 			text: '',
-			html: 
-			`
+			html:
+				`
 			<div ${styles.main}>
 				<h1>Кто-то оставил заявку в форме "${formName}"</h1>
 				<span ${styles.bold}>Имя пользователя: </span><p style="color: #22304a">${name}</p>
@@ -159,7 +159,7 @@ class MailService {
 			const textMessage = `Новая заявка. Форма: ${formName}. Имя: ${name}. Телефон: ${phone}`
 			const url = `${process.env.SMS_SERVER_URL}/sms/send?number=${formProcessing.phoneNumber}&text=${textMessage}&sign=SMS Aero`
 			const encodedUrl = encodeURI(url)
-	
+
 			const messageData = await axios.get(encodedUrl)
 			if (!messageData.data.success) throw ApiError.BadRequest('Произошла ошибка при отправке СМС сообщения', 'danger')
 		}

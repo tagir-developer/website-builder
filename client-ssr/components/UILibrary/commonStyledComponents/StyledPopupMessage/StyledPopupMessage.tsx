@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 interface IStyledPopupMessageProps {
@@ -52,5 +53,3 @@ export const StyledPopupMessage: React.FC<IStyledPopupMessageProps> = ({ isActiv
 	}
 
 }
-
-// export default StyledPopupMessage

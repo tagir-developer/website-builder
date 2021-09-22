@@ -34,16 +34,16 @@ const HorizontalNav: React.FC<IHorizontalNav> = ({ parentClass, modClass, items 
 						>
 							{item.handler
 								? <div
-								className={item.bold 
-									? "horizontal-nav__link horizontal-nav__link_bold"
-									: "horizontal-nav__link"
-								}
+									className={item.bold
+										? "horizontal-nav__link horizontal-nav__link_bold"
+										: "horizontal-nav__link"
+									}
 								>
 									{item.title}
 								</div>
 								: <NavLink
 									to={item.link}
-									className={item.bold 
+									className={item.bold
 										? "horizontal-nav__link horizontal-nav__link_bold"
 										: "horizontal-nav__link"
 									}

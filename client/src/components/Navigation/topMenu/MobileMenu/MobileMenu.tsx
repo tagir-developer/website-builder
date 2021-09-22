@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import Toggle from '../../../UI/Toggle/Toggle'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
-import { useCheck } from '../../../../hooks/useCheck.hook'
 
 interface IItems {
 	title: string

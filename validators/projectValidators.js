@@ -5,7 +5,7 @@ exports.createProjectValidators = [
 	check('name')
 		.trim()
 		.isLength({min: 3}).withMessage('Название сайта должно содержать не менее трех букв')
-		.isLength({max: 60}).withMessage('Название сайта должно содержать не более 60 букв'), // ! Нужно еще добавить отсутствие посторонних символов в кастомном валидаторе
+		.isLength({max: 60}).withMessage('Название сайта должно содержать не более 60 букв'),
 	check('link')
 		.not().isEmpty().withMessage('Поле с именем проекта не должно быть пустым')
 		.trim().escape()
@@ -48,7 +48,6 @@ exports.setFontConfigsValidators = [
 	check('fontFamily')
 		.trim()
 		.isString().withMessage('Передаваемое значение fontFamily должно быть строкой'),
-				// ? Возможно, нужно проверять шрифт, есть ли такой в списке разрешенных
 	check('titleSize')
 		.trim()
 		.isString().withMessage('Передаваемое значение titleSize должно быть строкой'),

@@ -54,19 +54,6 @@ const FileUpload: React.FC<IFileUpload> = ({ parentClass, modClass, multiple, ac
 					})}
 				</ul>
 			}
-			{/* <ul className="file-upload__show-downloaded-files">
-				{fileNames.map((i, index) => {
-					return (
-						<li
-							key={index}
-							className="file-upload__show-downloaded-files-item"
-						>
-							{i}
-						</li>
-					)
-				})}
-			</ul> */}
-
 		</div>
 	)
 }

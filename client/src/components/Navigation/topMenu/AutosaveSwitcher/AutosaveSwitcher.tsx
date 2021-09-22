@@ -2,7 +2,6 @@ import React from 'react'
 import './AutosaveSwitcher.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import Toggle from '../../../UI/Toggle/Toggle'
-import { useCheck } from '../../../../hooks/useCheck.hook'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
 
 interface IAutosaveSwitcherProps {

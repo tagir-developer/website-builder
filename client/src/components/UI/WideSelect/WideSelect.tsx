@@ -26,9 +26,9 @@ const WideSelect: React.FC<IWideSelect> = ({ children, parentClass, options, val
 			<div className="wide-select__list-wrapper">
 				<div className="wide-select__list-background"></div>
 				<div className="wide-select__list-button"></div>
-				<select 
-					value={value} 
-					className="wide-select__list" 
+				<select
+					value={value}
+					className="wide-select__list"
 					onChange={e => onChange(e)}
 				>
 					{options.map((i, index) => (

@@ -1,4 +1,3 @@
-import { IBasicComponent } from "../../../commonStyledComponents/BasicComponent/BasicComponent";
 import { IHiddenOnDevices } from "../../../commonStyledComponents/commonTypes"
 
 export interface IContent1Configs extends IHiddenOnDevices {

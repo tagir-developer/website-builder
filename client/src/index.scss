@@ -15,7 +15,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 // Scrollbar custom styles
-// @include scrollbars(15px, #a7b3be);
 @include scrollbars(5px, #a7b3be);
 
 // Default styles reset
@@ -124,9 +123,4 @@ button {
   justify-content: center;
 }
 
-// .relative-block {
-//   width: 10px;
-//   height: 2000px;
-//   background: crimson;
-// }
 

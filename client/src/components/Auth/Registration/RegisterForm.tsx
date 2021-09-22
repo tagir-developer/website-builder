@@ -16,7 +16,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 
 	const registerFormClasses = useCreateClassName('register-form', parentClass)
 
-	const {loading, errors} = useTypedSelector(state => state.auth)
+	const { loading, errors } = useTypedSelector(state => state.auth)
 	const { register, authRemoveError } = useActions()
 
 	const email = useInput('', authRemoveError, 'email', errors)
@@ -27,67 +27,67 @@ const RegisterForm: React.FC<IRegisterForm> = ({ parentClass, history }) => {
 	const registerHandler = () => register(email.value, password.value, passwordConfirm.value, name.value)
 
 	return (
-				<div className={registerFormClasses}>
-					<div className="register-form__container">
-						<div className="register-form__row">
-							<div className="register-form__form-container">
-								<div className="register-form__form">
+		<div className={registerFormClasses}>
+			<div className="register-form__container">
+				<div className="register-form__row">
+					<div className="register-form__form-container">
+						<div className="register-form__form">
 
-									<Input
-										type="text"
-										parentClass="register-form"
-										placeholder="Ваше имя"
-										{...name.bind}
-									/>
-									<Input
-										type="text"
-										parentClass="register-form"
-										placeholder="Электронная почта*"
-										{...email.bind}
-									/>
-									<Input
-										type="password"
-										parentClass="register-form"
-										placeholder="Придумайте пароль*"
-										{...password.bind}
-									/>
-									<Input
-										type="password"
-										parentClass="register-form"
-										placeholder="Повторите пароль*"
-										{...passwordConfirm.bind}
-									/>
+							<Input
+								type="text"
+								parentClass="register-form"
+								placeholder="Ваше имя"
+								{...name.bind}
+							/>
+							<Input
+								type="text"
+								parentClass="register-form"
+								placeholder="Электронная почта*"
+								{...email.bind}
+							/>
+							<Input
+								type="password"
+								parentClass="register-form"
+								placeholder="Придумайте пароль*"
+								{...password.bind}
+							/>
+							<Input
+								type="password"
+								parentClass="register-form"
+								placeholder="Повторите пароль*"
+								{...passwordConfirm.bind}
+							/>
 
-									<Button
-										parentClass="register-form"
-										modClass={['big']}
-										handler={registerHandler}
-										disabled={loading}
-									>
-										Регистрация
-									</Button>
+							<Button
+								parentClass="register-form"
+								modClass={['big']}
+								handler={registerHandler}
+								disabled={loading}
+							>
+								Регистрация
+							</Button>
 
-									<div className="register-form__bottom-container">
-										<div className="register-form__question" >Уже есть аккаунт?</div>
-										<SmallIconButton
-											parentClass="register-form"
-											modClass={["enter-icon"]}
-											handler={() => history.push('./login')}
-										>
-											Войти
-										</SmallIconButton>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="register-form__row-terms">
-							<div className="register-form__terms">
-								Нажимая кнопку регистрации, вы принимаете условия
-								<Link to="/" className="register-form__terms-link">Пользовательского соглашения</Link>
+							<div className="register-form__bottom-container">
+								<div className="register-form__question" >Уже есть аккаунт?</div>
+								<SmallIconButton
+									parentClass="register-form"
+									modClass={["enter-icon"]}
+									handler={() => history.push('./login')}
+								>
+									Войти
+								</SmallIconButton>
 							</div>
 						</div>
 					</div>
 				</div>
+				<div className="register-form__row-terms">
+					<div className="register-form__terms">
+						Нажимая кнопку регистрации, вы принимаете условия
+						<Link to="/" className="register-form__terms-link">Пользовательского соглашения</Link>
+					</div>
+				</div>
+			</div>
+		</div>
 	)
 }
 

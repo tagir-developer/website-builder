@@ -25,9 +25,9 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, matc
 
 	const CreatePageClasses = useCreateClassName('create-page', parentClass)
 
-	const { errors} = useTypedSelector(state => state.alert)
+	const { errors } = useTypedSelector(state => state.alert)
 	const { pages } = useTypedSelector(state => state.page)
-	const { createNewPage, alertRemoveError, changeProjectStatus } = useActions()
+	const { createNewPage, alertRemoveError } = useActions()
 
 	const name = useInput('', alertRemoveError, 'name', errors)
 	const link = useInput('', alertRemoveError, 'link', errors)
@@ -36,9 +36,6 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, matc
 
 	const createPageHandler = () => {
 		createNewPage(projectId, name.value, link.value, isHomePage.value, openInNewWindow.value)
-		// changeProjectStatus('projectId', [
-		// 	{prop: 'sdsaa', value: }
-		// ])
 	}
 
 	return (
@@ -90,7 +87,6 @@ const CreatePage: React.FC<ICreatePage> = ({ parentClass, handler, history, matc
 
 								<Button
 									parentClass="create-page"
-									// handler={createPageHandler}
 									handler={createPageHandler}
 									modClass={['big']}
 								>

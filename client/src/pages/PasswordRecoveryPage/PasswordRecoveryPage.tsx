@@ -74,17 +74,17 @@ const PasswordRecoveryPage: React.FC = () => {
 				<div className="content-area">
 					<div className="password-recovery-page">
 
-						{ loading
-						? <Loader />
-						: !Object.keys(resetData).length
-							? <Error 
-								handler={errorHandler} 
-								parentClass="password-recovery-page" 
-								title="Произошла ошибка!"
-							>
-								{message}
-							</Error>
-							: <RecoveryForm parentClass="password-recovery-page" />
+						{loading
+							? <Loader />
+							: !Object.keys(resetData).length
+								? <Error
+									handler={errorHandler}
+									parentClass="password-recovery-page"
+									title="Произошла ошибка!"
+								>
+									{message}
+								</Error>
+								: <RecoveryForm parentClass="password-recovery-page" />
 						}
 
 					</div>

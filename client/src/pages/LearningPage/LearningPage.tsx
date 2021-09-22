@@ -4,8 +4,6 @@ import Footer from '../../components/UI/Footer/Footer'
 import VideoBlock from '../../components/UI/VideoBlock/VideoBlock'
 import './LearningPage.scss'
 
-//! Здесь в зависимости от авторизованности выводить разный тип меню
-
 const LearningPage: React.FC = () => {
 	return (
 		<>

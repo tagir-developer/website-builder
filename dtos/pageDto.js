@@ -23,6 +23,5 @@ module.exports = class PageListDto {
 		this.createdAt = model.createdAt
 		this.isNewPage = model.isNewPage
 		this.autosavePage = model.autosavePage
-		// this.hasBlocks = !!model.blocks.length
 	}
 }

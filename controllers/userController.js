@@ -1,7 +1,5 @@
 const ApiError = require("../exeptions/apiError")
 const userService = require("../service/userService")
-const gm = require('gm')
-const path = require('path')
 
 class userController {
 

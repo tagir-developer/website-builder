@@ -25,8 +25,8 @@ const ProjectHeader: React.FC<IProjectHeader> = ({ parentClass, modClass, name, 
 
 	const projectHeaderClasses = useCreateClassName('project-header', parentClass, modClass)
 
-	const {activeProject} = useTypedSelector(state => state.projects)
-	const {generateWebsite} = useActions()
+	const { activeProject } = useTypedSelector(state => state.projects)
+	const { generateWebsite } = useActions()
 
 	const projectMenuItems = [
 		{

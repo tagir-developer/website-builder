@@ -1,4 +1,3 @@
-import { IPageResponse } from "../../models/response/PageResponse"
 import { ITemplateResponse } from "../../models/response/TemplateResponse"
 import { IAlertAction } from "./alert"
 

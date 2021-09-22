@@ -9,7 +9,6 @@ router.post('/create-new-page', authMiddleware, createPageValidators, pageContro
 router.put('/change-page', authMiddleware, updatePageValidators, pageController.changePage)
 router.put('/switch-autosave', authMiddleware, switchAutosavePageValidators, pageController.switchAutosave)
 router.put('/choose-page-template', authMiddleware, choosePageTemplateValidators, pageController.choosePageTemplate)
-// router.put('/choose-page-template', authMiddleware, pageController.choosePageTemplate)
 
 router.put('/change-publication-status', authMiddleware, changePublicationStatusValidators, pageController.changePublicationStatus)
 router.put('/make-page-home', authMiddleware, pageController.makePageHome)

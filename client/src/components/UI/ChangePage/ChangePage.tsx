@@ -58,7 +58,6 @@ const ChangePage: React.FC<IChangePage> = ({ parentClass, handler, history, matc
 								>
 									Адрес страницы
 								</Input>
-
 								<div className="change-page__checkbox-container">
 									<Checkbox
 										parentClass="change-page"
@@ -67,23 +66,19 @@ const ChangePage: React.FC<IChangePage> = ({ parentClass, handler, history, matc
 										Открывать в новом окне
 									</Checkbox>
 								</div>
-
 								<div className="change-page__annotation">
 									Адрес страницы будет использоваться в адресной строке браузера. В примере ниже подчеркнуто красным цветом. Если имя проекта не указано, то сервис сгенерирует его автоматически. В дальнейшем вы сможете изменить его в настройках или подключить свой домен. Например:
 									<br />
 									<span className="change-page__annotation-bold-text"> http://instasite.com/project-name/</span>
 									<span className="change-page__annotation-bold-red-text">page-name</span>
 								</div>
-
 								<Button
 									parentClass="change-page"
-									// handler={ChangePageHandler}
 									handler={сhangePageHandler}
 									modClass={['big']}
 								>
 									Изменить страницу
 								</Button>
-
 							</div>
 						</div>
 					</div>

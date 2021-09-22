@@ -13,8 +13,7 @@ router.put('/change-status', authMiddleware, changeStatusValidators, projectsCon
 router.put('/form-processing', authMiddleware, formProcessingValidators, projectsController.formProcessing)
 router.delete('/delete-project/:projectId', authMiddleware, projectsController.deleteProject)
 router.get('/projects', authMiddleware, projectsController.getAllProjects)
-router.post('/publish-user-website', generateWebsiteValidators, projectsController.generateWebsite) // ! Добавить authMiddleware
-// router.post('/get-page-data', getPageDataValidators, projectsController.getPageData)
+router.post('/publish-user-website', authMiddleware, generateWebsiteValidators, projectsController.generateWebsite)
 router.get('/get-page-data/:projectId/:pageId', projectsController.getPageData)
 
 

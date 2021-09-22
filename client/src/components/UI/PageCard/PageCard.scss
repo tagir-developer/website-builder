@@ -50,7 +50,6 @@
 
 	&__label-and-button-container {
 		display: flex;
-		// flex-wrap: wrap;
 		height: 60px;
 		@include media-breakpoint-down(md) {
 			flex-direction: column;

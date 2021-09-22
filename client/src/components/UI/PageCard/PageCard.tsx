@@ -16,7 +16,6 @@ interface IPageCard extends RouteComponentProps<any> {
 	isMainPage: boolean
 	pageId: string
 	handlers: {
-		// [key: string]: (param?: any) => any
 		changePageOpenPopup: Function
 		copyPage: Function
 		makePageHome: Function
@@ -28,17 +27,15 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 
 	const pageCardClasses = useCreateClassName('page-card', parentClass, modClass)
 	const { activeProject } = useTypedSelector(state => state.projects)
-	const { pages, activePage } = useTypedSelector(state => state.page)
+	const { pages } = useTypedSelector(state => state.page)
 	const { setActivePage, changePagePublicationStatus, changeProjectStatus } = useActions()
-
-	// const needToPublish: string = published ? 'Снять с публикации' : 'Опубликовать' //! Пока функцию опубликовать и снять с публикации отложим
 
 	const menuItems = [
 		{
 			title: published ? 'Снять с публикации' : 'Опубликовать',
 			handler: () => {
 				published ? changePagePublicationStatus(pageId, false) : changePagePublicationStatus(pageId, true)
-				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
+				changeProjectStatus(activeProject.id, [{ prop: 'updated', value: false }])
 			}
 		},
 		{
@@ -52,7 +49,7 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 			title: 'Создать дубликат',
 			handler: () => {
 				handlers.copyPage(pageId)
-				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
+				changeProjectStatus(activeProject.id, [{ prop: 'updated', value: false }])
 			}
 		},
 		{
@@ -60,19 +57,19 @@ const PageCard: React.FC<IPageCard> = ({ parentClass, modClass, title, published
 			handler: () => {
 				setActivePage(pages, pageId)
 				handlers.deletePageOpenPopup()
-				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
+				changeProjectStatus(activeProject.id, [{ prop: 'updated', value: false }])
 			}
 		},
 		{
 			title: 'Сделать главной',
 			handler: () => {
 				handlers.makePageHome(pageId, activeProject.id)
-				changeProjectStatus(activeProject.id, [{prop: 'updated', value: false}])
+				changeProjectStatus(activeProject.id, [{ prop: 'updated', value: false }])
 			}
 		},
 	]
 
-	const editPageHandler = () => { 
+	const editPageHandler = () => {
 		setActivePage(pages, pageId)
 
 		const activePage = pages.filter(page => page.id === pageId)[0]

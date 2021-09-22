@@ -47,11 +47,9 @@ const AuthPage: React.FC = () => {
 			<Backdrop {...messagePopup.backdropProps}>
 				<TopMenu menuType="back-to-main" />
 				<div className="content-area">
-
 					<div className="auth-page">
 						<Login parentClass="auth-page" />
 					</div>
-
 				</div>
 				<Footer />
 			</Backdrop>

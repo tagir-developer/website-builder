@@ -1,5 +1,4 @@
-import axios, { AxiosError } from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { BasicComponent } from '../../commonStyledComponents/BasicComponent/BasicComponent'
 import { ICommonBlockProps } from '../../commonStyledComponents/commonTypes'

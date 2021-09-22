@@ -6,7 +6,6 @@ const storage = multer.diskStorage({
 	},
 	filename(req, file, cb) {
 		cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
-		// cb(null, file.fieldname + '-' + Date.now())
 	}
 })
 
@@ -23,5 +22,3 @@ const fileFilter = (req, file, cb) => {
 module.exports = multer({
 	storage, fileFilter
 })
-
-// ! Этот шаблон пока нигде не используется, возможно, надо удалить

@@ -116,7 +116,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 				</PopUp>
 
 				<PopUp {...deleteConfirmationPopup.popupProps} transparent={true}>
-					<Confirm 
+					<Confirm
 						handler={deleteConfirmationPopup.confirm}
 						successFunc={projectDeletion}
 					>
@@ -125,7 +125,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 				</PopUp>
 
 				<PopUp {...deletePageConfirmationPopup.popupProps} transparent={true}>
-					<Confirm 
+					<Confirm
 						handler={deletePageConfirmationPopup.confirm}
 						successFunc={pageDeletion}
 					>
@@ -134,13 +134,13 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 				</PopUp>
 
 				<PopUp {...mainConfigPopup.popupProps} withTitle="Основные настройки">
-					<BasicSettings 
+					<BasicSettings
 						closePopup={mainConfigPopup.closePopup}
 					/>
 				</PopUp>
 
 				<PopUp {...formProcessingPopup.popupProps} withTitle="Обработка форм">
-					<FormProcessing 
+					<FormProcessing
 						closePopup={formProcessingPopup.closePopup}
 					/>
 				</PopUp>
@@ -166,7 +166,6 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 								updated={activeProject.updated}
 								addPageHandler={createPagePopup.handler}
 								projectLink={activeProject.generatedProject}
-							// ? type='published-updated'
 							/>
 
 							<div className="project-page__pages-list-container">

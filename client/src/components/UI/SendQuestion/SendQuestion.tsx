@@ -46,13 +46,11 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 							>
 								Наберите сообщение*:
 							</Textarea>
-
 							<FileUpload 
 								parentClass="send-question"
 								multiple={true}
 								{ ...upload.bind }
 							/>
-
 							<Button
 								parentClass="send-question"
 								handler={sendForm}
@@ -61,8 +59,6 @@ const SendQuestion: React.FC<ISendQuestion> = ({ parentClass }) => {
 							>
 								Отправить
 							</Button>
-
-
 						</div>
 					</div>
 				</div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './styles/Header2Contents.scss'
 import { useCreateClassName } from '../../../../hooks/createClassName.hook'
 import SecondaryButton from '../../../UI/SecondaryButton/SecondaryButton'

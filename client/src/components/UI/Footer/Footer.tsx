@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
 							<button className="footer__footer-button footer-button">Задать вопрос</button>
 						</Link>
 						<Link to="/complaint" className="footer__button-link">
-						<button className="footer__footer-button footer-button">Написать жалобу</button>
+							<button className="footer__footer-button footer-button">Написать жалобу</button>
 						</Link>
 					</div>
 					<div className="footer__learning">

@@ -52,5 +52,3 @@ export const StyledPopupMessage: React.FC<IStyledPopupMessageProps> = ({ isActiv
 	}
 
 }
-
-// export default StyledPopupMessage

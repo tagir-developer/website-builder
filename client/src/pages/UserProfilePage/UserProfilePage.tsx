@@ -154,7 +154,6 @@ const UserProfilePage: React.FC = () => {
 					</div>
 					<Footer />
 				</AlertMessage>
-
 			</Backdrop>
 		</>
 	)

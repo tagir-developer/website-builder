@@ -5,7 +5,6 @@ import BlockService from "../../services/BlockService"
 import { blockActionTypes, IBlockAction, IBlockState } from "../types/block"
 import { alertErrorOrMessageCreator } from "./alert"
 import produce from 'immer'
-import { WritableDraft } from "immer/dist/internal"
 import { IPageState } from "../types/page"
 import { IProjectsState } from "../types/projects"
 import { updateActiveProject } from "./projects"
@@ -57,7 +56,6 @@ export const getPageBlocks = (pageId: string) => {
 export const addBlockToPage = (blockId: string) => {
 	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
 
-		// dispatch(blockStartCreator())
 		const changeHistory: Array<IPageBlocksResponse[]> = getState().block.changeHistory
 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
 		const pageId: string = getState().page.activePage.id
@@ -75,7 +73,6 @@ export const addBlockToPage = (blockId: string) => {
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				// dispatch(blockEndCreator())
 				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 		}
@@ -104,7 +101,6 @@ export const changeBlockConfigs = (configObject: any) => {
 		})
 
 		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
-		// dispatch(saveBlockConfigs(newBlockList))
 		dispatch(blockGetPageBlocks(newBlockList))
 	}
 }
@@ -121,7 +117,6 @@ export const changeBlockContent = (contentObject: any) => {
 		})
 
 		dispatch(addBlocksToChangeHistory(changeHistory, newBlockList))
-		// dispatch(saveBlockConfigs(newBlockList))
 		dispatch(blockGetPageBlocks(newBlockList))
 	}
 }
@@ -191,7 +186,6 @@ export const moveBlock = (direction: 'up' | 'down') => {
 
 export const copyBlock = () => {
 	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
-		// dispatch(blockStartCreator())
 		const changeHistory: Array<IPageBlocksResponse[]> = getState().block.changeHistory
 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
 		const activeBlock: IPageBlocksResponse = getState().block.activeBlock
@@ -213,7 +207,6 @@ export const copyBlock = () => {
 		} catch (error) {
 			const e = error as AxiosError
 			if (e.response) {
-				// dispatch(blockEndCreator())
 				dispatch(alertErrorOrMessageCreator(e.response.data))
 			}
 		}
@@ -226,7 +219,6 @@ export const saveBlocksInDB = (showMessage: boolean = false, templateId: string 
 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
 		const pageId: string = getState().page.activePage.id
 		const projectName: string = getState().projects.activeProject.link
-		// const dtoBlocks: string = JSON.stringify(blocks)
 
 		const formData = new FormData()
 
@@ -280,27 +272,6 @@ export const saveBlocksInDB = (showMessage: boolean = false, templateId: string 
 	}
 }
 
-// export const saveBlocksInDB = (showMessage: boolean = false) => {
-// 	return async (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState, page: IPageState }) => {
-
-// 		const blocks: IPageBlocksResponse[] = getState().block.pageBlocks
-// 		const pageId: string = getState().page.activePage.id
-// 		const dtoBlocks: string = JSON.stringify(blocks)
-
-// 		try {
-// 			const response = await BlockService.saveBlocksInDB(pageId, dtoBlocks)
-
-// 			if (showMessage) dispatch(alertErrorOrMessageCreator(response.data))
-
-// 		} catch (error) {
-// 			const e = error as AxiosError
-// 			if (e.response) {
-// 				dispatch(alertErrorOrMessageCreator(e.response.data))
-// 			}
-
-// 		}
-// 	}
-// }
 
 export const blockUndoChange = () => {
 	return (dispatch: Dispatch<IBlockAction>, getState: () => { block: IBlockState }) => {
@@ -354,13 +325,6 @@ export const blockGetBlocksList = (payload: IBlockResponse[]): IBlockAction => {
 		payload
 	}
 }
-
-// export const saveBlockConfigs = (payload: IPageBlocksResponse[]): IBlockAction => {
-// 	return {
-// 		type: blockActionTypes.BLOCK_SAVE_BLOCK_CONFIGS,
-// 		payload
-// 	}
-// }
 
 export const blockGetPageBlocks = (payload: IPageBlocksResponse[]): IBlockAction => {
 	return {

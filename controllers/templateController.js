@@ -23,26 +23,6 @@ class templateController {
 		}
 	}
 
-	// async addBlocks(req, res, next) {
-	// 	try {
-	// 		ApiError.ValidationErrorChecking(req)
-
-	// 		const {templateId, blocks} = req.body
-
-	// 		await templateService.addBlocks(templateId, blocks)
-
-	// 		return res.json({
-	// 			// template,
-	// 			messageType: 'success',
-	// 			message: "Блоки добавлены к шаблону",
-	// 			errors: []
-	// 		})
-
-	// 	} catch (e) {
-	// 		next(e)
-	// 	}
-	// }
-
 	async getAllTemplates(req, res, next) {
 		try {
 			ApiError.ValidationErrorChecking(req)
@@ -50,13 +30,6 @@ class templateController {
 			const templates = await templateService.getAll()
 
 			return res.json(templates)
-
-			// return res.json({
-			// 	templates,
-			// 	messageType: 'success',
-			// 	message: "Шаблон успешно получены",
-			// 	errors: []
-			// })
 
 		} catch (e) {
 			next(e)

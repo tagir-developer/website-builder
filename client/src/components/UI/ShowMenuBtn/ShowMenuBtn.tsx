@@ -44,27 +44,26 @@ const ShowMenuBtn: React.FC<IShowMenuBtn> = ({ parentClass, modClass, items }) =
 	}
 
 	return (
-		<>
-			<div
-				className={ShowMenuBtnClasses}
-				onClick={() => isOpenHandler(prev => !prev)}
-				
-			>
-				<div className="show-menu-btn__menu">
-					<CSSTransition
-						in={isOpen}
-						timeout={400}
-						classNames="show-menu-btn__menu-list_show"
-						mountOnEnter
-						unmountOnExit
-					>
-						<ul className="show-menu-btn__menu-list" >
+		<div
+			className={ShowMenuBtnClasses}
+			onClick={() => isOpenHandler(prev => !prev)}
+
+		>
+			<div className="show-menu-btn__menu">
+				<CSSTransition
+					in={isOpen}
+					timeout={400}
+					classNames="show-menu-btn__menu-list_show"
+					mountOnEnter
+					unmountOnExit
+				>
+					<ul className="show-menu-btn__menu-list" >
 
 						{items && items.map((i, index) => {
 							return (
-								<li 
+								<li
 									key={'menu-list-item' + index}
-									className="show-menu-btn__menu-list-item" 
+									className="show-menu-btn__menu-list-item"
 									onClick={e => openSettingInPopup(e, i.handler)}
 								>
 									{i.title}
@@ -72,13 +71,12 @@ const ShowMenuBtn: React.FC<IShowMenuBtn> = ({ parentClass, modClass, items }) =
 							)
 						})}
 
-						</ul>
-					</CSSTransition>
-				</div>
-
-				<div className="show-menu-btn__icon" ref={showMenuRef}></div>
+					</ul>
+				</CSSTransition>
 			</div>
-		</>
+
+			<div className="show-menu-btn__icon" ref={showMenuRef}></div>
+		</div>
 	)
 }
 

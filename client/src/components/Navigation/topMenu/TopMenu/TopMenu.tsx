@@ -9,7 +9,7 @@ import ViewOnDevices from '../ViewOnDevices/ViewOnDevices'
 import ViewOnDevicesMobile from '../ViewOnDevicesMobile/ViewOnDevicesMobile'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import { useActions, useTypedSelector } from '../../../../hooks/reduxHooks'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 interface ITopMenu {
 	menuType?: 'main' | 'back-to-main' | 'go-back' | 'auth' | 'auth-project' | 'select-template' | 'edit' | 'preview'
@@ -17,9 +17,9 @@ interface ITopMenu {
 
 const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 
-	const {activeProject} = useTypedSelector(state => state.projects)
-	const {activePage} = useTypedSelector(state => state.page)
-	const {changePagePublicationStatus, blockUndoChange, saveBlocksInDB, changeProjectStatus} = useActions()
+	const { activeProject } = useTypedSelector(state => state.projects)
+	const { activePage } = useTypedSelector(state => state.page)
+	const { changePagePublicationStatus, blockUndoChange, saveBlocksInDB, changeProjectStatus } = useActions()
 	const history = useHistory()
 
 	const topMenuClasses = (typeMenu: string): string => {
@@ -235,35 +235,45 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 						parentClass="top-menu"
 						modClass={['dark-theme']}
 						items={[
-							{ title: 'Опубликовать', link: '/', bold: true, handler: async () => {
-								await saveBlocksInDB(true)
-								changePagePublicationStatus(activePage.id, true)
-								changeProjectStatus(activeProject.id, [
-									{prop: 'updated', value: false}
-								])
-								history.push('/projects/' + activeProject.link)
-							} },
+							{
+								title: 'Опубликовать', link: '/', bold: true, handler: async () => {
+									await saveBlocksInDB(true)
+									changePagePublicationStatus(activePage.id, true)
+									changeProjectStatus(activeProject.id, [
+										{ prop: 'updated', value: false }
+									])
+									history.push('/projects/' + activeProject.link)
+								}
+							},
 						]}
 					/>
 					<MobileMenu
 						items={[
-							{ title: 'Сохранить', link: '/', bold: false, handler: () => {
-								saveBlocksInDB(true)
-							} },
-							{ title: 'Отменить действие', link: '/', bold: false, handler: () => {
-								blockUndoChange()
-							}},
-							{ title: 'Предпросмотр', link: '/', bold: false, handler: () => {
-								history.push(history.location.pathname + '/preview')
-							}},
-							{ title: 'Опубликовать', link: '/', bold: false, handler: async () => {
-								await saveBlocksInDB(true)
-								changePagePublicationStatus(activePage.id, true)
-								changeProjectStatus(activeProject.id, [
-									{prop: 'updated', value: false}
-								])
-								history.push('/projects/' + activeProject.link)
-							}},
+							{
+								title: 'Сохранить', link: '/', bold: false, handler: () => {
+									saveBlocksInDB(true)
+								}
+							},
+							{
+								title: 'Отменить действие', link: '/', bold: false, handler: () => {
+									blockUndoChange()
+								}
+							},
+							{
+								title: 'Предпросмотр', link: '/', bold: false, handler: () => {
+									history.push(history.location.pathname + '/preview')
+								}
+							},
+							{
+								title: 'Опубликовать', link: '/', bold: false, handler: async () => {
+									await saveBlocksInDB(true)
+									changePagePublicationStatus(activePage.id, true)
+									changeProjectStatus(activeProject.id, [
+										{ prop: 'updated', value: false }
+									])
+									history.push('/projects/' + activeProject.link)
+								}
+							},
 						]}
 						parentClass="top-menu"
 						modClass={['dark-theme']}
@@ -291,20 +301,20 @@ const TopMenu: React.FC<ITopMenu> = ({ menuType = 'main' }) => {
 							{ title: 'Назад', link: '/', goBack: true },
 						]}
 					/>
-					<ViewOnDevices 
+					<ViewOnDevices
 						parentClass="top-menu"
 						deviceItems={[
-							{title: 'Смартфон', value: 'mobile' },
-							{title: 'Планшет', value: 'tablete' },
-							{title: 'Компьютер', value: 'pc' }
-						]} 
+							{ title: 'Смартфон', value: 'mobile' },
+							{ title: 'Планшет', value: 'tablete' },
+							{ title: 'Компьютер', value: 'pc' }
+						]}
 					/>
-					<ViewOnDevicesMobile 
+					<ViewOnDevicesMobile
 						parentClass="top-menu"
 						deviceItems={[
-							{title: 'Смартфон', value: 'mobile', iconClass: 'icon-mobile' },
-							{title: 'Планшет', value: 'tablete', iconClass: 'icon-tablet' },
-							{title: 'Компьютер', value: 'pc', iconClass: 'icon-pc' }
+							{ title: 'Смартфон', value: 'mobile', iconClass: 'icon-mobile' },
+							{ title: 'Планшет', value: 'tablete', iconClass: 'icon-tablet' },
+							{ title: 'Компьютер', value: 'pc', iconClass: 'icon-pc' }
 						]}
 					/>
 				</>

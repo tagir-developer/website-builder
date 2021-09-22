@@ -32,8 +32,6 @@ export const getProjectPages = (projectId: string) => {
 export const createNewPage = (projectId: string, name: string, link: string, isHomePage: boolean, openInNewWindow: boolean) => {
 	return async (dispatch: Dispatch<IPageAction>) => {
 
-		// dispatch(pageStartCreator())
-
 		try {
 			const response = await PageService.createPage(projectId, name, link, isHomePage, openInNewWindow)
 
@@ -41,9 +39,6 @@ export const createNewPage = (projectId: string, name: string, link: string, isH
 			dispatch(savePagesNames(response.data.pages))
 			dispatch(setHomePage(response.data.pages))
 			dispatch(alertErrorOrMessageCreator(response.data))
-
-			// dispatch(pageEndCreator())
-			// dispatch(alertErrorOrMessageCreator(response.data))
 
 		} catch (error) {
 			const e = error as AxiosError
@@ -57,9 +52,8 @@ export const createNewPage = (projectId: string, name: string, link: string, isH
 }
 
 export const changePage = (pageId: string, name: string, link: string, openInNewWindow: boolean) => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => {projects: IProjectsState}) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => { projects: IProjectsState }) => {
 
-		// dispatch(pageStartCreator())
 		const projectId = getState().projects.activeProject.id
 
 		try {
@@ -81,7 +75,7 @@ export const changePage = (pageId: string, name: string, link: string, openInNew
 }
 
 export const switchPageAutosave = (autosave: boolean) => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => { page: IPageState }) => {
 
 		const pageId = getState().page.activePage.id
 
@@ -102,7 +96,7 @@ export const switchPageAutosave = (autosave: boolean) => {
 }
 
 export const choosePageTemplate = (isEmptyTemplate: 'isEmpty' | 'template', templateId: string = '') => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => { page: IPageState }) => {
 
 		const pageId = getState().page.activePage.id
 
@@ -122,16 +116,12 @@ export const choosePageTemplate = (isEmptyTemplate: 'isEmpty' | 'template', temp
 }
 
 export const changePagePublicationStatus = (pageId: string, value: boolean) => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => {projects: IProjectsState}) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => { projects: IProjectsState }) => {
 
 		const projectId = getState().projects.activeProject.id
 
 		try {
 			const response = await PageService.changePagePublicationStatus(projectId, pageId, value)
-
-			console.log('Возврат данных', response.data)
-
-			// dispatch(changeActivePage(response.data.page))
 
 			dispatch(pagesGetAll(response.data.pages))
 			dispatch(savePagesNames(response.data.pages))
@@ -148,12 +138,10 @@ export const changePagePublicationStatus = (pageId: string, value: boolean) => {
 }
 
 export const makePageHome = (pageId: string, projectId: string) => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => {page: IPageState}) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => { page: IPageState }) => {
 
-		const {homePageId} = getState().page
+		const { homePageId } = getState().page
 		if (pageId === homePageId) return
-
-		// dispatch(pageStartCreator())
 
 		try {
 			const response = await PageService.makePageHome(pageId, projectId)
@@ -177,8 +165,6 @@ export const makePageHome = (pageId: string, projectId: string) => {
 export const deletePage = (pageId: string, projectId: string) => {
 	return async (dispatch: Dispatch<IPageAction>) => {
 
-		// dispatch(pageStartCreator())
-
 		try {
 			const response = await PageService.deletePage(pageId, projectId)
 
@@ -199,9 +185,8 @@ export const deletePage = (pageId: string, projectId: string) => {
 }
 
 export const copyPage = (pageId: string) => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => {projects: IProjectsState}) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => { projects: IProjectsState }) => {
 
-		// dispatch(pageStartCreator())
 		const projectId = getState().projects.activeProject.id
 
 		try {
@@ -223,7 +208,7 @@ export const copyPage = (pageId: string) => {
 }
 
 export const pagesGetAll = (payload: IPageResponse[]): IPageAction => {
-	return { 
+	return {
 		type: pageActionTypes.PAGE_GET_PAGES,
 		payload
 	}
@@ -233,7 +218,7 @@ export const savePagesNames = (pages: IPageResponse[]): IPageAction => {
 
 	const pagesNames: string[] = pages.map(i => '/' + i.link)
 
-	return { 
+	return {
 		type: pageActionTypes.PAGE_SAVE_NAMES,
 		payload: pagesNames
 	}
@@ -243,7 +228,7 @@ export const setHomePage = (pages: IPageResponse[]): IPageAction => {
 
 	const homePageId: string = pages.filter(i => i.isHomePage === true)[0].id
 
-	return { 
+	return {
 		type: pageActionTypes.PAGE_SET_HOME_PAGE,
 		payload: homePageId
 	}
@@ -253,14 +238,14 @@ export const setActivePage = (pages: IPageResponse[], pageId: string): IPageActi
 
 	const activePage: IPageResponse = pages.filter(i => i.id === pageId)[0]
 
-	return { 
+	return {
 		type: pageActionTypes.PAGE_SET_ACTIVE_PAGE,
 		payload: activePage
 	}
 }
 
 export const changeActivePage = (payload: IPageResponse): IPageAction => {
-	return { 
+	return {
 		type: pageActionTypes.PAGE_SET_ACTIVE_PAGE,
 		payload
 	}
@@ -275,14 +260,14 @@ export const pageEndCreator = (): IPageAction => {
 }
 
 export const showDevicePreview = (payload: IDeviceTypes): IPageAction => {
-	return { 
+	return {
 		type: pageActionTypes.PAGE_SHOW_DEVICE_PREVIEW,
 		payload
 	}
 }
 
 export const setPreviousPath = (payload: string): IPageAction => {
-	return { 
+	return {
 		type: pageActionTypes.PAGE_SET_PATH,
 		payload
 	}

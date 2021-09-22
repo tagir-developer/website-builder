@@ -51,8 +51,7 @@ const Content1Contents: React.FC<IContent1ContentsProps> = ({ parentClass, close
 				{...content.bind}
 			>
 				Основной контент
-			</Textarea>			
-
+			</Textarea>
 			<SecondaryButton
 				parentClass="lib-content-1-contents"
 				handler={saveNewContent}

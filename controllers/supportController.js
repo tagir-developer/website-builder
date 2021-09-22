@@ -1,7 +1,3 @@
-const User = require("../models/User")
-const { validationResult } = require("express-validator")
-const userService = require("../service/userService")
-const { json } = require("body-parser")
 const ApiError = require("../exeptions/apiError")
 const mailService = require("../service/mailService")
 
