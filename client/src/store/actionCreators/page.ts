@@ -51,13 +51,14 @@ export const createNewPage = (projectId: string, name: string, link: string, isH
 	}
 }
 
-export const changePage = (pageId: string, name: string, link: string, openInNewWindow: boolean) => {
-	return async (dispatch: Dispatch<IPageAction>, getState: () => { projects: IProjectsState }) => {
+export const changePage = (name: string, link: string, openInNewWindow: boolean) => {
+	return async (dispatch: Dispatch<IPageAction>, getState: () => { projects: IProjectsState, page: IPageState }) => {
 
 		const projectId = getState().projects.activeProject.id
+		const activePageId = getState().page.activePage.id
 
 		try {
-			const response = await PageService.changePage(projectId, pageId, name, link, openInNewWindow)
+			const response = await PageService.changePage(projectId, activePageId, name, link, openInNewWindow)
 
 			dispatch(pagesGetAll(response.data.pages))
 			dispatch(savePagesNames(response.data.pages))

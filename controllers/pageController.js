@@ -66,7 +66,7 @@ class pageController {
 			const updatedProjectPages = await pageService.changePage(projectId, pageId, name, link, openInNewWindow)
 
 			return res.json({
-				page: updatedProjectPages,
+				pages: updatedProjectPages,
 				messageType: 'success',
 				message: "Страница успешно изменена",
 				errors: []
@@ -102,7 +102,6 @@ class pageController {
 			const projectPages = await pageService.getAllPages(req.params.projectId)
 
 			return res.json(projectPages)
-
 		} catch (e) {
 			next(e)
 		}

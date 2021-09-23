@@ -49,7 +49,20 @@ exports.updatePageValidators = [
 	check('link')
 		.not().isEmpty().withMessage('Поле с адресом страницы не должно быть пустым')
 		.trim().escape()
-		.matches(/^[a-z0-9][a-z0-9\\-]+[a-z0-9]$/).withMessage('Имя проекта должно содержать только прописные английские буквы, цифры и тире'),
+		.matches(/^[a-z0-9][a-z0-9\\-]+[a-z0-9]$/).withMessage('Имя проекта должно содержать только прописные английские буквы, цифры и тире')
+		.custom(async (value, {req}) => { 
+			try {
+				const page = await Page.findOne({ project: req.body.projectId, link: value })
+	
+				if (page) {
+					return Promise.reject('Такое имя страницы уже занято')
+				}
+				return true		
+	
+			} catch(e) {
+				console.log(e)
+			}
+			}).withMessage('Такое имя страницы уже занято'),
 	check('openInNewWindow')
 		.isBoolean().withMessage('Поле должно иметь значение true или false')
 ]

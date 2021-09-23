@@ -1,5 +1,4 @@
 import React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
 import { useCreateClassName } from '../../../hooks/createClassName.hook'
 import { useActions, useTypedSelector } from '../../../hooks/reduxHooks'
 import { useCheck } from '../../../hooks/useCheck.hook'
@@ -10,18 +9,14 @@ import Checkbox from '../Checkbox/Checkbox'
 import Input from '../Input/Input'
 import './ChangePage.scss'
 
-interface IRouteProps {
-	name: string
-}
 
-interface IChangePage extends RouteComponentProps<IRouteProps> {
+interface IChangePage {
 	parentClass?: string
-	handler?: Function
 	closePopup: Function
 	pageId: string
 }
 
-const ChangePage: React.FC<IChangePage> = ({ parentClass, handler, history, match, closePopup, pageId }) => {
+const ChangePage: React.FC<IChangePage> = ({ parentClass, closePopup }) => {
 
 	const changePageClasses = useCreateClassName('change-page', parentClass)
 
@@ -33,7 +28,7 @@ const ChangePage: React.FC<IChangePage> = ({ parentClass, handler, history, matc
 	const openInNewWindow = useCheck(false)
 
 	const сhangePageHandler = () => {
-		changePage(pageId, name.value, link.value, openInNewWindow.value)
+		changePage(name.value, link.value, openInNewWindow.value)
 	}
 
 
@@ -88,4 +83,4 @@ const ChangePage: React.FC<IChangePage> = ({ parentClass, handler, history, matc
 	)
 }
 
-export default withRouter(ChangePage)
+export default ChangePage

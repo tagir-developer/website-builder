@@ -22,14 +22,11 @@ import ChangeProject from '../../components/UI/ChangeProject/ChangeProject'
 import Confirm from '../../components/UI/Confirm/Confirm'
 import ChangePage from '../../components/UI/ChangePage/ChangePage'
 
-interface IRouteProps {
-	name: string
+
+interface IProjectPage {
 }
 
-interface IProjectPage extends RouteComponentProps<IRouteProps> {
-}
-
-const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
+const ProjectPage: React.FC<IProjectPage> = () => {
 
 	const { projectsNames, activeProject, shouldCreatePageAfterOpenProject } = useTypedSelector(state => state.projects)
 	const { pages: projectPages, loading, activePage } = useTypedSelector(state => state.page)
@@ -90,6 +87,8 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 		deletePageOpenPopup: deletePageConfirmationPopup.openPopup,
 	}
 
+	console.log('Страницы проекта', projectPages)
+
 	return (
 		<>
 			<AlertMessage>
@@ -103,7 +102,7 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 
 				<PopUp {...changePagePopup.popupProps} withTitle="Изменить страницу" >
 					<ChangePage
-						pageId={activePage?.id}
+						pageId={activePage.id}
 						closePopup={changePagePopup.closePopup}
 					/>
 				</PopUp>
@@ -208,4 +207,4 @@ const ProjectPage: React.FC<IProjectPage> = ({ match }) => {
 	)
 }
 
-export default withRouter(ProjectPage)
+export default ProjectPage
