@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Website and landing page builder",
   "main": "app.js",
+  "engines": {
+  "node": "14.x"
+  },
   "scripts": {
-    "start": "node start app.js",
+    "start": "node app.js",
     "server": "nodemon start app.js",
     "client": "npm run start --prefix client",
     "ssr": "npm run dev --prefix client-ssr",
