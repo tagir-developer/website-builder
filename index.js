@@ -79,6 +79,6 @@ mongoose
       });
     },
     err => {
-      console.log('database connection failed', err);
+      console.log('database connection failed ---', err);
     }
   );
