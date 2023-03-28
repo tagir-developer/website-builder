@@ -14,10 +14,14 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/tester', express.static(path.join(__dirname, 'tester')));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'tester', 'index.html'));
 });
+// app.get('/', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// });
 
 app.use('/api/auth/', require('./routes/auth.routes'));
 app.use('/api/support/', require('./routes/support.routes'));
