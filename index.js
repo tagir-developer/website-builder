@@ -37,11 +37,11 @@ const PORT = 80;
 
 async function start() {
   try {
-    // await mongoose.connect(process.env.DB_URL, {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    //   useCreateIndex: true,
-    // });
+    await mongoose.connect(process.env.DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
     app.listen(PORT, () => {
       console.log(`App has been started on port ${PORT}...`);
     });
