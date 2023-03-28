@@ -2,13 +2,13 @@
   "name": "website-builder",
   "version": "1.0.0",
   "description": "Website and landing page builder",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
   "node": "14.x"
   },
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon start server.js",
+    "start": "node index.js",
+    "server": "nodemon start index.js",
     "client": "npm run start --prefix client",
     "ssr": "npm run dev --prefix client-ssr",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
