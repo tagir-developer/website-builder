@@ -33,15 +33,16 @@ app.use('/api/projects/', require('./routes/projects.routes'));
 // app.use(errorMiddleware);
 
 // const PORT = process.env.PORT || 5000;
-const PORT = 80;
+const PORT = process.env.PORT;
+// const PORT = 80;
 
 async function start() {
   try {
-    await mongoose.connect(process.env.DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
+    // await mongoose.connect(process.env.DB_URL, {
+    //   useNewUrlParser: true,
+    //   useUnifiedTopology: true,
+    //   useCreateIndex: true,
+    // });
     app.listen(PORT, () => {
       console.log(`App has been started on port ${PORT}...`);
     });
