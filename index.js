@@ -36,29 +36,49 @@ const PORT = process.env.PORT || 5000;
 // const PORT = process.env.PORT;
 // const PORT = 80;
 
-async function start() {
-  try {
-    // await mongoose.connect(process.env.DB_URL, {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    //   useCreateIndex: true,
-    // });
-    await mongoose.connect(
-      'mongodb+srv://Tagir3991:tHi345Kl12psNiz@main-claster.kdeku.mongodb.net/app?retryWrites=true&w=majority',
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-      }
-    );
+// async function start() {
+//   try {
+//     // await mongoose.connect(process.env.DB_URL, {
+//     //   useNewUrlParser: true,
+//     //   useUnifiedTopology: true,
+//     //   useCreateIndex: true,
+//     // });
+//     await mongoose.connect(
+//       'mongodb+srv://Tagir3991:tHi345Kl12psNiz@main-claster.kdeku.mongodb.net/app?retryWrites=true&w=majority',
+//       {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true,
+//         useCreateIndex: true,
+//       }
+//     );
 
-    app.listen(PORT, () => {
-      console.log(`App has been started on port ${PORT}...`);
-    });
-  } catch (e) {
-    console.log('Server Error', e.message);
-    process.exit(1);
-  }
-}
+//     app.listen(PORT, () => {
+//       console.log(`App has been started on port ${PORT}...`);
+//     });
+//   } catch (e) {
+//     console.log('Server Error', e.message);
+//     process.exit(1);
+//   }
+// }
 
-start();
+// start();
+
+const DB_URL =
+  'mongodb+srv://Tagir3991:tHi345Kl12psNiz@main-claster.kdeku.mongodb.net/app?retryWrites=true&w=majority';
+
+mongoose
+  .connect(DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(
+    () => {
+      app.listen(PORT, () => {
+        console.log(`App has been started on port ${PORT}...`);
+      });
+    },
+    err => {
+      console.log('database connection failed', err);
+    }
+  );
