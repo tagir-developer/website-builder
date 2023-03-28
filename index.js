@@ -82,3 +82,5 @@ mongoose
       console.log('database connection failed ---', err);
     }
   );
+
+export default app;
