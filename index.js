@@ -43,6 +43,15 @@ async function start() {
     //   useUnifiedTopology: true,
     //   useCreateIndex: true,
     // });
+    await mongoose.connect(
+      'mongodb+srv://Tagir3991:tHi345Kl12psNiz@main-claster.kdeku.mongodb.net/app?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+      }
+    );
+
     app.listen(PORT, () => {
       console.log(`App has been started on port ${PORT}...`);
     });
