@@ -27,6 +27,8 @@ app.use('/api/pages/', require('./routes/page.routes'));
 app.use('/api/user/', require('./routes/user.routes'));
 app.use('/api/template/', require('./routes/pageTemplate.routes'));
 app.use('/api/blocks/', require('./routes/block.routes'));
+
+app.use('/api/test/', require('./routes/test.routes'));
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;
