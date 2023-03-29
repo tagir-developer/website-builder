@@ -22,18 +22,31 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
     });
   };
   const testRequestThree = (): void => {
-    fetch('https://website-builder-two-fawn.vercel.app/api/auth/login', {
+    fetch('https://jsonplaceholder.typicode.com/posts', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
       body: JSON.stringify({
-        email: 'tagirdjan@gmail.com',
-        password: '12345q',
+        title: 'foo',
+        body: 'bar',
+        userId: 1,
       }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
     })
       .then(response => response.json())
       .then(json => console.log(json));
+    // fetch('https://website-builder-two-fawn.vercel.app/api/auth/login', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8',
+    //   },
+    //   body: JSON.stringify({
+    //     email: 'tagirdjan@gmail.com',
+    //     password: '12345q',
+    //   }),
+    // })
+    //   .then(response => response.json())
+    //   .then(json => console.log(json));
   };
 
   return (
@@ -67,7 +80,7 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
                     parentClass='landing-header'
                     handler={testRequestThree}
                   >
-                    Авторизация через фетч
+                    Тестовый пост запрос
                   </Button>
                   {/* <Button parentClass="landing-header" handler={() => history.push('/registration')} >
 										Создать сайт

@@ -73,7 +73,7 @@ mongoose
   })
   .then(
     () => {
-      app.listen(PORT, () => {
+      app.listen(3000, () => {
         console.log(`App has been started on port ${PORT}...`);
       });
     },

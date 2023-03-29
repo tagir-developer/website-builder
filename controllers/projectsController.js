@@ -1,4 +1,5 @@
 const ApiError = require('../exeptions/apiError');
+const Project = require('../models/Project');
 const projectService = require('../service/projectService');
 
 class projectsController {
@@ -208,7 +209,8 @@ class projectsController {
 
   async getTestData(req, res, next) {
     try {
-      return res.json({ message: 'Успешный тестовый запрос' });
+      const projects = await Project.findAll();
+      return res.json({ message: 'Успешный тестовый запрос', data: projects });
     } catch (e) {
       next(e);
     }
