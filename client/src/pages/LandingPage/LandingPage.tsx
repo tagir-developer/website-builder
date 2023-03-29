@@ -12,42 +12,42 @@ import './LandingPage.scss';
 const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
   const testPopup = usePopup(false, 'blur');
 
-  const testRequestOne = (): void => {
-    axios.get('https://website-builder-two-fawn.vercel.app/api/test/test');
-  };
-  const testRequestTwo = (): void => {
-    axios.post('https://website-builder-two-fawn.vercel.app/api/auth/login', {
-      email: 'tagirdjan@gmail.com',
-      password: '12345q',
-    });
-  };
-  const testRequestThree = (): void => {
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify({
-        title: 'foo',
-        body: 'bar',
-        userId: 1,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
-      .then(response => response.json())
-      .then(json => console.log(json));
-    // fetch('https://website-builder-two-fawn.vercel.app/api/auth/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8',
-    //   },
-    //   body: JSON.stringify({
-    //     email: 'tagirdjan@gmail.com',
-    //     password: '12345q',
-    //   }),
-    // })
-    //   .then(response => response.json())
-    //   .then(json => console.log(json));
-  };
+  //   const testRequestOne = (): void => {
+  //     axios.get('https://website-builder-two-fawn.vercel.app/api/test/test');
+  //   };
+  //   const testRequestTwo = (): void => {
+  //     axios.post('https://website-builder-two-fawn.vercel.app/api/auth/login', {
+  //       email: 'tagirdjan@gmail.com',
+  //       password: '12345q',
+  //     });
+  //   };
+  //   const testRequestThree = (): void => {
+  //     fetch('https://jsonplaceholder.typicode.com/posts', {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //         title: 'foo',
+  //         body: 'bar',
+  //         userId: 1,
+  //       }),
+  //       headers: {
+  //         'Content-type': 'application/json; charset=UTF-8',
+  //       },
+  //     })
+  //       .then(response => response.json())
+  //       .then(json => console.log(json));
+  //     // fetch('https://website-builder-two-fawn.vercel.app/api/auth/login', {
+  //     //   method: 'POST',
+  //     //   headers: {
+  //     //     'Content-Type': 'application/json;charset=utf-8',
+  //     //   },
+  //     //   body: JSON.stringify({
+  //     //     email: 'tagirdjan@gmail.com',
+  //     //     password: '12345q',
+  //     //   }),
+  //     // })
+  //     //   .then(response => response.json())
+  //     //   .then(json => console.log(json));
+  //   };
 
   return (
     <>
@@ -68,7 +68,7 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
                   <h1 className='landing-header__heading'>
                     Хотите создать сайт-визитку для Instagram?
                   </h1>
-                  <Button parentClass='landing-header' handler={testRequestOne}>
+                  {/* <Button parentClass='landing-header' handler={testRequestOne}>
                     Тестовый запрос 1
                   </Button>
 
@@ -81,10 +81,13 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
                     handler={testRequestThree}
                   >
                     Тестовый пост запрос
+                  </Button> */}
+                  <Button
+                    parentClass='landing-header'
+                    handler={() => history.push('/registration')}
+                  >
+                    Создать сайт
                   </Button>
-                  {/* <Button parentClass="landing-header" handler={() => history.push('/registration')} >
-										Создать сайт
-									</Button> */}
                 </div>
                 <div className='landing-header__image-container'>
                   <div className='landing-header__image'></div>
