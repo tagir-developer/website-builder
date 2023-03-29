@@ -19,9 +19,6 @@ app.use('/tester', express.static(path.join(__dirname, 'tester')));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'tester', 'index.html'));
 });
-// app.get('/', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-// });
 
 app.use('/api/auth/', require('./routes/auth.routes'));
 app.use('/api/support/', require('./routes/support.routes'));
@@ -63,11 +60,11 @@ const PORT = process.env.PORT || 5000;
 
 // start();
 
-const DB_URL =
-  'mongodb+srv://Tagir3991:tHi345Kl12psNiz@main-claster.kdeku.mongodb.net/app?retryWrites=true&w=majority';
+// const DB_URL =
+//   'mongodb+srv://Tagir3991:tHi345Kl12psNiz@main-claster.kdeku.mongodb.net/app?retryWrites=true&w=majority';
 
 mongoose
-  .connect(DB_URL, {
+  .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
