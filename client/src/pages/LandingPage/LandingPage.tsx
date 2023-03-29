@@ -16,12 +16,25 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
     axios.get('https://website-builder-two-fawn.vercel.app/api/test/test');
   };
   const testRequestTwo = (): void => {
-    axios.get(
-      'website-builder-client-lhroo6jve-tagir-developer.vercel.app/api/test/test'
+    axios.post(
+      'website-builder-client-lhroo6jve-tagir-developer.vercel.app/api/auth/login',
+      { email: 'tagirdjan@gmail.com', password: '12345q' }
     );
   };
   const testRequestThree = (): void => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
+    fetch(
+      'website-builder-client-lhroo6jve-tagir-developer.vercel.app/api/auth/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify({
+          email: 'tagirdjan@gmail.com',
+          password: '12345q',
+        }),
+      }
+    )
       .then(response => response.json())
       .then(json => console.log(json));
   };
@@ -48,14 +61,16 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
                   <Button parentClass='landing-header' handler={testRequestOne}>
                     Тестовый запрос 1
                   </Button>
+
                   <Button parentClass='landing-header' handler={testRequestTwo}>
-                    Тестовый запрос 2
+                    Тестовый запрос логин
                   </Button>
+
                   <Button
                     parentClass='landing-header'
                     handler={testRequestThree}
                   >
-                    Тестовый запрос 3
+                    Авторизация через фетч
                   </Button>
                   {/* <Button parentClass="landing-header" handler={() => history.push('/registration')} >
 										Создать сайт
