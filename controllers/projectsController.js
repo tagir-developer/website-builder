@@ -209,7 +209,7 @@ class projectsController {
 
   async getTestData(req, res, next) {
     try {
-      const projects = await Project.findAll();
+      const projects = await Project.find({});
       return res.json({ message: 'Успешный тестовый запрос', data: projects });
     } catch (e) {
       next(e);
