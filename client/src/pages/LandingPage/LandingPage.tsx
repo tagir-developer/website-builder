@@ -16,25 +16,22 @@ const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
     axios.get('https://website-builder-two-fawn.vercel.app/api/test/test');
   };
   const testRequestTwo = (): void => {
-    axios.post(
-      'website-builder-client-lhroo6jve-tagir-developer.vercel.app/api/auth/login',
-      { email: 'tagirdjan@gmail.com', password: '12345q' }
-    );
+    axios.post('https://website-builder-two-fawn.vercel.app/api/auth/login', {
+      email: 'tagirdjan@gmail.com',
+      password: '12345q',
+    });
   };
   const testRequestThree = (): void => {
-    fetch(
-      'website-builder-client-lhroo6jve-tagir-developer.vercel.app/api/auth/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-          email: 'tagirdjan@gmail.com',
-          password: '12345q',
-        }),
-      }
-    )
+    fetch('https://website-builder-two-fawn.vercel.app/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
+        email: 'tagirdjan@gmail.com',
+        password: '12345q',
+      }),
+    })
       .then(response => response.json())
       .then(json => console.log(json));
   };
