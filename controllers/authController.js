@@ -2,6 +2,15 @@ const userService = require('../service/userService');
 const ApiError = require('../exeptions/apiError');
 const crypto = require('crypto');
 
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+const cookieOptions = {
+  maxAge: THIRTY_DAYS_MS,
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+};
+
 class authController {
   async registration(req, res, next) {
     try {
@@ -10,11 +19,7 @@ class authController {
       const { email, password, name } = req.body;
 
       const userData = await userService.registration(email, password, name);
-      res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: 'none',
-      });
+      res.cookie('refreshToken', userData.refreshToken, cookieOptions);
 
       return res.json({
         ...userData,
@@ -33,11 +38,7 @@ class authController {
       const { email, password } = req.body;
 
       const userData = await userService.login(email, password);
-      res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        // sameSite: 'none',
-      });
+      res.cookie('refreshToken', userData.refreshToken, cookieOptions);
 
       return res.json({
         ...userData,
@@ -75,11 +76,7 @@ class authController {
       const { refreshToken } = req.cookies;
 
       const userData = await userService.refresh(refreshToken);
-      res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: 'none',
-      });
+      res.cookie('refreshToken', userData.refreshToken, cookieOptions);
 
       return res.json({ ...userData });
     } catch (e) {
